@@ -1,0 +1,3 @@
+[submodule "Common"]
+	path = Common
+	url = https://sdo-online.visualstudio.com/Te%20Ara%20Manaaki/_git/ccms-d365-common

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>5f0f4bde-fe07-40b1-8d55-955b43ab35db</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>CCMS.Core.Services</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BaseService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\AutoNumberService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\CommonFunctions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ConfigService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\EmailProcess.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="C:\Users\jean\Source\Repos\ccms-d365-solution\CCMS.Services\Persons\PostalResidentialAddressService.xaml.cs">
+      <DependentUpon>PostalResidentialAddressService.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>
