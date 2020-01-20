@@ -1,6 +1,6 @@
-if (!$ServerUrl) {$ServerUrl = "https://ccmscoredev01.crm6.dynamics.com"}
+
 if (!$Credentials) {$Credentials = Get-Credential}
-if (!$conn) {$conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $ServerUrl}
+if (!$conn) {$conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $global:ServerUrl}
 
 Write-Host "Generating data package"
 $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch>

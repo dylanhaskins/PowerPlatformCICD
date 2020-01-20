@@ -9,8 +9,13 @@ $valueField = "adx_value"
 
 # Fill me in
 # pass json array from variables and then arguments
+
+# Release.PrimaryArtifactSourceAlias
+
 $jsonArray = "$Env:portalConfigJson" | ConvertFrom-Json
-$path = "$env:SYSTEM_DEFAULTWORKINGDIRECTORY/_CCMS-D365-Portal/drop/portalconfig/data.xml"
+
+
+$path = "$env:SYSTEM_DEFAULTWORKINGDIRECTORY/$env:Release_PrimaryArtefactsSourceAlias/drop/data/data.xml"
 
 # --- Start of script --- #
 Try {
