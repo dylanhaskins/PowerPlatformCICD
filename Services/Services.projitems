@@ -10,9 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BaseService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\AutoNumberService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\CommonFunctions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\ConfigService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\EmailProcess.cs" />
   </ItemGroup>
   <ItemGroup>

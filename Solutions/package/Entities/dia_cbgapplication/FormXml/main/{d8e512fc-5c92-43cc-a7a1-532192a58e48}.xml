@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{d8e512fc-5c92-43cc-a7a1-532192a58e48}</formid>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>0</FormActivationState>
+    <form shownavigationbar="true" showImage="false" maxWidth="1920">
+      <tabs>
+        <tab verticallayout="true" id="{354536fa-0e46-4e90-a1d5-c2134e2c3aaf}" IsUserDefined="1" labelid="{f6521497-a119-4f89-857a-90569eac47f1}" name="Applicant details tab" locklevel="0" expanded="true" showlabel="true">
+          <labels>
+            <label description="Applicant details" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section showlabel="true" showbar="false" IsUserDefined="0" id="{83ff565b-0ac2-42da-8043-5649c313e13c}" labelid="{77d8a608-40c2-4b91-828b-55f2f36a1a6e}" name="Personal details section" columns="11" locklevel="0" labelwidth="130" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Personal details" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{21737765-bd04-6c14-e800-829b0ce64e4c}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Service request" languagecode="1033" />
+                        </labels>
+                        <control id="dia_servicerequestid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dia_servicerequestid" disabled="false" />
+                      </cell>
+                      <cell id="{459297c4-372a-36ae-604c-b1dc50d16269}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Subject person" languagecode="1033" />
+                        </labels>
+                        <control id="dia_subjectpersonid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dia_subjectpersonid" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{36884b6d-6015-be54-89c0-e1c16cd2d572}" showlabel="true" locklevel="0" labelid="{42c08876-8fda-410e-b82e-3a708b25d850}">
+                        <labels>
+                          <label description="Title" languagecode="1033" />
+                        </labels>
+                        <control id="dia_titleid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dia_titleid" disabled="false" uniqueid="{b9812899-1e8d-ac7a-c4b5-ca7c1d762db6}" />
+                      </cell>
+                      <cell id="{627263cb-009a-16c4-c8e6-223b554967e3}" showlabel="true" locklevel="0" labelid="{4c9576aa-4af5-484f-945f-0a47a50c8669}">
+                        <labels>
+                          <label description="Gender" languagecode="1033" />
+                        </labels>
+                        <control id="dia_genderid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dia_genderid" disabled="false" uniqueid="{882415ea-5e71-089b-d822-9a895e7c01e2}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{448273ee-42c8-d740-a0bc-92b6c1e22a92}" showlabel="true" locklevel="0" labelid="{ee3e80c5-19ab-4939-8746-672994e20152}">
+                        <labels>
+                          <label description="First and middle names" languagecode="1033" />
+                        </labels>
+                        <control id="dia_givennames" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="dia_givennames" disabled="false" uniqueid="{388c8aeb-cc6e-ab6d-c345-d421c76a58e9}" />
+                      </cell>
+                      <cell id="{81693e81-63d1-a288-9c2d-bb44e38337aa}" showlabel="true" locklevel="0" labelid="{e6612ffd-a811-4caa-b08f-64869c80bcb6}">
+                        <labels>
+                          <label description="Surname or family names" languagecode="1033" />
+                        </labels>
+                        <control id="dia_familyname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="dia_familyname" disabled="false" uniqueid="{296c9d36-0d06-0b50-d851-e8e73da94a41}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{1c6137ab-7638-3023-ec13-913ee46bda55}" showlabel="true" locklevel="0" labelid="{fa9c6908-a645-499b-8fc0-a8f70dbebf7b}">
+                        <labels>
+                          <label description="Date of birth" languagecode="1033" />
+                        </labels>
+                        <control id="dia_dateofbirth" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="dia_dateofbirth" disabled="false" />
+                      </cell>
+                      <cell id="{7beea28e-4ab6-caed-bc74-cb03b12e66b0}" showlabel="false" labelid="{8a78c6c3-ecd0-4344-8308-cd83d1f74722}">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{572e02ba-e37e-4af3-ba08-385f2f194d8e}" labelid="{59092241-16fc-4f91-a766-4ae1b3467191}" showlabel="false" locklevel="0" visible="false">
+                        <labels>
+                          <label description="Record number" languagecode="1033" />
+                        </labels>
+                        <control id="dia_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="dia_name" uniqueid="{341e8a16-6ec6-c87d-52ba-b34248123e64}" disabled="true" />
+                      </cell>
+                      <cell id="{b13b04d3-157a-47a1-1762-d127887197c9}" showlabel="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab name="Names and Relationships tab" id="{433bb054-ab7a-7c5b-2c37-2b377e67e2c2}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="true">
+          <labels>
+            <label description="Names and Relationships" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section name="Names and Relationships section" showlabel="false" showbar="false" locklevel="0" id="{d3932cc1-2242-5316-249a-8692b5bb6632}" IsUserDefined="0" layout="varwidth" columns="11" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Names and Relationships" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{773d01a5-dc8e-c074-e807-abcbb122ab69}" showlabel="true" locklevel="0" labelid="{6aad175f-70d6-4cf2-8f14-655266dfdc97}">
+                        <labels>
+                          <label description="Has ever used a different name" languagecode="1033" />
+                        </labels>
+                        <control id="dia_usedothernames" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="dia_usedothernames" disabled="false" uniqueid="{b332a521-eaae-ac94-dc34-776c6d871b7c}" />
+                      </cell>
+                      <cell id="{4607ee62-0e28-5dc1-2c9c-5c2a71dc6ac8}" showlabel="true" locklevel="0" labelid="{583d9b87-8ee0-47fb-9558-66c17ab3d00e}">
+                        <labels>
+                          <label description="Has ever been married or joined in a civil union" languagecode="1033" />
+                        </labels>
+                        <control id="dia_marriedorcivilunion" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="dia_marriedorcivilunion" disabled="false" uniqueid="{9a57ea11-0748-4e95-bb5c-e85e3d2de4e2}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section name="Parent details section 1" showlabel="true" showbar="false" locklevel="0" id="{c5c23ca3-c008-9656-9345-4682587c2e81}" IsUserDefined="0" layout="varwidth" columns="11" labelwidth="115" celllabelalignment="Left" celllabelposition="Left" labelid="{98dec4d0-aa3d-4795-bed7-476481be8b28}">
+                  <labels>
+                    <label description="Parent's details" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{e0441d2d-0838-edb9-8708-580c09e12663}" showlabel="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                      </cell>
+                      <cell id="{55e8ed42-9183-7695-e238-d0c0e15d85a2}" showlabel="false" labelid="{07b6b20f-f0e7-4800-8364-523d5a5b254e}">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section name="Parent details section 2" showlabel="true" showbar="false" locklevel="0" id="{ad8cc485-1e5c-0c4e-6d0e-eaa6d8b2bd37}" IsUserDefined="0" layout="varwidth" columns="11" labelwidth="115" celllabelalignment="Left" celllabelposition="Left" labelid="{26b20de2-2a27-40de-94fd-d70e499d1025}">
+                  <labels>
+                    <label description="Parent 2" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{cc0de2db-edc4-7267-23bb-42536b2b305b}" showlabel="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                      </cell>
+                      <cell id="{4d970adb-6e73-b02c-8d4d-0c25620c4904}" showlabel="false" labelid="{4cc4acf3-abb6-474a-9779-c9fc13f98227}">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab name="Travel tab" id="{ed78a0e1-67d8-033c-bd69-7e894503cb90}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="false">
+          <labels>
+            <label description="Travel" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section name="Travel section" showlabel="true" showbar="false" locklevel="0" id="{80beb926-0638-d1b8-995b-59e798e33050}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left" labelid="{0dda6180-1368-428d-b153-27fc090f13f8}">
+                  <labels>
+                    <label description="Travel" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{6b4cbc10-a3a8-00b1-b557-7bdd8e8ee411}" showlabel="true" locklevel="0" labelid="{ce5e614c-cc2f-4b4c-8817-8a70c090f174}">
+                        <labels>
+                          <label description="Travel outside NZ in 12 months" languagecode="1033" />
+                        </labels>
+                        <control id="dia_traveloutsidenzin12months" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="dia_traveloutsidenzin12months" disabled="false" uniqueid="{8ba676a9-3b7d-1bee-ebc7-857266097621}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab name="Your character - criminal history tab" id="{aa0b9914-7116-819c-0434-2d300d4969db}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="true">
+          <labels>
+            <label description="Your character - criminal history" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section name="Your character - criminal history section" showlabel="false" showbar="false" locklevel="0" id="{da0aae67-2bd9-d784-d19c-a850b47c177d}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Your character - criminal history" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{a4a8d433-abd8-33b5-ae90-a85345b3a3e9}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Have you ever been convicted or found guilty of an offence against the law in the country?" languagecode="1033" />
+                        </labels>
+                        <control id="dia_convictedguiltyofanyoffence" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="dia_convictedguiltyofanyoffence" disabled="false" uniqueid="{0e0b2103-0412-2502-15d9-e35259a0a09b}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{8d8025db-c3d5-4345-abc1-c59ada60dc03}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Offence committed, not yet convicted" languagecode="1033" />
+                        </labels>
+                        <control id="dia_offencecommittednotyetconvicted" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="dia_offencecommittednotyetconvicted" disabled="false" uniqueid="{972686dd-bb8c-61d1-bd15-c27854c389e3}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5847a643-2776-8b38-609d-27ce6e758bdb}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Have you ever had a protection order issued against you?" languagecode="1033" />
+                        </labels>
+                        <control id="dia_protectionorderissued" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="dia_protectionorderissued" disabled="false" uniqueid="{0bb56c02-555a-1eca-ab06-5c79689a615b}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{6d2e1d7c-3c89-27e6-8dc7-ed4d61c216d2}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Terrorism activity involvement" languagecode="1033" />
+                        </labels>
+                        <control id="dia_terrorismactivityinvolvement" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="dia_terrorismactivityinvolvement" disabled="false" uniqueid="{e8077e2b-6559-8a23-6261-4e69973b0c2b}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{1b2b9c1b-28b8-b73b-7e16-ad949a81c947}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Involvement in making/using weapons" languagecode="1033" />
+                        </labels>
+                        <control id="dia_involvementinmakingusingweapons" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="dia_involvementinmakingusingweapons" disabled="false" uniqueid="{256e6c4e-e9c4-c3d3-ce7c-aa8b8098dea7}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{d94ebbe4-493c-95a1-ab00-b5b37877e4e8}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Have you ever committed a war crime or a crime against humanity?" languagecode="1033" />
+                        </labels>
+                        <control id="dia_committedwarcrimecrimeagainsthumanity" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="dia_committedwarcrimecrimeagainsthumanity" disabled="false" uniqueid="{ec2ab9ed-acb5-bcd5-dbc0-a242838864e4}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{14b322f5-5aa4-4609-aabe-da1822d69c3e}" columns="111">
+        <rows>
+          <row>
+            <cell id="{2cd82800-01ee-243e-569d-7acadaac6abc}" showlabel="true" locklevel="0" labelid="{2502d600-9a87-4927-a9ac-c905ac617ed8}">
+              <labels>
+                <label description="Service request" languagecode="1033" />
+              </labels>
+              <control id="header_dia_servicerequestid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dia_servicerequestid" disabled="false" />
+            </cell>
+            <cell id="{49a4c8a2-e6d9-4270-901b-5884568a2cd8}" showlabel="true" locklevel="0" labelid="{e420f289-88be-4094-afa1-8c9bd2add3a5}">
+              <labels>
+                <label description="Status" languagecode="1033" />
+              </labels>
+              <control id="header_statuscode" classid="{5D68B988-0661-4db2-BC3E-17598AD3BE6C}" datafieldname="statuscode" disabled="false" uniqueid="{a9861891-76a8-089d-5ca3-0d0da750098a}" />
+            </cell>
+            <cell id="{3aceb5c2-6324-a7a3-2c6d-641eb128de3e}" showlabel="true" locklevel="0" labelid="{2f622362-def4-42e7-96d3-a2ff4b9532c2}">
+              <labels>
+                <label description="Owner" languagecode="1033" />
+              </labels>
+              <control id="header_ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" disabled="false" />
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <Navigation>
+        <NavBar></NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title LCID="1033" Text="Common" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title LCID="1033" Text="Sales" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title LCID="1033" Text="Service" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title LCID="1033" Text="Marketing" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title LCID="1033" Text="Process Sessions" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+      <controlDescriptions />
+      <DisplayConditions Order="3">
+        <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
+        <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Portal CCMS CBG Application Wizard Form" languagecode="1033" />
+    </LocalizedNames>
+  </systemform>
+</forms>

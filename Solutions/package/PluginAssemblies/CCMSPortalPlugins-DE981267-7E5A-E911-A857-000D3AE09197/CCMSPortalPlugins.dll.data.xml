@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PluginAssembly FullName="CCMSPortalPlugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a6851c2462643036" PluginAssemblyId="de981267-7e5a-e911-a857-000d3ae09197" CustomizationLevel="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <IsolationMode>2</IsolationMode>
+  <SourceType>0</SourceType>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <FileName>/PluginAssemblies/CCMSPortalPlugins-DE981267-7E5A-E911-A857-000D3AE09197/CCMSPortalPlugins.dll</FileName>
+  <PluginTypes>
+    <PluginType AssemblyQualifiedName="CCMS.PortalPlugins.CBGApplication.CreateCbgApplicationDefaults, CCMSPortalPlugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a6851c2462643036" PluginTypeId="e24c4a69-7e5a-e911-a84e-000d3ae0b82e" Name="CCMS.PortalPlugins.CBGApplication.CreateCbgApplicationDefaults">
+      <FriendlyName>CCMS.PortalPlugins.CBGApplication.CreateCbgApplicationDefaults</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="CCMS.PortalPlugins.CBGApplication.CreateCurrentCitizenshipOneToMany, CCMSPortalPlugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a6851c2462643036" PluginTypeId="6c70d45d-d385-e911-a850-000d3ae0cb84" Name="CCMS.PortalPlugins.CBGApplication.CreateCurrentCitizenshipOneToMany">
+      <FriendlyName>CCMS.PortalPlugins.CBGApplication.CreateCurrentCitizenshipOneToMany</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="CCMS.PortalPlugins.CBGApplication.CreateDebtOneToMany, CCMSPortalPlugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a6851c2462643036" PluginTypeId="dfc180fc-948d-e911-a859-000d3ae0a6cf" Name="CCMS.PortalPlugins.CBGApplication.CreateDebtOneToMany">
+      <FriendlyName>CCMS.PortalPlugins.CBGApplication.CreateDebtOneToMany</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="CCMS.PortalPlugins.CBGApplication.CreateGivenupCitizenshipOneToMany, CCMSPortalPlugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a6851c2462643036" PluginTypeId="f61af9b1-dd87-e911-a85a-000d3ae09197" Name="CCMS.PortalPlugins.CBGApplication.CreateGivenupCitizenshipOneToMany">
+      <FriendlyName>CCMS.PortalPlugins.CBGApplication.CreateGivenupCitizenshipOneToMany</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="CCMS.PortalPlugins.CBGApplication.CreateMarriageOneToMany, CCMSPortalPlugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a6851c2462643036" PluginTypeId="b83c0ff4-4e87-e911-a850-000d3ae0cb84" Name="CCMS.PortalPlugins.CBGApplication.CreateMarriageOneToMany">
+      <FriendlyName>CCMS.PortalPlugins.CBGApplication.CreateMarriageOneToMany</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="CCMS.PortalPlugins.CBGApplication.CreateNameOneToMany, CCMSPortalPlugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a6851c2462643036" PluginTypeId="37a25db4-ed7c-e911-a850-000d3ae0cb84" Name="CCMS.PortalPlugins.CBGApplication.CreateNameOneToMany">
+      <FriendlyName>CCMS.PortalPlugins.CBGApplication.CreateNameOneToMany</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="CCMS.PortalPlugins.CBGApplication.CreateParent1CountryOneToMany, CCMSPortalPlugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a6851c2462643036" PluginTypeId="c7d6755f-f080-e911-a850-000d3ae0cb84" Name="CCMS.PortalPlugins.CBGApplication.CreateParent1CountryOneToMany">
+      <FriendlyName>CCMS.PortalPlugins.CBGApplication.CreateParent1CountryOneToMany</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="CCMS.PortalPlugins.CBGApplication.CreateParent2CountryOneToMany, CCMSPortalPlugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a6851c2462643036" PluginTypeId="e6fc1ac7-f980-e911-a850-000d3ae0cb84" Name="CCMS.PortalPlugins.CBGApplication.CreateParent2CountryOneToMany">
+      <FriendlyName>CCMS.PortalPlugins.CBGApplication.CreateParent2CountryOneToMany</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="CCMS.PortalPlugins.CBGApplication.CreateTravelIntentionOneToMany, CCMSPortalPlugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a6851c2462643036" PluginTypeId="f766f758-aa89-e911-a850-000d3ae0cb84" Name="CCMS.PortalPlugins.CBGApplication.CreateTravelIntentionOneToMany">
+      <FriendlyName>CCMS.PortalPlugins.CBGApplication.CreateTravelIntentionOneToMany</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="CCMS.PortalPlugins.SalesOrders.ProcessSalesOrder, CCMSPortalPlugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a6851c2462643036" PluginTypeId="97d1ce15-df7e-45e6-8969-12566a9a1f47" Name="CCMS.PortalPlugins.SalesOrders.ProcessSalesOrder">
+      <FriendlyName>1f5ec374-422d-4c1e-a93e-45e2a5195d4f</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="CCMS.PortalPlugins.ServiceRequest.SubmitApplication, CCMSPortalPlugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a6851c2462643036" PluginTypeId="825458e5-a2ae-e911-a85a-000d3ae02142" Name="CCMS.PortalPlugins.ServiceRequest.SubmitApplication">
+      <FriendlyName>CCMS.PortalPlugins.ServiceRequest.SubmitApplication</FriendlyName>
+    </PluginType>
+  </PluginTypes>
+</PluginAssembly>

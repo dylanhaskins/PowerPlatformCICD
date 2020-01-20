@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RibbonDiffXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CustomActions>
+    <CustomAction Id="diap.dia.dia_cbgapplication.ApproveApplication.Button.CustomAction" Location="Mscrm.Form.dia_cbgapplication.MainTab.Save.Controls._children" Sequence="6">
+      <CommandUIDefinition>
+        <Button Alt="$LocLabels:dia.dia_cbgapplication.ApproveApplication.Button.Alt" Command="dia.dia_cbgapplication.ApproveApplication.Command" Id="dia.dia_cbgapplication.ApproveApplication.Button" Image32by32="$webresource:dia_/images/dia_approved_32.png" Image16by16="$webresource:dia_/images/dia_approved_16.png" LabelText="$LocLabels:dia.dia_cbgapplication.ApproveApplication.Button.LabelText" Sequence="6" TemplateAlias="o1" ToolTipTitle="$LocLabels:dia.dia_cbgapplication.ApproveApplication.Button.ToolTipTitle" ToolTipDescription="$LocLabels:dia.dia_cbgapplication.ApproveApplication.Button.ToolTipDescription" ModernImage="$webresource:dia_/images/dia_approved.svg" />
+      </CommandUIDefinition>
+    </CustomAction>
+    <CustomAction Id="diap.dia.dia_cbgapplication.ApproveApplicationsFromHome.Button.CustomAction" Location="Mscrm.HomepageGrid.dia_cbgapplication.MainTab.Management.Controls._children" Sequence="5">
+      <CommandUIDefinition>
+        <Button Alt="$LocLabels:dia.dia_cbgapplication.ApproveApplicationsFromHome.Button.Alt" Command="dia.dia_cbgapplication.ApproveApplicationsFromSubgrid.Command" Id="dia.dia_cbgapplication.ApproveApplicationsFromHome.Button" Image32by32="$webresource:dia_/images/dia_approved_32.png" Image16by16="$webresource:dia_/images/dia_approved_16.png" LabelText="$LocLabels:dia.dia_cbgapplication.ApproveApplicationsFromHome.Button.LabelText" Sequence="5" TemplateAlias="o1" ToolTipTitle="$LocLabels:dia.dia_cbgapplication.ApproveApplicationsFromHome.Button.ToolTipTitle" ToolTipDescription="$LocLabels:dia.dia_cbgapplication.ApproveApplicationsFromHome.Button.ToolTipDescription" ModernImage="$webresource:dia_/images/dia_approved.svg" />
+      </CommandUIDefinition>
+    </CustomAction>
+    <CustomAction Id="diap.dia.dia_cbgapplication.ApproveApplicationsFromSubgrid.Button.CustomAction" Location="Mscrm.SubGrid.dia_cbgapplication.MainTab.Management.Controls._children" Sequence="4">
+      <CommandUIDefinition>
+        <Button Alt="$LocLabels:dia.dia_cbgapplication.ApproveApplicationsFromSubgrid.Button.Alt" Command="dia.dia_cbgapplication.ApproveApplicationsFromSubgrid.Command" Id="dia.dia_cbgapplication.ApproveApplicationsFromSubgrid.Button" Image32by32="$webresource:dia_/images/dia_approved_32.png" Image16by16="$webresource:dia_/images/dia_approved_16.png" LabelText="$LocLabels:dia.dia_cbgapplication.ApproveApplicationsFromSubgrid.Button.LabelText" Sequence="4" TemplateAlias="o1" ToolTipTitle="$LocLabels:dia.dia_cbgapplication.ApproveApplicationsFromSubgrid.Button.ToolTipTitle" ToolTipDescription="$LocLabels:dia.dia_cbgapplication.ApproveApplicationsFromSubgrid.Button.ToolTipDescription" ModernImage="$webresource:dia_/images/dia_approved.svg" />
+      </CommandUIDefinition>
+    </CustomAction>
+    <CustomAction Id="diap.Mscrm.Form.dia_cbgapplication.Deactivate.CustomAction" Location="Mscrm.Form.dia_cbgapplication.MainTab.Save.Controls._children" Sequence="60">
+      <CommandUIDefinition>
+        <Button Alt="$LocLabels:Mscrm.Form.dia_cbgapplication.Deactivate.Alt" Command="Mscrm.Form.Deactivate" Id="Mscrm.Form.dia_cbgapplication.Deactivate" Image32by32="/_imgs/ribbon/Deactivate_32.png" Image16by16="/_imgs/ribbon/Deactivate_16.png" LabelText="$LocLabels:Mscrm.Form.dia_cbgapplication.Deactivate.LabelText" Sequence="60" TemplateAlias="o2" ToolTipTitle="$LocLabels:Mscrm.Form.dia_cbgapplication.Deactivate.ToolTipTitle" ToolTipDescription="$LocLabels:Mscrm.Form.dia_cbgapplication.Deactivate.ToolTipDescription" ModernImage="DeActivate" />
+      </CommandUIDefinition>
+    </CustomAction>
+    <CustomAction Id="diap.Mscrm.HomepageGrid.dia_cbgapplication.Deactivate.CustomAction" Location="Mscrm.HomepageGrid.dia_cbgapplication.MainTab.Management.Controls._children" Sequence="40">
+      <CommandUIDefinition>
+        <Button Alt="$LocLabels:Mscrm.HomepageGrid.dia_cbgapplication.Deactivate.Alt" Command="Mscrm.HomepageGrid.Deactivate" Id="Mscrm.HomepageGrid.dia_cbgapplication.Deactivate" Image32by32="/_imgs/ribbon/Deactivate_32.png" Image16by16="/_imgs/ribbon/Deactivate_16.png" LabelText="$LocLabels:Mscrm.HomepageGrid.dia_cbgapplication.Deactivate.LabelText" Sequence="40" TemplateAlias="o2" ToolTipTitle="$LocLabels:Mscrm.HomepageGrid.dia_cbgapplication.Deactivate.ToolTipTitle" ToolTipDescription="$LocLabels:Mscrm.HomepageGrid.dia_cbgapplication.Deactivate.ToolTipDescription" ModernImage="DeActivate" />
+      </CommandUIDefinition>
+    </CustomAction>
+    <CustomAction Id="diap.Mscrm.SubGrid.dia_cbgapplication.AddExistingAssoc.CustomAction" Location="Mscrm.SubGrid.dia_cbgapplication.MainTab.Management.Controls._children" Sequence="40">
+      <CommandUIDefinition>
+        <Button Alt="$Resources(EntityDisplayName):Ribbon.SubGrid.AddExisting" Command="Mscrm.AddExistingRecordFromSubGridAssociated" Id="Mscrm.SubGrid.dia_cbgapplication.AddExistingAssoc" Image32by32="/_imgs/ribbon/AddExistingStandard_32.png" Image16by16="/_imgs/ribbon/AddExistingStandard_16.png" LabelText="$Resources(EntityDisplayName):Ribbon.SubGrid.AddExisting" Sequence="40" TemplateAlias="o1" ToolTipTitle="$Resources(EntityDisplayName):Mscrm_SubGrid_EntityLogicalName_MainTab_Management_AddExistingAssoc_ToolTipTitle" ToolTipDescription="$Resources(EntityDisplayName):Mscrm_SubGrid_EntityLogicalName_MainTab_Management_AddExistingAssoc_ToolTipDescription" ModernImage="AddExisting" />
+      </CommandUIDefinition>
+    </CustomAction>
+    <CustomAction Id="diap.Mscrm.SubGrid.dia_cbgapplication.AddExistingStandard.CustomAction" Location="Mscrm.SubGrid.dia_cbgapplication.MainTab.Management.Controls._children" Sequence="30">
+      <CommandUIDefinition>
+        <Button Alt="$Resources(EntityDisplayName):Ribbon.SubGrid.AddExisting" Command="Mscrm.AddExistingRecordFromSubGridStandard" Id="Mscrm.SubGrid.dia_cbgapplication.AddExistingStandard" Image32by32="/_imgs/ribbon/AddExistingStandard_32.png" Image16by16="/_imgs/ribbon/AddExistingStandard_16.png" LabelText="$Resources(EntityDisplayName):Ribbon.SubGrid.AddExisting" Sequence="30" TemplateAlias="o1" ToolTipTitle="$Resources(EntityDisplayName):Mscrm_SubGrid_EntityLogicalName_MainTab_Management_AddExistingStandard_ToolTipTitle" ToolTipDescription="$Resources(EntityDisplayName):Mscrm_SubGrid_EntityLogicalName_MainTab_Management_AddExistingStandard_ToolTipDescription" ModernImage="AddExisting" />
+      </CommandUIDefinition>
+    </CustomAction>
+    <CustomAction Id="diap.Mscrm.SubGrid.dia_cbgapplication.AddNewStandard.CustomAction" Location="Mscrm.SubGrid.dia_cbgapplication.MainTab.Management.Controls._children" Sequence="20">
+      <CommandUIDefinition>
+        <Button Alt="$Resources(EntityDisplayName):Ribbon.SubGrid.AddNew" Command="Mscrm.AddNewRecordFromSubGridStandard" Id="Mscrm.SubGrid.dia_cbgapplication.AddNewStandard" Image32by32="/_imgs/ribbon/newrecord32.png" Image16by16="/_imgs/ribbon/New_16.png" LabelText="$Resources(EntityDisplayName):Ribbon.SubGrid.AddNew" Sequence="20" TemplateAlias="o1" ToolTipTitle="$Resources(EntityDisplayName):Mscrm_SubGrid_EntityLogicalName_MainTab_Management_AddNewStandard_ToolTipTitle" ToolTipDescription="$Resources(EntityDisplayName):Mscrm_SubGrid_EntityLogicalName_MainTab_Management_AddNewStandard_ToolTipDescription" ModernImage="New" />
+      </CommandUIDefinition>
+    </CustomAction>
+    <CustomAction Id="diap.Mscrm.SubGrid.dia_cbgapplication.Deactivate.CustomAction" Location="Mscrm.SubGrid.dia_cbgapplication.MainTab.Management.Controls._children" Sequence="70">
+      <CommandUIDefinition>
+        <Button Alt="$LocLabels:Mscrm.SubGrid.dia_cbgapplication.Deactivate.Alt" Command="Mscrm.HomepageGrid.Deactivate" Id="Mscrm.SubGrid.dia_cbgapplication.Deactivate" Image32by32="/_imgs/ribbon/Deactivate_32.png" Image16by16="/_imgs/ribbon/Deactivate_16.png" LabelText="$LocLabels:Mscrm.SubGrid.dia_cbgapplication.Deactivate.LabelText" Sequence="70" TemplateAlias="o2" ToolTipTitle="$LocLabels:Mscrm.SubGrid.dia_cbgapplication.Deactivate.ToolTipTitle" ToolTipDescription="$LocLabels:Mscrm.SubGrid.dia_cbgapplication.Deactivate.ToolTipDescription" ModernImage="DeActivate" />
+      </CommandUIDefinition>
+    </CustomAction>
+  </CustomActions>
+  <Templates>
+    <RibbonTemplates Id="Mscrm.Templates"></RibbonTemplates>
+  </Templates>
+  <CommandDefinitions>
+    <CommandDefinition Id="dia.dia_cbgapplication.ApproveApplication.Command">
+      <EnableRules>
+        <EnableRule Id="dia.dia_cbgapplication.Approve.EnableRule" />
+      </EnableRules>
+      <DisplayRules />
+      <Actions>
+        <JavaScriptFunction FunctionName="CCMS.dia_cbgapplicationribbon.ApproveCBGApplication" Library="$webresource:dia_/js/ribbon/dia_cbgapplicationribbon.js">
+          <CrmParameter Value="PrimaryControl" />
+          <CrmParameter Value="FirstPrimaryItemId" />
+          <BoolParameter Value="false" />
+        </JavaScriptFunction>
+      </Actions>
+    </CommandDefinition>
+    <CommandDefinition Id="dia.dia_cbgapplication.ApproveApplicationsFromSubgrid.Command">
+      <EnableRules>
+        <EnableRule Id="dia.dia_cbgapplication.ApproveFromSubgrid.EnableRule" />
+      </EnableRules>
+      <DisplayRules />
+      <Actions>
+        <JavaScriptFunction FunctionName="CCMS.dia_cbgapplicationribbon.ApproveCBGApplication" Library="$webresource:dia_/js/ribbon/dia_cbgapplicationribbon.js">
+          <CrmParameter Value="SelectedControl" />
+          <CrmParameter Value="SelectedControlSelectedItemIds" />
+          <BoolParameter Value="true" />
+        </JavaScriptFunction>
+      </Actions>
+    </CommandDefinition>
+    <CommandDefinition Id="Mscrm.AddExistingRecordFromSubGridAssociated">
+      <EnableRules>
+        <EnableRule Id="Mscrm.AppendToPrimary" />
+        <EnableRule Id="Mscrm.EntityFormIsEnabled" />
+        <EnableRule Id="DIA.dia_cbgapplication.HideButtonIfSubmitted" />
+      </EnableRules>
+      <DisplayRules>
+        <DisplayRule Id="Mscrm.AddExisting" />
+        <DisplayRule Id="Mscrm.ShowForManyToManyGrids" />
+        <DisplayRule Id="Mscrm.AppendToPrimary" />
+        <DisplayRule Id="Mscrm.AppendSelected" />
+      </DisplayRules>
+      <Actions>
+        <JavaScriptFunction FunctionName="XrmCore.Commands.AddFromSubGrid.addExistingFromSubGridAssociated" Library="$webresource:Main_system_library.js">
+          <CrmParameter Value="SelectedEntityTypeName" />
+          <CrmParameter Value="SelectedControl" />
+        </JavaScriptFunction>
+      </Actions>
+    </CommandDefinition>
+    <CommandDefinition Id="Mscrm.AddExistingRecordFromSubGridStandard">
+      <EnableRules>
+        <EnableRule Id="Mscrm.AppendToPrimary" />
+        <EnableRule Id="Mscrm.EntityFormIsEnabled" />
+        <EnableRule Id="Mscrm.IsEntityAvailableForUserInMocaOffline" />
+        <EnableRule Id="Mscrm.IsRelationshipEnabledInMocaOffline" />
+        <EnableRule Id="DIA.dia_cbgapplication.HideButtonIfSubmitted" />
+      </EnableRules>
+      <DisplayRules>
+        <DisplayRule Id="Mscrm.AddExisting" />
+        <DisplayRule Id="Mscrm.ShowForOneToManyGrids" />
+        <DisplayRule Id="Mscrm.AppendToPrimary" />
+        <DisplayRule Id="Mscrm.AppendSelected" />
+        <DisplayRule Id="Mscrm.CanWriteSelected" />
+      </DisplayRules>
+      <Actions>
+        <JavaScriptFunction FunctionName="XrmCore.Commands.AddFromSubGrid.addExistingFromSubGridStandard" Library="$webresource:Main_system_library.js">
+          <CrmParameter Value="SelectedEntityTypeName" />
+          <CrmParameter Value="SelectedControl" />
+        </JavaScriptFunction>
+      </Actions>
+    </CommandDefinition>
+    <CommandDefinition Id="Mscrm.AddNewRecordFromSubGridStandard">
+      <EnableRules>
+        <EnableRule Id="Mscrm.AppendToPrimary" />
+        <EnableRule Id="Mscrm.EntityFormIsEnabled" />
+        <EnableRule Id="Mscrm.IsEntityAvailableForUserInMocaOffline" />
+        <EnableRule Id="DIA.dia_cbgapplication.HideButtonIfSubmitted" />
+      </EnableRules>
+      <DisplayRules>
+        <DisplayRule Id="Mscrm.ShowForOneToManyGrids" />
+        <DisplayRule Id="Mscrm.AppendToPrimary" />
+        <DisplayRule Id="Mscrm.CreateSelectedEntityPermission" />
+        <DisplayRule Id="Mscrm.AppendSelected" />
+        <DisplayRule Id="Mscrm.HideAddNewForChildEntities" />
+      </DisplayRules>
+      <Actions>
+        <JavaScriptFunction FunctionName="XrmCore.Commands.Open.addNewFromSubGridStandard" Library="$webresource:Main_system_library.js">
+          <CrmParameter Value="SelectedEntityTypeName" />
+          <CrmParameter Value="PrimaryEntityTypeName" />
+          <CrmParameter Value="FirstPrimaryItemId" />
+          <CrmParameter Value="PrimaryControl" />
+          <CrmParameter Value="SelectedControl" />
+        </JavaScriptFunction>
+      </Actions>
+    </CommandDefinition>
+    <CommandDefinition Id="Mscrm.Form.Deactivate">
+      <EnableRules>
+        <EnableRule Id="Mscrm.CanWritePrimary" />
+      </EnableRules>
+      <DisplayRules>
+        <DisplayRule Id="Mscrm.CanWritePrimary" />
+        <DisplayRule Id="Mscrm.PrimaryIsActive" />
+        <DisplayRule Id="Mscrm.PrimaryEntityHasStatecode" />
+        <DisplayRule Id="Mscrm.PrimaryIsNotActivity" />
+      </DisplayRules>
+      <Actions>
+        <JavaScriptFunction FunctionName="XrmCore.Commands.Deactivate.deactivatePrimaryRecord" Library="$webresource:Main_system_library.js">
+          <CrmParameter Value="FirstPrimaryItemId" />
+          <CrmParameter Value="PrimaryEntityTypeName" />
+        </JavaScriptFunction>
+      </Actions>
+    </CommandDefinition>
+  </CommandDefinitions>
+  <RuleDefinitions>
+    <TabDisplayRules />
+    <DisplayRules>
+      <DisplayRule Id="Mscrm.AddExisting">
+        <ReferencingAttributeRequiredRule Default="false" InvertResult="true" />
+      </DisplayRule>
+      <DisplayRule Id="Mscrm.AppendSelected">
+        <EntityPrivilegeRule PrivilegeType="Append" PrivilegeDepth="Basic" AppliesTo="SelectedEntity" />
+      </DisplayRule>
+      <DisplayRule Id="Mscrm.AppendToPrimary">
+        <EntityPrivilegeRule PrivilegeType="AppendTo" PrivilegeDepth="Basic" AppliesTo="PrimaryEntity" />
+      </DisplayRule>
+      <DisplayRule Id="Mscrm.CanWritePrimary">
+        <EntityPrivilegeRule PrivilegeType="Write" PrivilegeDepth="Basic" AppliesTo="PrimaryEntity" />
+      </DisplayRule>
+      <DisplayRule Id="Mscrm.CanWriteSelected">
+        <EntityPrivilegeRule PrivilegeType="Write" PrivilegeDepth="Basic" AppliesTo="SelectedEntity" />
+      </DisplayRule>
+      <DisplayRule Id="Mscrm.CreateSelectedEntityPermission">
+        <EntityPrivilegeRule PrivilegeType="Create" PrivilegeDepth="Basic" AppliesTo="SelectedEntity" />
+      </DisplayRule>
+      <DisplayRule Id="Mscrm.HideAddNewForChildEntities">
+        <OrRule>
+          <Or>
+            <EntityPropertyRule AppliesTo="SelectedEntity" PropertyName="IsChildEntity" PropertyValue="false" />
+          </Or>
+          <Or>
+            <RelationshipTypeRule AppliesTo="SelectedEntity" AllowCustomRelationship="false" />
+          </Or>
+        </OrRule>
+      </DisplayRule>
+      <DisplayRule Id="Mscrm.PrimaryEntityHasStatecode">
+        <EntityPropertyRule AppliesTo="PrimaryEntity" PropertyName="HasStateCode" PropertyValue="true" />
+      </DisplayRule>
+      <DisplayRule Id="Mscrm.PrimaryIsActive">
+        <FormStateRule State="Existing" />
+      </DisplayRule>
+      <DisplayRule Id="Mscrm.PrimaryIsNotActivity">
+        <EntityPropertyRule AppliesTo="PrimaryEntity" PropertyName="IsActivity" PropertyValue="false" />
+      </DisplayRule>
+      <DisplayRule Id="Mscrm.ShowForManyToManyGrids">
+        <RelationshipTypeRule AppliesTo="SelectedEntity" RelationshipType="ManyToMany" />
+      </DisplayRule>
+      <DisplayRule Id="Mscrm.ShowForOneToManyGrids">
+        <RelationshipTypeRule AppliesTo="SelectedEntity" RelationshipType="OneToMany" />
+      </DisplayRule>
+    </DisplayRules>
+    <EnableRules>
+      <EnableRule Id="dia.ApplicationRibbon.Incident.HideDeactivateButton">
+        <EntityRule EntityName="incident" AppliesTo="PrimaryEntity" Context="Form" Default="false" />
+      </EnableRule>
+      <EnableRule Id="dia.dia_cbgapplication.Approve.EnableRule">
+        <CustomRule FunctionName="CCMS.dia_cbgapplicationribbon.HideApproveCBGApplication" Library="$webresource:dia_/js/ribbon/dia_cbgapplicationribbon.js" Default="false">
+          <CrmParameter Value="PrimaryControl" />
+          <BoolParameter Value="true" />
+        </CustomRule>
+      </EnableRule>
+      <EnableRule Id="dia.dia_cbgapplication.ApproveFromSubgrid.EnableRule">
+        <SelectionCountRule AppliesTo="SelectedEntity" Minimum="1" />
+        <CustomRule FunctionName="CCMS.dia_cbgapplicationribbon.HideApproveCBGApplication" Library="$webresource:dia_/js/ribbon/dia_cbgapplicationribbon.js" Default="false">
+          <CrmParameter Value="PrimaryControl" />
+          <BoolParameter Value="false" />
+        </CustomRule>
+      </EnableRule>
+      <EnableRule Id="DIA.dia_cbgapplication.HideButtonIfSubmitted">
+        <CustomRule FunctionName="CCMS.dia_cbgapplicationribbon.HideAddButton" Library="$webresource:dia_/js/ribbon/dia_cbgapplicationribbon.js" Default="false">
+          <CrmParameter Value="PrimaryControl" />
+          <CrmParameter Value="PrimaryEntityTypeName" />
+        </CustomRule>
+      </EnableRule>
+      <EnableRule Id="Mscrm.AppendToPrimary">
+        <RecordPrivilegeRule PrivilegeType="AppendTo" AppliesTo="PrimaryEntity" />
+      </EnableRule>
+      <EnableRule Id="Mscrm.CanWritePrimary">
+        <RecordPrivilegeRule PrivilegeType="Write" AppliesTo="PrimaryEntity" />
+      </EnableRule>
+      <EnableRule Id="Mscrm.EntityFormIsEnabled">
+        <FormStateRule State="Disabled" InvertResult="true" />
+      </EnableRule>
+      <EnableRule Id="Mscrm.IsEntityAvailableForUserInMocaOffline">
+        <CustomRule FunctionName="XrmCore.Rules.Online.IsEntityAvailableForUserInMocaOffline" Library="$webresource:Main_system_library.js">
+          <CrmParameter Value="SelectedEntityTypeName" />
+        </CustomRule>
+      </EnableRule>
+      <EnableRule Id="Mscrm.IsRelationshipEnabledInMocaOffline">
+        <CustomRule FunctionName="XrmCore.Rules.Online.IsRelationshipEnabledInMocaOffline" Library="$webresource:Main_system_library.js">
+          <CrmParameter Value="SelectedControl" />
+        </CustomRule>
+      </EnableRule>
+    </EnableRules>
+  </RuleDefinitions>
+  <LocLabels>
+    <LocLabel Id="dia.dia_cbgapplication.ApproveApplication.Button.Alt">
+      <Titles>
+        <Title description="Approve" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="dia.dia_cbgapplication.ApproveApplication.Button.LabelText">
+      <Titles>
+        <Title description="Approve" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="dia.dia_cbgapplication.ApproveApplication.Button.ToolTipDescription">
+      <Titles>
+        <Title description="Approve CBG Application" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="dia.dia_cbgapplication.ApproveApplication.Button.ToolTipTitle">
+      <Titles>
+        <Title description="Approve CBG Application" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="dia.dia_cbgapplication.ApproveApplicationsFromHome.Button.Alt">
+      <Titles>
+        <Title description="Approve" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="dia.dia_cbgapplication.ApproveApplicationsFromHome.Button.LabelText">
+      <Titles>
+        <Title description="Approve" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="dia.dia_cbgapplication.ApproveApplicationsFromHome.Button.ToolTipDescription">
+      <Titles>
+        <Title description="Approve CBG Application" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="dia.dia_cbgapplication.ApproveApplicationsFromHome.Button.ToolTipTitle">
+      <Titles>
+        <Title description="Approve CBG Application" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="dia.dia_cbgapplication.ApproveApplicationsFromSubgrid.Button.Alt">
+      <Titles>
+        <Title description="Approve" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="dia.dia_cbgapplication.ApproveApplicationsFromSubgrid.Button.LabelText">
+      <Titles>
+        <Title description="Approve" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="dia.dia_cbgapplication.ApproveApplicationsFromSubgrid.Button.ToolTipDescription">
+      <Titles>
+        <Title description="Approve CBG Application" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="dia.dia_cbgapplication.ApproveApplicationsFromSubgrid.Button.ToolTipTitle">
+      <Titles>
+        <Title description="Approve CBG Application" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="Mscrm.Form.dia_cbgapplication.Deactivate.Alt">
+      <Titles>
+        <Title description="Resolve" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="Mscrm.Form.dia_cbgapplication.Deactivate.LabelText">
+      <Titles>
+        <Title description="Resolve" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="Mscrm.Form.dia_cbgapplication.Deactivate.ToolTipDescription">
+      <Titles>
+        <Title description="Resolve these {0}. &lt;br&gt;&lt;br&gt;You can reactivate these {0} from the Inactive {0} View." languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="Mscrm.Form.dia_cbgapplication.Deactivate.ToolTipTitle">
+      <Titles>
+        <Title description="Resolve" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="Mscrm.HomepageGrid.dia_cbgapplication.Deactivate.Alt">
+      <Titles>
+        <Title description="Resolve" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="Mscrm.HomepageGrid.dia_cbgapplication.Deactivate.LabelText">
+      <Titles>
+        <Title description="Resolve" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="Mscrm.HomepageGrid.dia_cbgapplication.Deactivate.ToolTipDescription">
+      <Titles>
+        <Title description="Resolve these {0}. &lt;br&gt;&lt;br&gt;You can reactivate these {0} from the Inactive {0} View." languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="Mscrm.HomepageGrid.dia_cbgapplication.Deactivate.ToolTipTitle">
+      <Titles>
+        <Title description="Resolve" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="Mscrm.SubGrid.dia_cbgapplication.Deactivate.Alt">
+      <Titles>
+        <Title description="Resolve" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="Mscrm.SubGrid.dia_cbgapplication.Deactivate.LabelText">
+      <Titles>
+        <Title description="Resolve" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="Mscrm.SubGrid.dia_cbgapplication.Deactivate.ToolTipDescription">
+      <Titles>
+        <Title description="Resolve these {0}. &lt;br&gt;&lt;br&gt;You can reactivate these {0} from the Inactive {0} View." languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="Mscrm.SubGrid.dia_cbgapplication.Deactivate.ToolTipTitle">
+      <Titles>
+        <Title description="Resolve" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+  </LocLabels>
+</RibbonDiffXml>

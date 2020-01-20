@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SdkMessageProcessingStep Name="Portal post-update current citizenship one to many - On update of current citizenship one to many fields" SdkMessageProcessingStepId="{ba50565e-d385-e911-a852-000d3ae0a7f8}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <PluginTypeName>CCMS.PortalPlugins.CBGApplication.CreateCurrentCitizenshipOneToMany, CCMSPortalPlugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a6851c2462643036</PluginTypeName>
+  <PluginTypeId>6c70d45d-d385-e911-a850-000d3ae0cb84</PluginTypeId>
+  <PrimaryEntity>dia_cbgapplication</PrimaryEntity>
+  <AsyncAutoDelete>0</AsyncAutoDelete>
+  <Description>Portal post-update current citizenship one to many - On update of current citizenship one to many fields</Description>
+  <FilteringAttributes>diap_currentcitizenshiponetomany</FilteringAttributes>
+  <InvocationSource>1</InvocationSource>
+  <Mode>0</Mode>
+  <Rank>60</Rank>
+  <SdkMessageId>{20bebb1b-ea3e-db11-86a7-000a3a5473e8}</SdkMessageId>
+  <EventHandlerTypeCode>4602</EventHandlerTypeCode>
+  <Stage>40</Stage>
+  <IsCustomizable>1</IsCustomizable>
+  <IsHidden>0</IsHidden>
+  <SupportedDeployment>0</SupportedDeployment>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <SdkMessageProcessingStepImages>
+    <SdkMessageProcessingStepImage Name="PostImage">
+      <SdkMessageProcessingStepImageId>{3a107211-d5e0-e911-a812-000d3a7946d7}</SdkMessageProcessingStepImageId>
+      <Attributes>diap_currentcitizenshiponetomany,diap_portalorigin</Attributes>
+      <EntityAlias>PostImage</EntityAlias>
+      <ImageType>1</ImageType>
+      <MessagePropertyName>Target</MessagePropertyName>
+      <IsCustomizable>1</IsCustomizable>
+    </SdkMessageProcessingStepImage>
+  </SdkMessageProcessingStepImages>
+</SdkMessageProcessingStep>

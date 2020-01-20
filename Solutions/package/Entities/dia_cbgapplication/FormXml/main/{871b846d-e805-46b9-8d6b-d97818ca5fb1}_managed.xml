@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{871b846d-e805-46b9-8d6b-d97818ca5fb1}</formid>
+    <IntroducedVersion>1.19288.0.1516</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form shownavigationbar="false" showImage="false" maxWidth="1920">
+      <tabs>
+        <tab name="Identity check" id="{0b985893-9467-ed43-8968-e28318724cbd}" IsUserDefined="0" locklevel="0" showlabel="false" expanded="true">
+          <labels>
+            <label description="Identity check" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section name="tab_2_section_1" showlabel="false" showbar="false" locklevel="0" id="{bc2b9814-dabe-33a3-9634-d49c51a557c1}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115">
+                  <labels>
+                    <label description="Section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{b6902601-2bec-7202-35ee-3a6c20166030}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Select how the applicant will verify their identity" languagecode="1033" />
+                        </labels>
+                        <control id="dia_identityverification" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="dia_identityverification" disabled="false" uniqueid="{e6804769-6a40-8540-5a32-b221bbc4a914}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab verticallayout="true" id="{354536fa-0e46-4e90-a1d5-c2134e2c3aaf}" IsUserDefined="1" labelid="{b12bbb32-9cfb-41b8-8550-2205c30e3046}" name="hidden-tab" locklevel="0" expanded="true" showlabel="false">
+          <labels>
+            <label description="Status" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{83ff565b-0ac2-42da-8043-5649c313e13c}" labelid="{dda2009b-02cc-4605-a5c3-d851339e048a}" name="Applicationdetails" columns="1" locklevel="0" labelwidth="283" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Application details" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{07941327-b61c-e9e2-2786-2045cc5a3c79}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dia_identitydocumentsstatus" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="dia_identitydocumentsstatus" disabled="false" uniqueid="{4d639d9c-e97b-8ada-171c-75664479064b}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{d4084553-da66-a73b-8a80-e63eb764e53d}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dia_passportphotostatus" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="dia_passportphotostatus" disabled="false" uniqueid="{bcea11ca-b855-395e-6345-0a98a55423b7}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{997a4d74-bbc7-38e5-e7aa-24713a5a4b1d}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dia_identitystatus" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="dia_identitystatus" disabled="false" uniqueid="{3bc533a5-7582-53e3-cc13-a40ad792a101}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{72ed885c-e659-a39b-c45b-4261b827a549}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dia_identitycheckstatus" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="dia_identitycheckstatus" disabled="false" uniqueid="{eb265857-3b58-d539-c868-5ab642124de1}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{14b322f5-5aa4-4609-aabe-da1822d69c3e}" columns="1111" labelwidth="130" celllabelalignment="Left" celllabelposition="Left">
+        <rows>
+          <row>
+            <cell id="{d14754e9-7d64-8918-190a-724e80b6a631}" showlabel="true" locklevel="0" labelid="{b3454b03-ae33-488c-998d-462c77bb3d8c}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control id="header_dia_servicerequestid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dia_servicerequestid" disabled="true" uniqueid="{98d92a90-0a0b-086e-8652-8046b7346888}">
+                <parameters>
+                  <AutoResolve>true</AutoResolve>
+                  <DisableMru>false</DisableMru>
+                  <DisableQuickFind>false</DisableQuickFind>
+                  <DisableViewPicker>false</DisableViewPicker>
+                  <DefaultViewId>{9AC51863-58C7-49A0-ADCC-AFD9A4C3EE59}</DefaultViewId>
+                  <AllowFilterOff>false</AllowFilterOff>
+                </parameters>
+              </control>
+            </cell>
+            <cell id="{49a4c8a2-e6d9-4270-901b-5884568a2cd8}" showlabel="true" locklevel="0" labelid="{26275624-f09c-4871-a684-2da7cb91b2c3}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control id="header_statuscode" classid="{5D68B988-0661-4db2-BC3E-17598AD3BE6C}" datafieldname="statuscode" disabled="false" uniqueid="{a9861891-76a8-089d-5ca3-0d0da750098a}" />
+            </cell>
+            <cell id="{088956bc-cd4c-883e-a958-622b3253659c}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control id="header_dia_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="dia_name" disabled="false" />
+            </cell>
+            <cell id="{6627e941-7d8d-79c0-c758-ca6e210148dd}" showlabel="true" locklevel="0" labelid="{6deafe92-3698-4c75-99bd-c4ea61368a1e}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control id="header_ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" disabled="true" uniqueid="{5d8c2b1b-11cb-3043-26e6-da12d106c634}">
+                <parameters>
+                  <AutoResolve>true</AutoResolve>
+                  <DisableMru>false</DisableMru>
+                </parameters>
+              </control>
+            </cell>
+          </row>
+          <row>
+            <cell id="{1d726d37-370c-d283-7665-4b5558c2966c}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control id="header_dia_applicationtypeid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dia_applicationtypeid" disabled="false" />
+            </cell>
+            <cell id="{b4575354-cbc1-ba23-5b79-6d58c258d482}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{62a942bd-2199-e374-0028-33365089e9ca}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{e0d4a572-5474-a896-8c2d-b785033a524b}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <Navigation>
+        <NavBar>
+          <NavBarByRelationshipItem RelationshipName="dia_cbgapplication_informationrequest_cbgapplicationid" Sequence="10001" Area="Info" Id="nav_dia_cbgapplication_informationrequest_cbgapplicationid">
+            <Titles>
+              <Title LCID="1033" Text="Information requests" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_cbgapplication_salesorderdetail_cbgapplicationid" Sequence="10003" Area="Info" Id="nav_dia_cbgapplication_salesorderdetail_cbgapplicationid">
+            <Titles>
+              <Title LCID="1033" Text="Order Products" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_cbgapplication_task_cbgapplicationid" Sequence="10004" Area="Info" Id="nav_dia_cbgapplication_task_cbgapplicationid">
+            <Titles>
+              <Title LCID="1033" Text="Tasks" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_cbgapplication_assessment_CBGapplicationid" Sequence="10006" Area="Info" Id="nav_dia_cbgapplication_assessment_CBGapplicationid" Show="false">
+            <Titles>
+              <Title LCID="1033" Text="Assessments" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_cbgapplication_completenesscheck_cbgapplicationid" Sequence="10007" Area="Info" Id="nav_dia_cbgapplication_completenesscheck_cbgapplicationid" Show="false">
+            <Titles>
+              <Title LCID="1033" Text="Completeness checks" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_cbgapplication_debt_cbgapplicationid" Sequence="10008" Area="Info" Id="nav_dia_cbgapplication_debt_cbgapplicationid" Show="false">
+            <Titles>
+              <Title LCID="1033" Text="Debts" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_cbgapplication_eligibility_cbgapplicationid" Sequence="10009" Area="Info" Id="nav_dia_cbgapplication_eligibility_cbgapplicationid" Show="false">
+            <Titles>
+              <Title LCID="1033" Text="Eligibility" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_cbgapplication_evidenceofidentity_cbgapplicationid" Sequence="10010" Area="Info" Id="nav_dia_cbgapplication_evidenceofidentity_cbgapplicationid" Show="false">
+            <Titles>
+              <Title LCID="1033" Text="Evidence of identities" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_cbgapplication_marriagescivilunions_cbgapplicationid" Sequence="10011" Area="Info" Id="nav_dia_cbgapplication_marriagescivilunions_cbgapplicationid" Show="false">
+            <Titles>
+              <Title LCID="1033" Text="Marriages and Civil Unions" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_cbgapplication_recommendation_CBGapplicationid" Sequence="10012" Area="Info" Id="nav_dia_cbgapplication_recommendation_CBGapplicationid" Show="false">
+            <Titles>
+              <Title LCID="1033" Text="Recommendations" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_cbgapplication_supportingdocument_cbgapplicationid" Sequence="10013" Area="Info" Id="nav_dia_cbgapplication_supportingdocument_cbgapplicationid" Show="false">
+            <Titles>
+              <Title LCID="1033" Text="Supporting documents" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_cbgapplication_registerkey_cbgapplicationid" Sequence="10015" Area="Info" Id="nav_dia_cbgapplication_registerkey_cbgapplicationid" Show="false">
+            <Titles>
+              <Title LCID="1033" Text="Register keys" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_cbgapplication_name_cbgapplicationid" Sequence="10017" Area="Info" Id="nav_dia_cbgapplication_name_cbgapplicationid" Show="false">
+            <Titles>
+              <Title LCID="1033" Text="Names" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_cbgapplication_country_currentcitizenship" Sequence="10018" Area="Info" Id="nav_dia_cbgapplication_country_currentcitizenship" Show="false">
+            <Titles>
+              <Title LCID="1033" Text="Current citizenship countries" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_cbgapplication_country_previouscitiz" Sequence="10019" Area="Info" Id="nav_dia_cbgapplication_country_previouscitiz" Show="false">
+            <Titles>
+              <Title LCID="1033" Text="Previous citizenship countries" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_country_cbgapplication_parent1" Sequence="10020" Area="Info" Id="nav_dia_country_cbgapplication_parent1" Show="false">
+            <Titles>
+              <Title LCID="1033" Text="Parent 1 countries of citizenship" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem RelationshipName="dia_country_cbgapplication_parent2" Sequence="10021" Area="Info" Id="nav_dia_country_cbgapplication_parent2" Show="false">
+            <Titles>
+              <Title LCID="1033" Text="Parent 2 countries of citizenship" />
+            </Titles>
+          </NavBarByRelationshipItem>
+        </NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title LCID="1033" Text="Common" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title LCID="1033" Text="Sales" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title LCID="1033" Text="Service" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title LCID="1033" Text="Marketing" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title LCID="1033" Text="Process Sessions" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+      <controlDescriptions />
+      <formLibraries>
+        <Library name="dia_/js/forms/dia_cbgapplication.js" libraryUniqueId="{e0d9b649-8dae-c59b-40cb-856ebc96d88b}" />
+        <Library name="dia_/js/common/JSHelper.js" libraryUniqueId="{edcb0308-badc-b360-e767-0b48ea6578ad}" />
+      </formLibraries>
+      <events>
+        <event name="onload" application="false" active="false">
+          <Handlers>
+            <Handler functionName="CCMS.dia_cbgapplication.OnLoad" libraryName="dia_/js/forms/dia_cbgapplication.js" handlerUniqueId="{ce814720-5a6d-1c18-3882-c1148848a473}" enabled="true" parameters="" passExecutionContext="true" />
+          </Handlers>
+        </event>
+        <event name="onsave" application="false" active="false">
+          <Handlers>
+            <Handler functionName="CCMS.dia_cbgapplication.OnSave" libraryName="dia_/js/forms/dia_cbgapplication.js" handlerUniqueId="{2e82d4b6-2cdc-92e4-ee97-e9b42e1401dd}" enabled="true" parameters="" passExecutionContext="true" />
+          </Handlers>
+        </event>
+      </events>
+      <DisplayConditions Order="17" FallbackForm="true">
+        <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
+        <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Portal CBG Adult - Identity" languagecode="1033" />
+    </LocalizedNames>
+  </systemform>
+</forms>

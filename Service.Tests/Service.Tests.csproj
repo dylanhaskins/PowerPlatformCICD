@@ -210,7 +210,6 @@
     <Folder Include="Common\" />
     <Folder Include="Tests\" />
   </ItemGroup>
-  <Import Project="..\Common\Common\Common.projitems" Label="Shared" />
   <Import Project="..\Entities\Entities.projitems" Label="Shared" />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

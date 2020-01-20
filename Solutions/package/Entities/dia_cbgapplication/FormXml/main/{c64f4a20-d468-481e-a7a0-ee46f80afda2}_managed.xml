@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{c64f4a20-d468-481e-a7a0-ee46f80afda2}</formid>
+    <IntroducedVersion>1.19354.0.0853</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form shownavigationbar="false" showImage="false" maxWidth="1920" headerdensity="HighWithControls">
+      <tabs>
+        <tab id="{95c89323-eea6-3825-c711-71cd98ed68a7}" name="travel_tab" IsUserDefined="0" locklevel="0" showlabel="false" expanded="true" labelid="{b99a1edf-7100-4a7a-9c96-486a1475a33f}">
+          <labels>
+            <label description="Travel" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{7cd938c1-3a4c-69be-966a-d2cc50a616d9}" name="most_recent_travel_document_section" IsUserDefined="0" locklevel="0" showlabel="true" labelid="{d0ad70a8-5bb4-431e-8cdd-086b76567c30}" showbar="false" layout="varwidth" columns="11" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Passport or travel document" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{90959d70-a46a-847b-abb4-72aebb4e502e}" locklevel="0" showlabel="true" labelid="{8c71b55d-3a58-4950-bdbd-75275bb61fb8}">
+                        <labels>
+                          <label description="Passport or travel document number" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_passporttraveldocumentnumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="dia_passporttraveldocumentnumber" uniqueid="{71889080-3952-6b67-bd30-4c7a62960cb2}" />
+                      </cell>
+                      <cell id="{5b817898-e394-6179-385a-7cec829662c8}" locklevel="0" showlabel="true" labelid="{d5966d8a-1994-4a77-8af1-b5d5252e8bf8}">
+                        <labels>
+                          <label description="What country issued it?" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_countryofissueid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dia_countryofissueid" uniqueid="{61b20952-5e31-802e-ed84-7c7325bd3abd}">
+                          <parameters>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>false</DisableMru>
+                            <DisableQuickFind>false</DisableQuickFind>
+                            <DisableViewPicker>true</DisableViewPicker>
+                            <DefaultViewId>{C9983B9C-C1CE-E911-A879-000D3A6A0F5D}</DefaultViewId>
+                            <AllowFilterOff>false</AllowFilterOff>
+                            <AvailableViewIds>{677C40AC-C5E4-49AD-B91A-FAEBB26B49E6},{7703A2B5-2B24-E911-A854-000D3AE09197},{20A09D7F-5840-4190-940C-AF468382EDE4},{907939EC-EEC9-4740-8A43-E47448646DCC},{B382E369-8B4E-E911-A857-000D3AE0A6CF},{934CA15D-83D2-E911-A812-000D3A6AAF3F},{F06C6AA9-C1CE-E911-A879-000D3A6A0F5D},{853142A3-C1CE-E911-A879-000D3A6A0F5D},{C9983B9C-C1CE-E911-A879-000D3A6A0F5D}</AvailableViewIds>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{b98160a4-bba6-6e78-c77c-8501c1e9ec49}" locklevel="0" showlabel="true" labelid="{e612f7b5-a15b-4787-8fa8-e992c7928da8}" colspan="2">
+                        <labels>
+                          <label description="Does the applicant have any travel outside of New Zealand planned in the next 12 months?" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_traveloutsidenzin12months" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="dia_traveloutsidenzin12months" uniqueid="{76931ad5-3473-be96-2c9b-e853c4e83b74}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab id="{9d02c916-b961-e74e-4102-30b8e1c33bbd}" name="what_are_your_travel_plans_tab" IsUserDefined="0" locklevel="0" showlabel="false" expanded="true" labelid="{21c47b5d-5e7f-4d94-b8e6-b9d0fa705c8a}">
+          <labels>
+            <label description="What are your travel plans?" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{32905337-a9c7-43ca-ecc2-306bcddeeb6e}" name="Travel_plans_section" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left" labelid="{18d6bed4-310d-4b2b-aaba-bb7a9a29f69e}">
+                  <labels>
+                    <label description="Provide details" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{506cdd67-38e0-873a-5cc0-4ada9c1d954e}" showlabel="false" colspan="1" auto="false" rowspan="6" labelid="{d24f0080-17b0-445c-ac8d-8d1cd0f049b2}">
+                        <labels>
+                          <label description="Travel intentions (CBG Application)" languagecode="1033" />
+                        </labels>
+                        <control id="Travel_intentions" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" uniqueid="{7440e9b7-3ac2-adde-4b43-43941d9c3de7}" indicationOfSubgrid="true">
+                          <parameters>
+                            <ViewId>{18C0A47F-A988-E911-A886-000D3A6A0947}</ViewId>
+                            <IsUserView>false</IsUserView>
+                            <RelationshipName>dia_cbgapplication_travelintention</RelationshipName>
+                            <TargetEntityType>dia_travelintention</TargetEntityType>
+                            <AutoExpand>Fixed</AutoExpand>
+                            <EnableQuickFind>false</EnableQuickFind>
+                            <EnableViewPicker>false</EnableViewPicker>
+                            <ViewIds>{6D4A6DCD-AA96-4924-B3AC-C98100EB8F11},{18C0A47F-A988-E911-A886-000D3A6A0947}</ViewIds>
+                            <EnableJumpBar>false</EnableJumpBar>
+                            <ChartGridMode>All</ChartGridMode>
+                            <VisualizationId />
+                            <IsUserChart>false</IsUserChart>
+                            <EnableChartPicker>true</EnableChartPicker>
+                            <RecordsPerPage>4</RecordsPerPage>
+                            <HeaderColorCode>#F3F3F3</HeaderColorCode>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row>
+                      <cell id="{02837e02-47b5-1073-37e2-d6abdd2e0e78}" locklevel="0" showlabel="true" labelid="{61d4cfbd-002d-4fb9-bcf2-03ef1bd5e1b2}">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="diap_travelintentiononetomany" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="diap_travelintentiononetomany" uniqueid="{4e170130-13e1-2745-57ad-aec74e7aaa24}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab id="{241b2042-43b0-338e-2602-28385e41d3ae}" name="Current_citizenships_tab" IsUserDefined="0" locklevel="0" showlabel="false" expanded="true" labelid="{b7092f06-04ac-4c39-90de-1823b9233fdf}">
+          <labels>
+            <label description="Citizenships" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{a13404e1-6b90-a2b5-b944-a502635c6e92}" name="Current_citizenships_section" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" columns="11" labelwidth="115" celllabelalignment="Left" celllabelposition="Left" labelid="{be40ba4c-fc0c-4981-8198-e6af6ff30801}">
+                  <labels>
+                    <label description="Citizenships" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{9870016e-ed38-177b-3854-1ceb274d711c}" showlabel="false" colspan="2" auto="false" rowspan="6" labelid="{51a165c7-e392-44b6-af1f-e9886efff380}">
+                        <labels>
+                          <label description="Portal Countries (CBG Application Citizenship)" languagecode="1033" />
+                        </labels>
+                        <control id="Current_citizenships_portal_countries" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" uniqueid="{a60d2a6a-3942-cb95-2ac2-d13ac0d6e2c6}" indicationOfSubgrid="true">
+                          <parameters>
+                            <ViewId>{AB2F5D45-C085-E911-A859-000D3AE0A6CF}</ViewId>
+                            <IsUserView>false</IsUserView>
+                            <RelationshipName />
+                            <TargetEntityType>diap_portalcountry</TargetEntityType>
+                            <AutoExpand>Fixed</AutoExpand>
+                            <EnableQuickFind>false</EnableQuickFind>
+                            <EnableViewPicker>false</EnableViewPicker>
+                            <ViewIds>{F701F1FA-C6CD-44D9-AE21-C7EBBBFEDACE},{AB2F5D45-C085-E911-A859-000D3AE0A6CF}</ViewIds>
+                            <EnableJumpBar>false</EnableJumpBar>
+                            <ChartGridMode>All</ChartGridMode>
+                            <VisualizationId />
+                            <IsUserChart>false</IsUserChart>
+                            <EnableChartPicker>true</EnableChartPicker>
+                            <RecordsPerPage>4</RecordsPerPage>
+                            <HeaderColorCode>#F3F3F3</HeaderColorCode>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row>
+                      <cell id="{ba723948-4865-2825-ac4a-d3cddc232a0c}" locklevel="0" showlabel="true" colspan="2" labelid="{f001155d-7207-4a32-9872-929805819d55}">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="diap_currentcitizenshiponetomany" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="diap_currentcitizenshiponetomany" uniqueid="{b0ee2524-8c7a-a942-99be-61573a47aa9c}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab id="{e490b9c5-ea7b-6b69-628b-59cc53cc64a1}" name="hidden-tab" IsUserDefined="0" locklevel="0" showlabel="false" expanded="true" labelid="{1d8e9d34-b7c7-460b-8784-bc84db8863ce}">
+          <labels>
+            <label description="Tab" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{55165467-a74a-6954-58e9-275d78cdd351}" name="hidden-section" IsUserDefined="0" locklevel="0" showlabel="false" showbar="false" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left" labelid="{302198b9-e80d-464b-b6ca-52051aec4054}">
+                  <labels>
+                    <label description="Section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{c57c5908-6123-8613-bde7-5060ca54519c}" locklevel="0" showlabel="true" labelid="{d8f5bc9e-1e0c-4ef2-9e35-017af7154540}">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_travelstatus" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="dia_travelstatus" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{14b322f5-5aa4-4609-aabe-da1822d69c3e}" columns="1111" labelwidth="130" celllabelalignment="Left" celllabelposition="Left">
+        <rows>
+          <row>
+            <cell id="{4b697cdc-e46e-94a4-87dd-31ac49222bc2}" locklevel="0" showlabel="true" labelid="{fc64fc53-d215-4da8-847a-7c309b8521c8}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_dia_applicationtypeid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dia_applicationtypeid" />
+            </cell>
+            <cell id="{49ac7016-e87a-1420-90d9-21007385be02}" locklevel="0" showlabel="true" labelid="{405a4cba-b0dc-4030-8c52-cca3e8e32538}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_dia_subjectpersonid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dia_subjectpersonid" />
+            </cell>
+            <cell id="{2de7379c-0b9e-dd94-39a7-d563a7487a2a}" locklevel="0" showlabel="true" labelid="{73f235d9-df1e-414c-a60a-a3a52f75deaa}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_dia_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="dia_name" />
+            </cell>
+            <cell id="{3aceb5c2-6324-a7a3-2c6d-641eb128de3e}" locklevel="0" showlabel="true" labelid="{ed154b45-b0de-4b94-8fc3-f0c68bf5de06}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <Navigation>
+        <NavBar>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_completenesscheck_cbgapplicationid" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_completenesscheck_cbgapplicationid" Show="false">
+            <Titles>
+              <Title Text="Completeness checks" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_debt_cbgapplicationid" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_debt_cbgapplicationid" Show="false">
+            <Titles>
+              <Title Text="Debts" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_evidenceofidentity_cbgapplicationid" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_evidenceofidentity_cbgapplicationid" Show="false">
+            <Titles>
+              <Title Text="Evidence of identities" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_marriagescivilunions_cbgapplicationid" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_marriagescivilunions_cbgapplicationid" Show="false">
+            <Titles>
+              <Title Text="Marriages and Civil Unions" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_country_currentcitizenship" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_country_currentcitizenship" Show="false">
+            <Titles>
+              <Title Text="Current citizenship countries" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_country_previouscitiz" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_country_previouscitiz" Show="false">
+            <Titles>
+              <Title Text="Previous citizenship countries" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_country_cbgapplication_parent1" Area="Info" Sequence="10000" RelationshipName="dia_country_cbgapplication_parent1" Show="false">
+            <Titles>
+              <Title Text="Parent 1 countries of citizenship" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_country_cbgapplication_parent2" Area="Info" Sequence="10000" RelationshipName="dia_country_cbgapplication_parent2" Show="false">
+            <Titles>
+              <Title Text="Parent 2 countries of citizenship" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+        </NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title Text="Common" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title Text="Sales" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title Text="Service" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title Text="Marketing" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title Text="Process Sessions" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+      <controlDescriptions>
+        <controlDescription forControl="{76931ad5-3473-be96-2c9b-e853c4e83b74}">
+          <customControl id="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}">
+            <parameters>
+              <datafieldname>dia_traveloutsidenzin12months</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.OptionSet.OptionSetControl">
+            <parameters>
+              <value>dia_traveloutsidenzin12months</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.OptionSet.OptionSetControl">
+            <parameters>
+              <value>dia_traveloutsidenzin12months</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.OptionSet.OptionSetControl">
+            <parameters>
+              <value>dia_traveloutsidenzin12months</value>
+            </parameters>
+          </customControl>
+        </controlDescription>
+      </controlDescriptions>
+      <footer id="{744fc87c-b73c-49a6-b730-c10d3495e417}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{4600cd96-1fb0-4504-9f0e-44058c09edd0}" showlabel="false" labelid="{430e585c-1f0f-4bf0-b365-062ab28ac743}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{df09919b-258f-4567-bf4e-e845dbdbb2d6}" showlabel="false" labelid="{2ce37814-64e1-4b8e-ba4c-174d93a076d1}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{d57f03f3-5571-42f8-a66d-434b5e0adab2}" showlabel="false" labelid="{f3144030-34c2-4f3b-b873-9355e6dce7ee}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <DisplayConditions Order="21" FallbackForm="true">
+        <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
+        <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Portal CBG Child - Travel" languagecode="1033" />
+    </LocalizedNames>
+  </systemform>
+</forms>

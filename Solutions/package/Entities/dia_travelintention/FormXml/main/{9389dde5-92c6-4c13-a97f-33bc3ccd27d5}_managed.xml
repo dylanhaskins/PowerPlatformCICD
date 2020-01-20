@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{9389dde5-92c6-4c13-a97f-33bc3ccd27d5}</formid>
+    <IntroducedVersion>1.0.2.2</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form maxWidth="1920" showImage="false" shownavigationbar="true">
+      <tabs>
+        <tab id="{b51e09e3-07a7-449c-80f7-d2f1f892d0cb}" IsUserDefined="1" verticallayout="true" labelid="{adb96c6f-7d3a-468c-a38e-60f87f42ba13}">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{23e4e858-b2d2-4f00-9888-e65da522d893}" name="{23e4e858-b2d2-4f00-9888-e65da522d893}" IsUserDefined="0" labelid="{19a36a41-f608-400b-a40c-8581a501fa78}" columns="11" showbar="false" showlabel="false" locklevel="0" labelwidth="130" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{b8ed4249-9210-4a15-e53d-04b8cc2b6d92}" labelid="{847c7c9e-8b36-4708-87b2-12a4bcb5d176}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="When is the applicant leaving?" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_dateleaving" datafieldname="dia_dateleaving" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" uniqueid="{e6a4609e-bcee-1e84-b661-2844be49cb97}" />
+                      </cell>
+                      <cell id="{ce9dda10-a87a-69cb-e416-4e0aa2d56ad1}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="When is the applicant returning?" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_expectedreturndate" datafieldname="dia_expectedreturndate" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" uniqueid="{5a225974-990c-e3b3-55e6-a02965c1da29}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{7b24417d-e075-aa45-8648-2435b208e319}" labelid="{dfed4503-32ca-4b06-a4f3-9aa5c9011607}" showlabel="true" locklevel="0" colspan="2">
+                        <labels>
+                          <label description="Why is the applicant travelling?" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_reasonfortrip" datafieldname="dia_reasonfortrip" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" uniqueid="{db553ce4-d24d-ca3c-9c4c-3ac7b274c6e4}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab id="{5ac482b1-c5b4-24d6-b9eb-56cddea29d46}" name="Hidden" IsUserDefined="0" labelid="{c48219c5-2e12-4127-b449-28cb12598739}" showlabel="false" locklevel="0" visible="false" expanded="true">
+          <labels>
+            <label description="Hidden" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{b48ac369-c9e4-8e64-4147-51dae0d3b7ec}" name="tab_2_section_1" IsUserDefined="0" labelid="{5ee453a7-7b04-4fd4-be96-076d726a1a38}" columns="1" showbar="false" showlabel="false" locklevel="0" labelwidth="115" layout="varwidth">
+                  <labels>
+                    <label description="Section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{a45d94f4-43e6-498e-9fa9-fe2794ac0974}" labelid="{f94c5f47-c95e-44a8-9ed3-e7e1f1414301}">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dia_name" datafieldname="dia_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{bb008305-49c4-46ce-8333-5652fee61228}" columns="111">
+        <rows>
+          <row>
+            <cell id="{b023b765-db41-42a5-b697-d8686e6b58e0}" labelid="{321dfdbb-46ff-42f5-a9a2-43c5ea6b64af}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{1e962849-b336-e9b9-42de-ae03a3481d73}" labelid="{8f13788f-299b-4b3e-997d-6529eef5663c}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control id="header_dia_cbgapplicationid" datafieldname="dia_cbgapplicationid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+            </cell>
+            <cell id="{5c688602-775a-aad7-a651-2c4519572aab}" labelid="{a31ad26a-13ee-4d97-8e92-373bab13a699}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_ownerid" datafieldname="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <Navigation>
+        <NavBar></NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title Text="Common" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title Text="Sales" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title Text="Service" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title Text="Marketing" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title Text="Process Sessions" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+      <controlDescriptions />
+      <DisplayConditions Order="1">
+        <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
+        <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Portal CBG Travel Intentions" languagecode="1033" />
+    </LocalizedNames>
+  </systemform>
+</forms>

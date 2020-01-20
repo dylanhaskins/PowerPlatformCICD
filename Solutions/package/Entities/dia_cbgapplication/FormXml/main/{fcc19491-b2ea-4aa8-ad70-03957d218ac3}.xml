@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{fcc19491-b2ea-4aa8-ad70-03957d218ac3}</formid>
+    <IntroducedVersion>1.19346.0.1018</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form maxWidth="1920" showImage="false" shownavigationbar="false" headerdensity="HighWithControls">
+      <tabs>
+        <tab id="{ae61a8e2-884c-ac2e-b531-1d0bae712c56}" name="personal_details_tab" showlabel="false" expanded="true" locklevel="0" IsUserDefined="0" labelid="{b4f975b2-bca6-4da8-896f-a16114d2e838}">
+          <labels>
+            <label description="Personal details" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{4a58b751-3d98-a4d7-5d0b-dd5ee24a40ae}" name="personal_details_section" showlabel="false" locklevel="0" IsUserDefined="0" labelid="{5a22669f-c81d-4413-978d-4fbfd28b9dbb}" layout="varwidth" celllabelposition="Left" celllabelalignment="Left" labelwidth="115" columns="11" showbar="false">
+                  <labels>
+                    <label description="Personal details" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{448273ee-42c8-d740-a0bc-92b6c1e22a92}" showlabel="true" locklevel="0" labelid="{64f6213b-3d55-4adb-9db5-44c296e10804}">
+                        <labels>
+                          <label description="First and middle names" languagecode="1033" />
+                        </labels>
+                        <control id="dia_givennames" uniqueid="{388c8aeb-cc6e-ab6d-c345-d421c76a58e9}" datafieldname="dia_givennames" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+                      </cell>
+                      <cell id="{81693e81-63d1-a288-9c2d-bb44e38337aa}" showlabel="true" locklevel="0" labelid="{36bc0e57-9b8d-422b-aeb6-a6abe9a808e5}">
+                        <labels>
+                          <label description="Surname or family names" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_familyname" uniqueid="{296c9d36-0d06-0b50-d851-e8e73da94a41}" datafieldname="dia_familyname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{2b2635b2-1611-a052-5543-c86462c9079e}" showlabel="true" locklevel="0" colspan="2" labelid="{912c13a9-a72c-4a0f-a5d6-f09afa3b98d3}">
+                        <labels>
+                          <label description="Has the applicant used any other names during their life?" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_usedothernames" uniqueid="{56c1a265-e498-aaa2-a4e0-e1a72dc7c0e6}" datafieldname="dia_usedothernames" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab id="{05a4b6a7-2ee5-4174-d78a-6de53e62125b}" name="other_names_subgrid_tab" showlabel="false" expanded="true" locklevel="0" IsUserDefined="0" labelid="{6c5b753c-2d84-44f2-b8b0-d8e4cc278637}">
+          <labels>
+            <label description="Other names subgrid" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{8629c35a-9e02-e901-8bd5-106a8b77047e}" name="Other_names_subgrid_section" showlabel="true" locklevel="0" IsUserDefined="0" layout="varwidth" celllabelposition="Left" celllabelalignment="Left" labelwidth="115" columns="1" showbar="false" labelid="{d0cc21c6-82e4-4ac0-b2fe-b0185f5c64b2}">
+                  <labels>
+                    <label description="Other names" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{836c9235-e544-cb1c-5c2d-21b0b07db0ec}" showlabel="false" colspan="1" rowspan="6" auto="false" labelid="{67177e7c-1619-49b0-b4a7-4f008d31034f}">
+                        <labels>
+                          <label description="Other names(CBG Application)" languagecode="1033" />
+                        </labels>
+                        <control id="Other_names" uniqueid="{3704b79d-6c49-7ed0-d1c4-536324080862}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                          <parameters>
+                            <ViewId>{278597B5-BA1B-4F14-8136-ECF1C512E4AC}</ViewId>
+                            <IsUserView>false</IsUserView>
+                            <RelationshipName>dia_cbgapplication_name_cbgapplicationid</RelationshipName>
+                            <TargetEntityType>dia_name</TargetEntityType>
+                            <AutoExpand>Fixed</AutoExpand>
+                            <EnableQuickFind>false</EnableQuickFind>
+                            <EnableViewPicker>false</EnableViewPicker>
+                            <ViewIds>{278597B5-BA1B-4F14-8136-ECF1C512E4AC}</ViewIds>
+                            <EnableJumpBar>false</EnableJumpBar>
+                            <ChartGridMode>All</ChartGridMode>
+                            <VisualizationId />
+                            <IsUserChart>false</IsUserChart>
+                            <EnableChartPicker>true</EnableChartPicker>
+                            <RecordsPerPage>4</RecordsPerPage>
+                            <HeaderColorCode>#F3F3F3</HeaderColorCode>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row>
+                      <cell id="{cdbabe69-8966-301d-b217-1a365b0667d7}" showlabel="true" locklevel="0" labelid="{19c34c4c-c245-48e2-a562-768bc6468be1}">
+                        <labels>
+                          <label description="Other Name OneToMany" languagecode="1033" />
+                        </labels>
+                        <control id="diap_othernameonetomany" uniqueid="{46077c3b-cce0-83a0-b8db-941bc142e678}" datafieldname="diap_othernameonetomany" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab id="{aa5a41e4-ae6b-02ce-0b1c-bd3e829b6329}" name="personal_details_tab_2" showlabel="false" expanded="true" locklevel="0" IsUserDefined="0" labelid="{2d12748b-4544-4323-9d57-b49b5e5c8e6d}">
+          <labels>
+            <label description="Personal details 2" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{a4834bc9-1512-b443-9dde-772b270de126}" name="personal_details_tab_2_section" showlabel="false" locklevel="0" IsUserDefined="0" layout="varwidth" celllabelposition="Left" celllabelalignment="Left" labelwidth="115" columns="11" showbar="false" labelid="{bbdae79f-c9c7-4187-bd68-b108c6ac3927}">
+                  <labels>
+                    <label description="Personal details 2" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{e468e1de-d758-5764-1376-4eb1676c274e}" showlabel="true" locklevel="0" labelid="{04c0f1e6-96dd-4795-b4b0-6ba6d4802ec0}" colspan="1">
+                        <labels>
+                          <label description="Gender" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_genderid" uniqueid="{7284dcbd-d8ba-4819-426d-6a12de5832aa}" datafieldname="dia_genderid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}">
+                          <parameters>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>false</DisableMru>
+                            <DisableQuickFind>true</DisableQuickFind>
+                            <DisableViewPicker>true</DisableViewPicker>
+                            <DefaultViewId>{B7368B17-0EC2-E911-A862-000D3AE02BC5}</DefaultViewId>
+                            <AllowFilterOff>false</AllowFilterOff>
+                          </parameters>
+                        </control>
+                      </cell>
+                      <cell id="{1c6137ab-7638-3023-ec13-913ee46bda55}" showlabel="true" locklevel="0" labelid="{ecf3ba41-9962-4601-90a5-fc98348327f5}">
+                        <labels>
+                          <label description="Date of birth" languagecode="1033" />
+                        </labels>
+                        <control id="dia_dateofbirth" uniqueid="{8edc4c5c-91d0-7916-57d7-7885e1804d18}" datafieldname="dia_dateofbirth" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{583e44e3-34a3-0494-9a78-9a17138bd1ca}" showlabel="true" locklevel="0" labelid="{d64e7fdb-78d2-4137-9d94-ebc31db69f52}">
+                        <labels>
+                          <label description="Country of birth" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_countryofbirth" uniqueid="{cd3d512d-7002-98b1-928e-519ceac56904}" datafieldname="dia_countryofbirth" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}">
+                          <parameters>
+                            <DefaultViewId>{934CA15D-83D2-E911-A812-000D3A6AAF3F}</DefaultViewId>
+                            <DisableViewPicker>true</DisableViewPicker>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>false</DisableMru>
+                            <DisableQuickFind>false</DisableQuickFind>
+                            <AllowFilterOff>false</AllowFilterOff>
+                            <AvailableViewIds>{934CA15D-83D2-E911-A812-000D3A6AAF3F}</AvailableViewIds>
+                            <DependentAttributeType>dia_cbgapplication</DependentAttributeType>
+                          </parameters>
+                        </control>
+                      </cell>
+                      <cell id="{d0820c68-abbc-8aa8-20c7-6e9ec9ae95b9}" showlabel="true" locklevel="0" labelid="{ce17dde4-1d0e-48f3-9ce4-50101c710e7e}" colspan="1">
+                        <labels>
+                          <label description="Place of birth" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_birthplace" uniqueid="{39424011-5198-7416-c1dd-4d5c94675979}" datafieldname="dia_birthplace" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab id="{96eb5331-690d-65a7-e44c-989e9e459ed1}" name="hidden-tab" showlabel="false" expanded="true" locklevel="0" IsUserDefined="0" labelid="{da6de4fd-89da-4026-9fa4-7c8db6edd277}">
+          <labels>
+            <label description="Tab" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{c010c48e-d5e3-3a9b-9a3d-eaa4a34c7ba4}" name="hidden-section" showlabel="false" locklevel="0" IsUserDefined="0" layout="varwidth" celllabelposition="Left" celllabelalignment="Left" labelwidth="115" columns="1" showbar="false" availableforphone="false" labelid="{aa4805a2-73e0-429c-ab40-1ace0870dfde}">
+                  <labels>
+                    <label description="Section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{91206386-7006-77e5-b518-4148200964eb}" showlabel="true" locklevel="0" labelid="{fb657ab0-b482-4411-b981-a36cb206a978}">
+                        <labels>
+                          <label description="Personal details status" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_personaldetailsstatus" uniqueid="{3bccabd5-706c-d8ba-ee1c-25d5961ea0a1}" datafieldname="dia_personaldetailsstatus" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{14b322f5-5aa4-4609-aabe-da1822d69c3e}" celllabelposition="Left" celllabelalignment="Left" labelwidth="130" columns="1111">
+        <rows>
+          <row>
+            <cell id="{d14754e9-7d64-8918-190a-724e80b6a631}" showlabel="true" locklevel="0" labelid="{68eef607-256f-47b2-9406-7cad84c4a73e}">
+              <labels>
+                <label description="Service request" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_dia_servicerequestid" uniqueid="{37dbed2d-ba09-dce8-3188-0c3bb154b3bc}" datafieldname="dia_servicerequestid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+            </cell>
+            <cell id="{211e8c62-b0dc-c52a-4a35-6d7b2660e5ba}" showlabel="true" locklevel="0" labelid="{0080180a-8991-4bf7-93c9-8fbf545ff7b4}">
+              <labels>
+                <label description="Service ID" languagecode="1033" />
+              </labels>
+              <control id="header_dia_name" datafieldname="dia_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+            </cell>
+            <cell id="{05653782-ea82-5654-1000-69eebd611aa1}" showlabel="true" locklevel="0" labelid="{214dd345-6441-41d6-b231-09bfd50d54f6}">
+              <labels>
+                <label description="Subject person" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_dia_subjectpersonid" datafieldname="dia_subjectpersonid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+            </cell>
+            <cell id="{3aceb5c2-6324-a7a3-2c6d-641eb128de3e}" showlabel="true" locklevel="0" labelid="{bc9a2571-5a7d-4c2a-91e3-08bb1b6ef0e2}">
+              <labels>
+                <label description="Owner" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_ownerid" datafieldname="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+            </cell>
+          </row>
+          <row>
+            <cell id="{8857b000-7ee7-e398-b1b6-71a73c531b17}" showlabel="true" locklevel="0" labelid="{8147558b-96ca-4700-96af-32209c1f7a7d}">
+              <labels>
+                <label description="Application type" languagecode="1033" />
+              </labels>
+              <control id="header_dia_applicationtypeid" uniqueid="{11e52e6e-3471-e387-9c57-a84e91d95860}" datafieldname="dia_applicationtypeid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+            </cell>
+            <cell id="{b2c39922-e737-29e3-d73a-d3c7221b8d86}" showlabel="false" labelid="{3d35ac91-6106-4375-aec1-7f718381c614}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{5780ca8a-5aba-3b5b-7bc7-57009c248c7a}" showlabel="false" labelid="{d1cc7414-5bad-4837-a773-10e65dcdc8cc}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{4eab7d26-491c-0523-6c12-d4d27039b32d}" showlabel="false" labelid="{6f7abef5-072f-4a5a-b660-ad94ce09e987}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <Navigation>
+        <NavBar>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_completenesscheck_cbgapplicationid" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_completenesscheck_cbgapplicationid" Show="false">
+            <Titles>
+              <Title Text="Completeness checks" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_debt_cbgapplicationid" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_debt_cbgapplicationid" Show="false">
+            <Titles>
+              <Title Text="Debts" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_evidenceofidentity_cbgapplicationid" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_evidenceofidentity_cbgapplicationid" Show="false">
+            <Titles>
+              <Title Text="Evidence of identities" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_marriagescivilunions_cbgapplicationid" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_marriagescivilunions_cbgapplicationid" Show="false">
+            <Titles>
+              <Title Text="Marriages and Civil Unions" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_country_currentcitizenship" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_country_currentcitizenship" Show="false">
+            <Titles>
+              <Title Text="Current citizenship countries" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_country_previouscitiz" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_country_previouscitiz" Show="false">
+            <Titles>
+              <Title Text="Previous citizenship countries" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_country_cbgapplication_parent1" Area="Info" Sequence="10000" RelationshipName="dia_country_cbgapplication_parent1" Show="false">
+            <Titles>
+              <Title Text="Parent 1 countries of citizenship" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_country_cbgapplication_parent2" Area="Info" Sequence="10000" RelationshipName="dia_country_cbgapplication_parent2" Show="false">
+            <Titles>
+              <Title Text="Parent 2 countries of citizenship" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+        </NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title Text="Common" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title Text="Sales" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title Text="Service" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title Text="Marketing" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title Text="Process Sessions" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+      <controlDescriptions />
+      <footer id="{b11b9cb0-f5f9-4ad0-b82d-aa6bc37fa3fe}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{a5b2a4d9-84ce-4eb2-9ca7-d5e1a9164fb0}" showlabel="false" labelid="{beac57e8-78a1-4fb0-b478-8d49e8f1a624}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{ba7f4f96-eae8-45f6-96ce-b462fa04b6d8}" showlabel="false" labelid="{09aa2a04-8e7a-4ece-9169-d7922400e039}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{ebacea29-3bfc-4c0b-b69a-c95c3eb74bfd}" showlabel="false" labelid="{8b2578e3-5f0d-4abf-b0b0-84c6373455c1}">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <DisplayConditions Order="18" FallbackForm="true">
+        <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
+        <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Portal CBG Child - Personal details" languagecode="1033" />
+    </LocalizedNames>
+  </systemform>
+</forms>

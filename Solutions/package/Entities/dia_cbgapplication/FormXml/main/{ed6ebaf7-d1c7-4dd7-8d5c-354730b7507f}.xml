@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{ed6ebaf7-d1c7-4dd7-8d5c-354730b7507f}</formid>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form maxWidth="1920" showImage="false" shownavigationbar="false">
+      <tabs>
+        <tab id="{354536fa-0e46-4e90-a1d5-c2134e2c3aaf}" name="consent_declaration_tab" showlabel="false" expanded="true" locklevel="0" labelid="{2b7ca789-e6a1-4112-8559-33da07a833f1}" IsUserDefined="1" verticallayout="true">
+          <labels>
+            <label description="Consent declaration" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{83ff565b-0ac2-42da-8043-5649c313e13c}" name="consent_declaration_section" showlabel="false" locklevel="0" labelid="{c1947ab2-9f1e-413e-bc72-0d47b02c2379}" IsUserDefined="0" celllabelposition="Left" celllabelalignment="Left" labelwidth="130" columns="1" showbar="false">
+                  <labels>
+                    <label description="Consent Declaration" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{aa2dd997-5b8e-2a93-a519-293eb95bb36a}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Provide false information (Citizenship Act 1977)" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_providefalseinformationstmt" datafieldname="dia_providefalseinformationstmt" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{825538e4-a520-747c-9d44-0c91bac5c85e}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Information declared true &amp; correct" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_informationdeclaredtruecorrect" datafieldname="dia_informationdeclaredtruecorrect" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" uniqueid="{d6c8c24e-a399-6ca7-9ea1-70d5a4e12e8a}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{2dc26b77-ee76-3054-6b45-045a9565657c}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Present citizenship stmt adult" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_presentcitizenshipstmtadult" datafieldname="dia_presentcitizenshipstmtadult" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{13ee3ccc-ca9a-19a1-790c-89709ae90a9e}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Responsibilities and privileges stmt" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_responsibilitiesandprivilegesstmt" datafieldname="dia_responsibilitiesandprivilegesstmt" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{30da0cd2-162c-1ebc-e92e-45200b6cc718}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Reside in NZ statement" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_resideinnzstmt" datafieldname="dia_resideinnzstmt" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{bb2e5167-1319-6485-5ea0-4d29d5e638d7}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Change in circumstances" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_changeincircumstancesstmt" datafieldname="dia_changeincircumstancesstmt" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{e16dee64-aa39-2450-cce2-a18260777ce3}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Sufficient information" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_sufficientinformationstmt" datafieldname="dia_sufficientinformationstmt" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{70d53942-9189-3698-8cb7-55e64db5b454}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Release information by govt agency" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_releaseinformationbygovtagencystmt" datafieldname="dia_releaseinformationbygovtagencystmt" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{497e922d-2a86-2265-852b-b16582c4776e}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Ceremony statement adult" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_ceremonystatementadult" datafieldname="dia_ceremonystatementadult" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" uniqueid="{2455c00c-d949-060a-51a4-6c2a13300ba0}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{10323b85-75dc-3113-d644-7abc645cea95}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Documents authenticity" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_documentsauthenticitystmt" datafieldname="dia_documentsauthenticitystmt" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{aebde3db-0721-7ebb-84d8-52a20c834826}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Privacy statement" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_privacystatement" datafieldname="dia_privacystatement" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab id="{b018d87d-45c1-c730-b29a-8d23a0362350}" name="hidden-tab" showlabel="false" expanded="true" locklevel="0" IsUserDefined="0">
+          <labels>
+            <label description="Tab" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{4aa5ca35-00db-c34d-4695-7c9306709bb7}" name="hidden-section" showlabel="false" locklevel="0" IsUserDefined="0" celllabelposition="Left" celllabelalignment="Left" labelwidth="115" columns="1" showbar="false" layout="varwidth">
+                  <labels>
+                    <label description="Section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{6291b475-2219-682c-ad1a-2ab557414a3e}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Consent declaration status" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="dia_consentdeclarationstatus" datafieldname="dia_consentdeclarationstatus" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" uniqueid="{85e05116-83e2-1312-2357-993eb47d9717}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{14b322f5-5aa4-4609-aabe-da1822d69c3e}" celllabelposition="Left" celllabelalignment="Left" labelwidth="130" columns="1111">
+        <rows>
+          <row>
+            <cell id="{69317a3a-847b-195c-e842-a62a2e5bc39c}" showlabel="true" locklevel="0" labelid="{5ea79313-3b6d-4a1e-9b6f-b3827cebdc63}">
+              <labels>
+                <label description="Application type" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_dia_applicationtypeid" datafieldname="dia_applicationtypeid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+            </cell>
+            <cell id="{92207b8b-c292-28c9-00d3-3c3a2ce00a2e}" showlabel="true" locklevel="0" labelid="{8e7e996c-4ba3-4f93-bd51-0519cb73e23f}">
+              <labels>
+                <label description="Service ID" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_dia_name" datafieldname="dia_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+            </cell>
+            <cell id="{81e48e32-9b3a-8246-2802-93a71c59517d}" showlabel="true" locklevel="0" labelid="{db4d956e-49a3-4ec8-8efe-72b8db7cc733}">
+              <labels>
+                <label description="Subject person" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_dia_subjectpersonid" datafieldname="dia_subjectpersonid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+            </cell>
+            <cell id="{3aceb5c2-6324-a7a3-2c6d-641eb128de3e}" showlabel="true" locklevel="0" labelid="{dafb4614-d438-4e89-b0af-d50e700f7a9d}">
+              <labels>
+                <label description="Owner" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_ownerid" datafieldname="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <Navigation>
+        <NavBar>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_completenesscheck_cbgapplicationid" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_completenesscheck_cbgapplicationid" Show="false">
+            <Titles>
+              <Title Text="Completeness checks" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_debt_cbgapplicationid" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_debt_cbgapplicationid" Show="false">
+            <Titles>
+              <Title Text="Debts" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_evidenceofidentity_cbgapplicationid" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_evidenceofidentity_cbgapplicationid" Show="false">
+            <Titles>
+              <Title Text="Evidence of identities" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_marriagescivilunions_cbgapplicationid" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_marriagescivilunions_cbgapplicationid" Show="false">
+            <Titles>
+              <Title Text="Marriages and Civil Unions" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_recommendation_CBGapplicationid" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_recommendation_CBGapplicationid" Show="false">
+            <Titles>
+              <Title Text="Recommendations" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_supportingdocument_cbgapplicationid" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_supportingdocument_cbgapplicationid" Show="false">
+            <Titles>
+              <Title Text="Supporting documents" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_country_currentcitizenship" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_country_currentcitizenship" Show="false">
+            <Titles>
+              <Title Text="Current citizenship countries" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_cbgapplication_country_previouscitiz" Area="Info" Sequence="10000" RelationshipName="dia_cbgapplication_country_previouscitiz" Show="false">
+            <Titles>
+              <Title Text="Previous citizenship countries" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_country_cbgapplication_parent1" Area="Info" Sequence="10000" RelationshipName="dia_country_cbgapplication_parent1" Show="false">
+            <Titles>
+              <Title Text="Parent 1 countries of citizenship" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="nav_dia_country_cbgapplication_parent2" Area="Info" Sequence="10000" RelationshipName="dia_country_cbgapplication_parent2" Show="false">
+            <Titles>
+              <Title Text="Parent 2 countries of citizenship" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+        </NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title Text="Common" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title Text="Sales" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title Text="Service" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title Text="Marketing" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title Text="Process Sessions" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+      <controlDescriptions />
+      <DisplayConditions Order="15" FallbackForm="true">
+        <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
+        <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Portal CBG Adult - Consent declaration" languagecode="1033" />
+    </LocalizedNames>
+  </systemform>
+</forms>

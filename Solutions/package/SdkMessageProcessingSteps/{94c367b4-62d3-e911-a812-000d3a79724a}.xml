@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SdkMessageProcessingStep Name="Check CBG Application defaults" SdkMessageProcessingStepId="{94c367b4-62d3-e911-a812-000d3a79724a}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <PluginTypeName>CCMS.PortalPlugins.CBGApplication.CreateCbgApplicationDefaults, CCMSPortalPlugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a6851c2462643036</PluginTypeName>
+  <PluginTypeId>e24c4a69-7e5a-e911-a84e-000d3ae0b82e</PluginTypeId>
+  <PrimaryEntity>dia_cbgapplication</PrimaryEntity>
+  <AsyncAutoDelete>0</AsyncAutoDelete>
+  <Description>Check CBG Application Type, Cost from field values</Description>
+  <FilteringAttributes>dia_dateofbirth,dia_countryofbirth</FilteringAttributes>
+  <InvocationSource>1</InvocationSource>
+  <Mode>0</Mode>
+  <Rank>0</Rank>
+  <SdkMessageId>{20bebb1b-ea3e-db11-86a7-000a3a5473e8}</SdkMessageId>
+  <EventHandlerTypeCode>4602</EventHandlerTypeCode>
+  <Stage>20</Stage>
+  <IsCustomizable>1</IsCustomizable>
+  <IsHidden>0</IsHidden>
+  <SupportedDeployment>0</SupportedDeployment>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <SdkMessageProcessingStepImages>
+    <SdkMessageProcessingStepImage Name="PreImage">
+      <SdkMessageProcessingStepImageId>{7e57c1c0-65d3-e911-a812-000d3a79770c}</SdkMessageProcessingStepImageId>
+      <Attributes>dia_dateofbirth,dia_countryofbirth,diap_portalorigin,statuscode</Attributes>
+      <EntityAlias>PreImage</EntityAlias>
+      <ImageType>0</ImageType>
+      <MessagePropertyName>Target</MessagePropertyName>
+      <IsCustomizable>1</IsCustomizable>
+    </SdkMessageProcessingStepImage>
+  </SdkMessageProcessingStepImages>
+</SdkMessageProcessingStep>
