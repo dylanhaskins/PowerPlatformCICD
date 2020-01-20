@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "module": "commonjs",
+    "target": "es2015",
+    "outDir": "./dist/js",
+    "esModuleInterop": true
+  },
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ]
+}
