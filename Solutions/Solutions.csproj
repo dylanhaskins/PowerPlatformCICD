@@ -147,7 +147,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Debug (
-powershell.exe -ExecutionPolicy Bypass -File .\Scripts\SolutionExport.ps1)</PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Debug (powershell.exe -ExecutionPolicy Bypass -File .\Scripts\SolutionExport.ps1)</PostBuildEvent>
   </PropertyGroup>
 </Project>
