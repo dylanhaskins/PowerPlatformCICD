@@ -34,3 +34,4 @@ Remove-Item .\Tools\$coreToolsFolder -Force -Recurse
 #cp .\CCMSPortalDeploymentPackage.dll .\Tools\PD -Force
 
 Remove-Item nuget.exe
+Remove-Item .\Tools -Force -Recurse -ErrorAction Ignore

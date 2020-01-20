@@ -89,15 +89,24 @@
     <None Include="bin\coretools\LicenseTerms.docx" />
     <None Include="bin\coretools\SolutionPackager.exe.config" />
     <None Include="packages.config" />
-    <None Include="Scripts\SolutionPack.ps1" />
-    <None Include="Scripts\UpdatePortalConfig.ps1" />
+    <None Include="Scripts\SolutionDeploy.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\SolutionPack.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\UpdatePortalConfig.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Scripts\_ConfigMigration.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Scripts\_Config.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\GenerateTypes.ps1" />
+    <None Include="Scripts\GenerateTypes.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Scripts\_SetupTools.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
