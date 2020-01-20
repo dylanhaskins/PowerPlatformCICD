@@ -11,3 +11,5 @@ This is the Template project to Create new D365 Solutions leveraging a lighweigh
 1.	Build Solution
 1.  Commit and Sync
 
+
+TODO - write up details instructions

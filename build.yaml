@@ -75,7 +75,6 @@ steps:
     Contents: '*.xml'
     TargetFolder: '$(build.artifactstagingdirectory)/data/'
 
-
 - task: CopyFiles@2
   displayName: 'Copy Build Artifact to: $(build.artifactstagingdirectory)'
   inputs:
