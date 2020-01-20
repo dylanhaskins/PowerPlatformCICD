@@ -1,4 +1,4 @@
-﻿
+﻿& ((Split-Path $MyInvocation.InvocationName) + "\_Config.ps1")
 
 $sourceNugetExe = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 $targetNugetExe = ".\nuget.exe"
@@ -24,7 +24,7 @@ Remove-Item .\Tools\$coreToolsFolder -Force -Recurse
 #Remove-Item .\Tools\$pdFolder -Force -Recurse
 
 
-&.\Tools\SolutionPackager.exe /action:pack /folder:..\..\Solutions\package /zipfile:"..\CCMSPortalConfiguration.zip" /packagetype:Both /map:..\map.xml 
+&.\Tools\SolutionPackager.exe /action:pack /folder:..\..\Solutions\package /zipfile:"..\$global:UnmanagedPackageFile" /packagetype:Both /map:..\map.xml 
 
 ##
 ##Remove NuGet.exe

@@ -94,20 +94,11 @@
     <None Include="Scripts\_ConfigMigration.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\DeployD365Package.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Scripts\_Config.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Scripts\GenerateTypes.ps1" />
     <None Include="Scripts\_SetupTools.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Scripts\OnlineInstanceFunctions.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Scripts\OTAScripts.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Scripts\SolutionExport.ps1">

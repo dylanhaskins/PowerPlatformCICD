@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Mapping>
-  <FileToFile map="PluginAssemblies\**\CCMSPlugins.dll" to="..\..\Plugins\bin\**\Plugins.dll" />
-  <FileToFile map="PluginAssemblies\**\CCMSWorkflows.dll" to="..\..\Workflows\bin\**\Workflows.dll" />
-  <FileToPath map="WebResources\*.*" to="..\..\WebResources\src\**" />
-  <FileToPath map="WebResources\**\*.*" to="..\..\WebResources\src\**" />
+  <FileToFile map="PluginAssemblies\**\Plugins.dll" to="..\..\Plugins\bin\**\Plugins.dll" />
+  <FileToFile map="PluginAssemblies\**\Workflows.dll" to="..\..\Workflows\bin\**\Workflows.dll" />
+  <FileToPath map="WebResources\*.*" to="..\..\WebResources\dist\**" />
+  <FileToPath map="WebResources\**\*.*" to="..\..\WebResources\dist\**" />
 </Mapping>
