@@ -98,6 +98,9 @@
     <None Include="bin\coretools\LicenseTerms.docx" />
     <None Include="bin\coretools\SolutionPackager.exe.config" />
     <None Include="packages.config" />
+    <None Include="Scripts\config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Scripts\SolutionDeploy.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
