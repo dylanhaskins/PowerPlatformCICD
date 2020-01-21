@@ -6,7 +6,7 @@
     <SharedGUID>31ae8b67-1c3e-4202-87c8-3c2961195896</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>CCMS.Core.Entities</Import_RootNamespace>
+    <Import_RootNamespace>Entities</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Context\placeholder.txt" />
