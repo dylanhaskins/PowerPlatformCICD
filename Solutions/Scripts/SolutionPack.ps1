@@ -5,20 +5,18 @@
 ##Download Package Deployer 
 ##
 ./nuget install  Microsoft.CrmSdk.XrmTooling.PackageDeployment.WPF -O .\Tools
-#$pdFolder = Get-ChildItem ./Tools | Where-Object {$_.Name -match 'Microsoft.CrmSdk.XrmTooling.PackageDeployment.Wpf.'}
-#md .\Tools\PD
-#move .\Tools\$pdFolder\tools\*.* .\Tools\PD
-#Remove-Item .\Tools\$pdFolder -Force -Recurse
+$pdFolder = Get-ChildItem ./Tools | Where-Object {$_.Name -match 'Microsoft.CrmSdk.XrmTooling.PackageDeployment.Wpf.'}
+md .\Tools\PD
+md .\Tools\PD\PkgFolder 
+move .\Tools\$pdFolder\tools\*.* .\Tools\PD
+Remove-Item .\Tools\$pdFolder -Force -Recurse
 
 
-&.\Tools\SolutionPackager.exe /action:pack /folder:..\..\Solutions\package /zipfile:"..\$global:UnmanagedPackageFile" /packagetype:Both /map:..\map.xml 
-
-##
-##Remove NuGet.exe
-##
-
-#Copy-Item .\PkgFolder\ .\Tools\PD -Recurse -Force
-#cp .\CCMSPortalDeploymentPackage.dll .\Tools\PD -Force
+if (Test-Path ...\..\Solutions\package\patch\Other\Solution.xml) {
+    &.\Tools\SolutionPackager.exe /action:pack /folder:..\..\Solutions\package\patch /zipfile:"..\$global:SolutionName.zip" /packagetype:Both /map:..\map.xml 
+}else{
+    &.\Tools\SolutionPackager.exe /action:pack /folder:..\..\Solutions\package\$global:SolutionName /zipfile:"..\$global:SolutionName.zip" /packagetype:Both /map:..\map.xml 
+}
 
 Remove-Item nuget.exe
 Remove-Item .\Tools -Force -Recurse -ErrorAction Ignore

@@ -1,0 +1,56 @@
+declare namespace SDK {
+  namespace REST {
+    function createRecord(object: Rest.Account, type: "Account", successCallback: (result: Rest.AccountResult) => any, errorCallback: (err: Error) => any): void;
+    function deleteRecord(id: string, type: "Account", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveRecord(id: string, type: "Account", select: string | null, expand: string | null, successCallback: (result: Rest.AccountResult) => any, errorCallback: (err: Error) => any): void;
+    function updateRecord(id: string, object: Rest.Account, type: "Account", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveMultipleRecords(type: "Account", options: string, successCallback: (result: Rest.AccountResult[]) => any, errorCallback: (err: Error) => any, onComplete: any): void;
+    function createRecord(object: Rest.ActivityParty, type: "ActivityParty", successCallback: (result: Rest.ActivityPartyResult) => any, errorCallback: (err: Error) => any): void;
+    function deleteRecord(id: string, type: "ActivityParty", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveRecord(id: string, type: "ActivityParty", select: string | null, expand: string | null, successCallback: (result: Rest.ActivityPartyResult) => any, errorCallback: (err: Error) => any): void;
+    function updateRecord(id: string, object: Rest.ActivityParty, type: "ActivityParty", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveMultipleRecords(type: "ActivityParty", options: string, successCallback: (result: Rest.ActivityPartyResult[]) => any, errorCallback: (err: Error) => any, onComplete: any): void;
+    function createRecord(object: Rest.ActivityPointer, type: "ActivityPointer", successCallback: (result: Rest.ActivityPointerResult) => any, errorCallback: (err: Error) => any): void;
+    function deleteRecord(id: string, type: "ActivityPointer", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveRecord(id: string, type: "ActivityPointer", select: string | null, expand: string | null, successCallback: (result: Rest.ActivityPointerResult) => any, errorCallback: (err: Error) => any): void;
+    function updateRecord(id: string, object: Rest.ActivityPointer, type: "ActivityPointer", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveMultipleRecords(type: "ActivityPointer", options: string, successCallback: (result: Rest.ActivityPointerResult[]) => any, errorCallback: (err: Error) => any, onComplete: any): void;
+    function createRecord(object: Rest.Contact, type: "Contact", successCallback: (result: Rest.ContactResult) => any, errorCallback: (err: Error) => any): void;
+    function deleteRecord(id: string, type: "Contact", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveRecord(id: string, type: "Contact", select: string | null, expand: string | null, successCallback: (result: Rest.ContactResult) => any, errorCallback: (err: Error) => any): void;
+    function updateRecord(id: string, object: Rest.Contact, type: "Contact", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveMultipleRecords(type: "Contact", options: string, successCallback: (result: Rest.ContactResult[]) => any, errorCallback: (err: Error) => any, onComplete: any): void;
+    function createRecord(object: Rest.devops_EntityA, type: "devops_EntityA", successCallback: (result: Rest.devops_EntityAResult) => any, errorCallback: (err: Error) => any): void;
+    function deleteRecord(id: string, type: "devops_EntityA", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveRecord(id: string, type: "devops_EntityA", select: string | null, expand: string | null, successCallback: (result: Rest.devops_EntityAResult) => any, errorCallback: (err: Error) => any): void;
+    function updateRecord(id: string, object: Rest.devops_EntityA, type: "devops_EntityA", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveMultipleRecords(type: "devops_EntityA", options: string, successCallback: (result: Rest.devops_EntityAResult[]) => any, errorCallback: (err: Error) => any, onComplete: any): void;
+    function createRecord(object: Rest.devops_EntityB, type: "devops_EntityB", successCallback: (result: Rest.devops_EntityBResult) => any, errorCallback: (err: Error) => any): void;
+    function deleteRecord(id: string, type: "devops_EntityB", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveRecord(id: string, type: "devops_EntityB", select: string | null, expand: string | null, successCallback: (result: Rest.devops_EntityBResult) => any, errorCallback: (err: Error) => any): void;
+    function updateRecord(id: string, object: Rest.devops_EntityB, type: "devops_EntityB", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveMultipleRecords(type: "devops_EntityB", options: string, successCallback: (result: Rest.devops_EntityBResult[]) => any, errorCallback: (err: Error) => any, onComplete: any): void;
+    function createRecord(object: Rest.SystemUser, type: "SystemUser", successCallback: (result: Rest.SystemUserResult) => any, errorCallback: (err: Error) => any): void;
+    function deleteRecord(id: string, type: "SystemUser", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveRecord(id: string, type: "SystemUser", select: string | null, expand: string | null, successCallback: (result: Rest.SystemUserResult) => any, errorCallback: (err: Error) => any): void;
+    function updateRecord(id: string, object: Rest.SystemUser, type: "SystemUser", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveMultipleRecords(type: "SystemUser", options: string, successCallback: (result: Rest.SystemUserResult[]) => any, errorCallback: (err: Error) => any, onComplete: any): void;
+    function createRecord(object: Rest.Connection, type: "Connection", successCallback: (result: Rest.ConnectionResult) => any, errorCallback: (err: Error) => any): void;
+    function deleteRecord(id: string, type: "Connection", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveRecord(id: string, type: "Connection", select: string | null, expand: string | null, successCallback: (result: Rest.ConnectionResult) => any, errorCallback: (err: Error) => any): void;
+    function updateRecord(id: string, object: Rest.Connection, type: "Connection", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveMultipleRecords(type: "Connection", options: string, successCallback: (result: Rest.ConnectionResult[]) => any, errorCallback: (err: Error) => any, onComplete: any): void;
+    function createRecord(object: Rest.Email, type: "Email", successCallback: (result: Rest.EmailResult) => any, errorCallback: (err: Error) => any): void;
+    function deleteRecord(id: string, type: "Email", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveRecord(id: string, type: "Email", select: string | null, expand: string | null, successCallback: (result: Rest.EmailResult) => any, errorCallback: (err: Error) => any): void;
+    function updateRecord(id: string, object: Rest.Email, type: "Email", successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveMultipleRecords(type: "Email", options: string, successCallback: (result: Rest.EmailResult[]) => any, errorCallback: (err: Error) => any, onComplete: any): void;
+    function createRecord(object: Rest.RestEntity, type: string, successCallback: (result: Rest.RestEntity) => any, errorCallback: (err: Error) => any): void;
+    function deleteRecord(id: string, type: string, successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveRecord(id: string, type: string, select: string | null, expand: string | null, successCallback: (result: Rest.RestEntity) => any, errorCallback: (err: Error) => any): void;
+    function updateRecord(id: string, object: Rest.RestEntity, type: string, successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function retrieveMultipleRecords(type: string, options: string, successCallback: (result: Rest.RestEntity[]) => any, errorCallback: (err: Error) => any, onComplete: any): void;
+    function associateRecords(parentId: string, parentType: string, relationshipName: string, childId: string, childType: string, successCallBack: () => any, errorCallback: (err: Error) => any): void;
+    function disassociateRecords(parentId: string, parentType: string, relationshipName: string, childId: string, childType: string, successCallBack: () => any, errorCallback: (err: Error) => any): void;
+  }
+}
