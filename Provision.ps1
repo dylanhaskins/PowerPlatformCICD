@@ -56,7 +56,6 @@ az extension add --name azure-devops
 
 $ErrorActionPreference = "SilentlyContinue"
 Remove-Item AzureCli.msi
-$ErrorActionPreference = "Continue"
 
 $adoOrg = Read-Host -Prompt "Enter the name of your Azure DevOps Organization (https://dev.azure.com/<Name>)"
 
@@ -72,8 +71,11 @@ if ($adoCreate -eq "C")
 }
 else {
     $selection = az devops project list --organization=https://dev.azure.com/$adoOrg --query '[value][].{Name:name}' --output json | Out-String | ConvertFrom-Json
-    $adoProject = $selection | Out-GridView -Title "Select the Project you wish to use" -PassThru
-    $adoProject = $adoProject.Name
+    $choiceIndex = 0
+    $options = $selection | ForEach-Object { New-Object System.Management.Automation.Host.ChoiceDescription "&$($choiceIndex) - $($_.Name)"; $choiceIndex++ }
+    $chosenIndex = $host.ui.PromptForChoice("DevOps Project", "Select the Project you wish to use", $options, 0)
+    $adoProject = $selection[$chosenIndex].Name 
+
 }
 
 Write-Host ""
@@ -81,8 +83,12 @@ $adoRepo = Read-Host -Prompt "Enter the name for the Repository you wish to Crea
 
 az devops configure --defaults organization=https://dev.azure.com/$adoOrg project=$adoProject
 
-az repos create --name $adoRepo
+$repo = az repos create --name $adoRepo | Out-String | ConvertFrom-Json
 az repos import create --git-source-url https://github.com/dylanhaskins/PowerPlatformCICD.git --repository $adoRepo
+
+git clone $repo.webUrl
+
+az repos show --repository $repo.id --open
 
 $pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
 az pipelines show --id $pipeline.definition.id --open
