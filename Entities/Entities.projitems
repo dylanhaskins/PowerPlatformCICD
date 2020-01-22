@@ -6,9 +6,24 @@
     <SharedGUID>31ae8b67-1c3e-4202-87c8-3c2961195896</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>CCMS.Core.Entities</Import_RootNamespace>
+    <Import_RootNamespace>Entities</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Context\placeholder.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Context\Account.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\ActivityParty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\ActivityPointer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\BusinessUnit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\Contact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\devops_EntityA.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\devops_EntityB.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\GlobalOptionSets.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\SystemUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\Team.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\TeamMembership.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\XrmContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\XrmExtensions.cs" />
   </ItemGroup>
 </Project>

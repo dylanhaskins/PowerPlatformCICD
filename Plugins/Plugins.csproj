@@ -7,8 +7,8 @@
     <ProjectGuid>{069B4D72-81DD-49F1-9F4C-5BA58CC52D07}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CCMS.Core.Plugins</RootNamespace>
-    <AssemblyName>CCMSCorePlugins</AssemblyName>
+    <RootNamespace>Plugins</RootNamespace>
+    <AssemblyName>Plugins</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

@@ -22,14 +22,64 @@ $newVersion = "{0}.{1}{2}.{3}.{4}" -f $theVersion.Major, (Get-Date -UFormat %y),
 Set-CrmSolutionVersionNumber -SolutionName $global:SolutionName -VersionNumber $newVersion -conn $conn
 Write-Host("New Version - $newVersion")
 
+######################## CHECK SOLUTION
+# Get solution by name
+$SolutionQuery = Get-CrmRecords -conn $conn -EntityLogicalName solution -Fields 'friendlyname', 'version' -FilterAttribute uniquename -FilterOperator eq -FilterValue  $global:SolutionName
+$Solution = $SolutionQuery.CrmRecords[0]
+if (!$Solution) { throw "Solution not found:  $global:SolutionName" }
+$SolutionId = $Solution.solutionid
+$SolutionVersion = $Solution.version
+Write-Host "Found:" $SolutionId "-" $Solution.friendlyname  "-" $SolutionVersion
+
+# Get most recent patch solution
+$PatchQuery = Get-CrmRecordsByFetch -conn $conn @"
+<fetch>
+  <entity name="solution" >
+    <attribute name="uniquename" />
+    <attribute name="friendlyname" />
+    <attribute name="version" />
+    <filter>
+      <condition attribute="parentsolutionid" operator="eq" value="$SolutionId" />
+    </filter>
+    <order attribute="createdon" descending="true" />
+  </entity>
+</fetch>
+"@ -TopCount 1
+$PatchSolution = $PatchQuery.CrmRecords[0]
+if ($PatchSolution) {
+    $SolutionId = $PatchSolution.solutionid
+    $SolutionName = $PatchSolution.uniquename
+    $SolutionVersion = $PatchSolution.version
+    Write-Host "Patch found:" $SolutionId "-" $global:SolutionName "-" $SolutionVersion
+}
+
+#Major.Minor.Build.Revision = TargetProductionDrop.Year+DayofYear.PatchNumber.BuildTime
+$theVersion = [version]$SolutionVersion
+$newVersion = "{0}.{1}.{2}.{3}" -f $theVersion.Major, (Get-Date -UFormat %y%j), $theVersion.Build , (Get-Date -UFormat %H%M)
+if ($PatchSolution) {
+	$newVersion = "{0}.{1}.{2}.{3}" -f $theVersion.Major, $theVersion.Minor, $theVersion.Build , $theVersion.Revision + 1
+}
+Set-CrmSolutionVersionNumber -conn $conn -SolutionName  $global:SolutionName -VersionNumber $newVersion
+
+
+
 ######################## EXPORT SOLUTION
 Write-Host "Exporting Unmanaged Solution"
-Export-CrmSolution -SolutionName $global:SolutionName -SolutionZipFileName $global:UnmanagedPackageFile
+Export-CrmSolution -SolutionName $global:SolutionName -SolutionZipFileName "$global:SolutionName.zip"
 
 Write-Host "Exporting Managed Solution"
-Export-CrmSolution -SolutionName $global:SolutionName -Managed -SolutionZipFileName $global:ManagedPackageFile
+Export-CrmSolution -SolutionName $global:SolutionName -Managed -SolutionZipFileName $global:SolutionName"_managed.zip"
 
 ######################## EXTRACT SOLUTION
+
 Remove-Item ..\..\package -Force -Recurse
-&.\Tools\SolutionPackager.exe /action:extract /folder:..\..\package /zipfile:$global:UnmanagedPackageFile /packagetype:Both 
+
+
+if ($PatchSolution) {
+    &.\Tools\SolutionPackager.exe /action:extract /folder:..\..\package\patch /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
+}else{
+    Remove-Item ..\..\package\patch -Force -Recurse
+    &.\Tools\SolutionPackager.exe /action:extract /folder:..\..\package\$global:SolutionName /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
+}
+
 

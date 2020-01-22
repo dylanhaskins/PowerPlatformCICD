@@ -1,8 +1,6 @@
 {
   "target": {
-    "ServerUrl": "https://AddNameHere.crm6.dynamics.com",
-    "SolutionName": "AddNameHere",
-    "UnmanagedPackageFile": "AddNameHere.zip",
-    "ManagedPackageFile": "AddNameHere_managed.zip"
+    "ServerUrl": "https://AddName.crm6.dynamics.com",
+    "SolutionName": "AddName"
   }
 }

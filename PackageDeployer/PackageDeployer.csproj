@@ -7,8 +7,8 @@
     <ProjectGuid>{170C0103-3F94-4896-9062-6314167F596A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CCMS.Core.PackageDeployer</RootNamespace>
-    <AssemblyName>CCMSCorePackageDeployer</AssemblyName>
+    <RootNamespace>PackageDeployer</RootNamespace>
+    <AssemblyName>PackageDeployer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <RestorePackages>true</RestorePackages>

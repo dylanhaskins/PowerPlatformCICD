@@ -7,8 +7,8 @@
     <ProjectGuid>{59EF756C-FF45-41A4-972C-DB19F4829314}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CCMS.Core.Workflows</RootNamespace>
-    <AssemblyName>CCMSCoreWorkflows</AssemblyName>
+    <RootNamespace>Workflows</RootNamespace>
+    <AssemblyName>Workflows</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

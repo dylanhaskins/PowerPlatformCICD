@@ -6,7 +6,7 @@
     <SharedGUID>5f0f4bde-fe07-40b1-8d55-955b43ab35db</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>CCMS.Core.Services</Import_RootNamespace>
+    <Import_RootNamespace>Services</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BaseService.cs" />
