@@ -1,6 +1,6 @@
 {
   "target": {
-    "ServerUrl": "https://devopsblog.crm6.dynamics.com",
-    "SolutionName": "CoreSolution"
+    "ServerUrl": "https://AddName.crm6.dynamics.com",
+    "SolutionName": "AddName"
   }
 }
