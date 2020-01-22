@@ -2,7 +2,7 @@
 This is the Template project to Create new D365 Solutions leveraging a lighweight framework
 
 # Getting Started
-1.  Download and Run the [Provision.ps1 PowerShell Script](~/Provision.ps1)
+1.  Download and Run the [Provision.ps1 PowerShell Script](Provision.ps1)
 1.	Clone New Repository (with Submodules)
 1.	Update Solutions/Scripts/config.json with correct values
 1.  Update Plugins and Workflows Projects Namespace and Assembly Names in Properties
