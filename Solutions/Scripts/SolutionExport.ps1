@@ -50,7 +50,7 @@ if ($PatchSolution) {
     $SolutionId = $PatchSolution.solutionid
     $SolutionName = $PatchSolution.uniquename
     $SolutionVersion = $PatchSolution.version
-    Write-Host "Patch found:" $SolutionId "-" $SolutionName "-" $SolutionVersion
+    Write-Host "Patch found:" $SolutionId "-" $global:SolutionName "-" $SolutionVersion
 }
 
 #Major.Minor.Build.Revision = TargetProductionDrop.Year+DayofYear.PatchNumber.BuildTime
