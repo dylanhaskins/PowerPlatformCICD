@@ -54,7 +54,6 @@ steps:
     configuration: '$(BuildConfiguration)'
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)\\"'
 
-steps:
 - task: PowerShell@2
   displayName: 'Pack Solution'
   inputs:
