@@ -62,17 +62,17 @@
  Interprets CRM OptionSetMetadata into intermediate type
 </summary>
 </member>
-<member name="M:DG.XrmContext.DataRetrieval.getFullEntityList``1(Microsoft.FSharp.Core.FSharpOption{System.String[]},Microsoft.FSharp.Core.FSharpOption{``0[]},Microsoft.Xrm.Sdk.Client.OrganizationServiceProxy)">
+<member name="M:DG.XrmContext.DataRetrieval.getFullEntityList``1(Microsoft.FSharp.Core.FSharpOption{System.String[]},Microsoft.FSharp.Core.FSharpOption{``0[]},Microsoft.Xrm.Sdk.IOrganizationService)">
 <summary>
  Gets all the entities related to the given solutions and merges with the given entities
 </summary>
 </member>
-<member name="M:DG.XrmContext.DataRetrieval.retrieveCrmData(Microsoft.FSharp.Core.FSharpOption{System.String[]},Microsoft.Xrm.Sdk.Client.OrganizationServiceProxy)">
+<member name="M:DG.XrmContext.DataRetrieval.retrieveCrmData(Microsoft.FSharp.Core.FSharpOption{System.String[]},Microsoft.Xrm.Sdk.IOrganizationService)">
 <summary>
  Retrieve all the necessary CRM data
 </summary>
 </member>
-<member name="M:DG.XrmContext.DataRetrieval.retrieveCrmVersion(Microsoft.Xrm.Sdk.Client.OrganizationServiceProxy)">
+<member name="M:DG.XrmContext.DataRetrieval.retrieveCrmVersion(Microsoft.Xrm.Sdk.IOrganizationService)">
 <summary>
  Retrieve version from CRM
 </summary>

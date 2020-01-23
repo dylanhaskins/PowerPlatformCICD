@@ -130,7 +130,11 @@
     </Content>
     <Content Include="XrmContext\FSharp.Core.dll" />
     <Content Include="XrmContext\Microsoft.Crm.Sdk.Proxy.dll" />
+    <Content Include="XrmContext\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
+    <Content Include="XrmContext\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll" />
+    <Content Include="XrmContext\Microsoft.Xrm.Sdk.Deployment.dll" />
     <Content Include="XrmContext\Microsoft.Xrm.Sdk.dll" />
+    <Content Include="XrmContext\Microsoft.Xrm.Tooling.Connector.dll" />
     <Content Include="XrmContext\XrmContext.exe" />
     <Content Include="XrmContext\XrmContext.xml" />
     <Content Include="XrmDefinitelyTyped\FSharp.Core.dll" />
