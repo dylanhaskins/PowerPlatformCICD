@@ -11,6 +11,19 @@ function Restart-PowerShell
     DevOps-Install
 }
 
+function InstallXrmModule{
+$moduleName = "Microsoft.Xrm.Data.Powershell"
+$moduleVersion = "2.8.5"
+if (!(Get-Module -ListAvailable -Name $moduleName )) {
+Write-host "Module Not found, installing now"
+Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
+}
+else
+{
+Write-host "Module Found"
+}
+}
+
 function PreReq-Install
 {
     Write-Host "Installing Chocolatey ...."
@@ -86,12 +99,50 @@ az devops configure --defaults organization=https://dev.azure.com/$adoOrg projec
 $repo = az repos create --name $adoRepo | Out-String | ConvertFrom-Json
 az repos import create --git-source-url https://github.com/dylanhaskins/PowerPlatformCICD.git --repository $adoRepo
 
-git clone $repo.webUrl
+git clone $repo.webUrl \Dev\Repos\$adoRepo
+
+chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
 
 az repos show --repository $repo.id --open
 
-$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
-az pipelines show --id $pipeline.definition.id --open
+$quit = Read-Host -Prompt "Press Enter to Connect to your CDS / D365 Instance or [Q]uit"
+if ($quit -eq "Q")
+{
+    exit
+}
+
+InstallXrmModule
+
+$conn = Connect-CrmOnlineDiscovery -InteractiveMode
+
+$solutionFetch = @"
+<fetch>
+  <entity name='solution' >
+    <filter type='and' >
+      <condition attribute='ismanaged' operator='eq' value='0' />
+      <condition attribute='isvisible' operator='eq' value='1' />
+    </filter>
+  </entity>
+</fetch>
+"@
+
+$solutions = (Get-CrmRecordsByFetch -conn $conn -Fetch $solutionFetch).CrmRecords
+
+$choiceIndex = 0
+$options = $solutions | ForEach-Object { New-Object System.Management.Automation.Host.ChoiceDescription "&$($choiceIndex) - $($_.uniquename)"; $choiceIndex++ }
+$chosenIndex = $host.ui.PromptForChoice("Solution", "Select the Solution you wish to use", $options, 0)
+$chosenSolution = $solutions[$chosenIndex].uniquename
+
+Write-Host "Updating config.json ..."
+
+(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
+(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
+
+& ((Split-Path $MyInvocation.InvocationName) + "\SolutionExport.ps1")
+
+
+#$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
+#az pipelines show --id $pipeline.definition.id --open
 }
 
 $message = @"
