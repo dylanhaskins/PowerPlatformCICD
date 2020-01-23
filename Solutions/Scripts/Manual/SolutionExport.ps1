@@ -1,6 +1,6 @@
 ﻿######################## SETUP 
-& ((Split-Path $MyInvocation.InvocationName) + "\..\_SetupTools.ps1")
-& ((Split-Path $MyInvocation.InvocationName) + "\..\_Config.ps1")
+& ".\\..\_SetupTools.ps1"
+& ".\\..\_Config.ps1"
 
 ######################## GET CONNECTION
 if (!$conn)

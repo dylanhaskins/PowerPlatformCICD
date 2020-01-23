@@ -103,8 +103,8 @@ git clone $repo.webUrl \Dev\Repos\$adoRepo
 
 chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
 
-az repos show --repository $repo.id --open
-
+Write-Host ""
+Write-Host ""
 $quit = Read-Host -Prompt "Press Enter to Connect to your CDS / D365 Instance or [Q]uit"
 if ($quit -eq "Q")
 {
@@ -145,6 +145,8 @@ git push origin master
 
 
 #$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
+
+az repos show --repository $repo.id --open
 #az pipelines show --id $pipeline.definition.id --open
 }
 
