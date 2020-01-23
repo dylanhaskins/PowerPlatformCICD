@@ -1,6 +1,6 @@
 ﻿######################## SETUP 
-& ((Split-Path $MyInvocation.InvocationName) + "\_SetupTools.ps1")
-& ((Split-Path $MyInvocation.InvocationName) + "\_Config.ps1")
+& ((Split-Path $MyInvocation.InvocationName) + "\..\_SetupTools.ps1")
+& ((Split-Path $MyInvocation.InvocationName) + "\..\_Config.ps1")
 
 ######################## GET CONNECTION
 if (!$conn)
@@ -10,11 +10,11 @@ if (!$conn)
 Write-Output($conn)
 
 ######################## Generate Config Migration data 
-& ((Split-Path $MyInvocation.InvocationName) + "\_ConfigMigration.ps1")
+#& ((Split-Path $MyInvocation.InvocationName) + "\..\_ConfigMigration.ps1")
 
 ######################## Generate Types
 Write-Host("Cleaning up Context Files...")
-& ((Split-Path $MyInvocation.InvocationName) + "\_GenerateTypes.ps1")
+#& ((Split-Path $MyInvocation.InvocationName) + "\..\_GenerateTypes.ps1")
 
 ######################## UPDATE VERSION
 $currentVersion = (Get-CrmRecords -conn $conn -EntityLogicalName solution -FilterAttribute uniquename -FilterOperator "like" -FilterValue $global:SolutionName -Fields uniquename,publisherid,version).CrmRecords | select version
@@ -74,6 +74,7 @@ Export-CrmSolution -SolutionName $global:SolutionName -Managed -SolutionZipFileN
 
 ######################## EXTRACT SOLUTION
 
+$ErrorActionPreference = "SilentlyContinue"
 Remove-Item ..\..\package -Force -Recurse
 
 
