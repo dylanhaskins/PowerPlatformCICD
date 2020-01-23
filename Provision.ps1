@@ -140,14 +140,15 @@ Write-Host "Updating config.json ..."
 
 & ".\\SolutionExport.ps1"
 
+git add -A
 git commit -m "Initial Commit"
 git push origin master
 
 
-#$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
+$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
 
 az repos show --repository $repo.id --open
-#az pipelines show --id $pipeline.definition.id --open
+az pipelines show --id $pipeline.definition.id --open
 }
 
 $message = @"
