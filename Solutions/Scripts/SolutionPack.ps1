@@ -1,5 +1,5 @@
-﻿& ((Split-Path $MyInvocation.InvocationName) + "\_Config.ps1")
-& ((Split-Path $MyInvocation.InvocationName) + "\_SetupTools.ps1")
+﻿& "$env:SYSTEM_DEFAULTWORKINGDIRECTORY/$env:RELEASE_PRIMARYARTIFACTSOURCEALIAS/Solutions/Scripts/_Config.ps1"
+& "$env:SYSTEM_DEFAULTWORKINGDIRECTORY/$env:RELEASE_PRIMARYARTIFACTSOURCEALIAS/Solutions/Scripts/_SetupTools.ps1"
 
 ##
 ##Download Package Deployer 
