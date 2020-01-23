@@ -59,7 +59,6 @@ steps:
   inputs:
     targetType: filePath
     filePath: 'Solutions/Scripts/SolutionPack.ps1'
-    arguments: '-ServerUrl $(d365url) -UserName $(d365username) -Password $(d365password)'
 
 - task: CopyFiles@2
   displayName: 'Copy Reference Data to: $(build.artifactstagingdirectory)'
