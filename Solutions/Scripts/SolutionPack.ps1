@@ -1,5 +1,5 @@
-﻿& ((Split-Path $MyInvocation.InvocationName) + "\_Config.ps1")
-& ((Split-Path $MyInvocation.InvocationName) + "\_SetupTools.ps1")
+﻿& "$env:SYSTEM_DEFAULTWORKINGDIRECTORY/$env:RELEASE_PRIMARYARTIFACTSOURCEALIAS/Solutions/Scripts/_Config.ps1"
+& "$env:SYSTEM_DEFAULTWORKINGDIRECTORY/$env:RELEASE_PRIMARYARTIFACTSOURCEALIAS/Solutions/Scripts/_SetupTools.ps1"
 
 ##
 ##Download Package Deployer 
@@ -38,9 +38,9 @@ $PatchQuery = Get-CrmRecordsByFetch -conn $conn @"
 $PatchSolution = $PatchQuery.CrmRecords[0]
 if ($PatchSolution) {
    Write-Host "Patch found:" $SolutionId "-" $SolutionName "-" $SolutionVersion
-   &.\Tools\SolutionPackager.exe /action:pack /folder:..\..\Solutions\package\patch /zipfile:"..\$global:SolutionName.zip" /packagetype:Both /map:..\map.xml 
+   &.\Tools\SolutionPackager.exe /action:pack /folder:..\..\Solutions\packagePatch /zipfile:"..\$global:SolutionName.zip" /packagetype:Both /map:..\map.xml 
 }else{
-&.\Tools\SolutionPackager.exe /action:pack /folder:..\..\Solutions\package\$global:SolutionName /zipfile:"..\$global:SolutionName.zip" /packagetype:Both /map:..\map.xml 
+&.\Tools\SolutionPackager.exe /action:pack /folder:..\..\Solutions\packageSolution /zipfile:"..\$global:SolutionName.zip" /packagetype:Both /map:..\map.xml 
 }
 
 

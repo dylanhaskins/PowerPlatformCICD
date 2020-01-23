@@ -1,18 +1,20 @@
 ﻿######################## SETUP 
-& ((Split-Path $MyInvocation.InvocationName) + "\_SetupTools.ps1")
-& ((Split-Path $MyInvocation.InvocationName) + "\_Config.ps1")
+& ".\\..\_SetupTools.ps1"
+& ".\\..\_Config.ps1"
 
 ######################## GET CONNECTION
-$Credentials = Get-Credential
-$conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $global:ServerUrl
+if (!$conn)
+{
+    $conn = Connect-CrmOnlineDiscovery -InteractiveMode
+}
 Write-Output($conn)
 
 ######################## Generate Config Migration data 
-& ((Split-Path $MyInvocation.InvocationName) + "\_ConfigMigration.ps1")
+#& ((Split-Path $MyInvocation.InvocationName) + "\..\_ConfigMigration.ps1")
 
 ######################## Generate Types
 Write-Host("Cleaning up Context Files...")
-& ((Split-Path $MyInvocation.InvocationName) + "\_GenerateTypes.ps1")
+#& ((Split-Path $MyInvocation.InvocationName) + "\..\_GenerateTypes.ps1")
 
 ######################## UPDATE VERSION
 $currentVersion = (Get-CrmRecords -conn $conn -EntityLogicalName solution -FilterAttribute uniquename -FilterOperator "like" -FilterValue $global:SolutionName -Fields uniquename,publisherid,version).CrmRecords | select version
@@ -72,11 +74,12 @@ Export-CrmSolution -SolutionName $global:SolutionName -Managed -SolutionZipFileN
 
 ######################## EXTRACT SOLUTION
 
+$ErrorActionPreference = "SilentlyContinue"
 Remove-Item ..\..\package -Force -Recurse
 
 
 if ($PatchSolution) {
-    &.\Tools\SolutionPackager.exe /action:extract /folder:..\..\packagePatch\ /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
+    &.\Tools\SolutionPackager.exe /action:extract /folder:..\..\packagePatch /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
 }else{
     Remove-Item ..\..\package\patch -Force -Recurse
     &.\Tools\SolutionPackager.exe /action:extract /folder:..\..\packageSolution\ /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c

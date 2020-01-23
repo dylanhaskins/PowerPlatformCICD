@@ -27,7 +27,7 @@ variables:
 steps:
 
 - powershell: |
-   $path = $path = "$(System.DefaultWorkingDirectory)/Solution/package/portal/Other/Solution.xml"
+   $path = $path = "$(System.DefaultWorkingDirectory)/Solutions/packageSolution/Other/Solution.xml"
    [XML]$xml = Get-Content $path
    $solutionversion = $xml.ImportExportXml.SolutionManifest.Version
    Write-Host "##vso[build.updatebuildnumber]$solutionversion"
@@ -54,12 +54,11 @@ steps:
     configuration: '$(BuildConfiguration)'
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)\\"'
 
-steps:
 - task: PowerShell@2
   displayName: 'Pack Solution'
   inputs:
     targetType: filePath
-    filePath: 'Solutions/Script/SolutionPack.ps1'
+    filePath: 'Solutions/Scripts/SolutionPack.ps1'
 
 - task: CopyFiles@2
   displayName: 'Copy Reference Data to: $(build.artifactstagingdirectory)'
