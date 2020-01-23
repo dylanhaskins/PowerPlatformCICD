@@ -1,5 +1,5 @@
 # Introduction 
-This is the Template project to Create new D365 Solutions leveraging a lighweight framework
+This is a Template project to Create new CDS/D365 Solutions leveraging a lighweight framework and CI/CD
 
 # Getting Started
 1.  Download and **Run** the [Provision.ps1](Provision.ps1) PowerShell Script (Right-Click -> Save Link As)
