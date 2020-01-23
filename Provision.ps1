@@ -72,6 +72,12 @@ Remove-Item AzureCli.msi
 
 $adoOrg = Read-Host -Prompt "Enter the name of your Azure DevOps Organization (https://dev.azure.com/<Name>)"
 
+$quit = Read-Host -Prompt "You will now be redirected to a Browser to Login to your Azure DevOps Organisation - Press Enter to Continue or [Q]uit"
+if ($quit -eq "Q")
+{
+    exit
+}
+
 az login --allow-no-subscriptions
 
 Write-Host ""

@@ -27,7 +27,7 @@ variables:
 steps:
 
 - powershell: |
-   $path = $path = "$(System.DefaultWorkingDirectory)/Solution/packageSolution/Other/Solution.xml"
+   $path = $path = "$(System.DefaultWorkingDirectory)/Solutions/packageSolution/Other/Solution.xml"
    [XML]$xml = Get-Content $path
    $solutionversion = $xml.ImportExportXml.SolutionManifest.Version
    Write-Host "##vso[build.updatebuildnumber]$solutionversion"
