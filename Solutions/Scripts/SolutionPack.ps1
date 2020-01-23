@@ -38,9 +38,9 @@ $PatchQuery = Get-CrmRecordsByFetch -conn $conn @"
 $PatchSolution = $PatchQuery.CrmRecords[0]
 if ($PatchSolution) {
    Write-Host "Patch found:" $SolutionId "-" $SolutionName "-" $SolutionVersion
-   &.\Tools\SolutionPackager.exe /action:pack /folder:..\..\Solutions\package\patch /zipfile:"..\$global:SolutionName.zip" /packagetype:Both /map:..\map.xml 
+   &.\Tools\SolutionPackager.exe /action:pack /folder:..\..\Solutions\packagePatch /zipfile:"..\$global:SolutionName.zip" /packagetype:Both /map:..\map.xml 
 }else{
-&.\Tools\SolutionPackager.exe /action:pack /folder:..\..\Solutions\package\$global:SolutionName /zipfile:"..\$global:SolutionName.zip" /packagetype:Both /map:..\map.xml 
+&.\Tools\SolutionPackager.exe /action:pack /folder:..\..\Solutions\packageSolution /zipfile:"..\$global:SolutionName.zip" /packagetype:Both /map:..\map.xml 
 }
 
 

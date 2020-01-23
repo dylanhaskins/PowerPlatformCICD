@@ -76,10 +76,10 @@ Remove-Item ..\..\package -Force -Recurse
 
 
 if ($PatchSolution) {
-    &.\Tools\SolutionPackager.exe /action:extract /folder:..\..\package\patch /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
+    &.\Tools\SolutionPackager.exe /action:extract /folder:..\..\packagePatch\ /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
 }else{
     Remove-Item ..\..\package\patch -Force -Recurse
-    &.\Tools\SolutionPackager.exe /action:extract /folder:..\..\package\$global:SolutionName /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
+    &.\Tools\SolutionPackager.exe /action:extract /folder:..\..\packageSolution\ /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
 }
 
 
