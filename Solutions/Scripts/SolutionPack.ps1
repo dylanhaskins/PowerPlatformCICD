@@ -1,4 +1,12 @@
-﻿& "$env:SYSTEM_DEFAULTWORKINGDIRECTORY/$env:RELEASE_PRIMARYARTIFACTSOURCEALIAS/Solutions/Scripts/_Config.ps1"
+﻿Param(
+    [string] [Parameter(Mandatory = $true)] $ServerUrl,
+    [string] [Parameter(Mandatory = $true)] $UserName,
+    [string] [Parameter(Mandatory = $true)] $Password
+)
+
+ [string]$CrmConnectionString = "AuthType=Office365;Username=$UserName; Password=$Password;Url=$ServerUrl"
+
+& "$env:SYSTEM_DEFAULTWORKINGDIRECTORY/$env:RELEASE_PRIMARYARTIFACTSOURCEALIAS/Solutions/Scripts/_Config.ps1"
 & "$env:SYSTEM_DEFAULTWORKINGDIRECTORY/$env:RELEASE_PRIMARYARTIFACTSOURCEALIAS/Solutions/Scripts/_SetupTools.ps1"
 
 ##
@@ -11,6 +19,9 @@ md .\Tools\PD\PkgFolder
 move .\Tools\$pdFolder\tools\*.* .\Tools\PD
 Remove-Item .\Tools\$pdFolder -Force -Recurse
 
+Write-Host "Creating CRM connection"
+    
+$conn = Get-CrmConnection -ConnectionString $CrmConnectionString
 
 ######################## CHECK SOLUTION
 # Get solution by name

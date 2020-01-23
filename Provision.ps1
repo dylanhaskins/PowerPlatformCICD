@@ -119,7 +119,17 @@ if ($quit -eq "Q")
 
 InstallXrmModule
 
-$conn = Connect-CrmOnlineDiscovery -InteractiveMode
+if (!$Credentials)
+{
+	$Credentials = Get-Credential
+}
+if (!$username)
+{
+$username =  $Credentials.GetNetworkCredential().UserName
+$password =  $Credentials.GetNetworkCredential().Password
+}
+
+$conn = Connect-CrmOnlineDiscovery -Credential $Credentials
 
 $solutionFetch = @"
 <fetch>
@@ -152,6 +162,10 @@ git push origin master
 
 
 $pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
+
+az pipelines variable create --name d365username --value $username --pipeline-id $pipeline.id
+az pipelines variable create --name d365password --value $password --secret $true --pipeline-id $pipeline.id
+az pipelines variable create --name d365url --value $conn.ConnectedOrgPublishedEndpoints["WebApplication"] --pipeline-id $pipeline.id
 
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
