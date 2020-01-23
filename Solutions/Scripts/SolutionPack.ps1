@@ -15,12 +15,12 @@ Remove-Item .\Tools\$coreToolsFolder -Force -Recurse
 
 # Support for patches
 $packageFolder = "packageSolution"
-if (Test-Path $(System.DefaultWorkingDirectory)\Solutions\packagePatch\Other\Solution.xml) {
+if (Test-Path $env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\packagePatch\Other\Solution.xml) {
     $packageFolder = "packagePatch"
 }
 
 
-&.\Tools\SolutionPackager.exe /action:pack /folder:..\Solutions\$packageFolder /zipfile:"..\$global:SolutionName.zip" /packagetype:Both /map:..\..\map.xml 
+&.\Tools\SolutionPackager.exe /action:pack /folder:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\$packageFolder /zipfile:"$env:SYSTEM_DEFAULTWORKINGDIRECTORY\$global:SolutionName.zip" /packagetype:Both /map:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\map.xml 
 
 Remove-Item nuget.exe
 Remove-Item .\Tools -Force -Recurse -ErrorAction Ignore
