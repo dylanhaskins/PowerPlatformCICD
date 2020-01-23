@@ -1,59 +1,26 @@
-﻿Param(
-    [string] [Parameter(Mandatory = $true)] $ServerUrl,
-    [string] [Parameter(Mandatory = $true)] $UserName,
-    [string] [Parameter(Mandatory = $true)] $Password
-)
-
- [string]$CrmConnectionString = "AuthType=Office365;Username=$UserName; Password=$Password;Url=$ServerUrl"
-
-& "$env:SYSTEM_DEFAULTWORKINGDIRECTORY/$env:RELEASE_PRIMARYARTIFACTSOURCEALIAS/Solutions/Scripts/_Config.ps1"
-& "$env:SYSTEM_DEFAULTWORKINGDIRECTORY/$env:RELEASE_PRIMARYARTIFACTSOURCEALIAS/Solutions/Scripts/_SetupTools.ps1"
+﻿
+$sourceNugetExe = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
+$targetNugetExe = ".\nuget.exe"
+Remove-Item .\Tools -Force -Recurse -ErrorAction Ignore
+Invoke-WebRequest $sourceNugetExe -OutFile $targetNugetExe
+Set-Alias nuget $targetNugetExe -Scope Global -Verbose
 
 ##
-##Download Package Deployer 
+##Download CoreTools
 ##
-./nuget install  Microsoft.CrmSdk.XrmTooling.PackageDeployment.WPF -O .\Tools
-$pdFolder = Get-ChildItem ./Tools | Where-Object {$_.Name -match 'Microsoft.CrmSdk.XrmTooling.PackageDeployment.Wpf.'}
-md .\Tools\PD
-md .\Tools\PD\PkgFolder 
-move .\Tools\$pdFolder\tools\*.* .\Tools\PD
-Remove-Item .\Tools\$pdFolder -Force -Recurse
+./nuget install  Microsoft.CrmSdk.CoreTools -O .\Tools
+$coreToolsFolder = Get-ChildItem ./Tools | Where-Object {$_.Name -match 'Microsoft.CrmSdk.CoreTools.'}
+move .\Tools\$coreToolsFolder\content\bin\coretools\*.* .\Tools\
+Remove-Item .\Tools\$coreToolsFolder -Force -Recurse
 
-Write-Host "Creating CRM connection"
-    
-$conn = Get-CrmConnection -ConnectionString $CrmConnectionString
-
-######################## CHECK SOLUTION
-# Get solution by name
-$SolutionQuery = Get-CrmRecords -conn $conn -EntityLogicalName solution -Fields 'friendlyname', 'version' -FilterAttribute uniquename -FilterOperator eq -FilterValue  $global:SolutionName
-$Solution = $SolutionQuery.CrmRecords[0]
-if (!$Solution) { throw "Solution not found:  $global:SolutionName" }
-$SolutionId = $Solution.solutionid
-$SolutionVersion = $Solution.version
-Write-Host "Found:" $SolutionId "-" $Solution.friendlyname  "-" $SolutionVersion
-
-# Get most recent patch solution
-$PatchQuery = Get-CrmRecordsByFetch -conn $conn @"
-<fetch>
-  <entity name="solution" >
-    <attribute name="uniquename" />
-    <attribute name="friendlyname" />
-    <attribute name="version" />
-    <filter>
-      <condition attribute="parentsolutionid" operator="eq" value="$SolutionId" />
-    </filter>
-    <order attribute="createdon" descending="true" />
-  </entity>
-</fetch>
-"@ -TopCount 1
-$PatchSolution = $PatchQuery.CrmRecords[0]
-if ($PatchSolution) {
-   Write-Host "Patch found:" $SolutionId "-" $SolutionName "-" $SolutionVersion
-   &.\Tools\SolutionPackager.exe /action:pack /folder:..\..\Solutions\packagePatch /zipfile:"..\$global:SolutionName.zip" /packagetype:Both /map:..\map.xml 
-}else{
-&.\Tools\SolutionPackager.exe /action:pack /folder:..\..\Solutions\packageSolution /zipfile:"..\$global:SolutionName.zip" /packagetype:Both /map:..\map.xml 
+# Support for patches
+$packageFolder = "packageSolution"
+if (Test-Path $(System.DefaultWorkingDirectory)\Solutions\packagePatch\Other\Solution.xml) {
+    $packageFolder = "packagePatch"
 }
 
+
+&.\Tools\SolutionPackager.exe /action:pack /folder:..\Solutions\$packageFolder /zipfile:"..\$global:SolutionName.zip" /packagetype:Both /map:..\..\map.xml 
 
 Remove-Item nuget.exe
 Remove-Item .\Tools -Force -Recurse -ErrorAction Ignore
