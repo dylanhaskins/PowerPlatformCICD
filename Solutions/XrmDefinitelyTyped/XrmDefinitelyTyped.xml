@@ -204,17 +204,17 @@
  Translate internal attribute type to corresponding TypeScript interface.
 </summary>
 </member>
-<member name="M:DG.XrmDefinitelyTyped.DataRetrieval.getFullEntityList``1(Microsoft.FSharp.Core.FSharpOption{System.String[]},Microsoft.FSharp.Core.FSharpOption{``0[]},Microsoft.Xrm.Sdk.Client.OrganizationServiceProxy)">
+<member name="M:DG.XrmDefinitelyTyped.DataRetrieval.getFullEntityList``1(Microsoft.FSharp.Core.FSharpOption{System.String[]},Microsoft.FSharp.Core.FSharpOption{``0[]},Microsoft.Xrm.Sdk.IOrganizationService)">
 <summary>
  Gets all the entities related to the given solutions and merges with the given entities
 </summary>
 </member>
-<member name="M:DG.XrmDefinitelyTyped.DataRetrieval.retrieveCrmData(System.Int32,System.Int32,System.Int32,System.Int32,Microsoft.FSharp.Core.FSharpOption{System.String[]},Microsoft.FSharp.Core.FSharpOption{System.String[]},Microsoft.Xrm.Sdk.Client.OrganizationServiceProxy,System.Boolean)">
+<member name="M:DG.XrmDefinitelyTyped.DataRetrieval.retrieveCrmData(System.Int32,System.Int32,System.Int32,System.Int32,Microsoft.FSharp.Core.FSharpOption{System.String[]},Microsoft.FSharp.Core.FSharpOption{System.String[]},Microsoft.Xrm.Sdk.IOrganizationService,System.Boolean)">
 <summary>
  Retrieve all the necessary CRM data
 </summary>
 </member>
-<member name="M:DG.XrmDefinitelyTyped.DataRetrieval.retrieveCrmVersion(Microsoft.Xrm.Sdk.Client.OrganizationServiceProxy)">
+<member name="M:DG.XrmDefinitelyTyped.DataRetrieval.retrieveCrmVersion(Microsoft.Xrm.Sdk.IOrganizationService)">
 <summary>
  Retrieve version from CRM
 </summary>
