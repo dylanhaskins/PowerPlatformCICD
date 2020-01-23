@@ -58,7 +58,7 @@ steps:
   displayName: 'Pack Solution'
   inputs:
     targetType: filePath
-    filePath: 'Solutions/Script/SolutionPack.ps1'
+    filePath: 'Solutions/Scripts/SolutionPack.ps1'
 
 - task: CopyFiles@2
   displayName: 'Copy Reference Data to: $(build.artifactstagingdirectory)'
