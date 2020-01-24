@@ -15,12 +15,12 @@ function InstallXrmModule{
 $moduleName = "Microsoft.Xrm.Data.Powershell"
 $moduleVersion = "2.8.5"
 if (!(Get-Module -ListAvailable -Name $moduleName )) {
-Write-host "Module Not found, installing now"
+Write-host "Module $moduleName Not found, installing now"
 Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
 }
 else
 {
-Write-host "Module Found"
+Write-host "Module $moduleName Found"
 }
 }
 
@@ -180,7 +180,7 @@ $password =  $Credentials.GetNetworkCredential().Password
 #else{
     Write-Host ""
     Write-Host "---- Please Select you Development Environment ------"
-    $conn = Connect-CrmOnlineDiscovery -Credential $Credentials
+    $conn = Connect-CrmOnlineDiscovery -Credential $Credentials -Verbose $false
 
     $CreateOrSelect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Solution or [S]elect an Existing One (Default [S])"
 if ($CreateOrSelect -eq "C"){

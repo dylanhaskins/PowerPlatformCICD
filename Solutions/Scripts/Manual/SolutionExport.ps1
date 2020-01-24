@@ -2,6 +2,9 @@
 & ".\\..\_SetupTools.ps1"
 & ".\\..\_Config.ps1"
 
+InstallXrmModule
+InstallCoreTools
+
 ######################## GET CONNECTION
 if (!$conn)
 {
