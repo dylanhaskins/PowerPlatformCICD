@@ -1,16 +1,17 @@
 ﻿Param(
     [string] [Parameter(Mandatory = $true)] $DeployServerUrl,
     [string] [Parameter(Mandatory = $true)] $UserName,
-    [string] [Parameter(Mandatory = $true)] $Password
+    [string] [Parameter(Mandatory = $true)] $Password,
+    [string] [Parameter(Mandatory = $true)] $PipelinePath
 )
 
 ######################## SETUP 
-. "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\Scripts\_SetupTools.ps1"
-. "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\Scripts\_Config.ps1"
+. "$PipelinePath\drop\Solutions\bin\Release\Scripts\_SetupTools.ps1"
+. "$PipelinePath\drop\Solutions\bin\Release\Scripts\_Config.ps1"
 
 function Import-Package {
     [string]$PackageName = "PackageDeployer.dll"
-    [string]$PackageDirectory = "$env:SYSTEM_DEFAULTWORKINGDIRECTORY/$env:RELEASE_PRIMARYARTIFACTSOURCEALIAS/drop/PackageDeployer/bin/Release"
+    [string]$PackageDirectory = "$PipelinePath/drop/PackageDeployer/bin/Release"
     [string]$LogsDirectory = "$PackageDirectory"
     [string]$CrmConnectionString = "AuthType=Office365;Username=$UserName; Password=$Password;Url=$DeployServerUrl"
     

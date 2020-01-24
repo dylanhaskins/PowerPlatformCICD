@@ -26,7 +26,6 @@ variables:
     value: 'release'
   - name : Solution
     value: '**\*.sln'
-  - group: replaceRepo.D365CDEnvironment
 
 stages:
   - stage: Build
@@ -88,25 +87,33 @@ stages:
               PublishSymbols: false
             continueOnError: true
 
+
           - task: PublishPipelineArtifact@1
-            displayName: 'Publish Artifact: mainbuild'
+            displayName: 'Publish Artifact: drop'
             inputs:
               path: '$(build.artifactstagingdirectory)'
-              artifact: mainbuild
+              artifact: drop
+
   - stage: Deployment
-  
+    
     displayName: Deployment
     jobs:
-      - job: DeployJob
-        displayName: Deployment Staging
-        steps:
-          - task: DownloadPipelineArtifact@2
-            inputs:
-              artifactName: mainbuild
+    - deployment: DeployJob      
+      displayName: Deployment Staging 
+      environment: 'Deployment Staging'
+      variables:
+        group: replaceRepo.D365CDEnvironment
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - task: DownloadPipelineArtifact@2
+              inputs:
+                source: 'current'
 
-          - task: PowerShell@2
-            displayName: 'Deploy Solution'
-            inputs:
-              targetType: filePath
-              filePath: '$(Pipeline.Workspace)/mainbuild/Solutions/Scripts/SolutionDeploy.ps1'
-              arguments: '-DeployServerUrl $(d365url) -UserName $(d365username) -Password $(d365password)'
+            - task: PowerShell@2
+              displayName: 'Deploy Solution'
+              inputs:
+                targetType: filePath
+                filePath: '$(Pipeline.Workspace)/drop/Solutions/bin/Release/Scripts/SolutionDeploy.ps1'
+                arguments: '-DeployServerUrl $(d365url) -UserName $(d365username) -Password $(d365password) -PipelinePath $(Pipeline.Workspace)'
