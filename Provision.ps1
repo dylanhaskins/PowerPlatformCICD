@@ -192,8 +192,6 @@ git commit -m "Initial Commit"
 git push origin master
 
 
-$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
-
 $varGroup = az pipelines variable-group create --name "$adoRepo.D365DevEnvironment"  --variables d365username=$username --authorize $true | ConvertFrom-Json
 az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroup.id
 az pipelines variable-group variable create --name d365url --value $conn.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroup.id
@@ -201,6 +199,8 @@ az pipelines variable-group variable create --name d365url --value $conn.Connect
 $varGroupCICD = az pipelines variable-group create --name "$adoRepo.D365CDEnvironment"  --variables d365username=$username --authorize $true| ConvertFrom-Json
 az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroupCICD.id
 az pipelines variable-group variable create --name d365url --value $connCICD.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroupCICD.id
+
+$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
 
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
