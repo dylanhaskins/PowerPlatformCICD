@@ -5,7 +5,7 @@ This is a Template project to create new CDS/D365 Solution leveraging a lighweig
 1.  Download and **Run** the [Provision.ps1](https://github.com/dylanhaskins/PowerPlatformCICD/raw/master/Provision.ps1) PowerShell Script (Right-Click -> Save Link As)
 
 
-[For more details go through the Getting started guide](https://github.com/dylanhaskins/PowerPlatformCICD/wiki/Getting-started)
+[For more details go through the Getting started guide](https://github.com/dylanhaskins/PowerPlatformCICD/wiki/)
 
 # Optional Steps
 1.  Update Plugins and Workflows Projects Namespace and Assembly Names in Properties
