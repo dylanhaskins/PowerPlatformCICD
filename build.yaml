@@ -66,12 +66,13 @@ stages:
               targetType: filePath
               filePath: 'Solutions/Scripts/SolutionPack.ps1'
 
-          - task: CopyFiles@2
-            displayName: 'Copy Reference Data to: $(build.artifactstagingdirectory)'
+          - task: ArchiveFiles@2
+            displayName: 'Archive Reference Data to: $(build.artifactstagingdirectory)'
             inputs:
-              SourceFolder: Solutions/ReferenceData
-              Contents: '*.xml'
-              TargetFolder: '$(build.artifactstagingdirectory)/data/'
+              rootFolderOrFile: 'Solutions/ReferenceData'
+              includeRootFolder: false
+              archiveFile: '$(build.artifactstagingdirectory)/PackageDeployer/bin/Release/PkgFolder/AddName.data.zip'
+              archiveType: zip
 
           - task: CopyFiles@2
             displayName: 'Copy Build Artifact to: $(build.artifactstagingdirectory)'

@@ -180,6 +180,7 @@ Write-Host "Updating ImportConfig.xml ..."
 Write-Host "Updating Build.yaml ..."
 
 (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceRepo",$adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
+(Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 
 Write-Host "Updating XrmContext.exe.config ..."
 

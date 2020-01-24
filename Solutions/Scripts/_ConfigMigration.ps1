@@ -1,3 +1,4 @@
+Write-Host("Exporting Configuration Data...")
 
 if (!$Credentials) {$Credentials = Get-Credential}
 if (!$conn) {$conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $global:ServerUrl}
@@ -10,8 +11,8 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch>
     <attribute name='parentbusinessunitid' />
 	<attribute name='description' />
   </entity>
-</fetch>") -DisablePluginsGlobally $true `
-|Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("")
+</fetch>") -DisablePluginsGlobally $true #`
+#|Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("")
 
 $packages.Data.InnerXml | Out-File -FilePath  ..\..\ReferenceData\data.xml
 $packages.Schema.InnerXml | Out-File -FilePath ..\..\ReferenceData\data_schema.xml

@@ -14,7 +14,6 @@ Write-Output($conn)
 & ((Split-Path $MyInvocation.InvocationName) + "\_ConfigMigration.ps1")
 
 ######################## Generate Types
-Write-Host("Cleaning up Context Files...")
 & ((Split-Path $MyInvocation.InvocationName) + "\_GenerateTypes.ps1")
 
 ######################## UPDATE VERSION
@@ -75,6 +74,7 @@ Export-CrmSolution -SolutionName $global:SolutionName -Managed -SolutionZipFileN
 
 ######################## EXTRACT SOLUTION
 
+$ErrorActionPreference = "SilentlyContinue"
 Remove-Item ..\..\package -Force -Recurse
 
 
