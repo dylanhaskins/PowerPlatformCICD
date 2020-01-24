@@ -2,7 +2,7 @@
 This is a Template project to Create new CDS/D365 Solutions leveraging a lighweight framework and CI/CD
 
 # Getting Started
-1.  Download and **Run** the [Provision.ps1](Provision.ps1) PowerShell Script (Right-Click -> Save Link As)
+1.  Download and **Run** the [Provision.ps1](https://github.com/dylanhaskins/PowerPlatformCICD/raw/master/Provision.ps1) PowerShell Script (Right-Click -> Save Link As)
 
 # Optional Steps
 1.  Update Plugins and Workflows Projects Namespace and Assembly Names in Properties
