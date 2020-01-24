@@ -341,3 +341,5 @@ healthchecksdb
 
 /Solutions/Scripts/Manual/Tools
 /Solutions/Scripts/Manual/nuget.exe
+
+.vscode/
