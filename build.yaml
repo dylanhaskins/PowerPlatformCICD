@@ -20,9 +20,13 @@ pr:
     - README.md
 
 variables:
-  BuildPlatform: 'any cpu'
-  BuildConfiguration: 'release'
-  Solution: '**\*.sln'
+  - name : BuildPlatform
+    value: 'any cpu'
+  - name : BuildConfiguration
+    value: 'release'
+  - name : Solution
+    value: '**\*.sln'
+  - group: replaceRepo.D365CDEnvironment
 
 stages:
   - stage: Build
@@ -89,3 +93,15 @@ stages:
             displayName: 'Publish Artifact: drop'
             inputs:
               PathtoPublish: '$(build.artifactstagingdirectory)'
+  - stage: Deployment
+    displayName: Deployment
+    jobs:
+      - job: DeployJob
+        displayName: Deployment Staging
+        steps:
+          - task: PowerShell@2
+            displayName: 'Deploy Solution'
+            inputs:
+              targetType: filePath
+              filePath: 'Solutions/Scripts/SolutionDeploy.ps1'
+              arguments: '-ServerUrl $(d365url) -UserName $(d365username) -Password $(d365password)'

@@ -225,6 +225,11 @@ Write-Host "Updating ImportConfig.xml ..."
 
 (Get-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml
 
+Write-Host "Updating Build.yaml ..."
+
+(Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceRepo",$adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
+
+
 Write-Host ""
 Write-Host "---- Please Select your Deployment Staging (CI/CD) Environment ------"
 $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
