@@ -129,55 +129,6 @@ $username =  $Credentials.GetNetworkCredential().UserName
 $password =  $Credentials.GetNetworkCredential().Password
 }
 
-#$CreateOrConnect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Environment or [S]elect and Existing One (Default [S])"
-#if ($CreateOrConnect -eq "C"){
-    #Write-Host("-------------------- NOTE -----------------")
-    #Write-Host("The New Environment will be Created as English and NZD without any Template Solutions (Sales, Service, Marketing etc.)")
-    #Write-Host("To change these values you can modify the New-CrmInstanceInfo line in Provision.ps1")
-    #Write-Host("-------------------------------------------")
-    #Install-Module Microsoft.Xrm.OnlineManagementAPI -Force
-
-#function Wait-OrgReady(
-    #[Int]$SleepDuration = 3
-#) {
-    #$completed = $false
-    #Write-Host "Waiting for org to be ready..."
-
-    #while ($completed -eq $false) {	
-        #Start-Sleep -Seconds 10
-        #$conn2 = Connect-CrmOnline -Credential $Credentials -ServerUrl $ServerUrl 
-        #Write-Output($conn2)
-
-        #if ($conn2.IsReady -eq "True") {
-            #$completed = $true
-            #return $conn2
-        #}
-        #$conn2.Dispose()
-    #}
-#}
-
-#$Region = Read-Host -Prompt "Enter your Dynamics Region (i.e. crm6)"
-#$ApiUrl = "https://admin.services.$Region.dynamics.com"
-#$DevOrgName = Read-Host -Prompt "Enter a Name for the New Development Environment"
-#$ServiceVersion = Get-CrmServiceVersions -ApiUrl $ApiUrl -Credential $Credentials
-#$ServerUrl = "https://$DevOrgName.Replace(' ','').$Region.dynamics.com"
-
-#$NewInstance = New-CrmInstanceInfo -BaseLanguage 1033 -CurrencyCode "NZD" -DomainName $DevOrgName.Replace(' ','') -InitialUserEmail $username -ServiceVersionId $ServiceVersion.Id -InstanceType "Sandbox" -FriendlyName $DevOrgName
-#$Instance = New-CrmInstance -ApiUrl $ApiUrl -Credential $Credentials -NewInstanceInfo $NewInstance
-#Write-Host($Instance)
-#$conn = Wait-OrgReady
-
-#$PublisherName = Read-Host -Prompt "Enter a Name for your Solution Publisher"
-#$PublisherPrefix = Read-Host -Prompt "Enter a Publisher Prefix"
-
-#$PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','').ToLower();"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix}
-
-#$SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"
-#$PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $PublisherId.Guid
-#$SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','').ToLower();"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
-#$chosenSolution = $SolutionName.Replace(' ','').ToLower()
-#}
-#else{
     Write-Host ""
     Write-Host "---- Please Select your Development Environment ------"
     $conn = Connect-CrmOnlineDiscovery -Credential $Credentials
@@ -254,6 +205,19 @@ az pipelines variable-group variable create --name d365url --value $connCICD.Con
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
 }
+
+$sourceFile = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/master/Provision.ps1"
+Set-Content .\SourceFile.ps1 -Value $sourceFile.Content
+
+If((Get-FileHash .\Provision.ps1).Hash -ne (Get-FileHash .\SourceFile.ps1))
+{
+ Write-Host "Provisioning File not up to Date, getting latest Version..."
+ Start-Sleep 5
+ Move-Item .\SourceFile.ps1 .\Provision.ps1 -Force
+ .\Provision.ps1
+ exit
+}
+
 
 $message = @"
 ____                          ____  _       _    __                        ____              ___            
