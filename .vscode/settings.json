@@ -1,7 +1,0 @@
-{
-    "azureFunctions.deploySubpath": "Webhooks/bin/Release/net461/publish",
-    "azureFunctions.projectLanguage": "C#",
-    "azureFunctions.projectRuntime": "~1",
-    "debug.internalConsoleOptions": "neverOpen",
-    "azureFunctions.preDeployTask": "publish"
-}
