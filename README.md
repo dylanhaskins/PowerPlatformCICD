@@ -12,4 +12,4 @@ This is a Template project to create new CDS/D365 Solution leveraging a lighweig
 1.	Build Solution
 1.  Commit and Sync
 
-(Getting started guide)[https://github.com/dylanhaskins/PowerPlatformCICD/wiki/Getting-started]
+[Getting started guide](https://github.com/dylanhaskins/PowerPlatformCICD/wiki/Getting-started)
