@@ -69,25 +69,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="babel.config.js" />
-    <Content Include="jest.config.js" />
     <Content Include="src\library\dg.xrmquery.rest.js" />
     <Content Include="src\library\dg.xrmquery.rest.min.js" />
     <Content Include="src\library\dg.xrmquery.web.js" />
     <Content Include="src\library\dg.xrmquery.web.min.js" />
     <Content Include="src\library\dg.xrmquery.web.promise.min.js" />
     <Content Include="Web.config" />
-    <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
-    <Content Include="package.json" />
     <None Include="packages.config" />
     <Content Include="tsconfig.json" />
-    <Content Include="tslint.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

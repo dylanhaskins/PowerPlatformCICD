@@ -9,21 +9,6 @@
     <Import_RootNamespace>Entities</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="$(MSBuildThisFileDirectory)Context\placeholder.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Context\Account.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Context\ActivityParty.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Context\ActivityPointer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Context\BusinessUnit.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Context\Contact.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Context\devops_EntityA.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Context\devops_EntityB.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Context\GlobalOptionSets.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Context\SystemUser.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Context\Team.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Context\TeamMembership.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Context\XrmContext.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Context\XrmExtensions.cs" />
+    <Folder Include="$(MSBuildThisFileDirectory)Context\" />
   </ItemGroup>
 </Project>

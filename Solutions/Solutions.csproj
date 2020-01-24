@@ -72,15 +72,6 @@
     <Content Include="ReferenceData\data_schema.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="staticData\data.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="staticData\data_schema.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="staticData\[Content_Types].xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="XrmContext\FSharp.Core.dll" />
     <Content Include="XrmContext\Microsoft.Crm.Sdk.Proxy.dll" />
     <Content Include="XrmContext\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
