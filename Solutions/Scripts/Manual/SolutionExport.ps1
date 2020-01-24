@@ -2,7 +2,7 @@
 . ".\\..\_SetupTools.ps1"
 . ".\\..\_Config.ps1"
 
-InstallXrmModule
+InstallDataXrmModule
 InstallCoreTools
 
 ######################## GET CONNECTION

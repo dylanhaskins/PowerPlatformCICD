@@ -67,17 +67,6 @@ namespace CCMS.Core.PackageDeployer
             base.RunSolutionUpgradeMigrationStep(solutionName, oldVersion, newVersion, oldSolutionId, newSolutionId);
         }
 
-        private class OrgFriendlyNames
-        {
-            public const string Dev = "CCMS DEV 01";
-            public const string Staging = "CCMS Deployment Staging";
-            public const string Dev02 = "CCMS DEV 02";
-            public const string CoreDev = "CCMS Core Dev 01";
-            public const string PortalDev = "CCMS Portal DEV 01";
-            public const string Test = "CCMS Test 01";
-            public const string QA = "CCMS QA 01";
-        }
-
         #region Properties
 
         /// <summary>

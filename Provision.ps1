@@ -99,6 +99,7 @@ else {
 
 Write-Host ""
 $adoRepo = Read-Host -Prompt "Enter the name for the Repository you wish to Create"
+$adoRepo = $adoRepo.Replace(' ','')
 
 az devops configure --defaults organization=https://dev.azure.com/$adoOrg project=$adoProject
 
@@ -129,57 +130,8 @@ $username =  $Credentials.GetNetworkCredential().UserName
 $password =  $Credentials.GetNetworkCredential().Password
 }
 
-#$CreateOrConnect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Environment or [S]elect and Existing One (Default [S])"
-#if ($CreateOrConnect -eq "C"){
-    #Write-Host("-------------------- NOTE -----------------")
-    #Write-Host("The New Environment will be Created as English and NZD without any Template Solutions (Sales, Service, Marketing etc.)")
-    #Write-Host("To change these values you can modify the New-CrmInstanceInfo line in Provision.ps1")
-    #Write-Host("-------------------------------------------")
-    #Install-Module Microsoft.Xrm.OnlineManagementAPI -Force
-
-#function Wait-OrgReady(
-    #[Int]$SleepDuration = 3
-#) {
-    #$completed = $false
-    #Write-Host "Waiting for org to be ready..."
-
-    #while ($completed -eq $false) {	
-        #Start-Sleep -Seconds 10
-        #$conn2 = Connect-CrmOnline -Credential $Credentials -ServerUrl $ServerUrl 
-        #Write-Output($conn2)
-
-        #if ($conn2.IsReady -eq "True") {
-            #$completed = $true
-            #return $conn2
-        #}
-        #$conn2.Dispose()
-    #}
-#}
-
-#$Region = Read-Host -Prompt "Enter your Dynamics Region (i.e. crm6)"
-#$ApiUrl = "https://admin.services.$Region.dynamics.com"
-#$DevOrgName = Read-Host -Prompt "Enter a Name for the New Development Environment"
-#$ServiceVersion = Get-CrmServiceVersions -ApiUrl $ApiUrl -Credential $Credentials
-#$ServerUrl = "https://$DevOrgName.Replace(' ','').$Region.dynamics.com"
-
-#$NewInstance = New-CrmInstanceInfo -BaseLanguage 1033 -CurrencyCode "NZD" -DomainName $DevOrgName.Replace(' ','') -InitialUserEmail $username -ServiceVersionId $ServiceVersion.Id -InstanceType "Sandbox" -FriendlyName $DevOrgName
-#$Instance = New-CrmInstance -ApiUrl $ApiUrl -Credential $Credentials -NewInstanceInfo $NewInstance
-#Write-Host($Instance)
-#$conn = Wait-OrgReady
-
-#$PublisherName = Read-Host -Prompt "Enter a Name for your Solution Publisher"
-#$PublisherPrefix = Read-Host -Prompt "Enter a Publisher Prefix"
-
-#$PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','').ToLower();"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix}
-
-#$SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"
-#$PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $PublisherId.Guid
-#$SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','').ToLower();"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
-#$chosenSolution = $SolutionName.Replace(' ','').ToLower()
-#}
-#else{
     Write-Host ""
-    Write-Host "---- Please Select you Development Environment ------"
+    Write-Host "---- Please Select your Development Environment ------"
     $conn = Connect-CrmOnlineDiscovery -Credential $Credentials
 
     $CreateOrSelect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Solution or [S]elect an Existing One (Default [S])"
@@ -225,6 +177,11 @@ Write-Host "Updating ImportConfig.xml ..."
 
 (Get-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml
 
+Write-Host "Updating Build.yaml ..."
+
+(Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceRepo",$adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
+
+
 Write-Host ""
 Write-Host "---- Please Select your Deployment Staging (CI/CD) Environment ------"
 $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
@@ -236,19 +193,23 @@ git commit -m "Initial Commit"
 git push origin master
 
 
-$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
-
-$varGroup = az pipelines variable-group create --name "$adoRepo.D365DevEnvironment"  --variables d365username=$username | ConvertFrom-Json
+$varGroup = az pipelines variable-group create --name "$adoRepo.D365DevEnvironment"  --variables d365username=$username --authorize $true | ConvertFrom-Json
 az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroup.id
 az pipelines variable-group variable create --name d365url --value $conn.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroup.id
 
-$varGroupCICD = az pipelines variable-group create --name "$adoRepo.D365CDEnvironment"  --variables d365username=$username | ConvertFrom-Json
+$varGroupCICD = az pipelines variable-group create --name "$adoRepo.D365CDEnvironment"  --variables d365username=$username --authorize $true| ConvertFrom-Json
 az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroupCICD.id
 az pipelines variable-group variable create --name d365url --value $connCICD.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroupCICD.id
+
+$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
 
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
 }
+
+$sourceFile = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/master/Provision.ps1"
+Set-Content .\Provision.ps1 -Value $sourceFile.Content
+
 
 $message = @"
 ____                          ____  _       _    __                        ____              ___            
@@ -260,11 +221,26 @@ ____                          ____  _       _    __                        ____ 
 
 
 
-Welcome to the Power Platform DevOps provisioning script. This script will install the Pre-Requisites (git and Azure CLI)
+Welcome to the Power Platform DevOps provisioning script. This script will perform the followin steps :
 
-You will also need to have an Azure DevOps organisation to use, if you don't have one, please create one at https://dev.azure.com
-
-You will need a Power Platform tenant, if you don't have one, please create one at https://powerapps.microsoft.com/
+ - Install the Pre-Requisites (git and Azure CLI) if required
+ - Connect to Azure DevOps (You will need to have an Azure DevOps organisation to use, if you don't have one, please create one at https://dev.azure.com)
+ - Allow you to Create a New Project in Azure DevOps or to Select an existing one
+ - Create a New Git Repository in the Project to store your Source Code (and D365 / CDS Solutions and Data)
+ - Clone the Template Repository into your new Azure DevOps repository
+ - Clone your new repository locally to <root>\Dev\Repos
+ - Connect to your Power Platform tenant (You will need a Power Platform tenant, if you don't have one, please create one at https://powerapps.microsoft.com/)
+ - Connect to your Power Platform Development Instance / Environment (If you don't have an instance to Develop in, please create one at https://admin.powerplatform.microsoft.com)
+    - You can either select an Existing Unamanged Solution (if you have already started customisation OR
+    - Create a new Publisher and Solution
+- Connect to your Power Platform Deployment Instance (If you don't have an instance to Continuously Deploy to, please create one at https://admin.powerplatform.microsoft.com)
+- Update your Solution Verion number
+- Export and UnManaged and Managed version of your Solution
+- Unpack the Solutions with Solution Packager
+- Commit Solution to Source Control and sync to your Azure DevOps repo
+- Create an Azure DevOps Multi-Stage Pipeline to Build and Continuously Deploy your Code
+- Create Variable Groups in Azure DevOps with your Power Platform details and secrets
+- Open the Repo and Pipeline in the Browser (and complete the initial Build)       
 
 
 "@

@@ -1,60 +1,19 @@
 ﻿Param(
-    [string] [Parameter(Mandatory = $true)] $ServerUrl,
+    [string] [Parameter(Mandatory = $true)] $DeployServerUrl,
     [string] [Parameter(Mandatory = $true)] $UserName,
-    [string] [Parameter(Mandatory = $true)] $Password
+    [string] [Parameter(Mandatory = $true)] $Password,
+    [string] [Parameter(Mandatory = $true)] $PipelinePath
 )
 
-
-function Install-XrmModule {
-    Write-Host "Installing Package"
-
-    $currentFolder = Get-Location
-    cd $currentFolder
-    $sourceNugetExe = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
-    $targetNugetExe = ".\nuget.exe"
-    Remove-Item .\Tools -Force -Recurse -ErrorAction Ignore
-    Invoke-WebRequest $sourceNugetExe -OutFile $targetNugetExe
-    Set-Alias nuget $targetNugetExe -Scope Global -Verbose
-
-    ##
-    ##Specify the NuGet package source
-    ##
-    $nugetPackageSource = "https://api.nuget.org/v3/index.json"
-
-    ##
-    ##Download XRM Tooling PowerShell cmdlets
-    ##
-    ./nuget install -source $nugetPackageSource Microsoft.CrmSdk.XrmTooling.PackageDeployment.PowerShell -O .\Tools
-    md .\Tools\XRMToolingPowerShell
-    $cmdletFolder = Get-ChildItem ./Tools | Where-Object { $_.Name -match 'Microsoft.CrmSdk.XrmTooling.PackageDeployment.PowerShell.' }
-    Write-Host $cmdletFolder
-    move .\Tools\$cmdletFolder\tools\*.* .\Tools\XRMToolingPowerShell
-    Remove-Item .\Tools\$cmdletFolder -Force -Recurse
-
-
-    ##
-    ##Remove NuGet.exe
-    ##
-    Remove-Item nuget.exe
-
-    $crmToolingConnector = (Get-Location).Path + "\Tools\XRMToolingPowerShell\Microsoft.Xrm.Tooling.PackageDeployment.Powershell\Microsoft.Xrm.Tooling.CrmConnector.Powershell.dll"
-    $crmToolingDeployment = (Get-Location).Path + "\Tools\XRMToolingPowerShell\Microsoft.Xrm.Tooling.PackageDeployment.Powershell\Microsoft.Xrm.Tooling.PackageDeployment.Powershell.dll"
-    
-
-    Write-Verbose "Importing: $crmToolingConnector" 
-    Import-Module $crmToolingConnector
-    Write-Verbose "Imported: $crmToolingConnector"
-
-    Write-Verbose "Importing: $crmToolingDeployment" 
-    Import-Module $crmToolingDeployment
-    Write-Verbose "Imported: $crmToolingDeployment"
-}
+######################## SETUP 
+. "$PipelinePath\drop\Solutions\bin\Release\Scripts\_SetupTools.ps1"
+. "$PipelinePath\drop\Solutions\bin\Release\Scripts\_Config.ps1"
 
 function Import-Package {
-    [string]$PackageName = "CCMSPortalDeploymentPackage.dll"
-    [string]$PackageDirectory = "$env:SYSTEM_DEFAULTWORKINGDIRECTORY/$env:RELEASE_PRIMARYARTIFACTSOURCEALIAS/drop/PackageDeployer/bin/Release"
+    [string]$PackageName = "PackageDeployer.dll"
+    [string]$PackageDirectory = "$PipelinePath/drop/PackageDeployer/bin/Release"
     [string]$LogsDirectory = "$PackageDirectory"
-    [string]$CrmConnectionString = "AuthType=Office365;Username=$UserName; Password=$Password;Url=$ServerUrl"
+    [string]$CrmConnectionString = "AuthType=Office365;Username=$UserName; Password=$Password;Url=$DeployServerUrl"
     
     Write-Host $PackageName
     Write-Host $PackageDirectory
@@ -114,5 +73,6 @@ function Import-Package {
     Write-Host "Import Complete."
 }
 
-Install-XrmModule
+InstallXrmDeployModule
+InstallXrmDataModule
 Import-Package
