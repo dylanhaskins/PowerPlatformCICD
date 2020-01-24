@@ -36,7 +36,7 @@
             Create multiple entries for different profiles
             */
             "profile": "default,debug",
-            "assemblypath": "bin\\Debug"
+            "assemblypath": "..\\Plugins\\bin\\Debug"
             /*
             Optional - defines the regex to use to detect a plugin or workflow activity when using a custom base class
             */
