@@ -212,7 +212,7 @@ Set-Content .\SourceFile.ps1 -Value $sourceFile.Content
 If((Get-FileHash .\Provision.ps1).Hash -ne (Get-FileHash .\SourceFile.ps1))
 {
  Write-Host "Provisioning File not up to Date, getting latest Version..."
- Start-Sleep 5
+ Start-Sleep 2
  Move-Item .\SourceFile.ps1 .\Provision.ps1 -Force
  .\Provision.ps1
  exit
