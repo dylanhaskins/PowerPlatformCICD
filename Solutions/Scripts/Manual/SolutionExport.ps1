@@ -1,6 +1,6 @@
 ﻿######################## SETUP 
-& ".\\..\_SetupTools.ps1"
-& ".\\..\_Config.ps1"
+. ".\\..\_SetupTools.ps1"
+. ".\\..\_Config.ps1"
 
 InstallXrmModule
 InstallCoreTools

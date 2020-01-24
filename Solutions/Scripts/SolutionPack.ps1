@@ -1,6 +1,6 @@
 ﻿######################## SETUP 
-& "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\Scripts\_SetupTools.ps1"
-& "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\Scripts\_Config.ps1"
+. "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\Scripts\_SetupTools.ps1"
+. "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\Scripts\_Config.ps1"
 
 InstallCoreTools
 
