@@ -111,7 +111,7 @@ chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
 
 Write-Host ""
 Write-Host ""
-$quit = Read-Host -Prompt "Press Enter to Connect to your CDS / D365 Instance or [Q]uit"
+$quit = Read-Host -Prompt "Press Enter to Connect to your CDS / D365 Tenant or [Q]uit"
 if ($quit -eq "Q")
 {
     exit
@@ -129,30 +129,101 @@ $username =  $Credentials.GetNetworkCredential().UserName
 $password =  $Credentials.GetNetworkCredential().Password
 }
 
-$conn = Connect-CrmOnlineDiscovery -Credential $Credentials
+#$CreateOrConnect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Environment or [S]elect and Existing One (Default [S])"
+#if ($CreateOrConnect -eq "C"){
+    #Write-Host("-------------------- NOTE -----------------")
+    #Write-Host("The New Environment will be Created as English and NZD without any Template Solutions (Sales, Service, Marketing etc.)")
+    #Write-Host("To change these values you can modify the New-CrmInstanceInfo line in Provision.ps1")
+    #Write-Host("-------------------------------------------")
+    #Install-Module Microsoft.Xrm.OnlineManagementAPI -Force
 
-$solutionFetch = @"
-<fetch>
-  <entity name='solution' >
-    <filter type='and' >
-      <condition attribute='ismanaged' operator='eq' value='0' />
-      <condition attribute='isvisible' operator='eq' value='1' />
-    </filter>
-  </entity>
-</fetch>
+#function Wait-OrgReady(
+    #[Int]$SleepDuration = 3
+#) {
+    #$completed = $false
+    #Write-Host "Waiting for org to be ready..."
+
+    #while ($completed -eq $false) {	
+        #Start-Sleep -Seconds 10
+        #$conn2 = Connect-CrmOnline -Credential $Credentials -ServerUrl $ServerUrl 
+        #Write-Output($conn2)
+
+        #if ($conn2.IsReady -eq "True") {
+            #$completed = $true
+            #return $conn2
+        #}
+        #$conn2.Dispose()
+    #}
+#}
+
+#$Region = Read-Host -Prompt "Enter your Dynamics Region (i.e. crm6)"
+#$ApiUrl = "https://admin.services.$Region.dynamics.com"
+#$DevOrgName = Read-Host -Prompt "Enter a Name for the New Development Environment"
+#$ServiceVersion = Get-CrmServiceVersions -ApiUrl $ApiUrl -Credential $Credentials
+#$ServerUrl = "https://$DevOrgName.Replace(' ','').$Region.dynamics.com"
+
+#$NewInstance = New-CrmInstanceInfo -BaseLanguage 1033 -CurrencyCode "NZD" -DomainName $DevOrgName.Replace(' ','') -InitialUserEmail $username -ServiceVersionId $ServiceVersion.Id -InstanceType "Sandbox" -FriendlyName $DevOrgName
+#$Instance = New-CrmInstance -ApiUrl $ApiUrl -Credential $Credentials -NewInstanceInfo $NewInstance
+#Write-Host($Instance)
+#$conn = Wait-OrgReady
+
+#$PublisherName = Read-Host -Prompt "Enter a Name for your Solution Publisher"
+#$PublisherPrefix = Read-Host -Prompt "Enter a Publisher Prefix"
+
+#$PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','').ToLower();"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix}
+
+#$SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"
+#$PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $PublisherId.Guid
+#$SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','').ToLower();"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
+#$chosenSolution = $SolutionName.Replace(' ','').ToLower()
+#}
+#else{
+    Write-Host ""
+    Write-Host "---- Please Select you Development Environment ------"
+    $conn = Connect-CrmOnlineDiscovery -Credential $Credentials
+
+    $CreateOrSelect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Solution or [S]elect an Existing One (Default [S])"
+if ($CreateOrSelect -eq "C"){
+    $PublisherName = Read-Host -Prompt "Enter a Name for your Solution Publisher"
+    $PublisherPrefix = Read-Host -Prompt "Enter a Publisher Prefix"
+
+    $PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','').ToLower();"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix}
+
+    $SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"
+    $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $PublisherId.Guid
+    $SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','').ToLower();"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
+    $chosenSolution = $SolutionName.Replace(' ','').ToLower()
+    }
+    else{
+
+    $solutionFetch = @"
+    <fetch>
+    <entity name='solution' >
+        <filter type='and' >
+        <condition attribute='ismanaged' operator='eq' value='0' />
+        <condition attribute='isvisible' operator='eq' value='1' />
+        </filter>
+    </entity>
+    </fetch>
 "@
 
-$solutions = (Get-CrmRecordsByFetch -conn $conn -Fetch $solutionFetch).CrmRecords
+    $solutions = (Get-CrmRecordsByFetch -conn $conn -Fetch $solutionFetch).CrmRecords
 
-$choiceIndex = 0
-$options = $solutions | ForEach-Object { New-Object System.Management.Automation.Host.ChoiceDescription "&$($choiceIndex) - $($_.uniquename)"; $choiceIndex++ }
-$chosenIndex = $host.ui.PromptForChoice("Solution", "Select the Solution you wish to use", $options, 0)
-$chosenSolution = $solutions[$chosenIndex].uniquename
+    $choiceIndex = 0
+    $options = $solutions | ForEach-Object { New-Object System.Management.Automation.Host.ChoiceDescription "&$($choiceIndex) - $($_.uniquename)"; $choiceIndex++ }
+    $chosenIndex = $host.ui.PromptForChoice("Solution", "Select the Solution you wish to use", $options, 0)
+    $chosenSolution = $solutions[$chosenIndex].uniquename
+}
+#}
 
 Write-Host "Updating config.json ..."
 
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
+
+Write-Host ""
+Write-Host "---- Please Select your Deployment Staging (CI/CD) Environment ------"
+$connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
 
 & ".\\SolutionExport.ps1"
 
@@ -163,9 +234,13 @@ git push origin master
 
 $pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
 
-$varGroup = az pipelines variable-group create --name "$adoRepo.D365Environment"  --variables d365username=$username | ConvertFrom-Json
+$varGroup = az pipelines variable-group create --name "$adoRepo.D365DevEnvironment"  --variables d365username=$username | ConvertFrom-Json
 az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroup.id
 az pipelines variable-group variable create --name d365url --value $conn.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroup.id
+
+$varGroupCICD = az pipelines variable-group create --name "$adoRepo.D365CDEnvironment"  --variables d365username=$username | ConvertFrom-Json
+az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroup.id
+az pipelines variable-group variable create --name d365url --value $connCICD.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroup.id
 
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
