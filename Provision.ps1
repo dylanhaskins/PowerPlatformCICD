@@ -239,7 +239,7 @@ Welcome to the Power Platform DevOps provisioning script. This script will perfo
 - Commit Solution to Source Control and sync to your Azure DevOps repo
 - Create an Azure DevOps Multi-Stage Pipeline to Build and Continuously Deploy your Code
 - Create Variable Groups in Azure DevOps with your Power Platform details and secrets
-- Open the Repo and Pipeline in the Browser (and complete the initial Build)        
+- Open the Repo and Pipeline in the Browser (and complete the initial Build)  ...      
 
 
 "@
