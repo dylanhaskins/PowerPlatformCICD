@@ -180,7 +180,7 @@ $password =  $Credentials.GetNetworkCredential().Password
 #else{
     Write-Host ""
     Write-Host "---- Please Select you Development Environment ------"
-    $conn = Connect-CrmOnlineDiscovery -Credential $Credentials -Verbose $false
+    $conn = Connect-CrmOnlineDiscovery -Credential $Credentials
 
     $CreateOrSelect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Solution or [S]elect an Existing One (Default [S])"
 if ($CreateOrSelect -eq "C"){
