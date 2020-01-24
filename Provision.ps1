@@ -265,11 +265,26 @@ ____                          ____  _       _    __                        ____ 
 
 
 
-Welcome to the Power Platform DevOps provisioning script. This script will install the Pre-Requisites (git and Azure CLI)
+Welcome to the Power Platform DevOps provisioning script. This script will perform the followin steps :
 
-You will also need to have an Azure DevOps organisation to use, if you don't have one, please create one at https://dev.azure.com
-
-You will need a Power Platform tenant, if you don't have one, please create one at https://powerapps.microsoft.com/
+ - Install the Pre-Requisites (git and Azure CLI) if required
+ - Connect to Azure DevOps (You will need to have an Azure DevOps organisation to use, if you don't have one, please create one at https://dev.azure.com)
+ - Allow you to Create a New Project in Azure DevOps or to Select an existing one
+ - Create a New Git Repository in the Project to store your Source Code (and D365 / CDS Solutions and Data)
+ - Clone the Template Repository into your new Azure DevOps repository
+ - Clone your new repository locally to <root>\Dev\Repos
+ - Connect to your Power Platform tenant (You will need a Power Platform tenant, if you don't have one, please create one at https://powerapps.microsoft.com/)
+ - Connect to your Power Platform Development Instance / Environment (If you don't have an instance to Develop in, please create one at https://admin.powerplatform.microsoft.com)
+    - You can either select an Existing Unamanged Solution (if you have already started customisation OR
+    - Create a new Publisher and Solution
+- Connect to your Power Platform Deployment Instance (If you don't have an instance to Continuously Deploy to, please create one at https://admin.powerplatform.microsoft.com)
+- Update your Solution Verion number
+- Export and UnManaged and Managed version of your Solution
+- Unpack the Solutions with Solution Packager
+- Commit Solution to Source Control and sync to your Azure DevOps repo
+- Create an Azure DevOps Multi-Stage Pipeline to Build and Continuously Deploy your Code
+- Create Variable Groups in Azure DevOps with your Power Platform details and secrets
+- Open the Repo and Pipeline in the Browser (and complete the initial Build)        
 
 
 "@

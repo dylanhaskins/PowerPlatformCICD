@@ -104,4 +104,4 @@ stages:
             inputs:
               targetType: filePath
               filePath: 'Solutions/Scripts/SolutionDeploy.ps1'
-              arguments: '-ServerUrl $(d365url) -UserName $(d365username) -Password $(d365password)'
+              arguments: '-DeployServerUrl $(d365url) -UserName $(d365username) -Password $(d365password)'

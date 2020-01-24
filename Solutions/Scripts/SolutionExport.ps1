@@ -2,7 +2,7 @@
 . ((Split-Path $MyInvocation.InvocationName) + "\_SetupTools.ps1")
 . ((Split-Path $MyInvocation.InvocationName) + "\_Config.ps1")
 
-InstallXrmModule
+InstallXrmDataModule
 InstallCoreTools
 
 ######################## GET CONNECTION
