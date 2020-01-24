@@ -207,17 +207,7 @@ az pipelines show --id $pipeline.definition.id --open
 }
 
 $sourceFile = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/master/Provision.ps1"
-Set-Content .\SourceFile.ps1 -Value $sourceFile.Content
-
-If((Get-FileHash .\Provision.ps1).Hash -ne (Get-FileHash .\SourceFile.ps1))
-{
- Write-Host "Provisioning File not up to Date, getting latest Version..."
- Start-Sleep 2
- Move-Item .\SourceFile.ps1 .\Provision.ps1 -Force
-
- start powershell { .\Provision.ps1}
- exit
-}
+Set-Content .\Provision.ps1 -Value $sourceFile.Content
 
 
 $message = @"
