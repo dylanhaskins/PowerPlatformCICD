@@ -66,13 +66,6 @@ stages:
           - task: CopyFiles@2
             displayName: 'Copy Reference Data to: $(build.artifactstagingdirectory)'
             inputs:
-              SourceFolder: Solutions
-              Contents: '*.zip'
-              TargetFolder: '$(build.artifactstagingdirectory)/packages/'
-
-          - task: CopyFiles@2
-            displayName: 'Copy Reference Data to: $(build.artifactstagingdirectory)'
-            inputs:
               SourceFolder: Solutions/ReferenceData
               Contents: '*.xml'
               TargetFolder: '$(build.artifactstagingdirectory)/data/'

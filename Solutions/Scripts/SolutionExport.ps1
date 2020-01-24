@@ -55,7 +55,7 @@ if ($PatchSolution) {
 
 #Major.Minor.Build.Revision = TargetProductionDrop.Year+DayofYear.PatchNumber.BuildTime
 $theVersion = [version]$SolutionVersion
-$newVersion = "{0}.{1}.{2}.{3}" -f $theVersion.Major, (Get-Date -UFormat %y%j), $theVersion.Build , (Get-Date -UFormat %H%M)
+$newVersion = "{0}.{1}{2}.{3}.{4}" -f $theVersion.Major, (Get-Date -UFormat %y),(Get-Date -UFormat %j).PadLeft(3,'0'), $theVersion.Build , (Get-Date -UFormat %H%M)
 if ($PatchSolution) {
 	$newVersion = "{0}.{1}.{2}.{3}" -f $theVersion.Major, $theVersion.Minor, $theVersion.Build , $theVersion.Revision + 1
 }

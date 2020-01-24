@@ -221,6 +221,10 @@ Write-Host "Updating config.json ..."
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 
+Write-Host "Updating ImportConfig.xml ..."
+
+(Get-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml
+
 Write-Host ""
 Write-Host "---- Please Select your Deployment Staging (CI/CD) Environment ------"
 $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
@@ -239,8 +243,8 @@ az pipelines variable-group variable create --name d365password --value $passwor
 az pipelines variable-group variable create --name d365url --value $conn.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroup.id
 
 $varGroupCICD = az pipelines variable-group create --name "$adoRepo.D365CDEnvironment"  --variables d365username=$username | ConvertFrom-Json
-az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroup.id
-az pipelines variable-group variable create --name d365url --value $connCICD.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroup.id
+az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroupCICD.id
+az pipelines variable-group variable create --name d365url --value $connCICD.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroupCICD.id
 
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open

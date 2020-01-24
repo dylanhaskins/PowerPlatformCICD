@@ -20,7 +20,7 @@ if (Test-Path $env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\packagePatch\Other\S
 }
 
 
-&.\Tools\SolutionPackager.exe /action:pack /folder:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\$packageFolder /zipfile:"$env:SYSTEM_DEFAULTWORKINGDIRECTORY\$global:SolutionName.zip" /packagetype:Both /map:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\map.xml 
+&.\Tools\SolutionPackager.exe /action:pack /folder:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\$packageFolder /zipfile:"$env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\PkgFolder\$global:SolutionName.zip" /packagetype:Both /map:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\map.xml 
 
 Remove-Item nuget.exe
 Remove-Item .\Tools -Force -Recurse -ErrorAction Ignore
