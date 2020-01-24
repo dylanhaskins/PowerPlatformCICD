@@ -70,7 +70,7 @@ az extension add --name azure-devops
 $ErrorActionPreference = "SilentlyContinue"
 Remove-Item AzureCli.msi
 
-$adoOrg = Read-Host -Prompt "Enter the name of your Azure DevOps Organization (https://dev.azure.com/<Name>)"
+$adoOrg = Read-Host -Prompt "Enter the name of your Azure DevOps Organisation (https://dev.azure.com/<Name>)"
 
 $quit = Read-Host -Prompt "You will now be redirected to a Browser to Login to your Azure DevOps Organisation - Press Enter to Continue or [Q]uit"
 if ($quit -eq "Q")
@@ -181,6 +181,13 @@ Write-Host "Updating Build.yaml ..."
 
 (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceRepo",$adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 
+Write-Host "Updating XrmContext.exe.config ..."
+
+(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmContext\XrmContext.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmContext\XrmContext.exe.config
+
+Write-Host "Updating XrmDefinitelyTyped.exe.config ..."
+
+(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config
 
 Write-Host ""
 Write-Host "---- Please Select your Deployment Staging (CI/CD) Environment ------"
@@ -221,26 +228,26 @@ ____                          ____  _       _    __                        ____ 
 
 
 
-Welcome to the Power Platform DevOps provisioning script. This script will perform the followin steps :
+Welcome to the Power Platform DevOps provisioning script. This script will perform the following steps automatically :
 
  - Install the Pre-Requisites (git and Azure CLI) if required
  - Connect to Azure DevOps (You will need to have an Azure DevOps organisation to use, if you don't have one, please create one at https://dev.azure.com)
  - Allow you to Create a New Project in Azure DevOps or to Select an existing one
  - Create a New Git Repository in the Project to store your Source Code (and D365 / CDS Solutions and Data)
- - Clone the Template Repository into your new Azure DevOps repository
+ - Clone this Template Repository into your new Azure DevOps repository
  - Clone your new repository locally to <root>\Dev\Repos
  - Connect to your Power Platform tenant (You will need a Power Platform tenant, if you don't have one, please create one at https://powerapps.microsoft.com/)
- - Connect to your Power Platform Development Instance / Environment (If you don't have an instance to Develop in, please create one at https://admin.powerplatform.microsoft.com)
+ - Connect to your Power Platform Development Instance / Environment (If you don't have an instance to develop in, please create one at https://admin.powerplatform.microsoft.com)
     - You can either select an Existing Unamanged Solution (if you have already started customisation OR
     - Create a new Publisher and Solution
-- Connect to your Power Platform Deployment Instance (If you don't have an instance to Continuously Deploy to, please create one at https://admin.powerplatform.microsoft.com)
-- Update your Solution Verion number
-- Export and UnManaged and Managed version of your Solution
-- Unpack the Solutions with Solution Packager
-- Commit Solution to Source Control and sync to your Azure DevOps repo
-- Create an Azure DevOps Multi-Stage Pipeline to Build and Continuously Deploy your Code
-- Create Variable Groups in Azure DevOps with your Power Platform details and secrets
-- Open the Repo and Pipeline in the Browser (and complete the initial Build)       
+ - Connect to your Power Platform Deployment Instance (If you don't have an instance to Continuously Deploy to, please create one at https://admin.powerplatform.microsoft.com)
+ - Update your Solution Version number
+ - Export an Unmanaged and Managed version of your Solution
+ - Unpack the Solutions with Solution Packager
+ - Commit Solution to Source Control and sync to your Azure DevOps repo
+ - Create an Azure DevOps Multi-Stage Pipeline to Build and Continuously Deploy your Code and Solutions
+ - Create Variable Groups in Azure DevOps with your Power Platform details and credentials (stored as secrets)
+ - Open the Repo and Pipeline in the Browser (and complete the initial Build and Deploy)       
 
 
 "@
