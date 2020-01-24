@@ -1,6 +1,9 @@
 ﻿######################## SETUP 
-& ((Split-Path $MyInvocation.InvocationName) + "\_SetupTools.ps1")
-& ((Split-Path $MyInvocation.InvocationName) + "\_Config.ps1")
+. ((Split-Path $MyInvocation.InvocationName) + "\_SetupTools.ps1")
+. ((Split-Path $MyInvocation.InvocationName) + "\_Config.ps1")
+
+InstallXrmModule
+InstallCoreTools
 
 ######################## GET CONNECTION
 $Credentials = Get-Credential
