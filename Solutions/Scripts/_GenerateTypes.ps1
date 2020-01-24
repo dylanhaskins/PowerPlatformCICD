@@ -17,5 +17,5 @@ $password =  $Credentials.GetNetworkCredential().Password
 }
 
 
-..\..\XrmContext\XrmContext.exe /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /solutions:$global:SolutionName
-..\..\XrmDefinitelyTyped\XrmDefinitelyTyped.exe /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /solutions:$global:SolutionName
+..\..\XrmContext\XrmContext.exe /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /out:"../../../Entities/Context"
+..\..\XrmDefinitelyTyped\XrmDefinitelyTyped.exe /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /out:"../../../Webresources/typings/XRM" /jsLib:"../../../Webresources/src/library"
