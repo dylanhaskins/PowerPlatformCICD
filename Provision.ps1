@@ -99,6 +99,7 @@ else {
 
 Write-Host ""
 $adoRepo = Read-Host -Prompt "Enter the name for the Repository you wish to Create"
+$adoRepo = $adoRepo.Replace(' ','')
 
 az devops configure --defaults organization=https://dev.azure.com/$adoOrg project=$adoProject
 
