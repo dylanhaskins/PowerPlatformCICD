@@ -65,10 +65,10 @@ Set-CrmSolutionVersionNumber -conn $conn -SolutionName  $global:SolutionName -Ve
 
 ######################## EXPORT SOLUTION
 Write-Host "Exporting Unmanaged Solution"
-Export-CrmSolution -SolutionName $global:SolutionName -SolutionZipFileName "$global:SolutionName.zip"
+Export-CrmSolution -SolutionName $global:SolutionName -SolutionZipFileName "$global:SolutionName.zip" -conn $conn
 
 Write-Host "Exporting Managed Solution"
-Export-CrmSolution -SolutionName $global:SolutionName -Managed -SolutionZipFileName $global:SolutionName"_managed.zip"
+Export-CrmSolution -SolutionName $global:SolutionName -Managed -SolutionZipFileName $global:SolutionName"_managed.zip" -conn $conn
 
 ######################## EXTRACT SOLUTION
 
