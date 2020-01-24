@@ -9,6 +9,9 @@ namespace Plugins
 {
     public class SamplePlugin : IPlugin
     {
-        
+        public void Execute(IServiceProvider serviceProvider)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
