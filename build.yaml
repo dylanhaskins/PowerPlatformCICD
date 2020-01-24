@@ -88,20 +88,25 @@ stages:
               PublishSymbols: false
             continueOnError: true
 
-
-          - task: PublishBuildArtifacts@1
-            displayName: 'Publish Artifact: drop'
+          - task: PublishPipelineArtifact@1
+            displayName: 'Publish Artifact: mainbuild'
             inputs:
-              PathtoPublish: '$(build.artifactstagingdirectory)'
+              path: '$(build.artifactstagingdirectory)'
+              artifact: mainbuild
   - stage: Deployment
+  
     displayName: Deployment
     jobs:
       - job: DeployJob
         displayName: Deployment Staging
         steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifactName: mainbuild
+
           - task: PowerShell@2
             displayName: 'Deploy Solution'
             inputs:
               targetType: filePath
-              filePath: 'Solutions/Scripts/SolutionDeploy.ps1'
+              filePath: '$(Pipeline.Workspace)/mainbuild/Solutions/Scripts/SolutionDeploy.ps1'
               arguments: '-DeployServerUrl $(d365url) -UserName $(d365username) -Password $(d365password)'
