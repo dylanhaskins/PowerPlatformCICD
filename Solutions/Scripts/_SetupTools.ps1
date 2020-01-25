@@ -65,6 +65,18 @@ Write-host "Module $moduleName Found"
 }
 }
 
+function InstallPowerAppsCheckerModule{
+$moduleName = "Microsoft.PowerApps.Checker.PowerShell"
+if (!(Get-Module -ListAvailable -Name $moduleName )) {
+Write-host "Module $moduleName Not found, installing now"
+Install-Module -Name $moduleName -Force -Scope CurrentUser
+}
+else
+{
+Write-host "Module $moduleName Found"
+}
+}
+
 Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
 #InstallXrmModule
 #InstallToastModule

@@ -26,6 +26,7 @@ variables:
     value: 'release'
   - name : Solution
     value: '**\*.sln'
+  - group: replaceRepo.D365CDEnvironment
 
 stages:
   - stage: Build
@@ -71,10 +72,11 @@ stages:
               searchFolder: '$(System.DefaultWorkingDirectory)'
 
           - task: PowerShell@2
-            displayName: 'Pack Solution'
+            displayName: 'Pack Solution and Run Solution Checker'
             inputs:
               targetType: filePath
               filePath: 'Solutions/Scripts/SolutionPack.ps1'
+              arguments: '-aadTenant $(aadTenant) -aadPowerAppId $(aadPowerAppId) -aadPowerAppSecret $(aadPowerAppSecret)'
 
           - task: ArchiveFiles@2
             displayName: 'Archive Reference Data to: $(build.artifactstagingdirectory)'
