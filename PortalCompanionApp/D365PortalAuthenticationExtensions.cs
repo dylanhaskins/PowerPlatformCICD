@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
 using System;
-using System.IdentityModel.Tokens;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -50,7 +48,7 @@ namespace PortalCompanionApp
 
         }
 
-        private static async Task<Microsoft.IdentityModel.Tokens.SecurityKey> GetSecurityKey(string domain)
+        private static async Task<SecurityKey> GetSecurityKey(string domain)
         {
             var response = await _httpClient.GetAsync($"https://{domain}/_services/auth/publickey");
             var content = await response.Content.ReadAsStringAsync();
@@ -72,7 +70,7 @@ namespace PortalCompanionApp
             };
 
             rsa.ImportParameters(rsaParameters);
-            return new Microsoft.IdentityModel.Tokens.RsaSecurityKey(rsa);
+            return new RsaSecurityKey(rsa);
 
         }
     }
