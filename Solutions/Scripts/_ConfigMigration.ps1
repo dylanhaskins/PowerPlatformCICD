@@ -5,11 +5,25 @@ if (!$conn) {$conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $glob
 
 Write-Host "Generating data package"
 $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch>
-  <entity name='businessunit'>
-    <attribute name='businessunitid' />
-    <attribute name='name' />
-    <attribute name='parentbusinessunitid' />
-	<attribute name='description' />
+  <entity name='fax'>
+    <attribute name='subject' />
+    <attribute name='from' />
+    <attribute name='to' />
+    <attribute name='regardingobjectid' />
+    <attribute name='statecode' />
+    <attribute name='createdon' />
+    <attribute name='activityid' />
+    <order attribute='createdon' descending='true' />
+    <link-entity name='activityparty' from='activityid' to='activityid' link-type='inner' alias='ab'>
+      <filter type='and'>
+        <condition attribute='participationtypemask' operator='in'>
+          <value>1</value>
+          <value>2</value>
+          <value>9</value>
+        </condition>
+        <condition attribute='partyid' operator='eq-userid' />
+      </filter>
+    </link-entity>
   </entity>
 </fetch>") -DisablePluginsGlobally $true #`
 #|Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("")
