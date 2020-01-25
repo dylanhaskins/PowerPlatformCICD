@@ -29,6 +29,16 @@ $analyzeResult = Invoke-PowerAppsChecker -Geography Australia -ClientApplication
 
 Write-Output $analyzeResult.IssueSummary  
 
+if ($analyzeResult.IssueSummary.HighIssueCount -gt 0) {
+    $errorCount = $analyzeResult.IssueSummary.HighIssueCount
+    $errorMessage = @"
+    You have $errorCount High Issues in your Solution    
+    You can review the results by getting the output from $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\PkgFolder\CheckResults in the Pipeline Artifacts. Results can be analysed using http://sarifviewer.azurewebsites.net/
+"@
+    Write-Host "##[warning] $errorMessage"
+    Write-Host "##vso[task.logissue type=warning;] $errorMessage"    
+}
+
 if ($analyzeResult.IssueSummary.CriticalIssueCount -gt 0) {
     $errorCount = $analyzeResult.IssueSummary.CriticalIssueCount
     $errorMessage = @"
