@@ -32,11 +32,11 @@ Write-Output $analyzeResult.IssueSummary
 if ($analyzeResult.IssueSummary.CriticalIssueCount -gt 0) {
     $errorCount = $analyzeResult.IssueSummary.CriticalIssueCount
     $errorMessage = @"
-    You have $errorCount Critical Errors 
-    
+    You have $errorCount Critical Issues in your Solution    
     You can review the results by getting the output from $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\PkgFolder\CheckResults in the Pipeline Artifacts. Results can be analysed using http://sarifviewer.azurewebsites.net/
 "@
     Write-Host "##[error] $errorMessage"
+    Write-Host "##vso[task.logissue type=error;] $errorMessage"
     Write-Error $errorMessage
 }
 
