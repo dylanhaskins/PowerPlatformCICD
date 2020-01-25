@@ -38,6 +38,8 @@ Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "AzureResources", "AzureReso
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webhooks", "Webhooks\Webhooks.csproj", "{0B1EEFBA-472C-4F04-8BE6-33F8AC9B4CF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalCompanionApp", "PortalCompanionApp\PortalCompanionApp.csproj", "{3C8EE62E-2C3E-4C38-8261-6E5DBFAB369D}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Entities\Entities.projitems*{31ae8b67-1c3e-4202-87c8-3c2961195896}*SharedItemsImports = 13
@@ -114,6 +116,14 @@ Global
 		{0B1EEFBA-472C-4F04-8BE6-33F8AC9B4CF6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0B1EEFBA-472C-4F04-8BE6-33F8AC9B4CF6}.Service and UI Tests|Any CPU.ActiveCfg = Debug|Any CPU
 		{0B1EEFBA-472C-4F04-8BE6-33F8AC9B4CF6}.Service and UI Tests|Any CPU.Build.0 = Debug|Any CPU
+		{3C8EE62E-2C3E-4C38-8261-6E5DBFAB369D}.Core|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C8EE62E-2C3E-4C38-8261-6E5DBFAB369D}.Core|Any CPU.Build.0 = Debug|Any CPU
+		{3C8EE62E-2C3E-4C38-8261-6E5DBFAB369D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C8EE62E-2C3E-4C38-8261-6E5DBFAB369D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C8EE62E-2C3E-4C38-8261-6E5DBFAB369D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C8EE62E-2C3E-4C38-8261-6E5DBFAB369D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C8EE62E-2C3E-4C38-8261-6E5DBFAB369D}.Service and UI Tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C8EE62E-2C3E-4C38-8261-6E5DBFAB369D}.Service and UI Tests|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
