@@ -59,6 +59,16 @@ stages:
               platform: '$(BuildPlatform)'
               configuration: '$(BuildConfiguration)'
               msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)\\"'
+          
+          - task: VSTest@2
+            displayName: Run Unit and UI Tests
+            inputs:
+              testSelector: 'testAssemblies'
+              testAssemblyVer2: |
+                **\*test*.dll
+                !**\*TestAdapter.dll
+                !**\obj\**
+              searchFolder: '$(System.DefaultWorkingDirectory)'
 
           - task: PowerShell@2
             displayName: 'Pack Solution'
