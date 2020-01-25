@@ -98,7 +98,7 @@ else {
 }
 
 Write-Host ""
-$adoRepo = Read-Host -Prompt "Enter the name for the Repository you wish to Create"
+$adoRepo = Read-Host -Prompt "Enter the name for the Git Repository you wish to Create"
 $adoRepo = $adoRepo.Replace(' ','')
 
 az devops configure --defaults organization=https://dev.azure.com/$adoOrg project=$adoProject
@@ -108,10 +108,15 @@ az repos import create --git-source-url https://github.com/dylanhaskins/PowerPla
 
 git clone $repo.webUrl \Dev\Repos\$adoRepo
 
-chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
-
 Write-Host "Create PowerApps Check Azure AD Application"
-$sourceFile = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/master/manifest.json"
+$manifest = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/master/manifest.json"
+Set-Content .\manifest.json -Value $manifest.Content
+
+$adApp = az ad app create --display-name "PowerApp Checker App" --native-app --required-resource-accesses manifest.json --reply-urls "urn:ietf:wg:oauth:2.0:oob" | ConvertFrom-Json
+$azureADAppPassword = (New-Guid).Guid.Replace("-","")
+$adAppCreds = az ad app credential reset --password $azureADAppPassword --id $adApp.appId | ConvertFrom-Json
+
+chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
 
 Write-Host ""
 Write-Host ""
@@ -210,6 +215,9 @@ az pipelines variable-group variable create --name d365url --value $conn.Connect
 
 $varGroupCICD = az pipelines variable-group create --name "$adoRepo.D365CDEnvironment"  --variables d365username=$username --authorize $true| ConvertFrom-Json
 az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroupCICD.id
+az pipelines variable-group variable create --name aadTenant --value $adAppCreds.tenant --group-id $varGroupCICD.id
+az pipelines variable-group variable create --name aadPowerAppId --value $adAppCreds.appId --group-id $varGroupCICD.id
+az pipelines variable-group variable create --name aadPowerAppSecret --value $adAppCreds.password --secret $true --group-id $varGroupCICD.id
 az pipelines variable-group variable create --name d365url --value $connCICD.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroupCICD.id
 
 $pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
