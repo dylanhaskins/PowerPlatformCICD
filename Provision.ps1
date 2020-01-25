@@ -110,6 +110,9 @@ git clone $repo.webUrl \Dev\Repos\$adoRepo
 
 chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
 
+Write-Host "Create PowerApps Check Azure AD Application"
+$sourceFile = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/master/manifest.json"
+
 Write-Host ""
 Write-Host ""
 $quit = Read-Host -Prompt "Press Enter to Connect to your CDS / D365 Tenant or [Q]uit"
@@ -237,6 +240,7 @@ Welcome to the Power Platform DevOps provisioning script. This script will perfo
  - Create a New Git Repository in the Project to store your Source Code (and D365 / CDS Solutions and Data)
  - Clone this Template Repository into your new Azure DevOps repository
  - Clone your new repository locally to <root>\Dev\Repos
+ - Create an Azure AD App Registration called "PowerApp Checker App" to enable PowerApp Solution Checker
  - Connect to your Power Platform tenant (You will need a Power Platform tenant, if you don't have one, please create one at https://powerapps.microsoft.com/)
  - Connect to your Power Platform Development Instance / Environment (If you don't have an instance to develop in, please create one at https://admin.powerplatform.microsoft.com)
     - You can either select an Existing Unamanged Solution (if you have already started customisation OR
