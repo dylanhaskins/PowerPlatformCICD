@@ -22,11 +22,23 @@ New-Item -ItemType Directory -Force -Path $env:SYSTEM_DEFAULTWORKINGDIRECTORY\Pa
 
 $rulesets = Get-PowerAppsCheckerRulesets -Geography Australia
 $rulesetToUse = $rulesets | where Name -EQ "Solution Checker"
+$overrides = New-PowerAppsCheckerRuleLevelOverride -Id 'meta-avoid-silverlight' -OverrideLevel High #Use this to Override Rules and set a Higher or Lower Level
 $analyzeResult = Invoke-PowerAppsChecker -Geography Australia -ClientApplicationId $aadPowerAppId `
     -TenantId $aadTenant -Ruleset $rulesetToUse -FileUnderAnalysis $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\PkgFolder\$global:SolutionName.zip `
-    -OutputDirectory $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\PkgFolder\CheckResults -ClientApplicationSecret (ConvertTo-SecureString -AsPlainText -Force -String $aadPowerAppSecret)
+    -OutputDirectory $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\PkgFolder\CheckResults -ClientApplicationSecret (ConvertTo-SecureString -AsPlainText -Force -String $aadPowerAppSecret) -RuleLevelOverrides $overrides 
 
 Write-Output $analyzeResult.IssueSummary  
+
+if ($analyzeResult.IssueSummary.CriticalIssueCount -gt 0) {
+    $errorCount = $analyzeResult.IssueSummary.CriticalIssueCount
+    $errorMessage = @"
+    You have $errorCount Critical Errors 
+    
+    You can review the results by getting the output from $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\PkgFolder\CheckResults in the Pipeline Artifacts. Results can be analysed using http://sarifviewer.azurewebsites.net/
+"@
+    Write-Host "##[error] $errorMessage"
+    Write-Error $errorMessage
+}
 
 Remove-Item nuget.exe
 Remove-Item .\Tools -Force -Recurse -ErrorAction Ignore
