@@ -98,6 +98,8 @@ stages:
   - stage: Deployment
     
     displayName: Deployment
+    dependsOn: 'Build'
+    condition: succeeded()
     jobs:
     - deployment: DeployJob      
       displayName: Deployment Staging 
