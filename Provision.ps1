@@ -98,7 +98,7 @@ else {
 }
 
 Write-Host ""
-$adoRepo = Read-Host -Prompt "Enter the name for the Repository you wish to Create"
+$adoRepo = Read-Host -Prompt "Enter the name for the Git Repository you wish to Create"
 $adoRepo = $adoRepo.Replace(' ','')
 
 az devops configure --defaults organization=https://dev.azure.com/$adoOrg project=$adoProject
@@ -107,6 +107,14 @@ $repo = az repos create --name $adoRepo | Out-String | ConvertFrom-Json
 az repos import create --git-source-url https://github.com/dylanhaskins/PowerPlatformCICD.git --repository $adoRepo
 
 git clone $repo.webUrl \Dev\Repos\$adoRepo
+
+Write-Host "Create PowerApps Check Azure AD Application"
+$manifest = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/master/manifest.json"
+Set-Content .\manifest.json -Value $manifest.Content
+
+$adApp = az ad app create --display-name "PowerApp Checker App" --native-app --required-resource-accesses manifest.json --reply-urls "urn:ietf:wg:oauth:2.0:oob" | ConvertFrom-Json
+$azureADAppPassword = (New-Guid).Guid.Replace("-","")
+$adAppCreds = az ad app credential reset --password $azureADAppPassword --id $adApp.appId | ConvertFrom-Json
 
 chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
 
@@ -207,6 +215,9 @@ az pipelines variable-group variable create --name d365url --value $conn.Connect
 
 $varGroupCICD = az pipelines variable-group create --name "$adoRepo.D365CDEnvironment"  --variables d365username=$username --authorize $true| ConvertFrom-Json
 az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroupCICD.id
+az pipelines variable-group variable create --name aadTenant --value $adAppCreds.tenant --group-id $varGroupCICD.id
+az pipelines variable-group variable create --name aadPowerAppId --value $adAppCreds.appId --group-id $varGroupCICD.id
+az pipelines variable-group variable create --name aadPowerAppSecret --value $adAppCreds.password --secret $true --group-id $varGroupCICD.id
 az pipelines variable-group variable create --name d365url --value $connCICD.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroupCICD.id
 
 $pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
@@ -237,6 +248,7 @@ Welcome to the Power Platform DevOps provisioning script. This script will perfo
  - Create a New Git Repository in the Project to store your Source Code (and D365 / CDS Solutions and Data)
  - Clone this Template Repository into your new Azure DevOps repository
  - Clone your new repository locally to <root>\Dev\Repos
+ - Create an Azure AD App Registration called "PowerApp Checker App" to enable PowerApp Solution Checker
  - Connect to your Power Platform tenant (You will need a Power Platform tenant, if you don't have one, please create one at https://powerapps.microsoft.com/)
  - Connect to your Power Platform Development Instance / Environment (If you don't have an instance to develop in, please create one at https://admin.powerplatform.microsoft.com)
     - You can either select an Existing Unamanged Solution (if you have already started customisation OR

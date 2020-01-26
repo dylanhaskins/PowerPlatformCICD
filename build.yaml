@@ -26,6 +26,7 @@ variables:
     value: 'release'
   - name : Solution
     value: '**\*.sln'
+  - group: replaceRepo.D365CDEnvironment
 
 stages:
   - stage: Build
@@ -59,12 +60,23 @@ stages:
               platform: '$(BuildPlatform)'
               configuration: '$(BuildConfiguration)'
               msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)\\"'
+          
+          - task: VSTest@2
+            displayName: Run Unit and UI Tests
+            inputs:
+              testSelector: 'testAssemblies'
+              testAssemblyVer2: |
+                **\*test*.dll
+                !**\*TestAdapter.dll
+                !**\obj\**
+              searchFolder: '$(System.DefaultWorkingDirectory)'
 
           - task: PowerShell@2
-            displayName: 'Pack Solution'
+            displayName: 'Pack Solution and Run Solution Checker'
             inputs:
               targetType: filePath
               filePath: 'Solutions/Scripts/SolutionPack.ps1'
+              arguments: '-aadTenant $(aadTenant) -aadPowerAppId $(aadPowerAppId) -aadPowerAppSecret $(aadPowerAppSecret)'
 
           - task: ArchiveFiles@2
             displayName: 'Archive Reference Data to: $(build.artifactstagingdirectory)'
