@@ -83,11 +83,7 @@
     <Content Include="XrmContext\XrmContext.xml" />
     <Content Include="XrmDefinitelyTyped\FSharp.Core.dll" />
     <Content Include="XrmDefinitelyTyped\Microsoft.Crm.Sdk.Proxy.dll" />
-    <Content Include="XrmDefinitelyTyped\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
-    <Content Include="XrmDefinitelyTyped\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll" />
-    <Content Include="XrmDefinitelyTyped\Microsoft.Xrm.Sdk.Deployment.dll" />
     <Content Include="XrmDefinitelyTyped\Microsoft.Xrm.Sdk.dll" />
-    <Content Include="XrmDefinitelyTyped\Microsoft.Xrm.Tooling.Connector.dll" />
     <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe" />
     <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.xml" />
   </ItemGroup>
