@@ -1,5 +1,6 @@
 Param(
-    [boolean] [Parameter(Mandatory = $false)] $PerformInstall = $false
+    [boolean] [Parameter(Mandatory = $false)] $PerformInstall = $false,
+    [string] [Parameter(Mandatory = $false)] $branch = "master"
 )
 
 function Restart-PowerShell
@@ -106,10 +107,10 @@ az devops configure --defaults organization=https://dev.azure.com/$adoOrg projec
 $repo = az repos create --name $adoRepo | Out-String | ConvertFrom-Json
 az repos import create --git-source-url https://github.com/dylanhaskins/PowerPlatformCICD.git --repository $adoRepo
 
-git clone $repo.webUrl \Dev\Repos\$adoRepo
+git clone $repo.webUrl \Dev\Repos\$adoRepo --single-branch --branch $branch
 
 Write-Host "Create PowerApps Check Azure AD Application"
-$manifest = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/master/manifest.json"
+$manifest = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/$branch/manifest.json"
 Set-Content .\manifest.json -Value $manifest.Content
 
 $adApp = az ad app create --display-name "PowerApp Checker App" --native-app --required-resource-accesses manifest.json --reply-urls "urn:ietf:wg:oauth:2.0:oob" | ConvertFrom-Json
@@ -226,7 +227,7 @@ az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
 }
 
-$sourceFile = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/master/Provision.ps1"
+$sourceFile = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/$branch/Provision.ps1"
 Set-Content .\Provision.ps1 -Value $sourceFile.Content
 
 
