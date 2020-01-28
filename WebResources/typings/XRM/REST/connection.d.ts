@@ -35,18 +35,30 @@ declare namespace Rest {
   interface Connection extends ConnectionBase {
     Referencedconnection_related_connection?: Connection[] | null;
     Referencingconnection_related_connection?: Connection | null;
-    account_connections1?: Account | null;
-    account_connections2?: Account | null;
-    contact_connections1?: Contact | null;
-    contact_connections2?: Contact | null;
+    business_unit_connections?: BusinessUnit | null;
+    createdby_connection?: SystemUser | null;
+    lk_connectionbase_createdonbehalfby?: SystemUser | null;
+    lk_connectionbase_modifiedonbehalfby?: SystemUser | null;
+    modifiedby_connection?: SystemUser | null;
+    owner_connections: Team | null | SystemUser;
+    systemuser_connections1?: SystemUser | null;
+    systemuser_connections2?: SystemUser | null;
+    team_connections1?: Team | null;
+    team_connections2?: Team | null;
   }
   interface ConnectionResult extends ConnectionBase {
     Referencedconnection_related_connection?: SDK.Results<ConnectionResult> | null;
     Referencingconnection_related_connection?: Connection | null;
-    account_connections1?: Account | null;
-    account_connections2?: Account | null;
-    contact_connections1?: Contact | null;
-    contact_connections2?: Contact | null;
+    business_unit_connections?: BusinessUnit | null;
+    createdby_connection?: SystemUser | null;
+    lk_connectionbase_createdonbehalfby?: SystemUser | null;
+    lk_connectionbase_modifiedonbehalfby?: SystemUser | null;
+    modifiedby_connection?: SystemUser | null;
+    owner_connections: Team | null | SystemUser;
+    systemuser_connections1?: SystemUser | null;
+    systemuser_connections2?: SystemUser | null;
+    team_connections1?: Team | null;
+    team_connections2?: Team | null;
   }
   interface Connection_Select extends Connection_Expand {
     ConnectionId: RestAttribute<Connection_Select>;
@@ -117,10 +129,16 @@ declare namespace Rest {
   interface Connection_Expand {
     Referencedconnection_related_connection: RestExpand<Connection_Select, Connection_Select>;
     Referencingconnection_related_connection: RestExpand<Connection_Select, Connection_Select>;
-    account_connections1: RestExpand<Connection_Select, Account_Select>;
-    account_connections2: RestExpand<Connection_Select, Account_Select>;
-    contact_connections1: RestExpand<Connection_Select, Contact_Select>;
-    contact_connections2: RestExpand<Connection_Select, Contact_Select>;
+    business_unit_connections: RestExpand<Connection_Select, BusinessUnit_Select>;
+    createdby_connection: RestExpand<Connection_Select, SystemUser_Select>;
+    lk_connectionbase_createdonbehalfby: RestExpand<Connection_Select, SystemUser_Select>;
+    lk_connectionbase_modifiedonbehalfby: RestExpand<Connection_Select, SystemUser_Select>;
+    modifiedby_connection: RestExpand<Connection_Select, SystemUser_Select>;
+    owner_connections: RestExpand<Connection_Select, SystemUser_Select & Team_Select>;
+    systemuser_connections1: RestExpand<Connection_Select, SystemUser_Select>;
+    systemuser_connections2: RestExpand<Connection_Select, SystemUser_Select>;
+    team_connections1: RestExpand<Connection_Select, Team_Select>;
+    team_connections2: RestExpand<Connection_Select, Team_Select>;
   }
 }
 interface RestEntities {
