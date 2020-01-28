@@ -86,7 +86,7 @@ $adoCreate = Read-Host -Prompt "Would you like to [C]reate a new Project or [S]e
 if ($adoCreate -eq "C")
 {
   $adoProject = Read-Host -Prompt "Please enter the Name of the Project you wish to Create"
-  az devops project create --name $adoProject --process Scrum
+  az devops project create --name $adoProject --organization=https://dev.azure.com/$adoOrg --process Scrum
 }
 else {
     $selection = az devops project list --organization=https://dev.azure.com/$adoOrg --query '[value][].{Name:name}' --output json | Out-String | ConvertFrom-Json
