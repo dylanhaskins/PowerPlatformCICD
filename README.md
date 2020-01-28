@@ -13,5 +13,3 @@ This is a Template project to create new CDS/D365 Solution leveraging a lighweig
 1.  Configure spkl.json mapping for Plugins and Webresources
 1.	Build Solution
 1.  Commit and Sync
-
-Test2
