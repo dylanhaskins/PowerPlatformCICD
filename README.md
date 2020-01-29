@@ -2,7 +2,8 @@
 This is a Template project to create new CDS/D365 Solution leveraging a lighweight framework and CI/CD
 
 # Getting Started
-1.  Download and **Run** the [Provision.ps1](https://github.com/dylanhaskins/PowerPlatformCICD/raw/master/Provision.ps1) PowerShell Script (Right-Click -> Save Link As)
+1.  Download  the [Provision.ps1](https://github.com/dylanhaskins/PowerPlatformCICD/raw/master/Provision.ps1) PowerShell Script (Right-Click -> Save Link As)
+1. Unblock and **run** as Administrator in admin shell
 
 
 [For more details go through the Getting started guide](https://github.com/dylanhaskins/PowerPlatformCICD/wiki/)
