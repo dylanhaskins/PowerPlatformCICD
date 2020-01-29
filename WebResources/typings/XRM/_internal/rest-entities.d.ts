@@ -3,21 +3,37 @@ declare namespace Rest {
   }
   interface RestEntity {
   }
-  interface AccountBase extends RestEntity {
+  interface BusinessUnitBase extends RestEntity {
   }
-  interface AccountResult extends AccountBase {
+  interface BusinessUnitResult extends BusinessUnitBase {
   }
-  interface Account_Select {
+  interface BusinessUnit_Select {
   }
-  interface Account extends AccountBase {
+  interface BusinessUnit extends BusinessUnitBase {
   }
-  interface ContactBase extends RestEntity {
+  interface SystemUserBase extends RestEntity {
   }
-  interface ContactResult extends ContactBase {
+  interface SystemUserResult extends SystemUserBase {
   }
-  interface Contact_Select {
+  interface SystemUser_Select {
   }
-  interface Contact extends ContactBase {
+  interface SystemUser extends SystemUserBase {
+  }
+  interface TeamBase extends RestEntity {
+  }
+  interface TeamResult extends TeamBase {
+  }
+  interface Team_Select {
+  }
+  interface Team extends TeamBase {
+  }
+  interface TeamMembershipBase extends RestEntity {
+  }
+  interface TeamMembershipResult extends TeamMembershipBase {
+  }
+  interface TeamMembership_Select {
+  }
+  interface TeamMembership extends TeamMembershipBase {
   }
   interface ConnectionBase extends RestEntity {
   }
@@ -26,13 +42,5 @@ declare namespace Rest {
   interface Connection_Select {
   }
   interface Connection extends ConnectionBase {
-  }
-  interface ActivityPartyBase extends RestEntity {
-  }
-  interface ActivityPartyResult extends ActivityPartyBase {
-  }
-  interface ActivityParty_Select {
-  }
-  interface ActivityParty extends ActivityPartyBase {
   }
 }

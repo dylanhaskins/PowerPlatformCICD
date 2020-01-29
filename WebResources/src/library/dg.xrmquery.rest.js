@@ -2,38 +2,68 @@ var Filter;
 (function (Filter) {
     var REST;
     (function (REST) {
-        function equals(v1, v2) { return Comp(v1, "eq", v2); }
+        function equals(v1, v2) {
+            return Comp(v1, "eq", v2);
+        }
         REST.equals = equals;
-        function notEquals(v1, v2) { return Comp(v1, "ne", v2); }
+        function notEquals(v1, v2) {
+            return Comp(v1, "ne", v2);
+        }
         REST.notEquals = notEquals;
-        function greaterThan(v1, v2) { return Comp(v1, "gt", v2); }
+        function greaterThan(v1, v2) {
+            return Comp(v1, "gt", v2);
+        }
         REST.greaterThan = greaterThan;
-        function greaterThanOrEqual(v1, v2) { return Comp(v1, "ge", v2); }
+        function greaterThanOrEqual(v1, v2) {
+            return Comp(v1, "ge", v2);
+        }
         REST.greaterThanOrEqual = greaterThanOrEqual;
-        function lessThan(v1, v2) { return Comp(v1, "lt", v2); }
+        function lessThan(v1, v2) {
+            return Comp(v1, "lt", v2);
+        }
         REST.lessThan = lessThan;
-        function lessThanOrEqual(v1, v2) { return Comp(v1, "le", v2); }
+        function lessThanOrEqual(v1, v2) {
+            return Comp(v1, "le", v2);
+        }
         REST.lessThanOrEqual = lessThanOrEqual;
-        function and(f1, f2) { return BiFilter(f1, "and", f2); }
+        function and(f1, f2) {
+            return BiFilter(f1, "and", f2);
+        }
         REST.and = and;
-        function or(f1, f2) { return BiFilter(f1, "or", f2); }
+        function or(f1, f2) {
+            return BiFilter(f1, "or", f2);
+        }
         REST.or = or;
-        function not(f1) { return ("not " + f1); }
+        function not(f1) {
+            return ("not " + f1);
+        }
         REST.not = not;
-        function ands(fs) { return NestedFilter(fs, "and"); }
+        function ands(fs) {
+            return NestedFilter(fs, "and");
+        }
         REST.ands = ands;
-        function ors(fs) { return NestedFilter(fs, "or"); }
+        function ors(fs) {
+            return NestedFilter(fs, "or");
+        }
         REST.ors = ors;
-        function startsWith(v1, v2) { return DataFunc("startswith", v1, v2); }
+        function startsWith(v1, v2) {
+            return DataFunc("startswith", v1, v2);
+        }
         REST.startsWith = startsWith;
-        function substringOf(v1, v2) { return DataFunc("substringof", v1, v2); }
+        function substringOf(v1, v2) {
+            return DataFunc("substringof", v1, v2);
+        }
         REST.substringOf = substringOf;
-        function endsWith(v1, v2) { return DataFunc("endswith", v1, v2); }
+        function endsWith(v1, v2) {
+            return DataFunc("endswith", v1, v2);
+        }
         REST.endsWith = endsWith;
         /**
          * Makes a string into a GUID that can be sent to the OData source
          */
-        function makeGuid(id) { return XQR.makeTag("(guid'" + id + "')"); }
+        function makeGuid(id) {
+            return XQR.makeTag("(guid'" + id + "')");
+        }
         REST.makeGuid = makeGuid;
         /**
          * @internal
@@ -41,10 +71,10 @@ var Filter;
         function getVal(v) {
             if (v == null)
                 return "null";
-            if (typeof (v) === "string")
+            if (typeof v === "string")
                 return "'" + v + "'";
             if (Object.prototype.toString.call(v) === "[object Date]")
-                return "DateTime'" + v.format('yyyy-MM-ddTHH:mm:ss') + "'";
+                return "DateTime'" + v.format("yyyy-MM-ddTHH:mm:ss") + "'";
             return v.toString();
         }
         /**
@@ -71,7 +101,7 @@ var Filter;
         function NestedFilter(fs, conj) {
             var last = fs.pop();
             if (last === undefined) {
-                return ('');
+                return ("");
             }
             return fs.reduceRight(function (acc, c) { return BiFilter(c, conj, acc); }, last);
         }

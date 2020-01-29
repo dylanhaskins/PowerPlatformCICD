@@ -20,10 +20,10 @@ declare namespace Web {
   }
   interface Connection_Relationships {
     connection_related_connection?: Connection_Result[] | null;
-    record1id_account?: Account_Result | null;
-    record1id_contact?: Contact_Result | null;
-    record2id_account?: Account_Result | null;
-    record2id_contact?: Contact_Result | null;
+    record1id_systemuser?: SystemUser_Result | null;
+    record1id_team?: Team_Result | null;
+    record2id_systemuser?: SystemUser_Result | null;
+    record2id_team?: Team_Result | null;
   }
   interface Connection extends Connection_Base, Connection_Relationships {
     channelaccessprofileruleid_bind$channelaccessprofilerules?: string | null;
@@ -162,10 +162,16 @@ declare namespace Web {
   }
   interface Connection_Expand {
     connection_related_connection: WebExpand<Connection_Expand, Connection_Select, Connection_Filter, { connection_related_connection: Connection_Result[] }>;
-    record1id_account: WebExpand<Connection_Expand, Account_Select, Account_Filter, { record1id_account: Account_Result }>;
-    record1id_contact: WebExpand<Connection_Expand, Contact_Select, Contact_Filter, { record1id_contact: Contact_Result }>;
-    record2id_account: WebExpand<Connection_Expand, Account_Select, Account_Filter, { record2id_account: Account_Result }>;
-    record2id_contact: WebExpand<Connection_Expand, Contact_Select, Contact_Filter, { record2id_contact: Contact_Result }>;
+    createdby: WebExpand<Connection_Expand, SystemUser_Select, SystemUser_Filter, { createdby: SystemUser_Result }>;
+    createdonbehalfby: WebExpand<Connection_Expand, SystemUser_Select, SystemUser_Filter, { createdonbehalfby: SystemUser_Result }>;
+    modifiedby: WebExpand<Connection_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
+    modifiedonbehalfby: WebExpand<Connection_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
+    ownerid: WebExpand<Connection_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+    owningbusinessunit: WebExpand<Connection_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
+    record1id_systemuser: WebExpand<Connection_Expand, SystemUser_Select, SystemUser_Filter, { record1id_systemuser: SystemUser_Result }>;
+    record1id_team: WebExpand<Connection_Expand, Team_Select, Team_Filter, { record1id_team: Team_Result }>;
+    record2id_systemuser: WebExpand<Connection_Expand, SystemUser_Select, SystemUser_Filter, { record2id_systemuser: SystemUser_Result }>;
+    record2id_team: WebExpand<Connection_Expand, Team_Select, Team_Filter, { record2id_team: Team_Result }>;
     relatedconnectionid: WebExpand<Connection_Expand, Connection_Select, Connection_Filter, { relatedconnectionid: Connection_Result }>;
   }
   interface Connection_FormattedResult {
@@ -211,10 +217,16 @@ declare namespace Web {
     transactioncurrencyid_guid: string | null;
   }
   interface Connection_RelatedOne {
-    record1id_account: WebMappingRetrieve<Web.Account_Select,Web.Account_Expand,Web.Account_Filter,Web.Account_Fixed,Web.Account_Result,Web.Account_FormattedResult>;
-    record1id_contact: WebMappingRetrieve<Web.Contact_Select,Web.Contact_Expand,Web.Contact_Filter,Web.Contact_Fixed,Web.Contact_Result,Web.Contact_FormattedResult>;
-    record2id_account: WebMappingRetrieve<Web.Account_Select,Web.Account_Expand,Web.Account_Filter,Web.Account_Fixed,Web.Account_Result,Web.Account_FormattedResult>;
-    record2id_contact: WebMappingRetrieve<Web.Contact_Select,Web.Contact_Expand,Web.Contact_Filter,Web.Contact_Fixed,Web.Contact_Result,Web.Contact_FormattedResult>;
+    createdby: WebMappingRetrieve<Web.SystemUser_Select,Web.SystemUser_Expand,Web.SystemUser_Filter,Web.SystemUser_Fixed,Web.SystemUser_Result,Web.SystemUser_FormattedResult>;
+    createdonbehalfby: WebMappingRetrieve<Web.SystemUser_Select,Web.SystemUser_Expand,Web.SystemUser_Filter,Web.SystemUser_Fixed,Web.SystemUser_Result,Web.SystemUser_FormattedResult>;
+    modifiedby: WebMappingRetrieve<Web.SystemUser_Select,Web.SystemUser_Expand,Web.SystemUser_Filter,Web.SystemUser_Fixed,Web.SystemUser_Result,Web.SystemUser_FormattedResult>;
+    modifiedonbehalfby: WebMappingRetrieve<Web.SystemUser_Select,Web.SystemUser_Expand,Web.SystemUser_Filter,Web.SystemUser_Fixed,Web.SystemUser_Result,Web.SystemUser_FormattedResult>;
+    ownerid: WebMappingRetrieve<Web.SystemUser_Select,Web.SystemUser_Expand,Web.SystemUser_Filter,Web.SystemUser_Fixed,Web.SystemUser_Result,Web.SystemUser_FormattedResult> & WebMappingRetrieve<Web.Team_Select,Web.Team_Expand,Web.Team_Filter,Web.Team_Fixed,Web.Team_Result,Web.Team_FormattedResult>;
+    owningbusinessunit: WebMappingRetrieve<Web.BusinessUnit_Select,Web.BusinessUnit_Expand,Web.BusinessUnit_Filter,Web.BusinessUnit_Fixed,Web.BusinessUnit_Result,Web.BusinessUnit_FormattedResult>;
+    record1id_systemuser: WebMappingRetrieve<Web.SystemUser_Select,Web.SystemUser_Expand,Web.SystemUser_Filter,Web.SystemUser_Fixed,Web.SystemUser_Result,Web.SystemUser_FormattedResult>;
+    record1id_team: WebMappingRetrieve<Web.Team_Select,Web.Team_Expand,Web.Team_Filter,Web.Team_Fixed,Web.Team_Result,Web.Team_FormattedResult>;
+    record2id_systemuser: WebMappingRetrieve<Web.SystemUser_Select,Web.SystemUser_Expand,Web.SystemUser_Filter,Web.SystemUser_Fixed,Web.SystemUser_Result,Web.SystemUser_FormattedResult>;
+    record2id_team: WebMappingRetrieve<Web.Team_Select,Web.Team_Expand,Web.Team_Filter,Web.Team_Fixed,Web.Team_Result,Web.Team_FormattedResult>;
     relatedconnectionid: WebMappingRetrieve<Web.Connection_Select,Web.Connection_Expand,Web.Connection_Filter,Web.Connection_Fixed,Web.Connection_Result,Web.Connection_FormattedResult>;
   }
   interface Connection_RelatedMany {

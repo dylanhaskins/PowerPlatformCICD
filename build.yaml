@@ -9,7 +9,7 @@ pool:
 trigger:
   branches:
     include:
-    - master
+    - replaceBranch
   paths:
     exclude:
     - README.md

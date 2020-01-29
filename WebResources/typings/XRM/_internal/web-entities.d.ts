@@ -10,51 +10,97 @@ declare namespace Web {
   interface WebEntity_Fixed {
     "@odata.etag": string;
   }
-  interface Account_Base extends WebEntity {
+  interface BusinessUnit_Base extends WebEntity {
   }
-  interface Account_Fixed extends WebEntity_Fixed {
-    accountid: string;
+  interface BusinessUnit_Fixed extends WebEntity_Fixed {
+    businessunitid: string;
   }
-  interface Account extends Account_Base, Account_Relationships {
+  interface BusinessUnit extends BusinessUnit_Base, BusinessUnit_Relationships {
   }
-  interface Account_Relationships {
+  interface BusinessUnit_Relationships {
   }
-  interface Account_Result extends Account_Base, Account_Relationships {
+  interface BusinessUnit_Result extends BusinessUnit_Base, BusinessUnit_Relationships {
   }
-  interface Account_FormattedResult {
+  interface BusinessUnit_FormattedResult {
   }
-  interface Account_Select {
+  interface BusinessUnit_Select {
   }
-  interface Account_Expand {
+  interface BusinessUnit_Expand {
   }
-  interface Account_Filter {
+  interface BusinessUnit_Filter {
   }
-  interface Account_Create extends Account {
+  interface BusinessUnit_Create extends BusinessUnit {
   }
-  interface Account_Update extends Account {
+  interface BusinessUnit_Update extends BusinessUnit {
   }
-  interface Contact_Base extends WebEntity {
+  interface SystemUser_Base extends WebEntity {
   }
-  interface Contact_Fixed extends WebEntity_Fixed {
-    contactid: string;
+  interface SystemUser_Fixed extends WebEntity_Fixed {
+    systemuserid: string;
   }
-  interface Contact extends Contact_Base, Contact_Relationships {
+  interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
   }
-  interface Contact_Relationships {
+  interface SystemUser_Relationships {
   }
-  interface Contact_Result extends Contact_Base, Contact_Relationships {
+  interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
   }
-  interface Contact_FormattedResult {
+  interface SystemUser_FormattedResult {
   }
-  interface Contact_Select {
+  interface SystemUser_Select {
   }
-  interface Contact_Expand {
+  interface SystemUser_Expand {
   }
-  interface Contact_Filter {
+  interface SystemUser_Filter {
   }
-  interface Contact_Create extends Contact {
+  interface SystemUser_Create extends SystemUser {
   }
-  interface Contact_Update extends Contact {
+  interface SystemUser_Update extends SystemUser {
+  }
+  interface Team_Base extends WebEntity {
+  }
+  interface Team_Fixed extends WebEntity_Fixed {
+    teamid: string;
+  }
+  interface Team extends Team_Base, Team_Relationships {
+  }
+  interface Team_Relationships {
+  }
+  interface Team_Result extends Team_Base, Team_Relationships {
+  }
+  interface Team_FormattedResult {
+  }
+  interface Team_Select {
+  }
+  interface Team_Expand {
+  }
+  interface Team_Filter {
+  }
+  interface Team_Create extends Team {
+  }
+  interface Team_Update extends Team {
+  }
+  interface TeamMembership_Base extends WebEntity {
+  }
+  interface TeamMembership_Fixed extends WebEntity_Fixed {
+    teammembershipid: string;
+  }
+  interface TeamMembership extends TeamMembership_Base, TeamMembership_Relationships {
+  }
+  interface TeamMembership_Relationships {
+  }
+  interface TeamMembership_Result extends TeamMembership_Base, TeamMembership_Relationships {
+  }
+  interface TeamMembership_FormattedResult {
+  }
+  interface TeamMembership_Select {
+  }
+  interface TeamMembership_Expand {
+  }
+  interface TeamMembership_Filter {
+  }
+  interface TeamMembership_Create extends TeamMembership {
+  }
+  interface TeamMembership_Update extends TeamMembership {
   }
   interface Connection_Base extends WebEntity {
   }
@@ -78,28 +124,5 @@ declare namespace Web {
   interface Connection_Create extends Connection {
   }
   interface Connection_Update extends Connection {
-  }
-  interface ActivityParty_Base extends WebEntity {
-  }
-  interface ActivityParty_Fixed extends WebEntity_Fixed {
-    activitypartyid: string;
-  }
-  interface ActivityParty extends ActivityParty_Base, ActivityParty_Relationships {
-  }
-  interface ActivityParty_Relationships {
-  }
-  interface ActivityParty_Result extends ActivityParty_Base, ActivityParty_Relationships {
-  }
-  interface ActivityParty_FormattedResult {
-  }
-  interface ActivityParty_Select {
-  }
-  interface ActivityParty_Expand {
-  }
-  interface ActivityParty_Filter {
-  }
-  interface ActivityParty_Create extends ActivityParty {
-  }
-  interface ActivityParty_Update extends ActivityParty {
   }
 }

@@ -107,7 +107,7 @@ az devops configure --defaults organization=https://dev.azure.com/$adoOrg projec
 $repo = az repos create --name $adoRepo | Out-String | ConvertFrom-Json
 az repos import create --git-source-url https://github.com/dylanhaskins/PowerPlatformCICD.git --repository $adoRepo
 
-git clone $repo.webUrl \Dev\Repos\$adoRepo --single-branch --branch $branch
+git clone $repo.webUrl \Dev\Repos\$adoRepo 
 
 Write-Host "Create PowerApps Check Azure AD Application"
 $manifest = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/$branch/manifest.json"
@@ -118,6 +118,11 @@ $azureADAppPassword = (New-Guid).Guid.Replace("-","")
 $adAppCreds = az ad app credential reset --password $azureADAppPassword --id $adApp.appId | ConvertFrom-Json
 
 chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
+
+git checkout $branch
+git branch -r | select-string -notmatch $branch | select-string -notmatch HEAD | foreach { git push origin --delete ("$_").Replace("origin/","").Trim()} #Remove non-used branches from remote
+git branch | select-string -notmatch $branch | foreach {git branch -D ("$_").Trim()} #Remove non-used local branches
+
 
 Write-Host ""
 Write-Host ""
@@ -171,9 +176,33 @@ if ($CreateOrSelect -eq "C"){
     $solutions = (Get-CrmRecordsByFetch -conn $conn -Fetch $solutionFetch).CrmRecords
 
     $choiceIndex = 0
-    $options = $solutions | ForEach-Object { New-Object System.Management.Automation.Host.ChoiceDescription "&$($choiceIndex) - $($_.uniquename)"; $choiceIndex++ }
-    $chosenIndex = $host.ui.PromptForChoice("Solution", "Select the Solution you wish to use", $options, 0)
-    $chosenSolution = $solutions[$chosenIndex].uniquename
+    $options = $solutions | ForEach-Object { write-host "[$($choiceIndex)] $($_.uniquename)"; $choiceIndex++; }  
+
+    $success = $false
+    do {
+        $choice = read-host "Enter your selection"
+        if (!$choice) {
+            Write-Host "Invalid selection (null)"
+        }
+        else {
+            $choice = $choice -as [int];
+            if ($choice -eq $null) {
+                Write-Host "Invalid selection (not number)"
+            }
+            elseif ($choice -le -1) {
+                Write-Host "Invalid selection (negative)"
+            }
+            else {
+                $chosenSolution = $solutions[$choice].uniquename
+                if ($null -ne $chosenSolution) {
+                    $success = $true
+                }
+                else {
+                    Write-Host "Invalid selection (index out of range)"
+                }
+            } 
+        }
+    } while (!$success)
 }
 #}
 
@@ -189,6 +218,7 @@ Write-Host "Updating ImportConfig.xml ..."
 Write-Host "Updating Build.yaml ..."
 
 (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceRepo",$adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
+(Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceBranch",$branch | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 
 Write-Host "Updating XrmContext.exe.config ..."
@@ -207,7 +237,7 @@ $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
 
 git add -A
 git commit -m "Initial Commit"
-git push origin master
+git push origin $branch
 
 
 $varGroup = az pipelines variable-group create --name "$adoRepo.D365DevEnvironment"  --variables d365username=$username --authorize $true | ConvertFrom-Json
@@ -221,7 +251,7 @@ az pipelines variable-group variable create --name aadPowerAppId --value $adAppC
 az pipelines variable-group variable create --name aadPowerAppSecret --value $adAppCreds.password --secret $true --group-id $varGroupCICD.id
 az pipelines variable-group variable create --name d365url --value $connCICD.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroupCICD.id
 
-$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
+$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch $branch | ConvertFrom-Json
 
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
@@ -273,6 +303,7 @@ if ($quit -eq "Q")
 {
     exit
 }
+    Write-Host("Performing Checks....")
 
 if ($PerformInstall)
 {

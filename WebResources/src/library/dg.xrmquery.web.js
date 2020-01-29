@@ -192,38 +192,68 @@ var XrmQuery;
 })(XrmQuery || (XrmQuery = {}));
 var Filter;
 (function (Filter) {
-    function equals(v1, v2) { return comp(v1, "eq", v2); }
+    function equals(v1, v2) {
+        return comp(v1, "eq", v2);
+    }
     Filter.equals = equals;
-    function notEquals(v1, v2) { return comp(v1, "ne", v2); }
+    function notEquals(v1, v2) {
+        return comp(v1, "ne", v2);
+    }
     Filter.notEquals = notEquals;
-    function greaterThan(v1, v2) { return comp(v1, "gt", v2); }
+    function greaterThan(v1, v2) {
+        return comp(v1, "gt", v2);
+    }
     Filter.greaterThan = greaterThan;
-    function greaterThanOrEqual(v1, v2) { return comp(v1, "ge", v2); }
+    function greaterThanOrEqual(v1, v2) {
+        return comp(v1, "ge", v2);
+    }
     Filter.greaterThanOrEqual = greaterThanOrEqual;
-    function lessThan(v1, v2) { return comp(v1, "lt", v2); }
+    function lessThan(v1, v2) {
+        return comp(v1, "lt", v2);
+    }
     Filter.lessThan = lessThan;
-    function lessThanOrEqual(v1, v2) { return comp(v1, "le", v2); }
+    function lessThanOrEqual(v1, v2) {
+        return comp(v1, "le", v2);
+    }
     Filter.lessThanOrEqual = lessThanOrEqual;
-    function and(f1, f2) { return biFilter(f1, "and", f2); }
+    function and(f1, f2) {
+        return biFilter(f1, "and", f2);
+    }
     Filter.and = and;
-    function or(f1, f2) { return biFilter(f1, "or", f2); }
+    function or(f1, f2) {
+        return biFilter(f1, "or", f2);
+    }
     Filter.or = or;
-    function not(f1) { return ("not " + f1); }
+    function not(f1) {
+        return ("not " + f1);
+    }
     Filter.not = not;
-    function ands(fs) { return nestedFilter(fs, "and"); }
+    function ands(fs) {
+        return nestedFilter(fs, "and");
+    }
     Filter.ands = ands;
-    function ors(fs) { return nestedFilter(fs, "or"); }
+    function ors(fs) {
+        return nestedFilter(fs, "or");
+    }
     Filter.ors = ors;
-    function startsWith(val, prefix) { return dataFunc("startswith", val, prefix); }
+    function startsWith(val, prefix) {
+        return dataFunc("startswith", val, prefix);
+    }
     Filter.startsWith = startsWith;
-    function contains(val, needle) { return dataFunc("contains", val, needle); }
+    function contains(val, needle) {
+        return dataFunc("contains", val, needle);
+    }
     Filter.contains = contains;
-    function endsWith(val, suffix) { return dataFunc("endswith", val, suffix); }
+    function endsWith(val, suffix) {
+        return dataFunc("endswith", val, suffix);
+    }
     Filter.endsWith = endsWith;
     /**
      * Makes a string into a GUID that can be sent to the OData source
      */
-    function makeGuid(id) { return XQW.makeTag(XQW.stripGUID(id)); }
+    function makeGuid(id) {
+        return XQW.makeTag(XQW.stripGUID(id));
+    }
     Filter.makeGuid = makeGuid;
     /**
      * @internal
@@ -261,7 +291,7 @@ var Filter;
     function nestedFilter(fs, conj) {
         var last = fs.pop();
         if (last === undefined) {
-            return ('');
+            return ("");
         }
         return fs.reduceRight(function (acc, c) { return biFilter(c, conj, acc); }, last);
     }
@@ -320,7 +350,7 @@ var XQW;
             newName = newName.substr(0, newName.length - LOOKUP_LOGICALNAME_SUFFIX.length);
         else if (lookupNavProperty)
             newName = newName.substr(0, newName.length - LOOKUP_NAVIGATIONPROPERTY_SUFFIX.length);
-        if (beginsWith(newName, '_') && endsWith(newName, '_value')) {
+        if (beginsWith(newName, "_") && endsWith(newName, "_value")) {
             newName = newName.substr(1, newName.length - 7);
             if (formatted)
                 newName += FORMATTED_ENDING;
@@ -330,6 +360,10 @@ var XQW;
                 newName += LOOKUP_NAVIGATIONPROPERTY_ENDING;
             else
                 newName += GUID_ENDING;
+        }
+        else {
+            if (formatted)
+                newName += FORMATTED_ENDING;
         }
         if (newName != name) {
             this[newName] = value;
@@ -359,7 +393,7 @@ var XQW;
         return JSON.parse(req.response, reviver);
     }
     function isStringArray(arr) {
-        return arr.length > 0 && typeof (arr[0]) === "string";
+        return arr.length > 0 && typeof arr[0] === "string";
     }
     function promisifyCallback(callbackFunc) {
         if (!Promise)
@@ -471,7 +505,8 @@ var XQW;
             if (obj.value.length == 0) {
                 return new PageLinkHelper(obj, expandKeys, successCallback, errorCallback);
             }
-            else { // Trim expand keys down to the ones that may have nextLinks
+            else {
+                // Trim expand keys down to the ones that may have nextLinks
                 var firstRec_1 = obj.value[0];
                 var toKeep = expandKeys.filter(function (exp) { return firstRec_1[exp.linkKey]; });
                 return new PageLinkHelper(obj, toKeep, successCallback, errorCallback);
@@ -497,14 +532,13 @@ var XQW;
             this.executeRaw(function (x) { ret = x; }, function (err) { ret = err; }, true, true);
             return ret;
         };
-        ;
         Query.prototype.executeRaw = function (successCallback, errorCallback, parseResult, sync) {
             var _this = this;
             if (errorCallback === void 0) { errorCallback = function () { }; }
             if (parseResult === void 0) { parseResult = false; }
             if (sync === void 0) { sync = false; }
             var config = function (req) { return _this.additionalHeaders.forEach(function (h) { return req.setRequestHeader(h.type, h.value); }); };
-            var successHandler = function (req) { return parseResult ? _this.handleResponse(req, successCallback, errorCallback) : successCallback(req); };
+            var successHandler = function (req) { return (parseResult ? _this.handleResponse(req, successCallback, errorCallback) : successCallback(req)); };
             return XrmQuery.sendRequest(this.requestType, this.getQueryString(), this.getObjectToSend(), successHandler, errorCallback, config, sync);
         };
         return Query;
@@ -849,8 +883,8 @@ var XQW;
     }(Query));
     XQW.UpdateRecord = UpdateRecord;
     /**
-   * Contains information about an AssociateRecord query for single-valued properties
-   */
+     * Contains information about an AssociateRecord query for single-valued properties
+     */
     var AssociateRecordSingle = /** @class */ (function (_super) {
         __extends(AssociateRecordSingle, _super);
         function AssociateRecordSingle(entityPicker, id, entityTargetPicker, targetid, relationPicker) {
@@ -881,8 +915,8 @@ var XQW;
     }(Query));
     XQW.AssociateRecordSingle = AssociateRecordSingle;
     /**
-   * Contains information about an AssociateRecord query for collection-valued properties
-   */
+     * Contains information about an AssociateRecord query for collection-valued properties
+     */
     var AssociateRecordCollection = /** @class */ (function (_super) {
         __extends(AssociateRecordCollection, _super);
         function AssociateRecordCollection(entityPicker, id, entityTargetPicker, targetid, relationPicker) {
@@ -941,13 +975,14 @@ var XQW;
             return this;
         };
         DisassociateRecord.prototype.getQueryString = function () {
-            if (this.targetId == undefined)
+            if (this.targetId == undefined) {
                 // single-valued
                 return this.entitySetName + "(" + this.id + ")/" + this.relation + "/$ref";
-            else
+            }
+            else {
                 // collection-valued
                 return this.entitySetName + "(" + this.id + ")/" + this.relation + "(" + this.targetId + ")/$ref";
-            ;
+            }
         };
         return DisassociateRecord;
     }(Query));
@@ -1068,12 +1103,12 @@ var XQW;
         if (obj instanceof Date) {
             return obj;
         }
-        else if (typeof (obj) === 'string' && startsWith("{", obj) && endsWith(obj, "}")) {
+        else if (typeof obj === "string" && startsWith("{", obj) && endsWith(obj, "}")) {
             return obj.substring(1, obj.length - 1);
         }
         else if (obj instanceof Array) {
             var arr = [];
-            obj.forEach(function (v, idx) { return arr[idx] = transformObject(v); });
+            obj.forEach(function (v, idx) { return (arr[idx] = transformObject(v)); });
             return arr;
         }
         else if (obj instanceof Object) {
@@ -1115,25 +1150,45 @@ var Filter;
 (function (Filter) {
     var GUID_ENDING = "_value";
     var GUID_START = "_";
-    function $in(val, listVal) { return queryFunc("In", val, listVal); }
+    function $in(val, listVal) {
+        return queryFunc("In", val, listVal);
+    }
     Filter.$in = $in;
-    function notIn(val, listVal) { return queryFunc("NotIn", val, listVal); }
+    function notIn(val, listVal) {
+        return queryFunc("NotIn", val, listVal);
+    }
     Filter.notIn = notIn;
-    function under(v1, v2) { return queryFunc("Under", v1, v2); }
+    function under(v1, v2) {
+        return queryFunc("Under", v1, v2);
+    }
     Filter.under = under;
-    function underOrEqual(v1, v2) { return queryFunc("UnderOrEqual", v1, v2); }
+    function underOrEqual(v1, v2) {
+        return queryFunc("UnderOrEqual", v1, v2);
+    }
     Filter.underOrEqual = underOrEqual;
-    function notUnder(v1, v2) { return queryFunc("NotUnder", v1, v2); }
+    function notUnder(v1, v2) {
+        return queryFunc("NotUnder", v1, v2);
+    }
     Filter.notUnder = notUnder;
-    function above(v1, v2) { return queryFunc("Above", v1, v2); }
+    function above(v1, v2) {
+        return queryFunc("Above", v1, v2);
+    }
     Filter.above = above;
-    function equalUserId(prop) { return queryFunc("EqualUserId", prop); }
+    function equalUserId(prop) {
+        return queryFunc("EqualUserId", prop);
+    }
     Filter.equalUserId = equalUserId;
-    function notEqualUserId(prop) { return queryFunc("NotEqualUserId", prop); }
+    function notEqualUserId(prop) {
+        return queryFunc("NotEqualUserId", prop);
+    }
     Filter.notEqualUserId = notEqualUserId;
-    function equalBusinessId(prop) { return queryFunc("EqualBusinessId", prop); }
+    function equalBusinessId(prop) {
+        return queryFunc("EqualBusinessId", prop);
+    }
     Filter.equalBusinessId = equalBusinessId;
-    function notEqualBusinessId(prop) { return queryFunc("NotEqualBusinessId", prop); }
+    function notEqualBusinessId(prop) {
+        return queryFunc("NotEqualBusinessId", prop);
+    }
     Filter.notEqualBusinessId = notEqualBusinessId;
     function queryFunc(funcName, val1, val2) {
         if (val2 !== undefined) {
