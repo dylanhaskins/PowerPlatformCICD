@@ -107,7 +107,10 @@ az devops configure --defaults organization=https://dev.azure.com/$adoOrg projec
 $repo = az repos create --name $adoRepo | Out-String | ConvertFrom-Json
 az repos import create --git-source-url https://github.com/dylanhaskins/PowerPlatformCICD.git --repository $adoRepo
 
-git clone $repo.webUrl \Dev\Repos\$adoRepo --branch $branch
+git clone $repo.webUrl \Dev\Repos\$adoRepo 
+git checkout $branch
+git branch -r | select-string -notmatch $branch | foreach { git push origin --delete ("$_").Replace("origin/","").Trim()} #Remove non-used branches from remote
+git branch | select-string -notmatch $branch | foreach {git branch -D ("$_").Trim()} #Remove non-used local branches
 
 Write-Host "Create PowerApps Check Azure AD Application"
 $manifest = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/$branch/manifest.json"
