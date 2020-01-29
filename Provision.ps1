@@ -189,6 +189,7 @@ Write-Host "Updating ImportConfig.xml ..."
 Write-Host "Updating Build.yaml ..."
 
 (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceRepo",$adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
+(Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceBranch",$branch | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 
 Write-Host "Updating XrmContext.exe.config ..."
@@ -207,7 +208,7 @@ $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
 
 git add -A
 git commit -m "Initial Commit"
-git push origin master
+git push origin $branch
 
 
 $varGroup = az pipelines variable-group create --name "$adoRepo.D365DevEnvironment"  --variables d365username=$username --authorize $true | ConvertFrom-Json
