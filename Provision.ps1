@@ -107,7 +107,7 @@ az devops configure --defaults organization=https://dev.azure.com/$adoOrg projec
 $repo = az repos create --name $adoRepo | Out-String | ConvertFrom-Json
 az repos import create --git-source-url https://github.com/dylanhaskins/PowerPlatformCICD.git --repository $adoRepo
 
-git clone $repo.webUrl \Dev\Repos\$adoRepo --single-branch --branch $branch
+git clone $repo.webUrl \Dev\Repos\$adoRepo --branch $branch
 
 Write-Host "Create PowerApps Check Azure AD Application"
 $manifest = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/$branch/manifest.json"
