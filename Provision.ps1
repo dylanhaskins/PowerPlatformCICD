@@ -120,7 +120,7 @@ $adAppCreds = az ad app credential reset --password $azureADAppPassword --id $ad
 chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
 
 git checkout $branch
-git branch -r | select-string -notmatch $branch | foreach { git push origin --delete ("$_").Replace("origin/","").Trim()} #Remove non-used branches from remote
+git branch -r | select-string -notmatch $branch | select-string -notmatch HEAD | foreach { git push origin --delete ("$_").Replace("origin/","").Trim()} #Remove non-used branches from remote
 git branch | select-string -notmatch $branch | foreach {git branch -D ("$_").Trim()} #Remove non-used local branches
 
 
