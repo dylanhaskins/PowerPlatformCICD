@@ -298,6 +298,7 @@ if ($quit -eq "Q")
 {
     exit
 }
+    Write-Host("Performing Checks....")
 
 if ($PerformInstall)
 {
