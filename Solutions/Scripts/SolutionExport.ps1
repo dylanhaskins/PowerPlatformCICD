@@ -2,21 +2,58 @@
 . ((Split-Path $MyInvocation.InvocationName) + "\_SetupTools.ps1")
 . ((Split-Path $MyInvocation.InvocationName) + "\_Config.ps1")
 
+InstallToastModule
+    $message = "Installing Tools..."
+    Write-Host $message
+    $ProgressBar = New-BTProgressBar -Status $message -Value 0.05
+    New-BurntToastNotification -Text $global:SolutionName -ProgressBar $ProgressBar -Silent -UniqueIdentifier $global:SolutionName
+
+
 InstallXrmDataModule
 InstallCoreTools
+InstallDevOpsDataModule
+
 
 ######################## GET CONNECTION
-$Credentials = Get-Credential
-$conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $global:ServerUrl
+if (!$Credentials) {
+    $message = "Getting Credentials for $global:ServerUrl"
+    Write-Host $message
+    $ProgressBar = New-BTProgressBar -Status $message -Value 0.1
+    New-BurntToastNotification -Text $global:SolutionName -ProgressBar $ProgressBar -Silent -UniqueIdentifier $global:SolutionName
+
+    $Credentials = Get-Credential
+}
+if (!$conn) {
+    $message = "Establishing connection to $global:ServerUrl"
+    Write-Host $message
+    $ProgressBar = New-BTProgressBar -Status $message -Value 0.2
+    New-BurntToastNotification -Text $global:SolutionName -ProgressBar $ProgressBar -Silent -UniqueIdentifier $global:SolutionName
+    $conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $global:ServerUrl
+}
 Write-Output($conn)
 
 ######################## Generate Config Migration data 
+$message = "Exporting Configuration Data from $global:ServerUrl"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.3
+New-BurntToastNotification -Text $global:SolutionName -ProgressBar $ProgressBar -Silent -UniqueIdentifier $global:SolutionName
+
 & ((Split-Path $MyInvocation.InvocationName) + "\_ConfigMigration.ps1")
 
 ######################## Generate Types
+$message = "Generating Context and Types from $global:ServerUrl"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.4
+New-BurntToastNotification -Text $global:SolutionName -ProgressBar $ProgressBar -Silent -UniqueIdentifier $global:SolutionName
+
 & ((Split-Path $MyInvocation.InvocationName) + "\_GenerateTypes.ps1")
 
 ######################## UPDATE VERSION
+$message = "Updating Solution version for $global:SolutionName"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.5
+New-BurntToastNotification -Text $global:SolutionName -ProgressBar $ProgressBar -Silent -UniqueIdentifier $global:SolutionName
+
 $currentVersion = (Get-CrmRecords -conn $conn -EntityLogicalName solution -FilterAttribute uniquename -FilterOperator "like" -FilterValue $global:SolutionName -Fields uniquename,publisherid,version).CrmRecords | select version
 Write-Host("Current Version - $currentVersion")
 $theVersion = [version]$currentVersion.version
@@ -66,10 +103,18 @@ Set-CrmSolutionVersionNumber -conn $conn -SolutionName  $global:SolutionName -Ve
 
 
 ######################## EXPORT SOLUTION
-Write-Host "Exporting Unmanaged Solution"
+$message = "Exporting Unmanaged Solution for $global:SolutionName"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.6
+New-BurntToastNotification -Text $global:SolutionName -ProgressBar $ProgressBar -Silent -UniqueIdentifier $global:SolutionName
+
 Export-CrmSolution -SolutionName $global:SolutionName -SolutionZipFileName "$global:SolutionName.zip" -conn $conn
 
-Write-Host "Exporting Managed Solution"
+$message = "Exporting Managed Solution for $global:SolutionName"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.7
+New-BurntToastNotification -Text $global:SolutionName -ProgressBar $ProgressBar -Silent -UniqueIdentifier $global:SolutionName
+
 Export-CrmSolution -SolutionName $global:SolutionName -Managed -SolutionZipFileName $global:SolutionName"_managed.zip" -conn $conn
 
 ######################## EXTRACT SOLUTION
@@ -77,6 +122,10 @@ Export-CrmSolution -SolutionName $global:SolutionName -Managed -SolutionZipFileN
 $ErrorActionPreference = "SilentlyContinue"
 Remove-Item ..\..\package -Force -Recurse
 
+$message = "Unpacking Solution $global:SolutionName"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.8
+New-BurntToastNotification -Text $global:SolutionName -ProgressBar $ProgressBar -Silent -UniqueIdentifier $global:SolutionName
 
 if ($PatchSolution) {
     &.\Tools\SolutionPackager.exe /action:extract /folder:..\..\packagePatch\ /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
@@ -84,5 +133,13 @@ if ($PatchSolution) {
     Remove-Item ..\..\package\patch -Force -Recurse
     &.\Tools\SolutionPackager.exe /action:extract /folder:..\..\packageSolution\ /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
 }
+
+$message = "Cleaning Up..."
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 1
+New-BurntToastNotification -Text $global:SolutionName -ProgressBar $ProgressBar -Silent -UniqueIdentifier $global:SolutionName
+
+Remove-Item nuget.exe
+Remove-Item .\Tools -Force -Recurse -ErrorAction Ignore
 
 

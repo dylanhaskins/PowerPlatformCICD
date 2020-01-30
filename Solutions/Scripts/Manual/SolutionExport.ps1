@@ -3,10 +3,16 @@ Write-Host "Initialising Setup ...."
 . ".\\..\_SetupTools.ps1"
 . ".\\..\_Config.ps1"
 
+InstallToastModule
+    $message = "Installing Tools..."
+    Write-Host $message
+    $ProgressBar = New-BTProgressBar -Status $message -Value 0.05
+    New-BurntToastNotification -Text $global:SolutionName -ProgressBar $ProgressBar -Silent -UniqueIdentifier $global:SolutionName
+
+
 InstallXrmDataModule
 InstallCoreTools
 InstallDevOpsDataModule
-InstallToastModule
 
 ######################## GET CONNECTION
 
@@ -29,10 +35,11 @@ if (!$conn) {
 Write-Output($conn)
 
 ######################## Generate Config Migration data 
-    $message = "Exporting Configuration Data from $global:ServerUrl"
-    Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.3
-    New-BurntToastNotification -Text $global:SolutionName -ProgressBar $ProgressBar -Silent -UniqueIdentifier $global:SolutionName
+$message = "Exporting Configuration Data from $global:ServerUrl"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.3
+New-BurntToastNotification -Text $global:SolutionName -ProgressBar $ProgressBar -Silent -UniqueIdentifier $global:SolutionName
+
 & ".\\..\_ConfigMigration.ps1"
 
 ######################## Generate Types
