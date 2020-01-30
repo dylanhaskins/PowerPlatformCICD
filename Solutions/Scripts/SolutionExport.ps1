@@ -6,7 +6,7 @@ $UniqueId = "SolutionMGMT"
 . ((Split-Path $MyInvocation.InvocationName) + "\_Config.ps1")
 
 InstallToastModule
-    $message = "Installing Tools..."
+    $message = "Installing Solution Management Tools..."
     Write-Host $message
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.05
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
