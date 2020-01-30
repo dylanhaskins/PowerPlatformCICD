@@ -3,6 +3,9 @@ Param(
     [string] [Parameter(Mandatory = $false)] $branch = "master"
 )
 
+$Text = "Power Platform DevOps"
+$UniqueId = "PPDevOps"
+
 function Restart-PowerShell
 {
     Start-Sleep -Seconds 5
@@ -25,15 +28,39 @@ Write-host "Module $moduleName Found"
 }
 }
 
+Function InstallToastModule{
+$moduleName = "BurntToast"
+if (!(Get-Module -ListAvailable -Name $moduleName )) {
+Write-host "Module $moduleName Not found, installing now"
+Install-Module -Name $moduleName -Force -Scope CurrentUser
+}
+else
+{
+Write-host "Module $moduleName Found"
+}
+}
+
 function PreReq-Install
 {
-    Write-Host "Installing Chocolatey ...."
+    $message = "Installing Chocolatey ...."
+    Write-Host $message
+    $ProgressBar = New-BTProgressBar -Status $message -Value 0.12
+    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
     Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
  
-    Write-Host "Installing Git ...."
+    $message = "Installing Git ...."
+    Write-Host $message
+    $ProgressBar = New-BTProgressBar -Status $message -Value 0.15
+    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
     choco install git.install -y
 
-    Write-Host "Installing Azure CLI ...."
+    
+    $message = "Installing Azure CLI ...."
+    Write-Host $message
+    $ProgressBar = New-BTProgressBar -Status $message -Value 0.18
+    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
     choco install azure-cli -y -force
 
     ## Restart PowerShell Environment to Enable Azure CLI
@@ -44,6 +71,12 @@ function DevOps-PreReq
 {
 
 $ErrorActionPreference = "SilentlyContinue"
+
+$message = "Checking Azure CLI"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.1
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
 $azver = az --version
 
 if ($azver)
@@ -66,10 +99,20 @@ else {
 function DevOps-Install
 {
 ## Install Azure DevOps Extension
+$message = "Installing azure-devops extenstion"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.20
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
 az extension add --name azure-devops
 
 $ErrorActionPreference = "SilentlyContinue"
 Remove-Item AzureCli.msi
+
+$message = "Connecting to Azure DevOps Organisation"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.30
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 $adoOrg = Read-Host -Prompt "Enter the name of your Azure DevOps Organisation (https://dev.azure.com/<Name>)"
 
@@ -87,6 +130,12 @@ $adoCreate = Read-Host -Prompt "Would you like to [C]reate a new Project or [S]e
 if ($adoCreate -eq "C")
 {
   $adoProject = Read-Host -Prompt "Please enter the Name of the Project you wish to Create"
+
+$message = "Creating DevOps Project $adoProject"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.35
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
   az devops project create --name $adoProject --organization=https://dev.azure.com/$adoOrg --process Scrum
 }
 else {
@@ -102,14 +151,28 @@ Write-Host ""
 $adoRepo = Read-Host -Prompt "Enter the name for the Git Repository you wish to Create"
 $adoRepo = $adoRepo.Replace(' ','')
 
+$message = "Creating Git Repo $adoRepo"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.38
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
 az devops configure --defaults organization=https://dev.azure.com/$adoOrg project=$adoProject
 
 $repo = az repos create --name $adoRepo | Out-String | ConvertFrom-Json
 az repos import create --git-source-url https://github.com/dylanhaskins/PowerPlatformCICD.git --repository $adoRepo
 
+$message = "Cloning Git Repo $adoRepo locally"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.40
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
 git clone $repo.webUrl \Dev\Repos\$adoRepo 
 
-Write-Host "Create PowerApps Check Azure AD Application"
+$message = "Create PowerApps Check Azure AD Application"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.50
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
 $manifest = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/$branch/manifest.json"
 Set-Content .\manifest.json -Value $manifest.Content
 
@@ -118,6 +181,11 @@ $azureADAppPassword = (New-Guid).Guid.Replace("-","")
 $adAppCreds = az ad app credential reset --password $azureADAppPassword --id $adApp.appId | ConvertFrom-Json
 
 chdir -Path \Dev\Repos\$adoRepo\
+
+$message = "Cleaning up Git Repository"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.60
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 git checkout $branch
 git branch | select-string -notmatch $branch | foreach {git branch -D ("$_").Trim()} #Remove non-used local branches
@@ -132,6 +200,12 @@ chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
 
 Write-Host ""
 Write-Host ""
+
+$message = "Connecting to Power Platform"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.70
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
 $quit = Read-Host -Prompt "Press Enter to Connect to your CDS / D365 Tenant or [Q]uit"
 if ($quit -eq "Q")
 {
@@ -150,12 +224,23 @@ $username =  $Credentials.GetNetworkCredential().UserName
 $password =  $Credentials.GetNetworkCredential().Password
 }
 
+    $message = "Connecting to Development Environment"
+    Write-Host $message
+    $ProgressBar = New-BTProgressBar -Status $message -Value 0.75
+    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
     Write-Host ""
     Write-Host "---- Please Select your Development Environment ------"
     $conn = Connect-CrmOnlineDiscovery -Credential $Credentials
 
     $CreateOrSelect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Solution or [S]elect an Existing One (Default [S])"
 if ($CreateOrSelect -eq "C"){
+
+    $message = "Creating Solution and Publisher"
+    Write-Host $message
+    $ProgressBar = New-BTProgressBar -Status $message -Value 0.78
+    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
     $PublisherName = Read-Host -Prompt "Enter a Name for your Solution Publisher"
     $PublisherPrefix = Read-Host -Prompt "Enter a Publisher Prefix"
 
@@ -212,6 +297,11 @@ if ($CreateOrSelect -eq "C"){
 }
 #}
 
+$message = "Setting Configurations in Source Code"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.80
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
 Write-Host "Updating config.json ..."
 
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
@@ -234,6 +324,11 @@ Write-Host "Updating XrmDefinitelyTyped.exe.config ..."
 
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config
 
+$message = "Connecting to Deployment Staging (CI/CD)"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.85
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
 Write-Host ""
 Write-Host "---- Please Select your Deployment Staging (CI/CD) Environment ------"
 $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
@@ -243,6 +338,11 @@ $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
 git add -A
 git commit -m "Initial Commit"
 git push origin master --force
+
+$message = "Creating variable groups in Azure DevOps"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.90
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 $varGroup = az pipelines variable-group create --name "$adoRepo.D365DevEnvironment"  --variables d365username=$username --authorize $true | ConvertFrom-Json
 az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroup.id
@@ -255,10 +355,20 @@ az pipelines variable-group variable create --name aadPowerAppId --value $adAppC
 az pipelines variable-group variable create --name aadPowerAppSecret --value $adAppCreds.password --secret $true --group-id $varGroupCICD.id
 az pipelines variable-group variable create --name d365url --value $connCICD.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroupCICD.id
 
+$message = "Creating Build and Deploy Pipeline in Azure DevOps"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.95
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
 $pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
 
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
+
+$message = "Complete"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 1
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 }
 
 $sourceFile = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/$branch/Provision.ps1"
@@ -307,7 +417,9 @@ if ($quit -eq "Q")
 {
     exit
 }
-    Write-Host("Performing Checks....")
+    
+Write-Host("Performing Checks....")
+InstallToastModule
 
 if ($PerformInstall)
 {
