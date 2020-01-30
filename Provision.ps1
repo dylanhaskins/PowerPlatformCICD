@@ -120,7 +120,6 @@ $adAppCreds = az ad app credential reset --password $azureADAppPassword --id $ad
 chdir -Path \Dev\Repos\$adoRepo\
 
 git checkout $branch
-#git branch -r | select-string -notmatch $branch | select-string -notmatch HEAD | foreach { git push origin --delete ("$_").Replace("origin/","").Trim()} #Remove non-used branches from remote
 #git branch | select-string -notmatch $branch | foreach {git branch -D ("$_").Trim()} #Remove non-used local branches
 
 Remove-Item .git -Recurse -Force
@@ -243,6 +242,7 @@ $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
 git add -A
 git commit -m "Initial Commit"
 git push origin master --force
+git branch -r | select-string -notmatch master | select-string -notmatch HEAD | foreach { git push origin --delete ("$_").Replace("origin/","").Trim()} #Remove non-used branches from remote
 
 
 $varGroup = az pipelines variable-group create --name "$adoRepo.D365DevEnvironment"  --variables d365username=$username --authorize $true | ConvertFrom-Json
