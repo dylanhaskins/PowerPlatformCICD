@@ -117,12 +117,18 @@ $adApp = az ad app create --display-name "PowerApp Checker App" --native-app --r
 $azureADAppPassword = (New-Guid).Guid.Replace("-","")
 $adAppCreds = az ad app credential reset --password $azureADAppPassword --id $adApp.appId | ConvertFrom-Json
 
-chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
+chdir -Path \Dev\Repos\$adoRepo\
 
 git checkout $branch
-git branch -r | select-string -notmatch $branch | select-string -notmatch HEAD | foreach { git push origin --delete ("$_").Replace("origin/","").Trim()} #Remove non-used branches from remote
 git branch | select-string -notmatch $branch | foreach {git branch -D ("$_").Trim()} #Remove non-used local branches
+git branch -r | select-string -notmatch master | select-string -notmatch HEAD | foreach { git push origin --delete ("$_").Replace("origin/","").Trim()} #Remove non-used branches from remote
 
+Remove-Item .git -Recurse -Force
+git init
+git add .
+git remote add origin $repo.webUrl
+
+chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
 
 Write-Host ""
 Write-Host ""
@@ -218,7 +224,6 @@ Write-Host "Updating ImportConfig.xml ..."
 Write-Host "Updating Build.yaml ..."
 
 (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceRepo",$adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
-(Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceBranch",$branch | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 
 Write-Host "Updating XrmContext.exe.config ..."
@@ -237,8 +242,7 @@ $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
 
 git add -A
 git commit -m "Initial Commit"
-git push origin $branch
-
+git push origin master --force
 
 $varGroup = az pipelines variable-group create --name "$adoRepo.D365DevEnvironment"  --variables d365username=$username --authorize $true | ConvertFrom-Json
 az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroup.id
@@ -251,7 +255,7 @@ az pipelines variable-group variable create --name aadPowerAppId --value $adAppC
 az pipelines variable-group variable create --name aadPowerAppSecret --value $adAppCreds.password --secret $true --group-id $varGroupCICD.id
 az pipelines variable-group variable create --name d365url --value $connCICD.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroupCICD.id
 
-$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch $branch | ConvertFrom-Json
+$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
 
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
