@@ -365,7 +365,7 @@ $pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --re
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
 
-$message = "Complete"
+$message = "Complete ... Enjoy !!!"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 1
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
