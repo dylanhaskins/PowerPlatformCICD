@@ -224,7 +224,6 @@ Write-Host "Updating ImportConfig.xml ..."
 Write-Host "Updating Build.yaml ..."
 
 (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceRepo",$adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
-(Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceBranch",$branch | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 
 Write-Host "Updating XrmContext.exe.config ..."
@@ -257,7 +256,7 @@ az pipelines variable-group variable create --name aadPowerAppId --value $adAppC
 az pipelines variable-group variable create --name aadPowerAppSecret --value $adAppCreds.password --secret $true --group-id $varGroupCICD.id
 az pipelines variable-group variable create --name d365url --value $connCICD.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroupCICD.id
 
-$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch $branch | ConvertFrom-Json
+$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
 
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
