@@ -117,12 +117,18 @@ $adApp = az ad app create --display-name "PowerApp Checker App" --native-app --r
 $azureADAppPassword = (New-Guid).Guid.Replace("-","")
 $adAppCreds = az ad app credential reset --password $azureADAppPassword --id $adApp.appId | ConvertFrom-Json
 
-chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
+chdir -Path \Dev\Repos\$adoRepo\
 
 git checkout $branch
 git branch -r | select-string -notmatch $branch | select-string -notmatch HEAD | foreach { git push origin --delete ("$_").Replace("origin/","").Trim()} #Remove non-used branches from remote
 git branch | select-string -notmatch $branch | foreach {git branch -D ("$_").Trim()} #Remove non-used local branches
 
+Remove-Item .git -Recurse -Force
+git init
+git add .
+git remote add origin $repo.webUrl
+
+chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
 
 Write-Host ""
 Write-Host ""
@@ -237,7 +243,7 @@ $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
 
 git add -A
 git commit -m "Initial Commit"
-git push origin $branch
+git push origin $branch --force
 
 
 $varGroup = az pipelines variable-group create --name "$adoRepo.D365DevEnvironment"  --variables d365username=$username --authorize $true | ConvertFrom-Json
