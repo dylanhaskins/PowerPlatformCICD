@@ -56,13 +56,6 @@ Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.4
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-$currentVersion = (Get-CrmRecords -conn $conn -EntityLogicalName solution -FilterAttribute uniquename -FilterOperator "like" -FilterValue $global:SolutionName -Fields uniquename,publisherid,version).CrmRecords | select version
-Write-Host("Current Version - $currentVersion")
-$theVersion = [version]$currentVersion.version
-$newVersion = "{0}.{1}{2}.{3}.{4}" -f $theVersion.Major, (Get-Date -UFormat %y),(Get-Date -UFormat %j).PadLeft(3,'0'), $theVersion.Build , (Get-Date -UFormat %H%M)
-Set-CrmSolutionVersionNumber -SolutionName $global:SolutionName -VersionNumber $newVersion -conn $conn
-Write-Host("New Version - $newVersion")
-
 ######################## CHECK SOLUTION
 # Get solution by name
 $SolutionQuery = Get-CrmRecords -conn $conn -EntityLogicalName solution -Fields 'friendlyname', 'version' -FilterAttribute uniquename -FilterOperator eq -FilterValue  $global:SolutionName
@@ -101,8 +94,6 @@ if ($PatchSolution) {
 	$newVersion = "{0}.{1}.{2}.{3}" -f $theVersion.Major, $theVersion.Minor, $theVersion.Build , $theVersion.Revision + 1
 }
 Set-CrmSolutionVersionNumber -conn $conn -SolutionName  $global:SolutionName -VersionNumber $newVersion
-
-
 
 ######################## EXPORT SOLUTION
 $message = "Exporting Unmanaged Solution for $global:SolutionName"
