@@ -11,7 +11,6 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BaseService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\CommonFunctions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\EmailProcess.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="C:\Users\jean\Source\Repos\ccms-d365-solution\CCMS.Services\Persons\PostalResidentialAddressService.xaml.cs">
