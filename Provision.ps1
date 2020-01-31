@@ -326,6 +326,11 @@ Write-Host "Updating XrmDefinitelyTyped.exe.config ..."
 
 Write-Host "Rename Core.sln to $chosenSolution.sln"
 Rename-Item -Path \Dev\Repos\$adoRepo\Core.sln -NewName "$chosenSolution.sln"
+(Get-Content -Path \Dev\Repos\$adoRepo\Plugins\Plugins.csproj) -replace "PowerPlatformDevOpsPlugins",($chosenSolution+"Plugins") | Set-Content -Path \Dev\Repos\$adoRepo\Plugins\Plugins.csproj
+(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\map.xml) -replace "PowerPlatformDevOpsPlugins",($chosenSolution+"Plugins") | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\map.xml
+(Get-Content -Path \Dev\Repos\$adoRepo\Workflows\Workflows.csproj) -replace "PowerPlatformDevOpsWorkflows",($chosenSolution+"Workflows") | Set-Content -Path \Dev\Repos\$adoRepo\Workflows\Workflows.csproj
+(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\map.xml) -replace "PowerPlatformDevOpsWorkflows",($chosenSolution+"Workflows") | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\map.xml
+
 
 $message = "Connecting to Deployment Staging (CI/CD)"
 Write-Host $message
