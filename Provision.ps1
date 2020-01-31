@@ -324,6 +324,9 @@ Write-Host "Updating XrmDefinitelyTyped.exe.config ..."
 
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config
 
+Write-Host "Rename Core.sln to $chosenSolution.sln"
+Rename-Item -Path \Dev\Repos\$adoRepo\Core.sln -NewName "$chosenSolution.sln"
+
 $message = "Connecting to Deployment Staging (CI/CD)"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.85
