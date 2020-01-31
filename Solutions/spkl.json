@@ -1,47 +1,51 @@
 {
     "webresources": [
-        {
-            /* 
+      {
+        /* 
             Option - profile - Provide a comma delimitered list of profile names that can be referenced when calling spkl
             */
-            "profile": "default,debug",
+        "profile": "default,debug",
 
-            /*
+        /*
             Optional - root - Provide the relatative path of the webresources.
             */
-            "root": "Webresources/",
+        "root": "..\\WebResources\\dist\\js",
 
-            /*
+        /*
             Optional - solution - Add webresources to a solution when deploying
             */
-            "solution": "<SolutionUniqueName>",
+        "solution": "AddName",
 
-            /*
+        /*
             Required - files - List the webresources to deploy relatative to the root of this file (or the the root parameter above)
             */
-            "files": [
-                {
-                    "uniquename": "new_/js/somefile.js",
-                    "file": "new_\\js\\somefile.js",
-                    "description": ""
-                }
-            ]
-        }
+        "files": [
+          {
+            "uniquename": "systemuser.js",
+            "file": "systemuser.js",
+            "description": "System User JavaScript Library"
+          }
+        ]
+      }
     ],
     "plugins": [
-        {
-            /*
+      {
+        /*
             Required - assemblypath - Relative path (from this file or the path parameter above) to the assembies to deply
             Can be either plugins or workflow activities
             Create multiple entries for different profiles
             */
-            "profile": "default,debug",
-            "assemblypath": "..\\Plugins\\bin\\Debug"
-            /*
-            Optional - defines the regex to use to detect a plugin or workflow activity when using a custom base class
-            */
-            //"classRegex": "((public( sealed)? class (?'class'[\\w]*)[\\W]*?)((?'plugin':[\\W]*?((IPlugin)|(PluginBase)|(Plugin)))|(?'wf':[\\W]*?CodeActivity)))"
-        }
+        "profile": "default,debug",
+        "solution": "AddName",
+        "assemblypath": "..\\Plugins\\bin\\Debug",
+        "classRegex": "((public( sealed)? class (?'class'[\\w]*)[\\W]*?)((?'plugin':[\\W]*?((IPlugin)|(BasePlugin)|(Plugin)))|(?'wf':[\\W]*?BaseWorkflow)))"
+      },
+      {
+        "profile": "default,debug",
+        "solution": "AddName",
+        "assemblypath": "..\\Workflows\\bin\\Debug",
+        "classRegex": "((public( sealed)? class (?'class'[\\w]*)[\\W]*?)((?'plugin':[\\W]*?((IPlugin)|(BasePlugin)|(Plugin)))|(?'wf':[\\W]*?BaseWorkflow)))"        
+      }
     ],
     /*
     The solutions section defines a solution that can be extracted to individual xml files to make
