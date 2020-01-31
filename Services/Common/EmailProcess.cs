@@ -1,5 +1,5 @@
-﻿using CCMS.Core.Entities;
-using CCMS.Core.Services;
+﻿using Entities;
+using Services;
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace CCMS.Core.Common
+namespace Common
 {
     internal class EmailProcessService : BaseService
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CCMS.Core.Services.Common
+namespace Services.Common
 {
     class CommonFunctions
     {
