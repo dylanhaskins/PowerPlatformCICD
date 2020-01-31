@@ -132,7 +132,6 @@
     <None Include="spkl\deploy-webresources.bat" />
     <None Include="spkl\deploy-workflows.bat" />
     <None Include="spkl\instrument-plugin-code.bat" />
-    <None Include="spkl\pack.bat" />
     <None Include="XrmContext\Run.fsx" />
     <None Include="XrmContext\Run.ps1" />
     <None Include="XrmContext\XrmContext.exe.config" />
