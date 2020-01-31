@@ -2,6 +2,6 @@
 <Mapping>
   <FileToFile map="PluginAssemblies\**\PowerPlatformDevOpsPlugins.dll" to="..\..\Plugins\bin\**\PowerPlatformDevOpsPlugins.dll" />
   <FileToFile map="PluginAssemblies\**\PowerPlatformDevOpsWorkflows.dll" to="..\..\Workflows\bin\**\PowerPlatformDevOpsWorkflows.dll" />
-  <FileToPath map="WebResources\*.*" to="..\..\WebResources\dist\**" />
-  <FileToPath map="WebResources\**\*.*" to="..\..\WebResources\dist\**" />
+  <FileToPath map="WebResources\*.*" to="..\..\WebResources\dist\js\**" />
+  <FileToPath map="WebResources\**\*.*" to="..\..\WebResources\dist\js\**" />
 </Mapping>
