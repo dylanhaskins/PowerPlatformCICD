@@ -309,7 +309,7 @@ Write-Host "Updating config.json ..."
 
 Write-Host "Updating spkl.json ..."
 
-(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\spkl.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\spkl.json
+(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json
 
 Write-Host "Updating ImportConfig.xml ..."
 
