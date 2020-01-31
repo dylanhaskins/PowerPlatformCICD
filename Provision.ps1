@@ -244,7 +244,7 @@ if ($CreateOrSelect -eq "C"){
     $PublisherName = Read-Host -Prompt "Enter a Name for your Solution Publisher"
     $PublisherPrefix = Read-Host -Prompt "Enter a Publisher Prefix"
 
-    $PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','').ToLower();"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix}
+    $PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','').ToLower();"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix.Replace(' ','').ToLower()}
 
     $SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"
     $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $PublisherId.Guid
@@ -286,6 +286,7 @@ if ($CreateOrSelect -eq "C"){
             else {
                 $chosenSolution = $solutions[$choice].uniquename
                 if ($null -ne $chosenSolution) {
+                    $PublisherPrefix = (Get-CrmRecord -conn $conn -EntityLogicalName publisher -Id $solutions[$choice].publisherid_Property.Value.Id -Fields customizationprefix).customizationprefix
                     $success = $true
                 }
                 else {
@@ -310,6 +311,7 @@ Write-Host "Updating config.json ..."
 Write-Host "Updating spkl.json ..."
 
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json
+(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json) -replace "prefix_",$PublisherPrefix.Replace(' ','').ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json
 
 Write-Host "Updating ImportConfig.xml ..."
 
