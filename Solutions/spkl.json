@@ -21,7 +21,7 @@
             */
         "files": [
           {
-            "uniquename": "prefix_systemuser.js",
+            "uniquename": "prefix_/systemuser.js",
             "file": "systemuser.js",
             "description": "System User JavaScript Library"
           }
