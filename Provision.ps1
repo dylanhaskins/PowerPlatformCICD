@@ -258,6 +258,8 @@ $password =  $Credentials.GetNetworkCredential().Password
     Write-Host "---- Please Select your Development Environment ------"
     $conn = Connect-CrmOnlineDiscovery -Credential $Credentials
 
+    Add-PowerAppsAccount -Username $Credentials.UserName -Password $Credentials.Password
+
     $Locations = Get-AdminPowerAppEnvironmentLocations
 
     $choiceIndex = 0
