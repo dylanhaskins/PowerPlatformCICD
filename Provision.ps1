@@ -42,15 +42,9 @@ Function InstallToastModule{
 
 function InstallPowerAppsAdmin{
 $moduleName = "Microsoft.PowerApps.Administration.PowerShell"
-$moduleVersion = "2.0.3,7"
-if (!(Get-Module -ListAvailable -Name $moduleName )) {
-Write-host "Module $moduleName Not found, installing now"
+$moduleVersion = "2.0.3.7"
+Write-host "Installing $moduleName"
 Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser -AllowClobber
-}
-else
-{
-Write-host "Module $moduleName Found"
-}
 }
 
 function InstallPowerAppsPowerShell{
