@@ -40,6 +40,30 @@ Function InstallToastModule{
     }
 }
 
+function InstallPowerAppsAdmin{
+$moduleName = "Microsoft.PowerApps.Administration.PowerShell"
+if (!(Get-Module -ListAvailable -Name $moduleName )) {
+Write-host "Module $moduleName Not found, installing now"
+Install-Module -Name $moduleName -Force -Scope CurrentUser
+}
+else
+{
+Write-host "Module $moduleName Found"
+}
+}
+
+function InstallPowerAppsPowerShell{
+$moduleName = "Microsoft.PowerApps.PowerShell"
+if (!(Get-Module -ListAvailable -Name $moduleName )) {
+Write-host "Module $moduleName Not found, installing now"
+Install-Module -Name $moduleName -Force -Scope CurrentUser -AllowClobber
+}
+else
+{
+Write-host "Module $moduleName Found"
+}
+}
+
 function PreReq-Install
 {
     $message = "Installing Chocolatey ...."
@@ -233,6 +257,13 @@ $password =  $Credentials.GetNetworkCredential().Password
     Write-Host "---- Please Select your Development Environment ------"
     $conn = Connect-CrmOnlineDiscovery -Credential $Credentials
 
+    $Locations = Get-AdminPowerAppEnvironmentLocations
+
+    $choiceIndex = 0
+    $options = $Locations | ForEach-Object { write-Host "[$($choiceIndex)] $($_.LocationDisplayName)"; $choiceIndex++; }
+    $geoselect = Read-Host "Please select the Geography for your Power Platform : "
+    $Geography = $Locations[$geoselect].LocationName
+
     $CreateOrSelect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Solution or [S]elect an Existing One (Default [S])"
 if ($CreateOrSelect -eq "C"){
 
@@ -268,6 +299,7 @@ if ($CreateOrSelect -eq "C"){
 
     $choiceIndex = 0
     $options = $solutions | ForEach-Object { write-host "[$($choiceIndex)] $($_.uniquename)"; $choiceIndex++; }  
+
 
     $success = $false
     do {
@@ -307,6 +339,7 @@ Write-Host "Updating config.json ..."
 
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
+(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddGeography",$Geography | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 
 Write-Host "Updating spkl.json ..."
 
@@ -434,6 +467,7 @@ if ($quit -eq "Q")
     
 Write-Host("Performing Checks....")
 InstallToastModule
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
 if ($PerformInstall)
 {
