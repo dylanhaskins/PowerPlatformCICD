@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CanvasApp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>ppdo_sharepointlistapp_56700</Name>
+  <AppVersion>2020-01-31T08:13:10Z</AppVersion>
+  <Status>Ready</Status>
+  <CreatedByClientVersion>3.20013.29.0</CreatedByClientVersion>
+  <MinClientVersion>3.20013.29.0</MinClientVersion>
+  <Tags>{"primaryDeviceWidth":"640","primaryDeviceHeight":"1136","sienaVersion":"5f1874e0-bdd4-4ae1-a21f-846741acaafe","deviceCapabilities":"","supportsPortrait":"true","supportsLandscape":"false","primaryFormFactor":"Phone","publisherVersion":"3.20013.29","minimumRequiredApiVersion":"2.2.0","hasComponent":"false","hasUnlockedComponent":"false"}</Tags>
+  <IsCdsUpgraded>0</IsCdsUpgraded>
+  <GalleryItemId xsi:nil="true"></GalleryItemId>
+  <BackgroundColor>rgba(0, 176, 240, 1)</BackgroundColor>
+  <DisplayName>SharePoint List App</DisplayName>
+  <Description xsi:nil="true"></Description>
+  <CommitMessage xsi:nil="true"></CommitMessage>
+  <Publisher xsi:nil="true"></Publisher>
+  <AuthorizationReferences xsi:nil="true"></AuthorizationReferences>
+  <ConnectionReferences>{"de3f71d5-e2e0-499f-91a6-e66bd3a629c5":{"id":"/providers/microsoft.powerapps/apis/shared_sharepointonline","displayName":"SharePoint","iconUri":"https://connectoricons-prod.azureedge.net/sharepointonline/icon_1.0.1299.1858.png","dataSources":["Documents","Documents_1"],"dependencies":[],"dependents":[],"parameterHints":{},"isOnPremiseConnection":false,"dataSets":{"https://intergenfieldservice.sharepoint.com/":{"dataSources":{"Documents":{"tableName":"0bf5e011-b281-47ff-946b-1d485fc153d6"}}},"https://intergenfieldservice.sharepoint.com/sites/FieldService":{"dataSources":{"Documents_1":{"tableName":"0930c91e-1c8a-4f8a-8626-18009a6d89ad"}}}},"apiTier":"Standard"}}</ConnectionReferences>
+  <DatabaseReferences>{}</DatabaseReferences>
+  <BypassConsent>0</BypassConsent>
+  <AdminControlBypassConsent>0</AdminControlBypassConsent>
+  <EmbeddedApp xsi:nil="true"></EmbeddedApp>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <CdsDependencies>{"cdsdependencies":[]}</CdsDependencies>
+  <BackgroundImageUri>/CanvasApps/ppdo_sharepointlistapp_56700_BackgroundImageUri</BackgroundImageUri>
+  <DocumentUri>/CanvasApps/ppdo_sharepointlistapp_56700_DocumentUri.msapp</DocumentUri>
+</CanvasApp>

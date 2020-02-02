@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CanvasApp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>ppdo_assetcheckoutphone_fa5fd</Name>
+  <AppVersion>2020-01-31T07:38:44Z</AppVersion>
+  <Status>Ready</Status>
+  <CreatedByClientVersion>3.20013.29.0</CreatedByClientVersion>
+  <MinClientVersion>3.20013.29.0</MinClientVersion>
+  <Tags>{"primaryDeviceWidth":"640","primaryDeviceHeight":"1136","sienaVersion":"20200131T073844Z-3.20013.29.0","deviceCapabilities":"","supportsPortrait":"true","supportsLandscape":"false","primaryFormFactor":"Phone","publisherVersion":"3.20013.29","minimumRequiredApiVersion":"2.2.0","hasComponent":"false","hasUnlockedComponent":"false"}</Tags>
+  <IsCdsUpgraded>0</IsCdsUpgraded>
+  <GalleryItemId xsi:nil="true"></GalleryItemId>
+  <BackgroundColor>rgba(81, 92, 107, 1)</BackgroundColor>
+  <DisplayName>Asset Checkout - Phone</DisplayName>
+  <Description xsi:nil="true"></Description>
+  <CommitMessage xsi:nil="true"></CommitMessage>
+  <Publisher xsi:nil="true"></Publisher>
+  <AuthorizationReferences xsi:nil="true"></AuthorizationReferences>
+  <ConnectionReferences>{"160469ac-e122-4fb4-a662-7fbb3b7e5eea":{"id":"/providers/microsoft.powerapps/apis/shared_excel","displayName":"Excel","iconUri":"https://connectoricons-prod.azureedge.net/excel/icon_1.0.1278.1753.png","dataSources":["Categories","Products","Reviews","Assets","Filterby"],"dependencies":["fc1b5523-a9cd-4507-ba7b-1077119d8ad6"],"dependents":[],"parameterHints":{"fc1b5523-a9cd-4507-ba7b-1077119d8ad6":{"value":"fileSource"}},"isOnPremiseConnection":false,"dataSets":{"b!nFQ1S6lJM0-x2tMD6IiiRCckOwreMKRDtX0w-hiVVI2wx5gZd4zrQY7oSCMboxlW.01NPRJYMRZXXH7UYXPSJHKBX5UVVBKUEZB":{"dataSources":{"Categories":{"tableName":"Categories"},"Products":{"tableName":"Products"},"Reviews":{"tableName":"Reviews"},"Assets":{"tableName":"Assets"},"Filterby":{"tableName":"Filterby"}}}},"apiTier":"Standard"},"fc1b5523-a9cd-4507-ba7b-1077119d8ad6":{"id":"/providers/microsoft.powerapps/apis/shared_onedriveforbusiness","displayName":"OneDrive for Business","iconUri":"https://connectoricons-prod.azureedge.net/onedriveforbusiness/icon_1.0.1284.1763.png","dataSources":[],"dependencies":[],"dependents":["160469ac-e122-4fb4-a662-7fbb3b7e5eea"],"parameterHints":{},"isOnPremiseConnection":false,"dataSets":{},"apiTier":"Standard"}}</ConnectionReferences>
+  <DatabaseReferences>{}</DatabaseReferences>
+  <BypassConsent>0</BypassConsent>
+  <AdminControlBypassConsent>0</AdminControlBypassConsent>
+  <EmbeddedApp xsi:nil="true"></EmbeddedApp>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <CdsDependencies>{"cdsdependencies":[]}</CdsDependencies>
+  <BackgroundImageUri>/CanvasApps/ppdo_assetcheckoutphone_fa5fd_BackgroundImageUri</BackgroundImageUri>
+  <DocumentUri>/CanvasApps/ppdo_assetcheckoutphone_fa5fd_DocumentUri.msapp</DocumentUri>
+</CanvasApp>

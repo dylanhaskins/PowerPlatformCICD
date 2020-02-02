@@ -119,6 +119,9 @@
     <None Include="Scripts\GenerateTypes.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Scripts\_ExportSolution.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Scripts\_PortalConfigMigration.ps1" />
     <None Include="Scripts\_SetupTools.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -127,6 +130,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Scripts\_GenerateTypes.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\_UpdateVersion.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="spkl.json" />

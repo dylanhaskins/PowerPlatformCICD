@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <EntityRelationship Name="business_unit_ppdo_entitya" />
+  <EntityRelationship Name="lk_ppdo_entitya_createdby" />
+  <EntityRelationship Name="lk_ppdo_entitya_modifiedby" />
+  <EntityRelationship Name="owner_ppdo_entitya" />
+  <EntityRelationship Name="team_ppdo_entitya" />
+  <EntityRelationship Name="user_ppdo_entitya" />
+</EntityRelationships>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CanvasApp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>ppdo_testcanvasapp_b7271</Name>
+  <AppVersion>2020-01-31T07:35:06Z</AppVersion>
+  <Status>Ready</Status>
+  <CreatedByClientVersion>3.20013.29.0</CreatedByClientVersion>
+  <MinClientVersion>3.20013.29.0</MinClientVersion>
+  <Tags>{"primaryDeviceWidth":"1366","primaryDeviceHeight":"768","sienaVersion":"6eadf88e-2604-4d22-9ef8-cbb43dab78d0","deviceCapabilities":"","supportsPortrait":"false","supportsLandscape":"true","primaryFormFactor":"Tablet","publisherVersion":"3.20013.29","minimumRequiredApiVersion":"2.2.0","hasComponent":"false","hasUnlockedComponent":"false"}</Tags>
+  <IsCdsUpgraded>0</IsCdsUpgraded>
+  <GalleryItemId xsi:nil="true"></GalleryItemId>
+  <BackgroundColor>rgba(0, 176, 240, 1)</BackgroundColor>
+  <DisplayName>Test Canvas App</DisplayName>
+  <Description xsi:nil="true"></Description>
+  <CommitMessage xsi:nil="true"></CommitMessage>
+  <Publisher xsi:nil="true"></Publisher>
+  <AuthorizationReferences xsi:nil="true"></AuthorizationReferences>
+  <ConnectionReferences>{}</ConnectionReferences>
+  <DatabaseReferences>{}</DatabaseReferences>
+  <BypassConsent>0</BypassConsent>
+  <AdminControlBypassConsent>0</AdminControlBypassConsent>
+  <EmbeddedApp xsi:nil="true"></EmbeddedApp>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <CdsDependencies>{"cdsdependencies":[]}</CdsDependencies>
+  <BackgroundImageUri>/CanvasApps/ppdo_testcanvasapp_b7271_BackgroundImageUri</BackgroundImageUri>
+  <DocumentUri>/CanvasApps/ppdo_testcanvasapp_b7271_DocumentUri.msapp</DocumentUri>
+</CanvasApp>

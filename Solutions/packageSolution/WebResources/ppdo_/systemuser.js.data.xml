@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebResource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <WebResourceId>{cd37f4dd-0a44-ea11-a812-000d3ad199e2}</WebResourceId>
+  <Name>ppdo_/systemuser.js</Name>
+  <DisplayName>ppdo_/systemuser.js</DisplayName>
+  <Description>System User JavaScript Library</Description>
+  <WebResourceType>3</WebResourceType>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <IsHidden>0</IsHidden>
+  <FileName>/WebResources/ppdo_systemuserjsCD37F4DD-0A44-EA11-A812-000D3AD199E2</FileName>
+</WebResource>

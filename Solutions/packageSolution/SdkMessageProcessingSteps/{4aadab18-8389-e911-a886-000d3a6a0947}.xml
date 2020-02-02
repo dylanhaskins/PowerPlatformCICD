@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SdkMessageProcessingStep Name="Users_SetEmployeeID on Pre Op Create" SdkMessageProcessingStepId="{4aadab18-8389-e911-a886-000d3a6a0947}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <PluginTypeName>Plugins.Users.SamplePlugin, TestCanvasAppPlugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f792590206e3544e</PluginTypeName>
+  <PluginTypeId>17d0a27a-ff43-ea11-a812-000d3ad1c8fb</PluginTypeId>
+  <PrimaryEntity>systemuser</PrimaryEntity>
+  <AsyncAutoDelete>0</AsyncAutoDelete>
+  <Description>Sets the employee ID to the local-part of the email/username</Description>
+  <FilteringAttributes></FilteringAttributes>
+  <InvocationSource>1</InvocationSource>
+  <Mode>0</Mode>
+  <Rank>1</Rank>
+  <SdkMessageId>{9ebdbb1b-ea3e-db11-86a7-000a3a5473e8}</SdkMessageId>
+  <EventHandlerTypeCode>4602</EventHandlerTypeCode>
+  <Stage>20</Stage>
+  <IsCustomizable>1</IsCustomizable>
+  <IsHidden>0</IsHidden>
+  <SupportedDeployment>0</SupportedDeployment>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <SdkMessageProcessingStepImages />
+</SdkMessageProcessingStep>
