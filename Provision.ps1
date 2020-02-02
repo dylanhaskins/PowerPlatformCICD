@@ -42,9 +42,10 @@ Function InstallToastModule{
 
 function InstallPowerAppsAdmin{
 $moduleName = "Microsoft.PowerApps.Administration.PowerShell"
+$moduleVersion = "2.0.3,7"
 if (!(Get-Module -ListAvailable -Name $moduleName )) {
 Write-host "Module $moduleName Not found, installing now"
-Install-Module -Name $moduleName -Force -Scope CurrentUser
+Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser -AllowClobber
 }
 else
 {
@@ -468,6 +469,7 @@ if ($quit -eq "Q")
 Write-Host("Performing Checks....")
 InstallToastModule
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+InstallPowerAppsAdmin
 
 if ($PerformInstall)
 {
