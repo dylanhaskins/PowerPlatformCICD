@@ -56,7 +56,7 @@ stages:
             displayName: 'Build Solution'
             inputs:
               solution: '$(Solution)'
-              vsVersion: '15.0'
+              vsVersion: latest
               platform: '$(BuildPlatform)'
               configuration: '$(BuildConfiguration)'
               msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)\\"'

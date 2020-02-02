@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Mapping>
-  <FileToFile map="PluginAssemblies\**\Plugins.dll" to="..\..\Plugins\bin\**\Plugins.dll" />
-  <FileToFile map="PluginAssemblies\**\Workflows.dll" to="..\..\Workflows\bin\**\Workflows.dll" />
-  <FileToPath map="WebResources\*.*" to="..\..\WebResources\dist\**" />
-  <FileToPath map="WebResources\**\*.*" to="..\..\WebResources\dist\**" />
+  <FileToFile map="PluginAssemblies\**\PowerPlatformDevOpsPlugins.dll" to="..\..\Plugins\bin\**\PowerPlatformDevOpsPlugins.dll" />
+  <FileToFile map="PluginAssemblies\**\PowerPlatformDevOpsWorkflows.dll" to="..\..\Workflows\bin\**\PowerPlatformDevOpsWorkflows.dll" />
+  <FileToPath map="WebResources\*.*" to="..\..\WebResources\dist\js\**" />
+  <FileToPath map="WebResources\**\*.*" to="..\..\WebResources\dist\js\**" />
 </Mapping>
