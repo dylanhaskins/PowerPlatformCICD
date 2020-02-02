@@ -77,30 +77,6 @@ Write-host "Module $moduleName Found"
 }
 }
 
-function InstallPowerAppsAdmin{
-$moduleName = "Microsoft.PowerApps.Administration.PowerShell"
-if (!(Get-Module -ListAvailable -Name $moduleName )) {
-Write-host "Module $moduleName Not found, installing now"
-Install-Module -Name $moduleName -Force -Scope CurrentUser
-}
-else
-{
-Write-host "Module $moduleName Found"
-}
-}
-
-function InstallPowerAppsPowerShell{
-$moduleName = "Microsoft.PowerApps.PowerShell"
-if (!(Get-Module -ListAvailable -Name $moduleName )) {
-Write-host "Module $moduleName Not found, installing now"
-Install-Module -Name $moduleName -Force -Scope CurrentUser -AllowClobber
-}
-else
-{
-Write-host "Module $moduleName Found"
-}
-}
-
 Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 #InstallXrmModule
