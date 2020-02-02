@@ -16,28 +16,28 @@ function Restart-PowerShell
 }
 
 function InstallXrmModule{
-$moduleName = "Microsoft.Xrm.Data.Powershell"
-$moduleVersion = "2.8.5"
-if (!(Get-Module -ListAvailable -Name $moduleName )) {
-Write-host "Module $moduleName Not found, installing now"
-Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
-}
-else
-{
-Write-host "Module $moduleName Found"
-}
+    $moduleName = "Microsoft.Xrm.Data.Powershell"
+    $moduleVersion = "2.8.5"
+    if (!(Get-Module -ListAvailable -Name $moduleName )) {
+        Write-host "Module $moduleName Not found, installing now"
+        Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
+    }
+    else
+    {
+        Write-host "Module $moduleName Found"
+    }
 }
 
 Function InstallToastModule{
-$moduleName = "BurntToast"
-if (!(Get-Module -ListAvailable -Name $moduleName )) {
-Write-host "Module $moduleName Not found, installing now"
-Install-Module -Name $moduleName -Force -Scope CurrentUser
-}
-else
-{
-Write-host "Module $moduleName Found"
-}
+    $moduleName = "BurntToast"
+    if (!(Get-Module -ListAvailable -Name $moduleName )) {
+        Write-host "Module $moduleName Not found, installing now"
+        Install-Module -Name $moduleName -Force -Scope CurrentUser
+    }
+    else
+    {
+        Write-host "Module $moduleName Found"
+    }
 }
 
 function PreReq-Install
