@@ -451,9 +451,6 @@ Welcome to the Power Platform DevOps provisioning script. This script will perfo
  - Create Variable Groups in Azure DevOps with your Power Platform details and credentials (stored as secrets)
  - Open the Repo and Pipeline in the Browser (and complete the initial Build and Deploy)       
 
-
-        Test...
-
 "@
 
 Write-Host $message
