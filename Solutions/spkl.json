@@ -9,7 +9,7 @@
         /*
             Optional - root - Provide the relatative path of the webresources.
             */
-        "root": "..\\WebResources\\dist\\js",
+        "root": "..\\WebResources\\dist",
 
         /*
             Optional - solution - Add webresources to a solution when deploying
