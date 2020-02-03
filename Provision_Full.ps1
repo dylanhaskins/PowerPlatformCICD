@@ -231,8 +231,6 @@ if ($quit -eq "Q")
     exit
 }
 
-InstallXrmModule
-
 if (!$Credentials)
 {
 	$Credentials = Get-Credential
@@ -243,6 +241,10 @@ $username =  $Credentials.GetNetworkCredential().UserName
 $password =  $Credentials.GetNetworkCredential().Password
 }
 
+    Add-PowerAppsAccount -Username $Credentials.UserName -Password $Credentials.Password
+
+    InstallXrmModule
+
     $message = "Connecting to Development Environment"
     Write-Host $message
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.75
@@ -251,8 +253,6 @@ $password =  $Credentials.GetNetworkCredential().Password
     Write-Host ""
     Write-Host "---- Please Select your Development Environment ------"
     $conn = Connect-CrmOnlineDiscovery -Credential $Credentials
-
-    Add-PowerAppsAccount -Username $Credentials.UserName -Password $Credentials.Password
 
     $Locations = Get-AdminPowerAppEnvironmentLocations
 
