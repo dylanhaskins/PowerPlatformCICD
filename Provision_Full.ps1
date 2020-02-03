@@ -415,10 +415,6 @@ $ProgressBar = New-BTProgressBar -Status $message -Value 1
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 }
 
-$sourceFile = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/$branch/Provision.ps1"
-Set-Content .\Provision.ps1 -Value $sourceFile.Content
-
-
 $message = @"
 ____                          ____  _       _    __                        ____              ___            
 |  _ \ _____      _____ _ __  |  _ \| | __ _| |_ / _| ___  _ __ _ __ ___   |  _ \  _____   __/ _ \ _ __  ___ 
