@@ -44,7 +44,7 @@ function InstallPowerAppsAdmin{
 $moduleName = "Microsoft.PowerApps.Administration.PowerShell"
 $moduleVersion = "2.0.33"
 Write-host "Installing $moduleName"
-Install-Module -Name $moduleName -RequiredVersion $moduleVersion -Force -Scope CurrentUser -AllowClobber
+Install-Module -Name $moduleName -RequiredVersion $moduleVersion -Force -AllowClobber
 }
 
 function InstallPowerAppsPowerShell{
