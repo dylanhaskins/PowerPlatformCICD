@@ -257,7 +257,7 @@ $password =  $Credentials.GetNetworkCredential().Password
 
     $choiceIndex = 0
     $options = $Locations | ForEach-Object { write-Host "[$($choiceIndex)] $($_.LocationDisplayName)"; $choiceIndex++; }
-    $geoselect = Read-Host "Please select the Geography for your Power Platform : "
+    $geoselect = Read-Host "Please select the Geography for your Power Platform "
     $Geography = $Locations[$geoselect].LocationName
 
     InstallXrmModule

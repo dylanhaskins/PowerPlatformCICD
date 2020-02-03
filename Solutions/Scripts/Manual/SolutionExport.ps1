@@ -39,7 +39,6 @@ if (!$conn) {
 Write-Output($conn)
 
 ######################## Generate Config Migration data 
-$message = "Exporting Configuration Data from $global:ServerUrl"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.3
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
