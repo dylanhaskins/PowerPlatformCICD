@@ -4,7 +4,7 @@
     "noEmitOnError": true,
     "module": "commonjs",
     "target": "es2015",
-    "outDir": "./dist/js",
+    "outDir": "./dist",
     "esModuleInterop": true
   },
   "exclude": [

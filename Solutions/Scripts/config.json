@@ -1,6 +1,7 @@
 {
   "target": {
     "ServerUrl": "https://AddName.crm6.dynamics.com",
-    "SolutionName": "AddName"
+    "SolutionName": "AddName",
+    "GeoGraphy" :  "AddGeography"
   }
 }

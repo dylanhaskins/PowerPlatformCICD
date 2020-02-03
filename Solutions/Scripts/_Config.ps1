@@ -24,6 +24,7 @@ $global:ServerUrl = ($Config.target.ServerUrl)
 $global:SolutionName = ($Config.target.SolutionName)
 $global:UnmanagedPackageFile = ($Config.target.UnmanagedPackageFile)
 $global:ManagedPackageFile = ($Config.target.ManagedPackageFile)
+$global:Geography = ($Config.target.Geography)
 
 Write-Host $global:ServerUrl
 Write-Host $global:SolutionName

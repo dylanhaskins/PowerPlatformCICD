@@ -9,7 +9,7 @@
         /*
             Optional - root - Provide the relatative path of the webresources.
             */
-        "root": "..\\WebResources\\dist\\js",
+        "root": "..\\WebResources\\dist",
 
         /*
             Optional - solution - Add webresources to a solution when deploying
@@ -21,7 +21,7 @@
             */
         "files": [
           {
-            "uniquename": "prefix_systemuser.js",
+            "uniquename": "prefix_/systemuser.js",
             "file": "systemuser.js",
             "description": "System User JavaScript Library"
           }
