@@ -2,7 +2,7 @@
 $moduleName = "Microsoft.Xrm.Data.Powershell"
 $moduleVersion = "2.8.5"
 $module = Get-Module -ListAvailable -Name $moduleName
-if (!($moduleName.Version -ge $moduleVersion )) {
+if (!($module.Version -ge $moduleVersion )) {
     Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
     Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
 }
@@ -28,7 +28,7 @@ function InstallDevOpsDataModule{
 $moduleName = "Microsoft.Xrm.DevOps.Data.Powershell"
 $moduleVersion = "1.3.0"
 $module = Get-Module -ListAvailable -Name $moduleName
-if (!($moduleName.Version -ge $moduleVersion )) {
+if (!($module.Version -ge $moduleVersion )) {
     Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
     Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
 }
@@ -58,7 +58,7 @@ function InstallXrmDeployModule {
 $moduleName = "Microsoft.Xrm.Tooling.PackageDeployment.Powershell"
 $moduleVersion = "3.3.0.879"
 $module = Get-Module -ListAvailable -Name $moduleName
-if (!($moduleName.Version -ge $moduleVersion )) {
+if (!($module.Version -ge $moduleVersion )) {
     Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
     Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
 }

@@ -19,7 +19,7 @@ function InstallXrmModule{
     $moduleName = "Microsoft.Xrm.Data.Powershell"
     $moduleVersion = "2.8.5"
     $module = Get-Module -ListAvailable -Name $moduleName
-    if (!($moduleName.Version -ge $moduleVersion )) {
+    if (!($module.Version -ge $moduleVersion )) {
         Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
         Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
     }
@@ -45,7 +45,7 @@ function InstallPowerAppsAdmin{
 $moduleName = "Microsoft.PowerApps.Administration.PowerShell"
 $moduleVersion = "2.0.33"
 $module = Get-Module -ListAvailable -Name $moduleName
-if (!($moduleName.Version -ge $moduleVersion )) {
+if (!($module.Version -ge $moduleVersion )) {
      Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
      Install-Module -Name $moduleName -RequiredVersion $moduleVersion -Force -AllowClobber
    }
