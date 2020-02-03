@@ -37,7 +37,7 @@ Function InstallToastModule{
     }
     else
     {
-        Write-host "Module $moduleName version $moduleVersion or higher Found"
+        Write-host "Module $moduleName Found"
     }
 }
 
