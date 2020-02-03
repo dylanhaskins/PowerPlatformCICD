@@ -18,8 +18,9 @@ function Restart-PowerShell
 function InstallXrmModule{
     $moduleName = "Microsoft.Xrm.Data.Powershell"
     $moduleVersion = "2.8.5"
-    if (!(Get-Module -ListAvailable -Name $moduleName )) {
-        Write-host "Module $moduleName Not found, installing now"
+    $module = Get-Module -ListAvailable -Name $moduleName
+    if (!($moduleName.Version -ge $moduleVersion )) {
+        Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
         Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
     }
     else
@@ -36,15 +37,22 @@ Function InstallToastModule{
     }
     else
     {
-        Write-host "Module $moduleName Found"
+        Write-host "Module $moduleName version $moduleVersion or higher Found"
     }
 }
 
 function InstallPowerAppsAdmin{
 $moduleName = "Microsoft.PowerApps.Administration.PowerShell"
 $moduleVersion = "2.0.33"
-Write-host "Installing $moduleName"
-Install-Module -Name $moduleName -RequiredVersion $moduleVersion -Force -AllowClobber
+$module = Get-Module -ListAvailable -Name $moduleName
+if (!($moduleName.Version -ge $moduleVersion )) {
+     Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
+     Install-Module -Name $moduleName -RequiredVersion $moduleVersion -Force -AllowClobber
+   }
+   else
+   {
+     Write-host "Module $moduleName version $moduleVersion or higher Found"
+   }
 }
 
 function InstallPowerAppsPowerShell{
@@ -243,6 +251,13 @@ $password =  $Credentials.GetNetworkCredential().Password
 
     Add-PowerAppsAccount -Username $Credentials.UserName -Password $Credentials.Password
 
+    $Locations = Get-AdminPowerAppEnvironmentLocations
+
+    $choiceIndex = 0
+    $options = $Locations | ForEach-Object { write-Host "[$($choiceIndex)] $($_.LocationDisplayName)"; $choiceIndex++; }
+    $geoselect = Read-Host "Please select the Geography for your Power Platform : "
+    $Geography = $Locations[$geoselect].LocationName
+
     InstallXrmModule
 
     $message = "Connecting to Development Environment"
@@ -253,13 +268,6 @@ $password =  $Credentials.GetNetworkCredential().Password
     Write-Host ""
     Write-Host "---- Please Select your Development Environment ------"
     $conn = Connect-CrmOnlineDiscovery -Credential $Credentials
-
-    $Locations = Get-AdminPowerAppEnvironmentLocations
-
-    $choiceIndex = 0
-    $options = $Locations | ForEach-Object { write-Host "[$($choiceIndex)] $($_.LocationDisplayName)"; $choiceIndex++; }
-    $geoselect = Read-Host "Please select the Geography for your Power Platform : "
-    $Geography = $Locations[$geoselect].LocationName
 
     $CreateOrSelect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Solution or [S]elect an Existing One (Default [S])"
 if ($CreateOrSelect -eq "C"){
