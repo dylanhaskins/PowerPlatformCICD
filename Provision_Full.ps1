@@ -271,7 +271,7 @@ $password =  $Credentials.GetNetworkCredential().Password
     Write-Host "---- Please Select your Development Environment ------"
     Do {
     $conn = Connect-CrmOnlineDiscovery -Credential $Credentials
-    } Until $conn.IsReady 
+    } Until ($conn.IsReady) 
 
     $CreateOrSelect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Solution or [S]elect an Existing One (Default [S])"
 if ($CreateOrSelect -eq "C"){
