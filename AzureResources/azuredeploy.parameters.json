@@ -2,5 +2,32 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "keyVaultName": {
+      "value": "eugenethomas-kv"
+    },
+    "keyVaultSku": {
+      "value": "standard"
+    },
+    "appInsightsName": {
+      "value": "eugenethomas-ai"
+    },
+    "appInsightsLocation": {
+      "value": "australiaeast"
+    },
+    "storageAccountName": {
+      "value": "eugenethomasstr"
+    },
+    "storageAccountSku": {
+      "value": "Standard_LRS"
+    },
+    "functionAppName": {
+      "value": "eugenethomas-fna"
+    },
+    "webAppName": {
+      "value": "eugenethomas-wba"
+    },
+    "webAppSkuCode": {
+      "value": "B1"
+    }
   }
 }
