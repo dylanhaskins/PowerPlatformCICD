@@ -1,13 +1,14 @@
 ﻿function InstallXrmDataModule{
 $moduleName = "Microsoft.Xrm.Data.Powershell"
 $moduleVersion = "2.8.5"
-if (!(Get-Module -ListAvailable -Name $moduleName )) {
-Write-host "Module $moduleName Not found, installing now"
-Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
+$module = Get-Module -ListAvailable -Name $moduleName
+if (!($module.Version -ge $moduleVersion )) {
+    Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
+    Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
 }
 else
 {
-Write-host "Module $moduleName Found"
+Write-host "Module $moduleName version $moduleVersion or higher Found"
 }
 }
 
@@ -26,13 +27,14 @@ Write-host "Module $moduleName Found"
 function InstallDevOpsDataModule{
 $moduleName = "Microsoft.Xrm.DevOps.Data.Powershell"
 $moduleVersion = "1.3.0"
-if (!(Get-Module -ListAvailable -Name $moduleName )) {
-Write-host "Module $moduleName Not found, installing now"
-Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
+$module = Get-Module -ListAvailable -Name $moduleName
+if (!($module.Version -ge $moduleVersion )) {
+    Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
+    Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
 }
 else
 {
-Write-host "Module $moduleName Found"
+Write-host "Module $moduleName version $moduleVersion or higher Found"
 }
 }
 
@@ -55,13 +57,14 @@ Remove-Item .\Tools\$coreToolsFolder -Force -Recurse
 function InstallXrmDeployModule {
 $moduleName = "Microsoft.Xrm.Tooling.PackageDeployment.Powershell"
 $moduleVersion = "3.3.0.879"
-if (!(Get-Module -ListAvailable -Name $moduleName )) {
-Write-host "Module $moduleName Not found, installing now"
-Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
+$module = Get-Module -ListAvailable -Name $moduleName
+if (!($module.Version -ge $moduleVersion )) {
+    Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
+    Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
 }
 else
 {
-Write-host "Module $moduleName Found"
+Write-host "Module $moduleName version $moduleVersion or higher Found"
 }
 }
 
@@ -78,6 +81,7 @@ Write-host "Module $moduleName Found"
 }
 
 Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 #InstallXrmModule
 #InstallToastModule
 #InstallDevOpsDataModule

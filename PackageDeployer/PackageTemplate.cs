@@ -13,7 +13,7 @@ using Microsoft.Xrm.Tooling.Connector;
 using Microsoft.Xrm.Sdk;
 using System.IO;
 
-namespace CCMS.Core.PackageDeployer
+namespace PackageDeployer
 {
     /// <summary>
     /// Import package starter frame. 

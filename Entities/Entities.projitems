@@ -9,6 +9,12 @@
     <Import_RootNamespace>Entities</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Context\" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\BusinessUnit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\GlobalOptionSets.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\SystemUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\Team.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\TeamMembership.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\XrmContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context\XrmExtensions.cs" />
   </ItemGroup>
 </Project>

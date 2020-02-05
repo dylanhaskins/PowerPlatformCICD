@@ -20,7 +20,7 @@ if (Test-Path $env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\packagePatch\Other\S
 
 New-Item -ItemType Directory -Force -Path $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\PkgFolder\CheckResults
 
-$rulesets = Get-PowerAppsCheckerRulesets -Geography Australia
+$rulesets = Get-PowerAppsCheckerRulesets -Geography $global:Geography
 $rulesetToUse = $rulesets | where Name -EQ "Solution Checker"
 $overrides = New-PowerAppsCheckerRuleLevelOverride -Id 'meta-avoid-silverlight' -OverrideLevel High #Use this to Override Rules and set a Higher or Lower Level
 $analyzeResult = Invoke-PowerAppsChecker -Geography Australia -ClientApplicationId $aadPowerAppId `
