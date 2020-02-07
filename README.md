@@ -5,9 +5,7 @@ This is a Template project to create new CDS/D365 Solution leveraging a lighweig
 1.	Right click on Start and select Windows PowerShell (Admin)
 1.	Copy and Paste the following lines of code into the PowerShell window :   
 *Set-ExecutionPolicy Unrestricted -Force*  
-
 *(Invoke-WebRequest https://raw.githubusercontent.com/dylanhaskins/PowerPlatformCICD/master/Provision.ps1 -UseBasicParsing:$true).Content | Out-File .\Provision.ps1*  
-
 *.\Provision.ps1*
 1.	Follow the Instructions
 
