@@ -7,6 +7,7 @@ This is a Template project to create new CDS/D365 Solution leveraging a lighweig
 1.	Right Click on Provision.ps1 and select Properties
 1.	Tick the "Unblock" tickbox and click OK
 1.	Right click on Start and select Windows PowerShell (Admin)
+1.	Type "Set-ExecutionPolicy Unrestricted -Force" and press Enter
 1.	Navigate to the location where you downloaded Provision.ps1 and type .\Provision.ps1 and press Enter
 1.	Follow the Instructions
 
