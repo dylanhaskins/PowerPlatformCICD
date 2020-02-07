@@ -7,6 +7,7 @@ This is a Template project to create new CDS/D365 Solution leveraging a lighweig
 *Set-ExecutionPolicy Unrestricted -Force*  
 *(Invoke-WebRequest https://raw.githubusercontent.com/dylanhaskins/PowerPlatformCICD/master/Provision.ps1 -UseBasicParsing:$true).Content | Out-File .\Provision.ps1*  
 *.\Provision.ps1*
+1.	Press Enter
 1.	Follow the Instructions
 
 
