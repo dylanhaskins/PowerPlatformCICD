@@ -3,28 +3,28 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "keyVaultName": {
-      "value": "eugenethomas-kv"
+      "value": "AddName-kv"
     },
     "keyVaultSku": {
       "value": "standard"
     },
     "appInsightsName": {
-      "value": "eugenethomas-ai"
+      "value": "AddName-ai"
     },
     "appInsightsLocation": {
-      "value": "australiaeast"
+      "value": "AddGeography"
     },
     "storageAccountName": {
-      "value": "eugenethomasstr"
+      "value": "AddName"
     },
     "storageAccountSku": {
       "value": "Standard_LRS"
     },
     "functionAppName": {
-      "value": "eugenethomas-fna"
+      "value": "AddName-fna"
     },
     "webAppName": {
-      "value": "eugenethomas-wba"
+      "value": "AddName-wba"
     },
     "webAppSkuCode": {
       "value": "B1"
