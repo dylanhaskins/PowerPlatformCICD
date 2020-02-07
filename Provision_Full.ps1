@@ -220,12 +220,12 @@ $GitEmail = git config --global user.email
 
 If ($GitUser -eq $null){
     $GitUser = Read-Host "Enter your name (to use when committing changes to Git)"
-    git config --global user.name="$GitUser"
+    git config --global user.name $GitUser
 }
 
 If ($GitEmail -eq $null){
     $GitEmail = Read-Host "Enter your email address (to use when committing changes to Git)"
-    git config --global user.email=$GitEmail
+    git config --global user.email $GitEmail
 }
 
 
