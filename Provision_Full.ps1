@@ -190,6 +190,7 @@ az repos import create --git-source-url https://github.com/dylanhaskins/PowerPla
 
 $message = "Cloning Git Repo $adoRepo locally"
 Write-Host $message
+Write-Host "If prompted for credentials, enter the same credentials you used for dev.azure.com"
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.40
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
@@ -208,6 +209,26 @@ $azureADAppPassword = (New-Guid).Guid.Replace("-","")
 $adAppCreds = az ad app credential reset --password $azureADAppPassword --id $adApp.appId | ConvertFrom-Json
 
 chdir -Path \Dev\Repos\$adoRepo\
+
+$message = "Confirming Git User Details"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.59
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
+$GitUser = git config --global user.name
+$GitEmail = git config --global user.email
+
+If ($GitUser -eq $null){
+    $GitUser = Read-Host "Enter your name (to use when committing changes to Git)"
+    git config --global user.name=$GitUser
+}
+
+If ($GitEmail -eq $null){
+    $GitEmail = Read-Host "Enter your email address (to use when committing changes to Git)"
+    git config --global user.name=$GitEmail
+}
+
+
 
 $message = "Cleaning up Git Repository"
 Write-Host $message
