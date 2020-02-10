@@ -377,32 +377,32 @@ $ProgressBar = New-BTProgressBar -Status $message -Value 0.80
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 Write-Host "Updating config.json ..."
-
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddGeography",$Geography | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 
 Write-Host "Updating spkl.json ..."
-
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json) -replace "prefix",$PublisherPrefix.Replace(' ','').ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json
 
 Write-Host "Updating ImportConfig.xml ..."
-
 (Get-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml
 
 Write-Host "Updating Build.yaml ..."
-
 (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceRepo",$adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 
 Write-Host "Updating XrmContext.exe.config ..."
-
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmContext\XrmContext.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmContext\XrmContext.exe.config
 
 Write-Host "Updating XrmDefinitelyTyped.exe.config ..."
-
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config
+
+Write-Host "Updating Companion App Settings"
+(Get-Content -Path \Dev\Repos\$adoRepo\PortalCompanionApp\AppSettings.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\PortalCompanionApp\AppSettings.json
+
+Write-Host "Updating Webhook Settings"
+(Get-Content -Path \Dev\Repos\$adoRepo\Webhook\local.settings.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\Webhook\local.settings.json
 
 Write-Host "Rename PowerPlatformDevOps.sln to $adoRepo.sln"
 Rename-Item -Path \Dev\Repos\$adoRepo\PowerPlatformDevOps.sln -NewName "$adoRepo.sln"
@@ -453,6 +453,41 @@ $pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --re
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
 
+
+#add azure provisioning here
+$AzureSetup = Read-Host -Prompt "Azure subscriptions : Would you like to create the default Azure resources [Y] Yes or [S] Skip (Default [S])"
+
+if ($AzureSetup -eq "Y"){
+
+Login-AzureRmAccount
+
+    $selection =  az account list --output json | Out-String | ConvertFrom-Json
+    $choiceIndex = 0
+    $options = $selection | ForEach-Object { New-Object System.Management.Automation.Host.ChoiceDescription "&$($choiceIndex) - $($_.Name)"; $choiceIndex++ }
+    $chosenIndex = $host.ui.PromptForChoice("Azure subscription", "Select the Azure Subscription you want to deploy to", $options, 0)
+    $subscriptionName = $selection[$chosenIndex].name 
+       
+Write-Host "Selected Subscription : $subscriptionName"
+Select-AzureRmSubscription -Subscription $subscriptionName
+
+    $selection =  az account list-locations --output json | Out-String | ConvertFrom-Json
+    $choiceIndex = 0    
+    $choices = @()
+    $options = $selection | ForEach-Object { New-Object System.Management.Automation.Host.ChoiceDescription "&$($choiceIndex) - $($_.Name)"; $choiceIndex++ }
+    $chosenIndex = $host.ui.PromptForChoice("Azure Region", "Select the Azure Region you want to use", $options, 0)
+    $regionName = $selection[$chosenIndex].Name 
+
+Write-Host "Selected Region : $regionName"
+
+Write-Host "Updating ARM Parameters"
+(Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddName" , $adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
+(Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddGeography" , $regionName.ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
+
+chdir -Path C:\Dev\Repos\$adoRepo\AzureResources\
+& .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation $regionName -ResourceGroupName "$adoRepo-dev"
+
+}
+
 $message = "Complete ... Enjoy !!!"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 1
@@ -490,6 +525,8 @@ Welcome to the Power Platform DevOps provisioning script. This script will perfo
  - Create an Azure DevOps Multi-Stage Pipeline to Build and Continuously Deploy your Code and Solutions
  - Create Variable Groups in Azure DevOps with your Power Platform details and credentials (stored as secrets)
  - Open the Repo and Pipeline in the Browser (and complete the initial Build and Deploy)       
+ - Create new Azure ResourceGroup in your selected Azure Subscription
+
 
 "@
 

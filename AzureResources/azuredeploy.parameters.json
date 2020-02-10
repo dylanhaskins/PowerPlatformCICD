@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "keyVaultName": {
-      "value": "addname-kv"
+      "value": "AddName-kv"
     },
     "keyVaultSku": {
       "value": "standard"
@@ -12,25 +12,22 @@
       "value": "AddName-ai"
     },
     "appInsightsLocation": {
-      "value": "australiaeast"
+      "value": "AddGeography"
     },
     "storageAccountName": {
-      "value": "addname"
+      "value": "AddName"
     },
     "storageAccountSku": {
       "value": "Standard_LRS"
     },
     "functionAppName": {
-      "value": "addname-fna"
+      "value": "AddName-fna"
     },
     "webAppName": {
-      "value": "addname-wba"
+      "value": "AddName-wba"
     },
     "webAppSkuCode": {
       "value": "B1"
-    },
-    "ResourceGroupName": {
-      "value": "addname"
     }
   }
 }
