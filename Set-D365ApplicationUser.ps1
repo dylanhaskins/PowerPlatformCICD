@@ -24,10 +24,7 @@ Param(
     , [Parameter(Mandatory = $true)] [string] $roleNames
 )
 
-$accesstoken=$(az account get-access-token `
-    --resource $d365ResourceName `
-    --query accessToken `
-    --output json)
+$accesstoken=$(az account get-access-token --resource $d365ResourceName --query accessToken --output json)
  
 # setting output variables
 Write-Host "##vso[task.setvariable variable=accessToken;isOutput=true;issecret=true]$accesstoken"
