@@ -487,10 +487,6 @@ Write-Host "Updating ARM Parameters"
 (Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddName" , $adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
 (Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddGeography" , $regionName.ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
 
-chdir -Path C:\Dev\Repos\$adoRepo\AzureResources\
-& .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation $regionName -ResourceGroupName "$adoRepo-dev"
-}
-
 Write-Host "Set new variables in Azure DevOps"
 az pipelines variable-group variable create --name CompanionAppName --value "$adoRepo-wba" --group-id $varGroup.id
 az pipelines variable-group variable create --name WebhookAppName --value "$adoRepo-fna" --group-id $varGroup.id
@@ -499,6 +495,11 @@ az pipelines variable-group variable create --name d365AppSecurityRoleNames --va
 az pipelines variable-group variable create --name CompanionAppName --value "$adoRepo-wba" --group-id $varGroupCICD.id
 az pipelines variable-group variable create --name WebhookAppName --value "$adoRepo-fna" --group-id $varGroupCICD.id
 az pipelines variable-group variable create --name d365AppSecurityRoleNames --value "Delegate" --group-id $varGroupCICD.id
+
+
+chdir -Path C:\Dev\Repos\$adoRepo\AzureResources\
+& .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation $regionName -ResourceGroupName "$adoRepo-dev"
+}
 
 $message = "Complete ... Enjoy !!!"
 Write-Host $message
