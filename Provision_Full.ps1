@@ -456,6 +456,9 @@ az pipelines show --id $pipeline.definition.id --open
 
 #add azure provisioning here
 #need to update library in DevOps with Keyvault, Storage etc values
+
+
+Write-Host "Setting up the Azure Resource group requires both Azure and your Power Platform/Dynamics 365 to be on the same Azure AD Tenant"
 $AzureSetup = Read-Host -Prompt "Azure subscriptions : Would you like to create the default Azure resources [Y] Yes or [S] Skip (Default [S])"
 
 if ($AzureSetup -eq "Y"){

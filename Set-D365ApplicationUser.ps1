@@ -11,22 +11,16 @@
   Pass following Script Arguments with a Powershell task in the release
 
   example for Companion App
-  -accessToken "$(d365AccessToken)" 
   -d365ResourceName "$(d365CrmResourceName)" 
-  -servicePrincipalNames "$(CompanionAppName)" 
-  -firstName "Portal Companion App" 
-  -lastName "Account" 
+  -servicePrincipalNames "$(CompanionAppName),$(WebhookAppName)" 
   -roleNames "$(d365AppSecurityRoleNames)"
 
 #>
 
 
 Param(
-    [Parameter(Mandatory = $true)] [string] $accessToken
     , [Parameter(Mandatory = $true)] [string] $d365ResourceName  
     , [Parameter(Mandatory = $true)] [string[]] $servicePrincipalNames
-    , [Parameter(Mandatory = $true)] [string] $firstName
-    , [Parameter(Mandatory = $true)] [string] $lastName
     , [Parameter(Mandatory = $true)] [string] $roleNames
 )
 
@@ -39,7 +33,7 @@ $accesstoken=$(az account get-access-token `
 Write-Host "##vso[task.setvariable variable=accessToken;isOutput=true;issecret=true]$accesstoken"
 
 
-
+$lastName = "Account"
 $securityRoleNames = $roleNames.Split(',')
 
 # Forcing Tls 1.2
@@ -251,7 +245,7 @@ foreach ($servicePrincipalName in $servicePrincipalNames) {
             -d365ResourceName $d365ResourceName `
             -accessToken $accessToken `
             -applicationId $servicePrincipal.ApplicationId `
-            -firstName $firstName `
+            -firstName $servicePrincipalName `
             -lastName $lastName `
             -businessUnitId $businessUnitId
         Write-Host "Application user created..."
@@ -263,7 +257,7 @@ foreach ($servicePrincipalName in $servicePrincipalNames) {
             -accessToken $accessToken `
             -systemUserId $applicationUser.systemuserid `
             -applicationId $servicePrincipal.ApplicationId `
-            -firstName $firstName `
+            -firstName $servicePrincipalName `
             -lastName $lastName `
             -businessUnitId $businessUnitId    
         Write-Host "Application user updated..."
