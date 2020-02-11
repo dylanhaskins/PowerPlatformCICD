@@ -15,10 +15,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DB8D8804-C1BF-4614-AAB1-F2DCACFE24DE}"
 	ProjectSection(SolutionItems) = preProject
 		build.yaml = build.yaml
+		Get-AccessToken.bat = Get-AccessToken.bat
 		manifest.json = manifest.json
 		Provision.ps1 = Provision.ps1
 		Provision_Full.ps1 = Provision_Full.ps1
 		README.md = README.md
+		Set-D365ApplicationUser.ps1 = Set-D365ApplicationUser.ps1
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.Tests", "Plugins.Tests\Plugins.Tests.csproj", "{3509C63E-D8DC-4D87-A5B9-F4972D4545D5}"
