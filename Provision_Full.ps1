@@ -471,34 +471,60 @@ Login-AzureRmAccount
     $chosenIndex = $host.ui.PromptForChoice("Azure subscription", "Select the Azure Subscription you want to deploy to", $options, 0)
     $subscriptionName = $selection[$chosenIndex].name 
        
-Write-Host "Selected Subscription : $subscriptionName"
-Select-AzureRmSubscription -Subscription $subscriptionName
+    Write-Host "Selected Subscription : $subscriptionName"
+    Select-AzureRmSubscription -Subscription $subscriptionName
+
 
     $selection =  az account list-locations --output json | Out-String | ConvertFrom-Json
-    $choiceIndex = 0    
-    $choices = @()
-    $options = $selection | ForEach-Object { New-Object System.Management.Automation.Host.ChoiceDescription "&$($choiceIndex) - $($_.Name)"; $choiceIndex++ }
-    $chosenIndex = $host.ui.PromptForChoice("Azure Region", "Select the Azure Region you want to use", $options, 0)
-    $regionName = $selection[$chosenIndex].Name 
+    $choiceIndex = 0
+    $selections | ForEach-Object { write-host "[$($choiceIndex)] $($_.name)"; $choiceIndex++; } 
+    $regionName = $null 
+    $success = $false
 
-Write-Host "Selected Region : $regionName"
+    do {
+        $choice = read-host "Enter your selection"
+        if (!$choice) {
+            Write-Host "Invalid selection (null)"
+        }
+        else {
+            $choice = $choice -as [int];
+            if ($choice -eq $null) {
+                Write-Host "Invalid selection (not number)"
+            }
+            elseif ($choice -le -1) {
+                Write-Host "Invalid selection (negative)"
+            }
+            else {
+                $regionName = $selections[$choice].name
+                if ($null -ne $regionName) {
+                   Write-Host "Selected Region : $regionName"
+                   $success = $true
+                }
+                else {
+                    Write-Host "Invalid selection (index out of range)"
+                }
+            } 
+        }
+    } while (!$success)
 
-Write-Host "Updating ARM Parameters"
-(Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddName" , $adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
-(Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddGeography" , $regionName.ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
-
-Write-Host "Set new variables in Azure DevOps"
-az pipelines variable-group variable create --name CompanionAppName --value "$adoRepo-wba" --group-id $varGroup.id
-az pipelines variable-group variable create --name WebhookAppName --value "$adoRepo-fna" --group-id $varGroup.id
-az pipelines variable-group variable create --name d365AppSecurityRoleNames --value "Delegate" --group-id $varGroup.id
-
-az pipelines variable-group variable create --name CompanionAppName --value "$adoRepo-wba" --group-id $varGroupCICD.id
-az pipelines variable-group variable create --name WebhookAppName --value "$adoRepo-fna" --group-id $varGroupCICD.id
-az pipelines variable-group variable create --name d365AppSecurityRoleNames --value "Delegate" --group-id $varGroupCICD.id
 
 
-chdir -Path C:\Dev\Repos\$adoRepo\AzureResources\
-& .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation $regionName -ResourceGroupName "$adoRepo-dev"
+    Write-Host "Updating ARM Parameter values"
+    (Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddName" , $adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
+    (Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddGeography" , $regionName.ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
+
+    Write-Host "Set new variables in Azure DevOps"
+    az pipelines variable-group variable create --name CompanionAppName --value "$adoRepo-wba" --group-id $varGroup.id
+    az pipelines variable-group variable create --name WebhookAppName --value "$adoRepo-fna" --group-id $varGroup.id
+    az pipelines variable-group variable create --name d365AppSecurityRoleNames --value "Delegate" --group-id $varGroup.id
+
+    az pipelines variable-group variable create --name CompanionAppName --value "$adoRepo-wba" --group-id $varGroupCICD.id
+    az pipelines variable-group variable create --name WebhookAppName --value "$adoRepo-fna" --group-id $varGroupCICD.id
+    az pipelines variable-group variable create --name d365AppSecurityRoleNames --value "Delegate" --group-id $varGroupCICD.id
+
+
+    chdir -Path C:\Dev\Repos\$adoRepo\AzureResources\
+    & .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation $regionName -ResourceGroupName "$adoRepo-dev"
 }
 
 $message = "Complete ... Enjoy !!!"
