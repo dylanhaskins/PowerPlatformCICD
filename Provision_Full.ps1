@@ -371,6 +371,8 @@ if ($CreateOrSelect -eq "C"){
 }
 #}
 
+#update values in Solution files 
+
 $message = "Setting Configurations in Source Code"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.80
@@ -423,6 +425,9 @@ $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
 
 & ".\\SolutionExport.ps1"
 
+
+#commit repo and update VariableGroup in DevOps
+
 git add -A
 git commit -m "Initial Commit"
 git push origin master --force
@@ -454,10 +459,7 @@ az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
 
 
-#add azure provisioning here
-#need to update library in DevOps with Keyvault, Storage etc values
-
-
+#Provision Azure Resource group 
 Write-Host "Setting up the Azure Resource group requires both Azure and your Power Platform/Dynamics 365 to be on the same Azure AD Tenant"
 $AzureSetup = Read-Host -Prompt "Azure subscriptions : Would you like to create the default Azure resources [Y] Yes or [S] Skip (Default [S])"
 
@@ -470,10 +472,9 @@ Login-AzureRmAccount
     $options = $selection | ForEach-Object { New-Object System.Management.Automation.Host.ChoiceDescription "&$($choiceIndex) - $($_.Name)"; $choiceIndex++ }
     $chosenIndex = $host.ui.PromptForChoice("Azure subscription", "Select the Azure Subscription you want to deploy to", $options, 0)
     $subscriptionName = $selection[$chosenIndex].name 
-       
+
     Write-Host "Selected Subscription : $subscriptionName"
     Select-AzureRmSubscription -Subscription $subscriptionName
-
 
     $selection =  az account list-locations --output json | Out-String | ConvertFrom-Json
     $choiceIndex = 0
