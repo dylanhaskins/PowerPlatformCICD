@@ -81,14 +81,14 @@ function PreReq-Install
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.15
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-    choco install git.install -y
+    choco upgrade git.install -y
 
     
     $message = "Installing Azure CLI ...."
     Write-Host $message
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.18
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
-    choco install azure-cli -y -force
+    choco upgrade azure-cli -y 
 
     ## Restart PowerShell Environment to Enable Azure CLI
     Restart-PowerShell
