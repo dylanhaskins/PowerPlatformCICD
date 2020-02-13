@@ -469,11 +469,37 @@ Login-AzureRmAccount
 
     $selection =  az account list --output json | Out-String | ConvertFrom-Json
     $choiceIndex = 0
-    $options = $selection | ForEach-Object { New-Object System.Management.Automation.Host.ChoiceDescription "&$($choiceIndex) - $($_.Name)"; $choiceIndex++ }
-    $chosenIndex = $host.ui.PromptForChoice("Azure subscription", "Select the Azure Subscription you want to deploy to", $options, 0)
-    $subscriptionName = $selection[$chosenIndex].name 
+    $selections | ForEach-Object { write-host "[$($choiceIndex)] $($_.Name)"; $choiceIndex++; }     
+    $subscriptionName = $null 
+    $success = $false
 
-    Write-Host "Selected Subscription : $subscriptionName"
+    do {
+        $choice = read-host "Select the Azure Subscription you want to deploy to"
+        if (!$choice) {
+            Write-Host "Invalid selection (null)"
+        }
+        else {
+            $choice = $choice -as [int];
+            if ($choice -eq $null) {
+                Write-Host "Invalid selection (not number)"
+            }
+            elseif ($choice -le -1) {
+                Write-Host "Invalid selection (negative)"
+            }
+            else {
+                $subscriptionName = $selections[$choice].name
+                if ($null -ne $subscriptionName) {
+                   Write-Host "Selected Subscription : $subscriptionName"
+                   $success = $true
+                }
+                else {
+                    Write-Host "Invalid selection (index out of range)"
+                }
+            } 
+        }
+    } while (!$success)
+
+    
     Select-AzureRmSubscription -Subscription $subscriptionName
 
     $selection =  az account list-locations --output json | Out-String | ConvertFrom-Json
