@@ -97,30 +97,32 @@ function PreReq-Install
 function DevOps-PreReq
 {
 
-$ErrorActionPreference = "SilentlyContinue"
+#$ErrorActionPreference = "SilentlyContinue"
 
-$message = "Checking Azure CLI"
+$message = "Checking Pre-requisites"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.1
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-$azver = az --version
+#$azver = az --version
 
-if ($azver)
-{
-    if ($azver[$azver.Length -3] -eq "Your CLI is up-to-date.")
-    {
-        $ErrorActionPreference = "Continue"
-        DevOps-Install
-    }
-    else {
-        PreReq-Install
-    }
-}
-else {
-    $ErrorActionPreference = "Continue"
+#if ($azver)
+#{
+#    if ($azver[$azver.Length -3] -eq "Your CLI is up-to-date.")
+#    {
+#        $ErrorActionPreference = "Continue"
+#        DevOps-Install
+#    }
+#    else {
+#        PreReq-Install
+#    }
+#}
+#else {
+#    $ErrorActionPreference = "Continue"
+#    PreReq-Install
+#     }
     PreReq-Install
-     }
+    DevOps-Install
 }
 
 function DevOps-Install
