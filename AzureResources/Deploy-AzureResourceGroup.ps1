@@ -28,29 +28,29 @@ $TemplateParametersFile = [System.IO.Path]::GetFullPath([System.IO.Path]::Combin
 
 # Create the resource group only when it doesn't already exist
 if ((az group show --resource-group $ResourceGroupName --verbose) -eq $null) {
-    Write-Host "Creating Resource Group $ResourceGroupName"
+    Write-Host "Creating Resource Group $ResourceGroupName" -ForegroundColor White
     az group create --name $ResourceGroupName --location $ResourceGroupLocation --verbose
 }
 
-    Write-Host "Validating Deployment template"
+    Write-Host "Validating Deployment template" -ForegroundColor White
     $ValidationResults = (az group deployment validate --resource-group $ResourceGroupName `
                                                                                   --template-file $TemplateFile `
                                                                                   --parameters @$TemplateParametersFile `
                                                                                   --handle-extended-json-format | ConvertFrom-Json) 
     if ($ValidationResults.error) {
-        Write-Output '', 'Validation returned the following errors:', @($ValidationResults.error), '', 'Template is invalid.'
+        Write-Host '', 'Validation returned the following errors:', @($ValidationResults.error), '', 'Template is invalid.' -ForegroundColor Red
     }
     else {
-        Write-Output '', 'Template is valid.'
+        Write-Host '', 'Template is valid.' -ForegroundColor Green
 
-    Write-Host "Deploying to Azure using template"
+    Write-Host "Deploying to Azure using template" -ForegroundColor White
     $DeploymentResult = (az group deployment create --name ((Get-ChildItem $TemplateFile).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
                                        --resource-group $ResourceGroupName `
                                        --template-file $TemplateFile `
                                        --parameters @$TemplateParametersFile `
                                        --handle-extended-json-format) | ConvertFrom-Json
     if ($DeploymentResult.properties.provisioningState -eq "Succeeded") {
-        Write-Output '', 'Deployment completed successfuly'
+        Write-Host '', 'Deployment completed successfuly' -ForegroundColor Green
     }
 
     }
