@@ -29,8 +29,8 @@
     "webAppSkuCode": {
       "value": "B1"
     },
-    "logWorkspaceName": {
-      "value":  "AddName-log"
+    "workspaceName": {
+      "value": "AddName-log"
     }
   }
 }
