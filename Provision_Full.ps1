@@ -151,7 +151,7 @@ if ($quit -eq "Q")
     exit
 }
 
-az login --allow-no-subscriptions
+$azSubs = az login --allow-no-subscriptions
 
 Write-Host ""
 $adoCreate = Read-Host -Prompt "Would you like to [C]reate a new Project or [S]elect and existing one (Default [S])"
