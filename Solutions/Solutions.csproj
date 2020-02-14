@@ -98,6 +98,7 @@
     <None Include="Scripts\config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Scripts\Flow2LogAnalytics.ps1" />
     <None Include="Scripts\SolutionDeploy.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
