@@ -37,6 +37,9 @@
     },
     "webAppSkuCode": {
       "type": "string"
+    },
+    "workspaceName": {
+      "type":  "string"
     }
   },
   "variables": {
@@ -272,7 +275,7 @@
         "siteConfig": {
           "alwaysOn": true,
           "minTlsVersion": "1.2",
-          "ftpsState": "Disabled",          
+          "ftpsState": "Disabled",
           "appSettings": [
             {
               "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
@@ -325,6 +328,24 @@
               "value": "dotnetcore"
             }
           ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.OperationalInsights/workspaces",
+      "name": "[parameters('workspaceName')]",
+      "apiVersion": "2017-04-26-preview",
+      "location": "[parameters('appInsightsLocation')]",
+      "properties": {
+        "sku": {
+          "name": "CapacityReservation",
+          "capacityReservationLevel": 100
+        },
+        "retentionInDays": 120,
+        "features": {
+          "searchVersion": 1,
+          "legacy": 0,
+          "enableLogAccessUsingOnlyResourcePermissions": true
         }
       }
     }
