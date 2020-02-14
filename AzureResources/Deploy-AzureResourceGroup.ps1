@@ -28,10 +28,11 @@ $TemplateParametersFile = [System.IO.Path]::GetFullPath([System.IO.Path]::Combin
 
 # Create the resource group only when it doesn't already exist
 if ((az group show --resource-group $ResourceGroupName --verbose) -eq $null) {
+    Write-Host "Creating Resource Group $ResourceGroupName"
     az group create --name $ResourceGroupName --location $ResourceGroupLocation --verbose
 }
 
-
+    Write-Host "Validating Deployment template"
     $ValidationResults = (az group deployment validate --resource-group $ResourceGroupName `
                                                                                   --template-file $TemplateFile `
                                                                                   --parameters @$TemplateParametersFile `
@@ -42,6 +43,7 @@ if ((az group show --resource-group $ResourceGroupName --verbose) -eq $null) {
     else {
         Write-Output '', 'Template is valid.'
 
+    Write-Host "Deploying to Azure using template"
     $DeploymentResult = (az group deployment create --name ((Get-ChildItem $TemplateFile).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
                                        --resource-group $ResourceGroupName `
                                        --template-file $TemplateFile `
