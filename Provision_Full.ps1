@@ -467,11 +467,11 @@ $AzureSetup = Read-Host -Prompt "Azure subscriptions : Would you like to create 
 
 if ($AzureSetup -eq "Y"){
 
-Login-AzureRmAccount
-
-    $selection =  az account list --output json | Out-String | ConvertFrom-Json
+#Login-AzureRmAccount
+    
+    $selection =  az login | Out-String | ConvertFrom-Json
     $choiceIndex = 0
-    $selections | ForEach-Object { write-host "[$($choiceIndex)] $($_.Name)"; $choiceIndex++; }     
+    $selection | ForEach-Object { write-host "[$($choiceIndex)] $($_.Name)"; $choiceIndex++; }     
     $subscriptionName = $null 
     $success = $false
 
@@ -489,7 +489,8 @@ Login-AzureRmAccount
                 Write-Host "Invalid selection (negative)"
             }
             else {
-                $subscriptionName = $selections[$choice].name
+                $subscriptionId = $selection[$choice].id
+                $subscriptionName = $selection[$choice].name
                 if ($null -ne $subscriptionName) {
                    Write-Host "Selected Subscription : $subscriptionName"
                    $success = $true
@@ -501,17 +502,17 @@ Login-AzureRmAccount
         }
     } while (!$success)
 
-    
-    Select-AzureRmSubscription -Subscription $subscriptionName
+    az account set --subscription $subscriptionId
+    #Select-AzureRmSubscription -Subscription $subscriptionName
 
     $selection =  az account list-locations --output json | Out-String | ConvertFrom-Json
     $choiceIndex = 0
-    $selections | ForEach-Object { write-host "[$($choiceIndex)] $($_.name)"; $choiceIndex++; } 
+    $selection | ForEach-Object { write-host "[$($choiceIndex)] $($_.name)"; $choiceIndex++; } 
     $regionName = $null 
     $success = $false
 
     do {
-        $choice = read-host "Enter your selection"
+        $choice = read-host "Select the Azure Region you want to deploy to"
         if (!$choice) {
             Write-Host "Invalid selection (null)"
         }
@@ -524,7 +525,7 @@ Login-AzureRmAccount
                 Write-Host "Invalid selection (negative)"
             }
             else {
-                $regionName = $selections[$choice].name
+                $regionName = $selection[$choice].name
                 if ($null -ne $regionName) {
                    Write-Host "Selected Region : $regionName"
                    $success = $true
@@ -539,7 +540,7 @@ Login-AzureRmAccount
 
 
     Write-Host "Updating ARM Parameter values"
-    (Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddName" , $adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
+    (Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddName" , $adoRepo.ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
     (Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddGeography" , $regionName.ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
 
     Write-Host "Set new variables in Azure DevOps"

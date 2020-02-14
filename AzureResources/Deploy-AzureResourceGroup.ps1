@@ -27,30 +27,29 @@ $TemplateFile = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScrip
 $TemplateParametersFile = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $TemplateParametersFile))
 
 # Create the resource group only when it doesn't already exist
-if ((Get-AzureRmResourceGroup -Name $ResourceGroupName -Location $ResourceGroupLocation -Verbose -ErrorAction SilentlyContinue) -eq $null) {
-    New-AzureRmResourceGroup -Name $ResourceGroupName -Location $ResourceGroupLocation -Verbose -Force -ErrorAction Stop
+if ((az group show --resource-group $ResourceGroupName --verbose) -eq $null) {
+    az group create --name $ResourceGroupName --location $ResourceGroupLocation --verbose
 }
 
 
-    $ErrorMessages = Format-ValidationOutput (Test-AzureRmResourceGroupDeployment -ResourceGroupName $ResourceGroupName `
-                                                                                  -TemplateFile $TemplateFile `
-                                                                                  -TemplateParameterFile $TemplateParametersFile `
-                                                                                  @OptionalParameters)
-    if ($ErrorMessages) {
-        Write-Output '', 'Validation returned the following errors:', @($ErrorMessages), '', 'Template is invalid.'
+    $ValidationResults = (az group deployment validate --resource-group $ResourceGroupName `
+                                                                                  --template-file $TemplateFile `
+                                                                                  --parameters @$TemplateParametersFile `
+                                                                                  --handle-extended-json-format | ConvertFrom-Json) 
+    if ($ValidationResults.error) {
+        Write-Output '', 'Validation returned the following errors:', @($ValidationResults.error), '', 'Template is invalid.'
     }
     else {
         Write-Output '', 'Template is valid.'
 
-    New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
-                                       -ResourceGroupName $ResourceGroupName `
-                                       -TemplateFile $TemplateFile `
-                                       -TemplateParameterFile $TemplateParametersFile `
-                                       @OptionalParameters `
-                                       -Force -Verbose `
-                                       -ErrorVariable ErrorMessages
-    if ($ErrorMessages) {
-        Write-Output '', 'Template deployment returned the following errors:', @(@($ErrorMessages) | ForEach-Object { $_.Exception.Message.TrimEnd("`r`n") })
+    $DeploymentResult = (az group deployment create --name ((Get-ChildItem $TemplateFile).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
+                                       --resource-group $ResourceGroupName `
+                                       --template-file $TemplateFile `
+                                       --parameters @$TemplateParametersFile `
+                                       --handle-extended-json-format) | ConvertFrom-Json
+    if ($DeploymentResult.properties.provisioningState -eq "Succeeded") {
+        Write-Output '', 'Deployment completed successfuly'
+        #Write-Output '', 'Template deployment returned the following errors:', $DeploymentResult.properties
     }
 
     }
