@@ -81,14 +81,14 @@ function PreReq-Install
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.15
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-    choco install git.install -y
+    choco upgrade git.install -y
 
     
     $message = "Installing Azure CLI ...."
     Write-Host $message
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.18
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
-    choco install azure-cli -y -force
+    choco upgrade azure-cli -y 
 
     ## Restart PowerShell Environment to Enable Azure CLI
     Restart-PowerShell
@@ -96,31 +96,12 @@ function PreReq-Install
 
 function DevOps-PreReq
 {
+    $message = "Checking Pre-requisites"
+    Write-Host $message
+    $ProgressBar = New-BTProgressBar -Status $message -Value 0.1
+    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-$ErrorActionPreference = "SilentlyContinue"
-
-$message = "Checking Azure CLI"
-Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.1
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
-
-$azver = az --version
-
-if ($azver)
-{
-    if ($azver[$azver.Length -3] -eq "Your CLI is up-to-date.")
-    {
-        $ErrorActionPreference = "Continue"
-        DevOps-Install
-    }
-    else {
-        PreReq-Install
-    }
-}
-else {
-    $ErrorActionPreference = "Continue"
-    PreReq-Install
-     }
+    PreReq-Install  
 }
 
 function DevOps-Install
@@ -149,7 +130,7 @@ if ($quit -eq "Q")
     exit
 }
 
-az login --allow-no-subscriptions
+$azSubs = az login --allow-no-subscriptions
 
 Write-Host ""
 $adoCreate = Read-Host -Prompt "Would you like to [C]reate a new Project or [S]elect and existing one (Default [S])"
@@ -369,7 +350,8 @@ if ($CreateOrSelect -eq "C"){
         }
     } while (!$success)
 }
-#}
+
+#update values in Solution files 
 
 $message = "Setting Configurations in Source Code"
 Write-Host $message
@@ -377,32 +359,32 @@ $ProgressBar = New-BTProgressBar -Status $message -Value 0.80
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 Write-Host "Updating config.json ..."
-
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddGeography",$Geography | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 
 Write-Host "Updating spkl.json ..."
-
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json) -replace "prefix",$PublisherPrefix.Replace(' ','').ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json
 
 Write-Host "Updating ImportConfig.xml ..."
-
 (Get-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml
 
 Write-Host "Updating Build.yaml ..."
-
 (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceRepo",$adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 
 Write-Host "Updating XrmContext.exe.config ..."
-
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmContext\XrmContext.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmContext\XrmContext.exe.config
 
 Write-Host "Updating XrmDefinitelyTyped.exe.config ..."
-
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config
+
+Write-Host "Updating Companion App Settings"
+(Get-Content -Path \Dev\Repos\$adoRepo\PortalCompanionApp\AppSettings.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\PortalCompanionApp\AppSettings.json
+
+Write-Host "Updating Webhook Settings"
+(Get-Content -Path \Dev\Repos\$adoRepo\Webhook\local.settings.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\Webhook\local.settings.json
 
 Write-Host "Rename PowerPlatformDevOps.sln to $adoRepo.sln"
 Rename-Item -Path \Dev\Repos\$adoRepo\PowerPlatformDevOps.sln -NewName "$adoRepo.sln"
@@ -422,6 +404,8 @@ Write-Host "---- Please Select your Deployment Staging (CI/CD) Environment -----
 $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
 
 & ".\\SolutionExport.ps1"
+    
+#commit repo and update VariableGroup in DevOps
 
 git add -A
 git commit -m "Initial Commit"
@@ -452,6 +436,100 @@ $pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --re
 
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
+
+#Provision Azure Resource group 
+Write-Host "Setting up the Azure Resource group requires both Azure and your Power Platform/Dynamics 365 to be on the same Azure AD Tenant"
+$AzureSetup = Read-Host -Prompt "Azure subscriptions : Would you like to create the default Azure resources [Y] Yes or [S] Skip (Default [S])"
+
+if ($AzureSetup -eq "Y"){
+    
+    $selection =  az login | Out-String | ConvertFrom-Json
+    $choiceIndex = 0
+    $selection | ForEach-Object { write-host "[$($choiceIndex)] $($_.Name)"; $choiceIndex++; }     
+    $subscriptionName = $null 
+    $success = $false
+
+    do {
+        $choice = read-host "Select the Azure Subscription you want to deploy to"
+        if (!$choice) {
+            Write-Host "Invalid selection (null)"
+        }
+        else {
+            $choice = $choice -as [int];
+            if ($choice -eq $null) {
+                Write-Host "Invalid selection (not number)"
+            }
+            elseif ($choice -le -1) {
+                Write-Host "Invalid selection (negative)"
+            }
+            else {
+                $subscriptionId = $selection[$choice].id
+                $subscriptionName = $selection[$choice].name
+                if ($null -ne $subscriptionName) {
+                   Write-Host "Selected Subscription : $subscriptionName"
+                   $success = $true
+                }
+                else {
+                    Write-Host "Invalid selection (index out of range)"
+                }
+            } 
+        }
+    } while (!$success)
+
+    az account set --subscription $subscriptionId
+
+    $selection =  az account list-locations --output json | Out-String | ConvertFrom-Json
+    $choiceIndex = 0
+    $selection | ForEach-Object { write-host "[$($choiceIndex)] $($_.name)"; $choiceIndex++; } 
+    $regionName = $null 
+    $success = $false
+
+    do {
+        $choice = read-host "Select the Azure Region you want to deploy to"
+        if (!$choice) {
+            Write-Host "Invalid selection (null)"
+        }
+        else {
+            $choice = $choice -as [int];
+            if ($choice -eq $null) {
+                Write-Host "Invalid selection (not number)"
+            }
+            elseif ($choice -le -1) {
+                Write-Host "Invalid selection (negative)"
+            }
+            else {
+                $regionName = $selection[$choice].name
+                if ($null -ne $regionName) {
+                   Write-Host "Selected Region : $regionName"
+                   $success = $true
+                }
+                else {
+                    Write-Host "Invalid selection (index out of range)"
+                }
+            } 
+        }
+    } while (!$success)
+
+
+
+    Write-Host "Updating ARM Parameter values"
+    $adoRepoLower = $adoRepo.ToLower()
+    (Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddName" , $adoRepoLower | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
+    (Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddGeography" , $regionName.ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
+
+    Write-Host "Set new variables in Azure DevOps"
+    az pipelines variable-group variable create --name CompanionAppName --value "$adoRepoLower-wba" --group-id $varGroup.id
+    az pipelines variable-group variable create --name WebhookAppName --value "$adoRepoLower-fna" --group-id $varGroup.id
+    az pipelines variable-group variable create --name d365AppSecurityRoleNames --value "Delegate" --group-id $varGroup.id
+
+    az pipelines variable-group variable create --name CompanionAppName --value "$adoRepoLower-wba" --group-id $varGroupCICD.id
+    az pipelines variable-group variable create --name WebhookAppName --value "$adoRepoLower-fna" --group-id $varGroupCICD.id
+    az pipelines variable-group variable create --name d365AppSecurityRoleNames --value "Delegate" --group-id $varGroupCICD.id
+
+
+    chdir -Path C:\Dev\Repos\$adoRepo\AzureResources\
+    & .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation $regionName -ResourceGroupName "$adoRepoLower-dev"
+}
 
 $message = "Complete ... Enjoy !!!"
 Write-Host $message
@@ -490,6 +568,8 @@ Welcome to the Power Platform DevOps provisioning script. This script will perfo
  - Create an Azure DevOps Multi-Stage Pipeline to Build and Continuously Deploy your Code and Solutions
  - Create Variable Groups in Azure DevOps with your Power Platform details and credentials (stored as secrets)
  - Open the Repo and Pipeline in the Browser (and complete the initial Build and Deploy)       
+ - Create new Azure ResourceGroup in your selected Azure Subscription
+
 
 "@
 

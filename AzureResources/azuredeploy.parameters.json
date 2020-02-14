@@ -28,6 +28,9 @@
     },
     "webAppSkuCode": {
       "value": "B1"
+    },
+    "workspaceName": {
+      "value": "AddName-log"
     }
   }
 }

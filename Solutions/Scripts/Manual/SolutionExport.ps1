@@ -27,14 +27,13 @@ if (!$Credentials) {
 
     $Credentials = Get-Credential
 }
-if (!$conn) {
-    $message = "Establishing connection to $global:ServerUrl"
-    Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.2
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-    $conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $global:ServerUrl
-}
+$message = "Establishing connection to $global:ServerUrl"
+Write-Host $message
+$ProgressBar = New-BTProgressBar -Status $message -Value 0.2
+New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
+$conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $global:ServerUrl
 
 Write-Output($conn)
 
