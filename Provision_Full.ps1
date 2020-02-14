@@ -96,33 +96,12 @@ function PreReq-Install
 
 function DevOps-PreReq
 {
+    $message = "Checking Pre-requisites"
+    Write-Host $message
+    $ProgressBar = New-BTProgressBar -Status $message -Value 0.1
+    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-#$ErrorActionPreference = "SilentlyContinue"
-
-$message = "Checking Pre-requisites"
-Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.1
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
-
-#$azver = az --version
-
-#if ($azver)
-#{
-#    if ($azver[$azver.Length -3] -eq "Your CLI is up-to-date.")
-#    {
-#        $ErrorActionPreference = "Continue"
-#        DevOps-Install
-#    }
-#    else {
-#        PreReq-Install
-#    }
-#}
-#else {
-#    $ErrorActionPreference = "Continue"
-#    PreReq-Install
-#     }
-    PreReq-Install
-    DevOps-Install
+    PreReq-Install  
 }
 
 function DevOps-Install
@@ -371,7 +350,6 @@ if ($CreateOrSelect -eq "C"){
         }
     } while (!$success)
 }
-#}
 
 #update values in Solution files 
 
@@ -426,8 +404,7 @@ Write-Host "---- Please Select your Deployment Staging (CI/CD) Environment -----
 $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
 
 & ".\\SolutionExport.ps1"
-
-
+    
 #commit repo and update VariableGroup in DevOps
 
 git add -A
@@ -460,14 +437,11 @@ $pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --re
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
 
-
 #Provision Azure Resource group 
 Write-Host "Setting up the Azure Resource group requires both Azure and your Power Platform/Dynamics 365 to be on the same Azure AD Tenant"
 $AzureSetup = Read-Host -Prompt "Azure subscriptions : Would you like to create the default Azure resources [Y] Yes or [S] Skip (Default [S])"
 
 if ($AzureSetup -eq "Y"){
-
-#Login-AzureRmAccount
     
     $selection =  az login | Out-String | ConvertFrom-Json
     $choiceIndex = 0
@@ -503,7 +477,6 @@ if ($AzureSetup -eq "Y"){
     } while (!$success)
 
     az account set --subscription $subscriptionId
-    #Select-AzureRmSubscription -Subscription $subscriptionName
 
     $selection =  az account list-locations --output json | Out-String | ConvertFrom-Json
     $choiceIndex = 0
@@ -540,21 +513,22 @@ if ($AzureSetup -eq "Y"){
 
 
     Write-Host "Updating ARM Parameter values"
-    (Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddName" , $adoRepo.ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
+    $adoRepoLower = $adoRepo.ToLower()
+    (Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddName" , $adoRepoLower | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
     (Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddGeography" , $regionName.ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
 
     Write-Host "Set new variables in Azure DevOps"
-    az pipelines variable-group variable create --name CompanionAppName --value "$adoRepo-wba" --group-id $varGroup.id
-    az pipelines variable-group variable create --name WebhookAppName --value "$adoRepo-fna" --group-id $varGroup.id
+    az pipelines variable-group variable create --name CompanionAppName --value "$adoRepoLower-wba" --group-id $varGroup.id
+    az pipelines variable-group variable create --name WebhookAppName --value "$adoRepoLower-fna" --group-id $varGroup.id
     az pipelines variable-group variable create --name d365AppSecurityRoleNames --value "Delegate" --group-id $varGroup.id
 
-    az pipelines variable-group variable create --name CompanionAppName --value "$adoRepo-wba" --group-id $varGroupCICD.id
-    az pipelines variable-group variable create --name WebhookAppName --value "$adoRepo-fna" --group-id $varGroupCICD.id
+    az pipelines variable-group variable create --name CompanionAppName --value "$adoRepoLower-wba" --group-id $varGroupCICD.id
+    az pipelines variable-group variable create --name WebhookAppName --value "$adoRepoLower-fna" --group-id $varGroupCICD.id
     az pipelines variable-group variable create --name d365AppSecurityRoleNames --value "Delegate" --group-id $varGroupCICD.id
 
 
     chdir -Path C:\Dev\Repos\$adoRepo\AzureResources\
-    & .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation $regionName -ResourceGroupName "$adoRepo-dev"
+    & .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation $regionName -ResourceGroupName "$adoRepoLower-dev"
 }
 
 $message = "Complete ... Enjoy !!!"

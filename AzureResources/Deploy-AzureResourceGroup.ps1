@@ -49,7 +49,6 @@ if ((az group show --resource-group $ResourceGroupName --verbose) -eq $null) {
                                        --handle-extended-json-format) | ConvertFrom-Json
     if ($DeploymentResult.properties.provisioningState -eq "Succeeded") {
         Write-Output '', 'Deployment completed successfuly'
-        #Write-Output '', 'Template deployment returned the following errors:', $DeploymentResult.properties
     }
 
     }
