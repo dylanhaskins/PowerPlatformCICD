@@ -39,7 +39,7 @@
       "type": "string"
     },
     "workspaceName": {
-      "type":  "string"
+      "type": "string"
     }
   },
   "variables": {
@@ -352,3 +352,5 @@
   ],
   "outputs": {}
 }
+
+//https://resources.azure.com/
