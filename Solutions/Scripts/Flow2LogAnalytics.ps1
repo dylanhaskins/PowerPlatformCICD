@@ -5,7 +5,7 @@ Param(
     [string] [Parameter(Mandatory = $false)] $Username = "",
     [string] [Parameter(Mandatory = $false)] $Password = "",
     [string] [Parameter(Mandatory = $false)] $EnvironmentName = "",
-    [int32] [Parameter(Mandatory = $false)] $HoursSinceLastCheck = 1
+    [int32] [Parameter(Mandatory = $false)] $MinutesSinceLastCheck = 60
 )
  
  # Create the function to create the authorization signature
@@ -72,7 +72,7 @@ Param(
  $Pass = $Password | ConvertTo-SecureString -AsPlainText -Force
  Add-PowerAppsAccount -Username $Username -Password $Pass
 
- $Date = (Get-Date).AddHours(-$HoursSinceLastCheck).ToUniversalTime()
+ $Date = (Get-Date).AddMinutes(-$MinutesSinceLastCheck).ToUniversalTime()
  $DateToCheck = Get-Date -Date $Date -Format o
  
  Get-FlowEnvironment | Where-Object {$_.DisplayName -clike "*$EnvironmentName*"} |
