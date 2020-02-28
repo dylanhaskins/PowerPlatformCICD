@@ -155,9 +155,18 @@ else {
 
 }
 
-Write-Host ""
-$adoRepo = Read-Host -Prompt "Enter the name for the Git Repository you wish to Create"
-$adoRepo = $adoRepo.Replace(' ','')
+if ($adoCreate -eq "C")
+{
+  $adoRepo = $adoProject
+  $adoRepo = $adoRepo.Replace(' ','')
+  az devops configure --defaults organization=https://dev.azure.com/$adoOrg project=$adoProject
+  $repo = az repos show --repository $adoRepo | Out-String | ConvertFrom-Json
+}
+else
+{
+  Write-Host ""
+  $adoRepo = Read-Host -Prompt "Enter the name for the Git Repository you wish to Create"
+    $adoRepo = $adoRepo.Replace(' ','')
 
 $message = "Creating Git Repo $adoRepo"
 Write-Host $message
@@ -167,6 +176,9 @@ New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -Unique
 az devops configure --defaults organization=https://dev.azure.com/$adoOrg project=$adoProject
 
 $repo = az repos create --name $adoRepo | Out-String | ConvertFrom-Json
+
+}
+
 az repos import create --git-source-url https://github.com/dylanhaskins/PowerPlatformCICD.git --repository $adoRepo
 
 $message = "Cloning Git Repo $adoRepo locally"
