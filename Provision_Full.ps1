@@ -83,7 +83,13 @@ function PreReq-Install
 
     choco upgrade git.install -y
 
-    
+    $message = "Installing NoideJS ...."
+    Write-Host $message
+    $ProgressBar = New-BTProgressBar -Status $message -Value 0.17
+    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
+    choco upgrade nodejs -y
+
     $message = "Installing Azure CLI ...."
     Write-Host $message
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.18
