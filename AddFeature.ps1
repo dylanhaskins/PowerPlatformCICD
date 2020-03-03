@@ -249,6 +249,6 @@ if ($quit -eq "Q")
 Write-Host("Performing Checks....")
 InstallToastModule
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-choco upgrade dotnetcore
+choco upgrade dotnetcore -y
 
 Add-Feature
