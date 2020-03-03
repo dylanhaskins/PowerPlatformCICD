@@ -191,6 +191,8 @@ Rename-Item -Path .\$chosenSolution\FeatureTemplate.snk -NewName "$chosenSolutio
 Write-Host "Updating $chosenSolution.csproj ..."
 (Get-Content -Path .\$chosenSolution\$chosenSolution.csproj) -replace "FeatureTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\$chosenSolution.csproj
 
+(Get-Content -Path .\$chosenSolution\map.xml) -replace "PowerPlatformDevOpsPlugins",($chosenSolution) | Set-Content -Path .\$chosenSolution\map.xml
+
 Write-Host "Adding Feature to packageDeploy.json"
 $packagesToDeploy = Get-Content .\deployPackages.json | ConvertFrom-Json
 $packagesToDeploy += @{PackageName="$($chosenSolution)Package.dll";PackageFolder=$chosenSolution;DestinationFolder=$chosenSolution;SolutionName=$chosenSolution.ToLower()} 
