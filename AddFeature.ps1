@@ -192,7 +192,13 @@ Write-Host "Updating $chosenSolution.csproj ..."
 (Get-Content -Path .\$chosenSolution\$chosenSolution.csproj) -replace "FeatureTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\$chosenSolution.csproj
 
 chdir $chosenSolution
+Write-Host "Installing Node module dependencies ..."
 npm install
+
+Write-Host "Adding $chosenSolution Project to Solution"
+chdir ..
+$sln = ls *.sln
+dotnet sln $sln.Name add $chosenSolution\$chosenSolution.csproj
 
 #commit repo and update VariableGroup in DevOps
 
