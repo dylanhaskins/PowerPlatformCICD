@@ -88,7 +88,7 @@ function PreReq-Install
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.17
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-    choco upgrade nodejs -y
+    choco upgrade nodejs-lts -y
 
     $message = "Installing Azure CLI ...."
     Write-Host $message
@@ -567,7 +567,7 @@ ____                          ____  _       _    __                        ____ 
 
 Welcome to the Power Platform DevOps provisioning script. This script will perform the following steps automatically :
 
- - Install the Pre-Requisites (git and Azure CLI) if required
+ - Install the Pre-Requisites (git, NodeJS and Azure CLI) if required
  - Connect to Azure DevOps (You will need to have an Azure DevOps organisation to use, if you don't have one, please create one at https://dev.azure.com)
  - Allow you to Create a New Project in Azure DevOps or to Select an existing one
  - Create a New Git Repository in the Project to store your Source Code (and D365 / CDS Solutions and Data)
