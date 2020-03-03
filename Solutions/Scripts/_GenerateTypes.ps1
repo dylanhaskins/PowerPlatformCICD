@@ -2,7 +2,7 @@
 
 if (!$Credentials)
 {
-	$Credentials = Get-Credential
+	$Credentials = Get-Credential -Message "Credentials : $global:SolutionName @ $global:ServerUrl"
 }
 if (!$username)
 {

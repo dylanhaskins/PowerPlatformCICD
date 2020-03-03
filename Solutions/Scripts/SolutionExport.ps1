@@ -24,7 +24,7 @@ if (!$Credentials) {
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.1
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-    $Credentials = Get-Credential
+    $Credentials = Get-Credential -Message "Credentials : $global:SolutionName @ $global:ServerUrl"
 }
 if (!$conn) {
     $message = "Establishing connection to $global:ServerUrl"

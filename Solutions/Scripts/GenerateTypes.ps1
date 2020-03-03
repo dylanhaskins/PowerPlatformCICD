@@ -11,7 +11,7 @@ New-Item -ItemType Directory -Path ..\..\WebResources\typings\XRM
 
 if (!$Credentials)
 {
-	$Credentials = Get-Credential
+	$Credentials = Get-Credential -Message "Credentials : $global:SolutionName @ $global:ServerUrl"
 }
 if (!$username)
 {
