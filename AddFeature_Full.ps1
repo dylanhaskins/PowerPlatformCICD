@@ -87,7 +87,7 @@ if ($CreateOrSelect -eq "C"){
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.78
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-    $CreateOrSelectPub = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Solution or [S]elect an Existing One (Default [S])"
+    $CreateOrSelectPub = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Publisher or [S]elect an Existing One (Default [S])"
     if ($CreateOrSelectPub -eq "C"){
 
     $PublisherName = Read-Host -Prompt "Enter a Name for your Solution Publisher"
@@ -132,7 +132,7 @@ if ($CreateOrSelect -eq "C"){
                 $chosenPublisher = $publishers[$choice].uniquename
                 if ($null -ne $chosenPublisher) {
                     $PublisherPrefix = $publishers[$choice].customizationprefix
-                    $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $publishers[$choice].Id
+                    $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $publishers[$choice].publisherid
                     $success = $true
                 }
                 else {
