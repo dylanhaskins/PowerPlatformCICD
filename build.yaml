@@ -93,6 +93,14 @@ stages:
               Contents: '**\bin\$(BuildConfiguration)\**'
               TargetFolder: '$(build.artifactstagingdirectory)'
 
+          - task: CopyFiles@2
+            displayName: 'Copy deployPackages Artifact to: $(build.artifactstagingdirectory)'
+            inputs:
+              SourceFolder: '$(system.defaultworkingdirectory)'
+              Contents: 'deployPackages.json'
+              TargetFolder: '$(build.artifactstagingdirectory)'
+
+
           - task: PublishSymbols@2
             displayName: 'Publish symbols path'
             inputs:
