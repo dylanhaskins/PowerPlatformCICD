@@ -76,12 +76,14 @@
     <Content Include="src\library\dg.xrmquery.web.min.js" />
     <Content Include="src\library\dg.xrmquery.web.promise.min.js" />
     <Content Include="Web.config" />
+    <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="package.json" />
     <None Include="packages.config" />
     <Content Include="tsconfig.json" />
     <None Include="Web.Debug.config">
@@ -152,6 +154,9 @@
     <Error Condition="!Exists('..\packages\Microsoft.TypeScript.MSBuild.3.8.0-beta\build\Microsoft.TypeScript.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.TypeScript.MSBuild.3.8.0-beta\build\Microsoft.TypeScript.MSBuild.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.TypeScript.MSBuild.3.8.0-beta\build\Microsoft.TypeScript.MSBuild.targets" Condition="Exists('..\packages\Microsoft.TypeScript.MSBuild.3.8.0-beta\build\Microsoft.TypeScript.MSBuild.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>npm run dist</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

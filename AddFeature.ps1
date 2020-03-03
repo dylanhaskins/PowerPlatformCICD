@@ -231,6 +231,10 @@ ____                          ____  _       _    __                        ____ 
 
 Welcome to the Power Platform DevOps Feature Add script. This script will perform the following steps automatically :
 
+- Install Pre-requisites (Dotnet Core CLI)
+- Connect to CDS to Get Solution
+- Add Feature Project to your Visual Studio Solution
+
  
 "@
 
@@ -245,5 +249,6 @@ if ($quit -eq "Q")
 Write-Host("Performing Checks....")
 InstallToastModule
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+choco upgrade dotnetcore
 
 Add-Feature
