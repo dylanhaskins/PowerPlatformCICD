@@ -193,7 +193,7 @@ Write-Host "Updating $chosenSolution.csproj ..."
 
 Write-Host "Adding Feature to packageDeploy.json"
 $packagesToDeploy = Get-Content .\deployPackages.json | ConvertFrom-Json
-$packagesToDeploy += @{PackageName="$($chosenSolution)Package.dll";PackageFolder=$chosenSolution;DestinationFolder=$chosenSolution} 
+$packagesToDeploy += @{PackageName="$($chosenSolution)Package.dll";PackageFolder=$chosenSolution;DestinationFolder=$chosenSolution;SolutionName=$chosenSolution.ToLower()} 
 $packagesToDeploy | ConvertTo-Json | Out-File .\deployPackages.json
 
 chdir $chosenSolution
