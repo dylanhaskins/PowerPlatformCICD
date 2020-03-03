@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
     // Add entry point for each entity to be compiled.
     entry: {
-        systemuser: './Webresources/src/ts/forms/systemuser.ts',
+        systemuser: './src/ts/forms/systemuser.ts',
     },
     output: {
         filename: "[name].js",
