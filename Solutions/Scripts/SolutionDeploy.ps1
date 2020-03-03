@@ -50,7 +50,7 @@ function Import-Package {
                         }
                      $error.Clear()
 
-                     $Packages = Get-Content . "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\deployPackages.json" | ConvertFrom-Json
+                     $Packages = Get-Content "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\deployPackages.json" | ConvertFrom-Json
 
                      foreach ($package in $Packages)
                      {
