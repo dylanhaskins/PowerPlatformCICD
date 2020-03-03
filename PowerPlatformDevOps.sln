@@ -15,6 +15,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DB8D8804-C1BF-4614-AAB1-F2DCACFE24DE}"
 	ProjectSection(SolutionItems) = preProject
 		AddFeature.ps1 = AddFeature.ps1
+		AddFeature_Full.ps1 = AddFeature_Full.ps1
 		build.yaml = build.yaml
 		deployPackages.json = deployPackages.json
 		manifest.json = manifest.json

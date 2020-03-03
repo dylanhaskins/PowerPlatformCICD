@@ -78,14 +78,6 @@ stages:
               filePath: 'Solutions/Scripts/SolutionPack.ps1'
               arguments: '-aadTenant $(aadTenant) -aadPowerAppId $(aadPowerAppId) -aadPowerAppSecret $(aadPowerAppSecret)'
 
-          - task: ArchiveFiles@2
-            displayName: 'Archive Reference Data to: $(build.artifactstagingdirectory)'
-            inputs:
-              rootFolderOrFile: 'Solutions/ReferenceData'
-              includeRootFolder: false
-              archiveFile: '$(build.artifactstagingdirectory)/PackageDeployer/bin/Release/PkgFolder/AddName.data.zip'
-              archiveType: zip
-
           - task: CopyFiles@2
             displayName: 'Copy Build Artifact to: $(build.artifactstagingdirectory)'
             inputs:

@@ -312,13 +312,62 @@ if ($CreateOrSelect -eq "C"){
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.78
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
+    $CreateOrSelectPub = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Publisher or [S]elect an Existing One (Default [S])"
+    if ($CreateOrSelectPub -eq "C"){
+
     $PublisherName = Read-Host -Prompt "Enter a Name for your Solution Publisher"
     $PublisherPrefix = Read-Host -Prompt "Enter a Publisher Prefix"
 
     $PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','').ToLower();"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix.Replace(' ','').ToLower()}
-
-    $SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"
     $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $PublisherId.Guid
+    }
+    else
+    {
+           $publisherFetch = @"
+    <fetch>
+    <entity name='publisher' >
+        <filter type='and' >
+        <condition attribute='isreadonly' operator='eq' value='false' />
+        </filter>
+    </entity>
+    </fetch>
+"@
+
+    $publishers = (Get-CrmRecordsByFetch -conn $conn -Fetch $publisherFetch).CrmRecords
+
+    $choiceIndex = 0
+    $options = $publishers | ForEach-Object { write-host "[$($choiceIndex)] $($_.friendlyname)"; $choiceIndex++; }  
+
+
+    $success = $false
+    do {
+        $choice = read-host "Enter your selection"
+        if (!$choice) {
+            Write-Host "Invalid selection (null)"
+        }
+        else {
+            $choice = $choice -as [int];
+            if ($choice -eq $null) {
+                Write-Host "Invalid selection (not number)"
+            }
+            elseif ($choice -le -1) {
+                Write-Host "Invalid selection (negative)"
+            }
+            else {
+                $chosenPublisher = $publishers[$choice].uniquename
+                if ($null -ne $chosenPublisher) {
+                    $PublisherPrefix = $publishers[$choice].customizationprefix
+                    $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $publishers[$choice].publisherid
+                    $success = $true
+                }
+                else {
+                    Write-Host "Invalid selection (index out of range)"
+                }
+            } 
+        }
+    } while (!$success)
+    }
+    $SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"    
     $SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','').ToLower();"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
     $chosenSolution = $SolutionName.Replace(' ','').ToLower()
     }

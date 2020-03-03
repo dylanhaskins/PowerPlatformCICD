@@ -25,6 +25,11 @@ if (Test-Path $env:SYSTEM_DEFAULTWORKINGDIRECTORY\$PFolder\packagePatch\Other\So
 
 &.\Tools\SolutionPackager.exe /action:pack /folder:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\$PFolder\$packageFolder /zipfile:"$env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\$PDest\$PSolution.zip" /packagetype:Both /map:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\$PFolder\map.xml 
 
+Write-Host "Archiving ReferenceData data file"
+$compressPath  = "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\$PFolder\ReferenceData\*"
+$destinationPath  = "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\$PDest\$PSolution.data.zip"
+Compress-Archive -Path $compressPath -CompressionLevel Fastest -DestinationPath $destinationPath -Force
+
 New-Item -ItemType Directory -Force -Path $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\$PDest\CheckResults
 
 $rulesets = Get-PowerAppsCheckerRulesets -Geography $global:Geography
