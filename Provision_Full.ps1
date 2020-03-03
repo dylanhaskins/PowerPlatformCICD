@@ -381,6 +381,9 @@ Write-Host "Updating config.json ..."
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddGeography",$Geography | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 
+Write-Host "Updating deployPackages.json ..."
+(Get-Content -Path \Dev\Repos\$adoRepo\deployPackages.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\deployPackages.json
+
 Write-Host "Updating spkl.json ..."
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json) -replace "prefix",$PublisherPrefix.Replace(' ','').ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json

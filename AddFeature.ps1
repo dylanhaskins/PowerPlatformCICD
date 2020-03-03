@@ -172,9 +172,9 @@ Write-Host "Updating spkl.json ..."
 
 Write-Host "Updating ImportConfig.xml ..."
 Move-Item .\$chosenSolution\Deployment\FeatureTemplate .\$chosenSolution\Deployment\$chosenSolution
-Move-Item .\$chosenSolution\Deployment\FeatureTemplate.cs .\$chosenSolution\Deployment\$chosenSolution.cs
+Move-Item .\$chosenSolution\Deployment\FeatureTemplatePackage.cs .\$chosenSolution\Deployment\$($chosenSolution)Package.cs
 (Get-Content -Path .\$chosenSolution\Deployment\$chosenSolution\ImportConfig.xml) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\Deployment\$chosenSolution\ImportConfig.xml
-(Get-Content -Path .\$chosenSolution\Deployment\$chosenSolution.cs) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\Deployment\$chosenSolution.cs
+(Get-Content -Path .\$chosenSolution\Deployment\$($chosenSolution)Package.cs) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\Deployment\$($chosenSolution)Package.cs
 
 Write-Host "Updating XrmContext.exe.config ..."
 (Get-Content -Path .\$chosenSolution\XrmContext\XrmContext.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\XrmContext\XrmContext.exe.config
@@ -190,6 +190,10 @@ Rename-Item -Path .\$chosenSolution\FeatureTemplate.snk -NewName "$chosenSolutio
 
 Write-Host "Updating $chosenSolution.csproj ..."
 (Get-Content -Path .\$chosenSolution\$chosenSolution.csproj) -replace "FeatureTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\$chosenSolution.csproj
+
+Write-Host "Adding Feature to packageDeploy.json"
+$packagesToDeploy = Get-Content .\deployPackages.json | ConvertFrom-Json
+$packagesToDeploy += @{PackageName="$($chosenSolution)Package.dll";PackageFolder=$chosenSolution;DestinationFolder=$chosenSolution} 
 
 chdir $chosenSolution
 Write-Host "Installing Node module dependencies ..."

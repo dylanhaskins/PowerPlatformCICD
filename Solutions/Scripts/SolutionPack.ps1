@@ -10,22 +10,29 @@
 InstallCoreTools
 InstallPowerAppsCheckerModule
 
+$Packages = Get-Content . "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\deployPackages.json" | ConvertFrom-Json
+
+foreach ($package in $Packages)
+{
+$PFolder = $package.PackageFolder
+$PDest =   $package.DestinationFolder
+$PSolution = $package.SolutionName
 # Support for patches
 $packageFolder = "packageSolution"
-if (Test-Path $env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\packagePatch\Other\Solution.xml) {
+if (Test-Path $env:SYSTEM_DEFAULTWORKINGDIRECTORY\$PFolder\packagePatch\Other\Solution.xml) {
     $packageFolder = "packagePatch"
 }
 
-&.\Tools\SolutionPackager.exe /action:pack /folder:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\$packageFolder /zipfile:"$env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\PkgFolder\$global:SolutionName.zip" /packagetype:Both /map:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\Solutions\map.xml 
+&.\Tools\SolutionPackager.exe /action:pack /folder:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\$PFolder\$packageFolder /zipfile:"$env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\$PDest\$PSolution.zip" /packagetype:Both /map:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\$PFolder\map.xml 
 
-New-Item -ItemType Directory -Force -Path $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\PkgFolder\CheckResults
+New-Item -ItemType Directory -Force -Path $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\$PDest\CheckResults
 
 $rulesets = Get-PowerAppsCheckerRulesets -Geography $global:Geography
 $rulesetToUse = $rulesets | where Name -EQ "Solution Checker"
 $overrides = New-PowerAppsCheckerRuleLevelOverride -Id 'meta-avoid-silverlight' -OverrideLevel High #Use this to Override Rules and set a Higher or Lower Level
 $analyzeResult = Invoke-PowerAppsChecker -Geography Australia -ClientApplicationId $aadPowerAppId `
-    -TenantId $aadTenant -Ruleset $rulesetToUse -FileUnderAnalysis $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\PkgFolder\$global:SolutionName.zip `
-    -OutputDirectory $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\PkgFolder\CheckResults -ClientApplicationSecret (ConvertTo-SecureString -AsPlainText -Force -String $aadPowerAppSecret) -RuleLevelOverrides $overrides 
+    -TenantId $aadTenant -Ruleset $rulesetToUse -FileUnderAnalysis $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\$PDest\$PSolution.zip `
+    -OutputDirectory $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\$PDest\CheckResults -ClientApplicationSecret (ConvertTo-SecureString -AsPlainText -Force -String $aadPowerAppSecret) -RuleLevelOverrides $overrides 
 
 Write-Output $analyzeResult.IssueSummary  
 
@@ -33,7 +40,7 @@ if ($analyzeResult.IssueSummary.HighIssueCount -gt 0) {
     $errorCount = $analyzeResult.IssueSummary.HighIssueCount
     $errorMessage = @"
     You have $errorCount High Issues in your Solution    
-    You can review the results by getting the output from $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\PkgFolder\CheckResults in the Pipeline Artifacts. Results can be analysed using http://sarifviewer.azurewebsites.net/
+    You can review the results by getting the output from $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\$PDest\CheckResults in the Pipeline Artifacts. Results can be analysed using http://sarifviewer.azurewebsites.net/
 "@
     Write-Host "##[warning] $errorMessage"
     Write-Host "##vso[task.logissue type=warning;] $errorMessage"    
@@ -43,12 +50,13 @@ if ($analyzeResult.IssueSummary.CriticalIssueCount -gt 0) {
     $errorCount = $analyzeResult.IssueSummary.CriticalIssueCount
     $errorMessage = @"
     You have $errorCount Critical Issues in your Solution    
-    You can review the results by getting the output from $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\PkgFolder\CheckResults in the Pipeline Artifacts. Results can be analysed using http://sarifviewer.azurewebsites.net/
+    You can review the results by getting the output from $env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\$PDest\CheckResults in the Pipeline Artifacts. Results can be analysed using http://sarifviewer.azurewebsites.net/
 "@
     Write-Host "##[error] $errorMessage"
     Write-Host "##vso[task.logissue type=error;] $errorMessage"
     Write-Error $errorMessage
 }
 
+    }
 Remove-Item nuget.exe
 Remove-Item .\Tools -Force -Recurse -ErrorAction Ignore

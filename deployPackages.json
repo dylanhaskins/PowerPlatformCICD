@@ -1,0 +1,8 @@
+[
+  {
+    "DestinationFolder": "PkgFolder",
+    "PackageFolder": "Solutions",
+    "PackageName": "PackageDeployer.dll",
+    "SolutionName": "AddName"
+  }
+]
