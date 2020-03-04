@@ -213,7 +213,7 @@ git checkout $Branch
 git branch | select-string -notmatch $Branch | foreach {git branch -D ("$_").Trim()} #Remove non-used local branches
 
 Remove-Item .git -Recurse -Force
-Remove-Item $chosenSolution\.git -Recurse -Force
+cd ..
 
 $message = "Setting Configurations in Source Code"
 Write-Host $message
