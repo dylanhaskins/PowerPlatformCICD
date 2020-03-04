@@ -266,8 +266,10 @@ Set-Location -Path .\Scripts
 Write-Host "Exporting Solution and Generating Types"
 & ".\\SolutionExport.ps1"
 
+Set-Location -Path .\..
+
 Write-Host "Adding $chosenSolution Project to Solution"
-chdir ..
+Set-Location .\..
 $sln = ls *.sln
 dotnet sln $sln.Name add $chosenSolution\$chosenSolution.csproj
 
