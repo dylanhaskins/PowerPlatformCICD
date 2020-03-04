@@ -388,8 +388,8 @@ declare namespace XQW {
     function getApiUrl(): string;
 }
 declare namespace Filter {
-  function $in(val: string | number | XQW.Guid, listVal: (string | number | XQW.Guid)[]): WebFilter;
-  function notIn(val: string | number | XQW.Guid, listVal: (string | number | XQW.Guid)[]): WebFilter;
+  function $in<T extends string | number | XQW.Guid>(val: T, listVal: T[]): WebFilter;
+  function notIn<T extends string | number | XQW.Guid>(val: T, listVal: T[]): WebFilter;
   function under(v1: XQW.Guid, v2: string | XQW.Guid): WebFilter;
   function underOrEqual(v1: XQW.Guid, v2: string | XQW.Guid): WebFilter;
   function notUnder(v1: XQW.Guid, v2: string | XQW.Guid): WebFilter;

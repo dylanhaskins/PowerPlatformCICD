@@ -1948,10 +1948,32 @@ namespace Entities {
     }
     
     [DataContract()]
-    public enum SystemUser_Address1_AddressTypeCode {
+    public enum SystemUser_Address2_ShippingMethodCode {
         
         [EnumMember()]
         DefaultValue = 1,
+    }
+    
+    [DataContract()]
+    public enum SystemUser_AccessMode {
+        
+        [EnumMember()]
+        ReadWrite = 0,
+        
+        [EnumMember()]
+        Administrative = 1,
+        
+        [EnumMember()]
+        Read = 2,
+        
+        [EnumMember()]
+        SupportUser = 3,
+        
+        [EnumMember()]
+        Noninteractive = 4,
+        
+        [EnumMember()]
+        DelegatedAdmin = 5,
     }
     
     [DataContract()]
@@ -1962,71 +1984,20 @@ namespace Entities {
     }
     
     [DataContract()]
+    public enum SystemUser_PreferredAddressCode {
+        
+        [EnumMember()]
+        MailingAddress = 1,
+        
+        [EnumMember()]
+        OtherAddress = 2,
+    }
+    
+    [DataContract()]
     public enum SystemUser_PreferredEmailCode {
         
         [EnumMember()]
         DefaultValue = 1,
-    }
-    
-    [DataContract()]
-    public enum SystemUser_OutgoingEmailDeliveryMethod {
-        
-        [EnumMember()]
-        None = 0,
-        
-        [EnumMember()]
-        MicrosoftDynamics365forOutlook = 1,
-        
-        [EnumMember()]
-        ServerSideSynchronizationorEmailRouter = 2,
-    }
-    
-    [DataContract()]
-    public enum SystemUser_PreferredPhoneCode {
-        
-        [EnumMember()]
-        MainPhone = 1,
-        
-        [EnumMember()]
-        OtherPhone = 2,
-        
-        [EnumMember()]
-        HomePhone = 3,
-        
-        [EnumMember()]
-        MobilePhone = 4,
-    }
-    
-    [DataContract()]
-    public enum SystemUser_EmailRouterAccessApproval {
-        
-        [EnumMember()]
-        Empty = 0,
-        
-        [EnumMember()]
-        Approved = 1,
-        
-        [EnumMember()]
-        PendingApproval = 2,
-        
-        [EnumMember()]
-        Rejected = 3,
-    }
-    
-    [DataContract()]
-    public enum SystemUser_IncomingEmailDeliveryMethod {
-        
-        [EnumMember()]
-        None = 0,
-        
-        [EnumMember()]
-        MicrosoftDynamics365forOutlook = 1,
-        
-        [EnumMember()]
-        ServerSideSynchronizationorEmailRouter = 2,
-        
-        [EnumMember()]
-        ForwardMailbox = 3,
     }
     
     [DataContract()]
@@ -2073,32 +2044,55 @@ namespace Entities {
     }
     
     [DataContract()]
-    public enum SystemUser_AccessMode {
-        
-        [EnumMember()]
-        ReadWrite = 0,
-        
-        [EnumMember()]
-        Administrative = 1,
-        
-        [EnumMember()]
-        Read = 2,
-        
-        [EnumMember()]
-        SupportUser = 3,
-        
-        [EnumMember()]
-        Noninteractive = 4,
-        
-        [EnumMember()]
-        DelegatedAdmin = 5,
-    }
-    
-    [DataContract()]
-    public enum SystemUser_Address2_AddressTypeCode {
+    public enum SystemUser_Address1_AddressTypeCode {
         
         [EnumMember()]
         DefaultValue = 1,
+    }
+    
+    [DataContract()]
+    public enum SystemUser_IncomingEmailDeliveryMethod {
+        
+        [EnumMember()]
+        None = 0,
+        
+        [EnumMember()]
+        MicrosoftDynamics365forOutlook = 1,
+        
+        [EnumMember()]
+        ServerSideSynchronizationorEmailRouter = 2,
+        
+        [EnumMember()]
+        ForwardMailbox = 3,
+    }
+    
+    [DataContract()]
+    public enum SystemUser_PreferredPhoneCode {
+        
+        [EnumMember()]
+        MainPhone = 1,
+        
+        [EnumMember()]
+        OtherPhone = 2,
+        
+        [EnumMember()]
+        HomePhone = 3,
+        
+        [EnumMember()]
+        MobilePhone = 4,
+    }
+    
+    [DataContract()]
+    public enum SystemUser_OutgoingEmailDeliveryMethod {
+        
+        [EnumMember()]
+        None = 0,
+        
+        [EnumMember()]
+        MicrosoftDynamics365forOutlook = 1,
+        
+        [EnumMember()]
+        ServerSideSynchronizationorEmailRouter = 2,
     }
     
     [DataContract()]
@@ -2127,19 +2121,25 @@ namespace Entities {
     }
     
     [DataContract()]
-    public enum SystemUser_Address2_ShippingMethodCode {
+    public enum SystemUser_EmailRouterAccessApproval {
         
         [EnumMember()]
-        DefaultValue = 1,
+        Empty = 0,
+        
+        [EnumMember()]
+        Approved = 1,
+        
+        [EnumMember()]
+        PendingApproval = 2,
+        
+        [EnumMember()]
+        Rejected = 3,
     }
     
     [DataContract()]
-    public enum SystemUser_PreferredAddressCode {
+    public enum SystemUser_Address2_AddressTypeCode {
         
         [EnumMember()]
-        MailingAddress = 1,
-        
-        [EnumMember()]
-        OtherAddress = 2,
+        DefaultValue = 1,
     }
 }

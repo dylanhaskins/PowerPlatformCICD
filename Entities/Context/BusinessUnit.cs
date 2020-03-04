@@ -1156,14 +1156,7 @@ namespace Entities {
     }
     
     [DataContract()]
-    public enum BusinessUnit_Address2_ShippingMethodCode {
-        
-        [EnumMember()]
-        DefaultValue = 1,
-    }
-    
-    [DataContract()]
-    public enum BusinessUnit_Address1_ShippingMethodCode {
+    public enum BusinessUnit_Address1_AddressTypeCode {
         
         [EnumMember()]
         DefaultValue = 1,
@@ -1177,7 +1170,14 @@ namespace Entities {
     }
     
     [DataContract()]
-    public enum BusinessUnit_Address1_AddressTypeCode {
+    public enum BusinessUnit_Address2_ShippingMethodCode {
+        
+        [EnumMember()]
+        DefaultValue = 1,
+    }
+    
+    [DataContract()]
+    public enum BusinessUnit_Address1_ShippingMethodCode {
         
         [EnumMember()]
         DefaultValue = 1,
