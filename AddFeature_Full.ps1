@@ -1,3 +1,6 @@
+Param(
+    [string] [Parameter(Mandatory = $false)] $Branch = "master"
+)
 
 $Text = "Power Platform DevOps"
 $UniqueId = "PPDevOps"
@@ -204,6 +207,12 @@ $ProgressBar = New-BTProgressBar -Status $message -Value 0.30
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 git clone https://github.com/dylanhaskins/FeatureTemplate.git $chosenSolution
+chdir -Path .\$chosenSolution
+
+git checkout $Branch
+git branch | select-string -notmatch $Branch | foreach {git branch -D ("$_").Trim()} #Remove non-used local branches
+
+Remove-Item .git -Recurse -Force
 Remove-Item $chosenSolution\.git -Recurse -Force
 
 $message = "Setting Configurations in Source Code"

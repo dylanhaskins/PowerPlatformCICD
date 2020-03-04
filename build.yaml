@@ -1,10 +1,11 @@
 name: 1.0.0$(Rev:.r)
 
 resources:
-- repo: self
+ repositories:
+   - repository: self
 
 pool:
-  name: Hosted VS2017
+  vmImage: 'windows-latest'
 
 trigger:
   branches:
@@ -35,6 +36,9 @@ stages:
       - job: buildjob
         displayName: Build Job
         steps:
+          - checkout: self
+            submodules: true
+
           - powershell: |
               $path = $path = "$(System.DefaultWorkingDirectory)/Solutions/packageSolution/Other/Solution.xml"
               [XML]$xml = Get-Content $path

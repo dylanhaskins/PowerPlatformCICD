@@ -12,9 +12,4 @@
     <Compile Include="$(MSBuildThisFileDirectory)BaseService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\CommonFunctions.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Update="C:\Users\jean\Source\Repos\ccms-d365-solution\CCMS.Services\Persons\PostalResidentialAddressService.xaml.cs">
-      <DependentUpon>PostalResidentialAddressService.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
 </Project>
