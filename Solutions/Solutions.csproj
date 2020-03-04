@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrmPluginRegistrationAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -169,7 +170,11 @@
     <None Include="spkl\deploy-plugins.bat" />
     <None Include="spkl\deploy-webresources.bat" />
     <None Include="spkl\deploy-workflows.bat" />
+    <None Include="spkl\download-webresources.bat" />
+    <None Include="spkl\earlybound.bat" />
     <None Include="spkl\instrument-plugin-code.bat" />
+    <None Include="spkl\pack+import.bat" />
+    <None Include="spkl\unpack.bat" />
     <None Include="XrmContext\Run.fsx" />
     <None Include="XrmContext\Run.ps1" />
     <None Include="XrmContext\XrmContext.exe.config" />
