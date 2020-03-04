@@ -30,10 +30,10 @@ $ProgressBar = New-BTProgressBar -Status $message -Value 0.8
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 if ($PatchSolution) {
-    &.\Tools\SolutionPackager.exe /action:extract /folder:..\..\packagePatch\ /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
+    &..\coretools\SolutionPackager.exe /action:extract /folder:..\..\packagePatch\ /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
 }else{
     Remove-Item ..\..\package\patch -Force -Recurse
-    &.\Tools\SolutionPackager.exe /action:extract /folder:..\..\packageSolution\ /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
+    &..\coretools\SolutionPackager.exe /action:extract /folder:..\..\packageSolution\ /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
 }
 
 

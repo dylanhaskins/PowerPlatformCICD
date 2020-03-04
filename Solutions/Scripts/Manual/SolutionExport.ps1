@@ -1,10 +1,10 @@
-﻿$Text = "Solution Management"
-$UniqueId = "SolutionMGMT"
-
-######################## SETUP 
+﻿######################## SETUP 
 Write-Host "Initialising Setup ...."
 . ".\\..\_SetupTools.ps1"
 . ".\\..\_Config.ps1"
+
+$Text = $global:SolutionName
+$UniqueId = "SolutionMGMT"
 
 InstallToastModule
     $message = "Installing Solution Management Tools..."

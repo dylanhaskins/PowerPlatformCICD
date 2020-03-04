@@ -1,9 +1,9 @@
-﻿$Text = "Solution Management"
-$UniqueId = "SolutionMGMT"
-
-######################## SETUP 
+﻿######################## SETUP 
 . ((Split-Path $MyInvocation.InvocationName) + "\_SetupTools.ps1")
 . ((Split-Path $MyInvocation.InvocationName) + "\_Config.ps1")
+
+$Text = $global:SolutionName
+$UniqueId = "SolutionMGMT"
 
 InstallToastModule
     $message = "Installing Solution Management Tools..."
@@ -13,9 +13,7 @@ InstallToastModule
 
 
 InstallXrmDataModule
-InstallCoreTools
 InstallDevOpsDataModule
-
 
 ######################## GET CONNECTION
 if (!$Credentials) {
@@ -55,8 +53,6 @@ Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 1
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-Remove-Item nuget.exe
-Remove-Item .\Tools -Force -Recurse -ErrorAction Ignore
 
 
 
