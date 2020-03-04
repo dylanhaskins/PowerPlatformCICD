@@ -13,6 +13,7 @@ InstallToastModule
 
 
 InstallXrmDataModule
+InstallCoreTools
 InstallDevOpsDataModule
 
 ######################## GET CONNECTION
@@ -53,7 +54,8 @@ Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 1
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-
+Remove-Item nuget.exe
+Remove-Item .\Tools -Force -Recurse -ErrorAction Ignore
 
 
 
