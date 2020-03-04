@@ -257,9 +257,14 @@ $packagesToDeploy = Get-Content .\deployPackages.json | ConvertFrom-Json
 $packagesToDeploy += @{PackageName="$($chosenSolution)Package.dll";PackageFolder=$chosenSolution;DestinationFolder=$chosenSolution;SolutionName=$chosenSolution.ToLower()} 
 $packagesToDeploy | ConvertTo-Json | Out-File .\deployPackages.json
 
-chdir $chosenSolution
+Set-Location -Path  .\$chosenSolution
 Write-Host "Installing Node module dependencies ..."
 npm install
+
+Set-Location -Path .\Scripts
+
+Write-Host "Exporting Solution and Generating Types"
+& ".\\SolutionExport.ps1"
 
 Write-Host "Adding $chosenSolution Project to Solution"
 chdir ..
