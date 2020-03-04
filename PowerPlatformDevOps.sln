@@ -38,21 +38,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webhooks", "Webhooks\Webhoo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalCompanionApp", "PortalCompanionApp\PortalCompanionApp.csproj", "{3C8EE62E-2C3E-4C38-8261-6E5DBFAB369D}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Common", "Common\Common.shproj", "{7F925BE0-A404-4902-9BC4-17E6D1D2BE86}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Common", "Common\Common\Common.shproj", "{7F925BE0-A404-4902-9BC4-17E6D1D2BE86}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageDeployer", "PackageDeployer\PackageDeployer.csproj", "{CE672AD8-F626-45F2-93FE-5DDA5549B72E}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Common\Common.projitems*{069b4d72-81dd-49f1-9f4c-5ba58cc52d07}*SharedItemsImports = 4
+		Common\Common\Common.projitems*{069b4d72-81dd-49f1-9f4c-5ba58cc52d07}*SharedItemsImports = 4
 		Entities\Entities.projitems*{069b4d72-81dd-49f1-9f4c-5ba58cc52d07}*SharedItemsImports = 4
 		Services\Services.projitems*{069b4d72-81dd-49f1-9f4c-5ba58cc52d07}*SharedItemsImports = 4
 		Entities\Entities.projitems*{31ae8b67-1c3e-4202-87c8-3c2961195896}*SharedItemsImports = 13
-		Common\Common.projitems*{59ef756c-ff45-41a4-972c-db19f4829314}*SharedItemsImports = 4
+		Common\Common\Common.projitems*{59ef756c-ff45-41a4-972c-db19f4829314}*SharedItemsImports = 4
 		Entities\Entities.projitems*{59ef756c-ff45-41a4-972c-db19f4829314}*SharedItemsImports = 4
 		Services\Services.projitems*{59ef756c-ff45-41a4-972c-db19f4829314}*SharedItemsImports = 4
 		Services\Services.projitems*{5f0f4bde-fe07-40b1-8d55-955b43ab35db}*SharedItemsImports = 13
-		Common\Common.projitems*{7f925be0-a404-4902-9bc4-17e6d1d2be86}*SharedItemsImports = 13
+		Common\Common\Common.projitems*{7f925be0-a404-4902-9bc4-17e6d1d2be86}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Core|Any CPU = Core|Any CPU

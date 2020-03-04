@@ -79,7 +79,7 @@
     <None Include="packages.config" />
     <None Include="Plugins.snk" />
   </ItemGroup>
-  <Import Project="..\Common\Common.projitems" Label="Shared" />
+  <Import Project="..\Common\Common\Common.projitems" Label="Shared" />
   <Import Project="..\Entities\Entities.projitems" Label="Shared" />
   <Import Project="..\Services\Services.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
