@@ -250,7 +250,7 @@ git init
 git add .
 git remote add origin $repo.webUrl
 
-chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
+Set-Location -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
 
 Write-Host ""
 Write-Host ""
@@ -480,7 +480,7 @@ Write-Host ""
 Write-Host "---- Please Select your Deployment Staging (CI/CD) Environment ------"
 $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
 
-& ".\\SolutionExport.ps1"
+. ".\SolutionExport.ps1"
     
 #commit repo and update VariableGroup in DevOps
 
