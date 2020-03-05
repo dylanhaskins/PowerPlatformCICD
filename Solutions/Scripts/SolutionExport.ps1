@@ -1,6 +1,6 @@
 ﻿######################## SETUP 
-.  ".\_SetupTools.ps1"
-.  ".\_Config.ps1"
+. ((Split-Path $MyInvocation.InvocationName) + ".\_SetupTools.ps1")
+. ((Split-Path $MyInvocation.InvocationName) + ".\_Config.ps1")
 
 $Text = $global:SolutionName
 $UniqueId = "SolutionMGMT"
@@ -36,16 +36,16 @@ if (!$conn) {
 Write-Output($conn)
 
 ######################## Generate Config Migration data 
-& ".\_ConfigMigration.ps1"
+& ((Split-Path $MyInvocation.InvocationName) + ".\_ConfigMigration.ps1")
 
 ######################## Generate Types
-& ".\_GenerateTypes.ps1"
+& ((Split-Path $MyInvocation.InvocationName) + ".\_GenerateTypes.ps1")
 
 ######################## UPDATE VERSION
-& ".\_UpdateVersion.ps1"
+& ((Split-Path $MyInvocation.InvocationName) + ".\_UpdateVersion.ps1")
 
 ######################## EXPORT Solution
-& ".\_ExportSolution.ps1"
+& ((Split-Path $MyInvocation.InvocationName) + ".\_ExportSolution.ps1")
 
 
 ######################### CLEANING UP
