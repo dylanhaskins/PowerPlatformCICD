@@ -1,7 +1,8 @@
 ﻿######################## SETUP 
+Write-Host $MyInvocation.InvocationName
 Write-Host "Initialising Setup ...."
-. ((Split-Path $MyInvocation.InvocationName) + ".\\..\_SetupTools.ps1")
-. ((Split-Path $MyInvocation.InvocationName) + ".\\..\_Config.ps1")
+. ((Split-Path $MyInvocation.InvocationName) + "\..\_SetupTools.ps1")
+. ((Split-Path $MyInvocation.InvocationName) + "\..\_Config.ps1")
 
 $Text = $global:SolutionName
 $UniqueId = "SolutionMGMT"
@@ -42,7 +43,7 @@ Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.3
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-& ((Split-Path $MyInvocation.InvocationName) + ".\\..\_ConfigMigration.ps1")
+& ((Split-Path $MyInvocation.InvocationName) + "\..\_ConfigMigration.ps1")
 
 ######################## Generate Types
 Write-Host("Cleaning up Context Files...")
