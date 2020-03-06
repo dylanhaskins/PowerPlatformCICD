@@ -22,7 +22,7 @@ Export-CrmSolution -SolutionName $global:SolutionName -Managed -SolutionZipFileN
 
 ######################## EXTRACT SOLUTION
 $ErrorActionPreference = "SilentlyContinue"
-Remove-Item ..\..\package -Force -Recurse
+Remove-Item (Join-Path $PSScriptRoot "..\package*") -Force -Recurse
 
 $message = "Unpacking Solution $global:SolutionName"
 Write-Host $message
@@ -30,10 +30,10 @@ $ProgressBar = New-BTProgressBar -Status $message -Value 0.8
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 if ($PatchSolution) {
-    &.\Tools\SolutionPackager.exe /action:extract /folder:..\..\packagePatch\ /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
+    &.\Tools\SolutionPackager.exe /action:extract /folder:(Join-Path $PSScriptRoot "..\packagePatch\") /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
 }else{
     Remove-Item ..\..\package\patch -Force -Recurse
-    &.\Tools\SolutionPackager.exe /action:extract /folder:..\..\packageSolution\ /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
+    &.\Tools\SolutionPackager.exe /action:extract /folder:(Join-Path $PSScriptRoot "..\packageSolution\") /zipfile:"$global:SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
 }
 
 

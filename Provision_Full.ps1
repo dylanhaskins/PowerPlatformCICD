@@ -250,7 +250,7 @@ git init
 git add .
 git remote add origin $repo.webUrl
 
-Set-Location -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
+Set-Location -Path \Dev\Repos\$adoRepo\Solutions\Scripts
 
 Write-Host ""
 Write-Host ""
