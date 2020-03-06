@@ -80,11 +80,8 @@ Write-host "Module $moduleName Found"
 }
 }
 
+$ProgressPreference = 'SilentlyContinue'
 Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-#InstallXrmModule
-#InstallToastModule
-#InstallDevOpsDataModule
-#InstallCoreTools
 
 

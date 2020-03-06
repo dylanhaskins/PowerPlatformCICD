@@ -2,7 +2,7 @@
 
 if (!$Credentials)
 {
-	$Credentials = Get-Credential
+	$Credentials = Get-Credential -Message "Credentials : $global:SolutionName @ $global:ServerUrl"
 }
 if (!$username)
 {
@@ -21,13 +21,17 @@ New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -Unique
 
 Write-Host("Cleaning up Context Files...")
 #clean up
-Remove-Item ..\..\..\Entities\Context -Force -Recurse -ErrorAction Ignore
-Remove-Item ..\..\..\WebResources\typings\XRM -Force -Recurse -ErrorAction Ignore
+Remove-Item (Join-Path $PSScriptRoot "..\..\Entities\Context") -Force -Recurse -ErrorAction Ignore
+Remove-Item (Join-Path $PSScriptRoot "..\..\WebResources\typings\XRM") -Force -Recurse -ErrorAction Ignore
 
-New-Item -ItemType Directory -Path ..\..\..\Entities\Context
-New-Item -ItemType Directory -Path ..\..\..\WebResources\typings\XRM
+New-Item -ItemType Directory -Path (Join-Path $PSScriptRoot "..\..\Entities\Context") -ErrorAction Ignore
+New-Item -ItemType Directory -Path (Join-Path $PSScriptRoot  "..\..\WebResources\typings\XRM") -ErrorAction Ignore
 
 	#generate types
-..\..\XrmContext\XrmContext.exe /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /out:"../../../Entities/Context"
-..\..\XrmDefinitelyTyped\XrmDefinitelyTyped.exe /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /out:"../../../Webresources/typings/XRM" /jsLib:"../../../Webresources/src/library"
+$CurrentLocation = Get-Location
+Set-Location -Path (Join-Path $PSScriptRoot "..\XrmContext")
+. .\XrmContext.exe /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /out:"../../Entities/Context"
+Set-Location -Path (Join-Path $PSScriptRoot "..\XrmDefinitelyTyped")
+. .\XrmDefinitelyTyped.exe /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /out:"../../Webresources/typings/XRM" /jsLib:"../../Webresources/src/library"
+Set-Location -Path $CurrentLocation
 }

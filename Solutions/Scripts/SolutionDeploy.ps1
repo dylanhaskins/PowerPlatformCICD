@@ -10,12 +10,10 @@
 . "$PipelinePath\drop\Solutions\bin\Release\Scripts\_Config.ps1"
 
 function Import-Package {
-    [string]$PackageName = "PackageDeployer.dll"
     [string]$PackageDirectory = "$PipelinePath/drop/PackageDeployer/bin/Release"
     [string]$LogsDirectory = "$PackageDirectory"
     [string]$CrmConnectionString = "AuthType=Office365;Username=$UserName; Password=$Password;Url=$DeployServerUrl"
     
-    Write-Host $PackageName
     Write-Host $PackageDirectory
     Write-Host $LogsDirectory
     Write-Host $CrmConnectionString 
@@ -51,7 +49,13 @@ function Import-Package {
                             throw "Could not establish connection with server"
                         }
                      $error.Clear()
-                     Import-CrmPackage -CrmConnection $CRMConn -PackageDirectory $PackageDirectory -PackageName $PackageName -LogWriteDirectory $LogsDirectory -EnabledAsyncForSolutionImport -SolutionBlockedRetryDelay 120 -SolutionBlockedRetryCount 10 -Timeout "00:60:00" -RuntimePackageSettings $RuntimeSettings -Verbose
+
+                     $Packages = Get-Content "$PipelinePath\drop\deployPackages.json" | ConvertFrom-Json
+
+                     foreach ($package in $Packages)
+                     {
+                         Import-CrmPackage -CrmConnection $CRMConn -PackageDirectory $PackageDirectory -PackageName $package.PackageName -LogWriteDirectory $LogsDirectory -EnabledAsyncForSolutionImport -SolutionBlockedRetryDelay 120 -SolutionBlockedRetryCount 10 -Timeout "00:08:00" -RuntimePackageSettings $RuntimeSettings -Verbose
+                     }
                      $Stoploop = $true
               }
               catch

@@ -2,7 +2,7 @@
 
 Write-Host("Exporting Configuration Data...")
 
-if (!$Credentials) {$Credentials = Get-Credential}
+if (!$Credentials) {$Credentials = Get-Credential -Message "Credentials : $global:SolutionName @ $global:ServerUrl"}
 if (!$conn) {$conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $global:ServerUrl}
 
 

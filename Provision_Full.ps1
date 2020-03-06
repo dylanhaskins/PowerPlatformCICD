@@ -83,12 +83,25 @@ function PreReq-Install
 
     choco upgrade git.install -y
 
-    
+    $message = "Installing NodeJS ...."
+    Write-Host $message
+    $ProgressBar = New-BTProgressBar -Status $message -Value 0.17
+    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
+    choco upgrade nodejs-lts -y
+
     $message = "Installing Azure CLI ...."
     Write-Host $message
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.18
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
     choco upgrade azure-cli -y 
+
+    $message = "Installing dotnet CLI ...."
+    Write-Host $message
+    $ProgressBar = New-BTProgressBar -Status $message -Value 0.19
+    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
+    choco upgrade dotnetcore -y
 
     ## Restart PowerShell Environment to Enable Azure CLI
     Restart-PowerShell
@@ -155,9 +168,18 @@ else {
 
 }
 
-Write-Host ""
-$adoRepo = Read-Host -Prompt "Enter the name for the Git Repository you wish to Create"
-$adoRepo = $adoRepo.Replace(' ','')
+if ($adoCreate -eq "C")
+{
+  $adoRepo = $adoProject
+  $adoRepo = $adoRepo.Replace(' ','')
+  az devops configure --defaults organization=https://dev.azure.com/$adoOrg project=$adoProject
+  $repo = az repos show --repository $adoRepo | Out-String | ConvertFrom-Json
+}
+else
+{
+  Write-Host ""
+  $adoRepo = Read-Host -Prompt "Enter the name for the Git Repository you wish to Create"
+    $adoRepo = $adoRepo.Replace(' ','')
 
 $message = "Creating Git Repo $adoRepo"
 Write-Host $message
@@ -167,6 +189,9 @@ New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -Unique
 az devops configure --defaults organization=https://dev.azure.com/$adoOrg project=$adoProject
 
 $repo = az repos create --name $adoRepo | Out-String | ConvertFrom-Json
+
+}
+
 az repos import create --git-source-url https://github.com/dylanhaskins/PowerPlatformCICD.git --repository $adoRepo
 
 $message = "Cloning Git Repo $adoRepo locally"
@@ -177,7 +202,7 @@ New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -Unique
 
 git clone $repo.webUrl \Dev\Repos\$adoRepo 
 
-$message = "Create PowerApps Check Azure AD Application"
+$message = "Create $adoRepo Azure AD Application"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.50
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
@@ -185,7 +210,7 @@ New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -Unique
 $manifest = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/$branch/manifest.json" -UseBasicParsing:$true
 Set-Content .\manifest.json -Value $manifest.Content
 
-$adApp = az ad app create --display-name "PowerApp Checker App" --native-app --required-resource-accesses manifest.json --reply-urls "urn:ietf:wg:oauth:2.0:oob" | ConvertFrom-Json
+$adApp = az ad app create --display-name "$adoRepo App" --native-app --required-resource-accesses manifest.json --reply-urls "urn:ietf:wg:oauth:2.0:oob" | ConvertFrom-Json
 $azureADAppPassword = (New-Guid).Guid.Replace("-","")
 $adAppCreds = az ad app credential reset --password $azureADAppPassword --id $adApp.appId | ConvertFrom-Json
 
@@ -225,7 +250,7 @@ git init
 git add .
 git remote add origin $repo.webUrl
 
-chdir -Path \Dev\Repos\$adoRepo\Solutions\Scripts\Manual
+Set-Location -Path \Dev\Repos\$adoRepo\Solutions\Scripts
 
 Write-Host ""
 Write-Host ""
@@ -294,13 +319,62 @@ if ($CreateOrSelect -eq "C"){
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.78
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
+    $CreateOrSelectPub = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Publisher or [S]elect an Existing One (Default [S])"
+    if ($CreateOrSelectPub -eq "C"){
+
     $PublisherName = Read-Host -Prompt "Enter a Name for your Solution Publisher"
     $PublisherPrefix = Read-Host -Prompt "Enter a Publisher Prefix"
 
     $PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','').ToLower();"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix.Replace(' ','').ToLower()}
-
-    $SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"
     $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $PublisherId.Guid
+    }
+    else
+    {
+           $publisherFetch = @"
+    <fetch>
+    <entity name='publisher' >
+        <filter type='and' >
+        <condition attribute='isreadonly' operator='eq' value='false' />
+        </filter>
+    </entity>
+    </fetch>
+"@
+
+    $publishers = (Get-CrmRecordsByFetch -conn $conn -Fetch $publisherFetch).CrmRecords
+
+    $choiceIndex = 0
+    $options = $publishers | ForEach-Object { write-host "[$($choiceIndex)] $($_.friendlyname)"; $choiceIndex++; }  
+
+
+    $success = $false
+    do {
+        $choice = read-host "Enter your selection"
+        if (!$choice) {
+            Write-Host "Invalid selection (null)"
+        }
+        else {
+            $choice = $choice -as [int];
+            if ($choice -eq $null) {
+                Write-Host "Invalid selection (not number)"
+            }
+            elseif ($choice -le -1) {
+                Write-Host "Invalid selection (negative)"
+            }
+            else {
+                $chosenPublisher = $publishers[$choice].uniquename
+                if ($null -ne $chosenPublisher) {
+                    $PublisherPrefix = $publishers[$choice].customizationprefix
+                    $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $publishers[$choice].publisherid
+                    $success = $true
+                }
+                else {
+                    Write-Host "Invalid selection (index out of range)"
+                }
+            } 
+        }
+    } while (!$success)
+    }
+    $SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"    
     $SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','').ToLower();"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
     $chosenSolution = $SolutionName.Replace(' ','').ToLower()
     }
@@ -363,6 +437,9 @@ Write-Host "Updating config.json ..."
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddGeography",$Geography | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 
+Write-Host "Updating deployPackages.json ..."
+(Get-Content -Path \Dev\Repos\$adoRepo\deployPackages.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\deployPackages.json
+
 Write-Host "Updating spkl.json ..."
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json
 (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json) -replace "prefix",$PublisherPrefix.Replace(' ','').ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json
@@ -403,7 +480,7 @@ Write-Host ""
 Write-Host "---- Please Select your Deployment Staging (CI/CD) Environment ------"
 $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
 
-& ".\\SolutionExport.ps1"
+. ".\SolutionExport.ps1"
     
 #commit repo and update VariableGroup in DevOps
 
@@ -549,7 +626,7 @@ ____                          ____  _       _    __                        ____ 
 
 Welcome to the Power Platform DevOps provisioning script. This script will perform the following steps automatically :
 
- - Install the Pre-Requisites (git and Azure CLI) if required
+ - Install the Pre-Requisites (git, NodeJS and Azure CLI) if required
  - Connect to Azure DevOps (You will need to have an Azure DevOps organisation to use, if you don't have one, please create one at https://dev.azure.com)
  - Allow you to Create a New Project in Azure DevOps or to Select an existing one
  - Create a New Git Repository in the Project to store your Source Code (and D365 / CDS Solutions and Data)

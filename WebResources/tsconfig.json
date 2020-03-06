@@ -3,7 +3,7 @@
     "noImplicitAny": false,
     "noEmitOnError": true,
     "module": "commonjs",
-    "target": "es2015",
+    "target": "ES6",
     "outDir": "./dist",
     "esModuleInterop": true
   },

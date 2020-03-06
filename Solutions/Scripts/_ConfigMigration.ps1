@@ -1,6 +1,6 @@
 
 
-if (!$Credentials) {$Credentials = Get-Credential}
+if (!$Credentials) {$Credentials = Get-Credential -Message "Credentials : $global:SolutionName @ $global:ServerUrl"}
 if (!$conn) {$conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $global:ServerUrl}
 
 if($conn.IsReady){
@@ -29,6 +29,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch>
 #|Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("")
 
 
-$packages.Data.InnerXml | Out-File -FilePath  ..\..\ReferenceData\data.xml
-$packages.Schema.InnerXml | Out-File -FilePath ..\..\ReferenceData\data_schema.xml
+$packages.Data.InnerXml | Out-File -FilePath  (Join-Path $PSScriptRoot "..\ReferenceData\data.xml")
+$packages.Schema.InnerXml | Out-File -FilePath (Join-Path $PSScriptRoot "..\ReferenceData\data_schema.xml")
 }
