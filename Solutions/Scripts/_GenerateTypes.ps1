@@ -28,6 +28,10 @@ New-Item -ItemType Directory -Path (Join-Path $PSScriptRoot "..\..\Entities\Cont
 New-Item -ItemType Directory -Path (Join-Path $PSScriptRoot  "..\..\WebResources\typings\XRM")
 
 	#generate types
-. (Join-Path $PSScriptRoot "..\XrmContext\XrmContext.exe") /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /out:"../../Entities/Context"
-. (Join-Path $PSScriptRoot "..\XrmDefinitelyTyped\XrmDefinitelyTyped.exe") /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /out:"../../Webresources/typings/XRM" /jsLib:"../../Webresources/src/library"
+$CurrentLocation = Get-Location
+Set-Location -Path (Join-Path $PSScriptRoot "..\XrmContext")
+. .\XrmContext.exe /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /out:"../../Entities/Context"
+Set-Location -Path (Join-Path $PSScriptRoot "..\XrmDefinitelyTyped")
+. .\XrmDefinitelyTyped.exe /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /out:"../../Webresources/typings/XRM" /jsLib:"../../Webresources/src/library"
+Set-Location -Path $CurrentLocation
 }

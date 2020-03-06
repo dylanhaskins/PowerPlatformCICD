@@ -159,6 +159,10 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == SolutionPackager (powershell.exe -ExecutionPolicy Bypass -File .\Scripts\SolutionExport.ps1)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>if $(ConfigurationName) == SolutionPackager (powershell.exe -ExecutionPolicy Bypass -File ..\..\Scripts\SolutionExport.ps1)</PreBuildEvent>
   </PropertyGroup>
 </Project>
