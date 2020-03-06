@@ -339,8 +339,9 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
-/Solutions/Scripts/Manual/Tools
-/Solutions/Scripts/Manual/nuget.exe
+/Solutions/Scripts/Tools
+/Solutions/Scripts/nuget.exe
+/Solutions/Scripts/*.zip
 /Solutions/spkl/Log*.txt
 
 .vscode/
