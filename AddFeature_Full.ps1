@@ -1,7 +1,7 @@
 Param(
     [string] [Parameter(Mandatory = $false)] $Branch = "master"
 )
-
+$ProgressPreference = 'SilentlyContinue'
 $Text = "Power Platform DevOps"
 $UniqueId = "PPDevOps"
 
@@ -317,3 +317,4 @@ Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 choco upgrade dotnetcore -y
 
 Add-Feature
+$ProgressPreference = 'Continue'
