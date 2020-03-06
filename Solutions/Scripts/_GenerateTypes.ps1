@@ -24,8 +24,8 @@ Write-Host("Cleaning up Context Files...")
 Remove-Item (Join-Path $PSScriptRoot "..\..\Entities\Context") -Force -Recurse -ErrorAction Ignore
 Remove-Item (Join-Path $PSScriptRoot "..\..\WebResources\typings\XRM") -Force -Recurse -ErrorAction Ignore
 
-New-Item -ItemType Directory -Path (Join-Path $PSScriptRoot "..\..\Entities\Context")
-New-Item -ItemType Directory -Path (Join-Path $PSScriptRoot  "..\..\WebResources\typings\XRM")
+New-Item -ItemType Directory -Path (Join-Path $PSScriptRoot "..\..\Entities\Context") -ErrorAction Ignore
+New-Item -ItemType Directory -Path (Join-Path $PSScriptRoot  "..\..\WebResources\typings\XRM") -ErrorAction Ignore
 
 	#generate types
 $CurrentLocation = Get-Location
