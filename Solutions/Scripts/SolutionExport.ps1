@@ -54,8 +54,9 @@ Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 1
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-Remove-Item nuget.exe
-Remove-Item .\Tools -Force -Recurse -ErrorAction Ignore
+Remove-Item (Join-Path $PSScriptRoot "nuget.exe") -ErrorAction Ignore -Force
+Remove-Item (Join-Path $PSScriptRoot "Tools") -Force -Recurse -ErrorAction Ignore
+Remove-Item (Join-Path $PSScriptRoot "*.zip") -Force -ErrorAction Ignore
 
 
 

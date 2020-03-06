@@ -109,9 +109,6 @@
     <None Include="Scripts\SolutionDeploy.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\Manual\SolutionExport__.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Scripts\SolutionPack.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
