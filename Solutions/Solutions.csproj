@@ -100,7 +100,6 @@
     <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".gitignore" />
     <None Include="packages.config" />
     <None Include="Scripts\config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
