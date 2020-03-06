@@ -25,20 +25,12 @@ Param(
      return $authorization
  }
  
- # Create the function to create and post the request
- Function Post-LogAnalyticsData 
- {
-     [CmdletBinding()]
-     Param(
-         [Parameter(ValueFromPipeline)] $bodyJson,
-         [string] [Parameter()] $customerId,
-         [string] [Parameter()] $sharedKey,
-         [string] [Parameter()] $logType
  
-     )
-     Process {
+ # Create the function to create and post the request
+ Function Post-LogAnalyticsData($customerId, $sharedKey, $body, $logType)
+ {
+
      Write-Host "Writing FlowRun to Azure Log... Status:" -NoNewline;
-     $body = [System.Text.Encoding]::UTF8.GetBytes($bodyJson)
      $method = "POST"
      $contentType = "application/json"
      $resource = "/api/logs"
@@ -61,9 +53,8 @@ Param(
      }
  
      $response = Invoke-WebRequest -Uri $uri -Method $method -ContentType $contentType -Headers $headers -Body $body -UseBasicParsing
+     Write-Host $response.StatusCode
      return $response.StatusCode
- 
- }
  }
  
  Install-Module -Name Microsoft.PowerApps.Administration.PowerShell
@@ -74,11 +65,45 @@ Param(
 
  $Date = (Get-Date).AddMinutes(-$MinutesSinceLastCheck).ToUniversalTime()
  $DateToCheck = Get-Date -Date $Date -Format o
+
+ $ProgressPreference = 'SilentlyContinue' 
  
- Get-FlowEnvironment | Where-Object {$_.DisplayName -clike "*$EnvironmentName*"} |
- ForEach-Object {Get-AdminFlow -EnvironmentName $_.EnvironmentName | ForEach-Object {$Name = $_.DisplayName; $EnvName = (Get-FlowEnvironment -EnvironmentName $_.EnvironmentName).DisplayName;
- Write-Host "Environment - $EnvName : " -NoNewline; Write-Host "Flow - $Name";   
- Get-FlowRun -EnvironmentName $_.EnvironmentName -FlowName $_.FlowName | 
- Where-Object {$_.Status -like 'Failed' -and $_.StartTime -ge $DateToCheck} | 
- Select-Object @{l="Environment";e={$EnvName}}, @{l="FlowName";e={$Name}}, FlowRunName, Status, StartTime | 
- ConvertTo-Json | Post-LogAnalyticsData -customerId $CustomerID -sharedKey $SharedKey -logType $LogType}}
+$all = (Measure-Command { 
+    foreach ($environment in (Get-FlowEnvironment *$EnvironmentName* ))
+{
+   $env = (Measure-Command { foreach ($adminflow in (Get-AdminFlow -EnvironmentName $environment.EnvironmentName))
+    {
+        Write-Host "Environment -" $environment.DisplayName ": Flow -" $adminflow.DisplayName;
+        $json = @()
+        $individual = (Measure-Command { foreach ($flow in (Get-FlowRun -EnvironmentName $environment.EnvironmentName -FlowName $adminflow.FlowName))
+        {
+            if ($flow.Status -like 'Failed' -and $flow.StartTime -ge $DateToCheck )
+            {
+                $json += 
+                    @{
+                        Environment=$environment.DisplayName;
+                        FlowName=$adminflow.DisplayName;
+                        FlowRunName=$flow.FlowRunName;
+                        Status=$flow.Status;
+                        StartTime=$flow.StartTime
+                    }
+            }
+        }}).TotalSeconds
+        
+        if  ($json.Length -gt 0)
+        {
+            $Body = ConvertTo-Json -InputObject $json 
+            Post-LogAnalyticsData -customerId $CustomerID -sharedKey $SharedKey -logType $LogType -body $Body  
+
+        }
+        else {
+            Write-Host "Skipped"
+        }
+        Write-Host ('Completed In :  {0:f2} seconds' -f $individual)   
+    }
+}).TotalMinutes
+Write-Host ('{0} Completed In :  {1:f2} minutes' -f $environment.DisplayName, $env) 
+}
+}).TotalMinutes
+
+Write-Host ('All Completed In :  {0:f2} minutes' -f $all)   

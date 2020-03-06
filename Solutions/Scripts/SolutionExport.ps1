@@ -1,4 +1,5 @@
 ﻿######################## SETUP 
+$ProgressPreference = 'SilentlyContinue'
 . (Join-Path $PSScriptRoot "_SetupTools.ps1")
 . (Join-Path $PSScriptRoot "_Config.ps1")
 
@@ -57,6 +58,8 @@ New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -Unique
 Remove-Item (Join-Path $PSScriptRoot "nuget.exe") -ErrorAction Ignore -Force
 Remove-Item (Join-Path $PSScriptRoot "Tools") -Force -Recurse -ErrorAction Ignore
 Remove-Item (Join-Path $PSScriptRoot "*.zip") -Force -ErrorAction Ignore
+
+ $ProgressPreference = 'Continue'
 
 
 
