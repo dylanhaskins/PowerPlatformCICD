@@ -1,4 +1,5 @@
-
+######################## SETUP 
+. ".\_Config.ps1"
 
 if (!$Credentials)
 {

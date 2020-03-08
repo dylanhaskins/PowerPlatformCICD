@@ -120,9 +120,6 @@
     <None Include="Scripts\_Config.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\GenerateTypes.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Scripts\_ExportSolution.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
