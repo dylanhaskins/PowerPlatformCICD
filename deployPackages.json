@@ -7,15 +7,18 @@
     "DeployTo": [
       {
         "EnvironmentName": "Development",
-        "DeploymentType": "Unmanaged"
+        "DeploymentType": "Unmanaged",
+        "DeployData": "true"
       },
       {
         "EnvironmentName": "Deployment Staging",
-        "DeploymentType": "Managed"
+        "DeploymentType": "Managed",
+        "DeployData": "true"
       },
       {
         "EnvironmentName": "Test",
-        "DeploymentType": "Managed"
+        "DeploymentType": "Managed",
+        "DeployData": "true"
       }
     ]
   }
