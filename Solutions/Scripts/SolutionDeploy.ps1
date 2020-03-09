@@ -54,7 +54,25 @@ function Import-Package {
 
                      foreach ($package in $Packages)
                      {
-                         Import-CrmPackage -CrmConnection $CRMConn -PackageDirectory $PackageDirectory -PackageName $package.PackageName -LogWriteDirectory $LogsDirectory -EnabledAsyncForSolutionImport -SolutionBlockedRetryDelay 120 -SolutionBlockedRetryCount 10 -Timeout "00:08:00" -RuntimePackageSettings $RuntimeSettings -Verbose
+                         $Deploy = $package.DeployTo | Where-Object {$_.EnvironmentName -eq $env:ENVIRONMENT_NAME}
+                         if ($Deploy -ne $null)
+                         {
+                           If ($Deploy.DeploymentType -eq "Unmanaged")
+                             {
+                                 $PFolder = $package.DestinationFolder
+                                 $Path = "./PackageDeployer/bin/Debug/$PFolder"
+                                 $ImportConfig = Get-ChildItem -Path $Path -Include "ImportConfig.xml" -Recurse
+                                
+                                 (Get-Content -Path "$($ImportConfig.DirectoryName)\ImportConfig.xml") -replace "_managed","" | Set-Content -Path "$($ImportConfig.DirectoryName)\ImportConfig.xml"
+                             }
+                           Write-Host "##[section] Deploying $($package.SolutionName) as $($Deploy.DeploymentType) to - $env:ENVIRONMENT_NAME" 
+                           Import-CrmPackage -CrmConnection $CRMConn -PackageDirectory $PackageDirectory -PackageName $package.PackageName -LogWriteDirectory $LogsDirectory -EnabledAsyncForSolutionImport -SolutionBlockedRetryDelay 120 -SolutionBlockedRetryCount 10 -Timeout "00:08:00" -RuntimePackageSettings $RuntimeSettings -Verbose
+                         }
+                         else
+                         {
+                             Write-Host "##[warning] $($Packages.SolutionName) is not configured for deployment to $env:ENVIRONMENT_NAME in deployPackages.json" 
+                         }
+
                      }
                      $Stoploop = $true
               }

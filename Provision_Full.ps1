@@ -504,6 +504,10 @@ az pipelines variable-group variable create --name aadPowerAppId --value $adAppC
 az pipelines variable-group variable create --name aadPowerAppSecret --value $adAppCreds.password --secret $true --group-id $varGroupCICD.id
 az pipelines variable-group variable create --name d365url --value $connCICD.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroupCICD.id
 
+$varGroupTest = az pipelines variable-group create --name "$adoRepo.D365TestEnvironment"  --variables d365username=$username --authorize $true| ConvertFrom-Json
+az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroupTest.id
+az pipelines variable-group variable create --name d365url --value "To Be Configured"  --group-id $varGroupTest.id
+
 $message = "Creating Build and Deploy Pipeline in Azure DevOps"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.95
