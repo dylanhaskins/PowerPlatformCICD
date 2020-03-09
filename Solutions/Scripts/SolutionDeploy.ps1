@@ -33,7 +33,7 @@ function Import-Package {
   Write-Host "Importing package"
     $Stoploop = $false
        [int]$Retrycount = "0"
-       [int]$RetryMax = "20"
+       [int]$RetryMax = "5"
        do
        {
               try
@@ -70,7 +70,8 @@ function Import-Package {
                          }
                          else
                          {
-                             Write-Host "##[warning] $($Packages.SolutionName) is not configured for deployment to $env:ENVIRONMENT_NAME in deployPackages.json" 
+                             Write-Host "##[warning] $($package.SolutionName) is not configured for deployment to $env:ENVIRONMENT_NAME in deployPackages.json" 
+                             Write-Host "##vso[task.logissue type=warning;] $($package.SolutionName) is not configured for deployment to $env:ENVIRONMENT_NAME in deployPackages.json"
                          }
 
                      }
@@ -84,10 +85,10 @@ function Import-Package {
               }
               if ($error.count -gt 0)
               {
-                     Write-Host "Error : $error,  retrying in 120 seconds..."
+                     Write-Host "Error : $error,  retrying in 30 seconds..."
                      $error.Clear()                    
                      $Retrycount = $Retrycount + 1
-                     Start-Sleep -Seconds 120
+                     Start-Sleep -Seconds 30
               }
               }
        }
