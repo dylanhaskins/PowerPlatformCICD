@@ -214,7 +214,7 @@ git branch | select-string -notmatch $Branch | foreach {git branch -D ("$_").Tri
 
 Remove-Item .git -Recurse -Force
 Set-Location -Path .\..
-
+$chosenSolution = $chosenSolution.ToLower()
 $message = "Setting Configurations in Source Code"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.40

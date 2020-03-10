@@ -426,7 +426,7 @@ if ($CreateOrSelect -eq "C"){
 }
 
 #update values in Solution files 
-
+$chosenSolution = $chosenSolution.ToLower()
 $message = "Setting Configurations in Source Code"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.80
