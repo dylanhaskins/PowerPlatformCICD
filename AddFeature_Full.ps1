@@ -254,9 +254,9 @@ Write-Host "Updating $chosenSolution.csproj ..."
 
 Write-Host "Adding Feature to packageDeploy.json"
 $packagesToDeploy = Get-Content .\deployPackages.json | ConvertFrom-Json
-$deployTo = @(@{EnvironmentName="Deployment Staging";DeploymentType="Unmanaged";DeployData="true"})
-$packagesToDeploy += @{PackageName="$($chosenSolution)Package.dll";PackageFolder=$chosenSolution;DestinationFolder=$chosenSolution;SolutionName=$chosenSolution.ToLower();DeployTo=$deployTo} 
-$packagesToDeploy | ConvertTo-Json | Out-File .\deployPackages.json
+$deployTo = @([ordered]@{EnvironmentName="Deployment Staging";DeploymentType="Unmanaged";DeployData="true"})
+$packagesToDeploy += [ordered]@{DestinationFolder=$chosenSolution;PackageFolder=$chosenSolution;PackageName="$($chosenSolution)Package.dll";SolutionName=$chosenSolution.ToLower();DeployTo=$deployTo} 
+$packagesToDeploy | ConvertTo-Json -Depth 3 | Out-File .\deployPackages.json
 
 Set-Location -Path  .\$chosenSolution
 Write-Host "Installing Node module dependencies ..."
