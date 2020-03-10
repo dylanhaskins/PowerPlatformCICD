@@ -1,0 +1,4 @@
+public( sealed)? class ([\w]|[\W])*? : (IPlugin|BasePlugin|Plugin|BaseWorkflow)
+
+https://www.debuggex.com/#cheatsheet
+https://regexr.com/3f4vo
