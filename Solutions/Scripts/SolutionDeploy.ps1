@@ -70,7 +70,16 @@ function Import-Package {
 
                     Write-Host "##[section] Deploying $($package.SolutionName) as $($Deploy.DeploymentType) to - $env:ENVIRONMENT_NAME" 
                     Write-Host Attempt $($Retrycount) of $RetryMax
-                    Import-CrmPackage -CrmConnection $CRMConn -PackageDirectory $PackageDirectory -PackageName $package.PackageName -LogWriteDirectory $LogsDirectory -EnabledAsyncForSolutionImport -SolutionBlockedRetryDelay 120 -SolutionBlockedRetryCount 10 -Timeout "00:08:00" -RuntimePackageSettings $RuntimeSettings #-Verbose 
+                    If ($Retrycount -eq 0)
+                    {
+                      Import-CrmPackage -CrmConnection $CRMConn -PackageDirectory $PackageDirectory -PackageName $package.PackageName -LogWriteDirectory $LogsDirectory -EnabledAsyncForSolutionImport -SolutionBlockedRetryDelay 120 -SolutionBlockedRetryCount 10 -Timeout "00:08:00" -RuntimePackageSettings $RuntimeSettings 
+                    }
+                    else
+                    {
+                      #Verbodse Logging for Subsequent Attempts
+                      Import-CrmPackage -CrmConnection $CRMConn -PackageDirectory $PackageDirectory -PackageName $package.PackageName -LogWriteDirectory $LogsDirectory -EnabledAsyncForSolutionImport -SolutionBlockedRetryDelay 120 -SolutionBlockedRetryCount 10 -Timeout "00:08:00" -RuntimePackageSettings $RuntimeSettings -Verbose 
+                    }
+
                     $Stoploop = $true
                     Write-Host "##[section] Import Complete."
                 }
