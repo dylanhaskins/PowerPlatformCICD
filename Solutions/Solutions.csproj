@@ -159,6 +159,6 @@
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>if $(ConfigurationName) == SolutionPackager (powershell.exe -ExecutionPolicy Bypass -File ..\..\Scripts\SolutionExport.ps1)</PreBuildEvent>
+    <PreBuildEvent>if $(ConfigurationName) == SolutionPackager (powershell.exe -ExecutionPolicy Bypass -Command "&amp; ..\..\Scripts\SolutionExport.ps1 -DevMode $true")</PreBuildEvent>
   </PropertyGroup>
 </Project>

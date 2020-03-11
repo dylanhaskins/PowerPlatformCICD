@@ -1,4 +1,7 @@
-﻿######################## SETUP 
+﻿Param(
+    [boolean] [Parameter(Mandatory = $false)] $DevMode = $false
+)
+######################## SETUP 
 $ProgressPreference = 'SilentlyContinue'
 . (Join-Path $PSScriptRoot "_SetupTools.ps1")
 . (Join-Path $PSScriptRoot "_Config.ps1")
@@ -40,7 +43,10 @@ Write-Output($conn)
 . (Join-Path $PSScriptRoot "_ConfigMigration.ps1")
 
 ######################## Generate Types
+If ($DevMode)
+{
 . (Join-Path $PSScriptRoot "_GenerateTypes.ps1")
+}
 
 ######################## UPDATE VERSION
 . (Join-Path $PSScriptRoot "_UpdateVersion.ps1")
