@@ -96,7 +96,7 @@ if ($CreateOrSelect -eq "C"){
     $PublisherName = Read-Host -Prompt "Enter a Name for your Solution Publisher"
     $PublisherPrefix = Read-Host -Prompt "Enter a Publisher Prefix"
 
-    $PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','').ToLower();"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix.Replace(' ','').ToLower()}
+    $PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','');"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix.Replace(' ','').ToLower()}
     $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $PublisherId.Guid
     }
     else
@@ -146,8 +146,8 @@ if ($CreateOrSelect -eq "C"){
     } while (!$success)
     }
     $SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"    
-    $SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','').ToLower();"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
-    $chosenSolution = $SolutionName.Replace(' ','').ToLower()
+    $SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','');"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
+    $chosenSolution = $SolutionName.Replace(' ','')
     }
     else{
 
@@ -199,7 +199,7 @@ if ($CreateOrSelect -eq "C"){
 #update values in Solution files 
 $TextInfo = (Get-Culture).TextInfo
 
-$chosenSolution = $TextInfo.ToTitleCase($chosenSolution.ToLower())
+#$chosenSolution = $TextInfo.ToTitleCase($chosenSolution.ToLower())
 $message = "Adding Feature to Git Repo locally"
 Write-Host $message
 Write-Host "If prompted for credentials, enter the same credentials you used for dev.azure.com"
@@ -214,7 +214,7 @@ git branch | select-string -notmatch $Branch | foreach {git branch -D ("$_").Tri
 
 Remove-Item .git -Recurse -Force
 Set-Location -Path .\..
-$chosenSolution = $chosenSolution.ToLower()
+#$chosenSolution = $chosenSolution.ToLower()
 $message = "Setting Configurations in Source Code"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.40
@@ -255,7 +255,7 @@ Write-Host "Updating $chosenSolution.csproj ..."
 Write-Host "Adding Feature to packageDeploy.json"
 $packagesToDeploy = Get-Content .\deployPackages.json | ConvertFrom-Json
 $deployTo = @([ordered]@{EnvironmentName="Deployment Staging";DeploymentType="Unmanaged";DeployData="true"})
-$packagesToDeploy += [ordered]@{DestinationFolder=$chosenSolution;PackageFolder=$chosenSolution;PackageName="$($chosenSolution)Package.dll";SolutionName=$chosenSolution.ToLower();DeployTo=$deployTo} 
+$packagesToDeploy += [ordered]@{DestinationFolder=$chosenSolution;PackageFolder=$chosenSolution;PackageName="$($chosenSolution)Package.dll";SolutionName=$chosenSolution;DeployTo=$deployTo} 
 $packagesToDeploy | ConvertTo-Json -Depth 3 | Out-File .\deployPackages.json
 
 Set-Location -Path  .\$chosenSolution

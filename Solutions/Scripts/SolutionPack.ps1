@@ -18,12 +18,36 @@ $PFolder = $package.PackageFolder
 $PDest =   $package.DestinationFolder
 $PSolution = $package.SolutionName
 # Support for patches
-$packageFolder = "packageSolution"
-if (Test-Path $env:SYSTEM_DEFAULTWORKINGDIRECTORY\$PFolder\packagePatch\Other\Solution.xml) {
-    $packageFolder = "packagePatch"
-}
 
-&.\Tools\SolutionPackager.exe /action:pack /folder:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\$PFolder\$packageFolder /zipfile:"$env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\$PDest\$PSolution.zip" /packagetype:Both /map:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\$PFolder\map.xml 
+    if (Test-Path $env:SYSTEM_DEFAULTWORKINGDIRECTORY\$Pfolder\Deployment)
+    {
+        $Path = "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\$Pfolder\Deployment" 
+    }
+    if ($PFolder -eq "Solutions")
+    {
+        $Path = "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer" 
+    }
+
+    if ($Path)
+    {
+        Write-Host Getting list of Solutions to pack from ImportConfig.xml
+        $ImportConfig = Get-ChildItem -Path $Path -Include "ImportConfig.xml" -Recurse
+                                
+        [xml] $xdoc = (Get-Content -Path "$($ImportConfig.DirectoryName)\ImportConfig.xml")
+        $nodes = $xdoc.configdatastorage.solutions.SelectNodes("//configsolutionfile")  
+        foreach ($node in $nodes)
+        {
+            $folder = ($node. solutionpackagefilename).Replace("_managed.zip","").Replace(".zip","")
+            $packageFolder = "package$($folder)"
+            &.\Tools\SolutionPackager.exe /action:pack /folder:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\$PFolder\$packageFolder /zipfile:"$env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\$PDest\$folder.zip" /packagetype:Both /map:$env:SYSTEM_DEFAULTWORKINGDIRECTORY\$PFolder\map.xml 
+        }
+    }
+    else
+    {
+        $errorMessage = "Couldn't find Path for Packing Solutions"
+        Write-Host "##[error] $errorMessage"
+        Write-Host "##vso[task.logissue type=error;] $errorMessage"  
+    }
 
 Write-Host "Archiving ReferenceData data file"
 $compressPath  = "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\$PFolder\ReferenceData\*"

@@ -375,8 +375,8 @@ if ($CreateOrSelect -eq "C"){
     } while (!$success)
     }
     $SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"    
-    $SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','').ToLower();"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
-    $chosenSolution = $SolutionName.Replace(' ','').ToLower()
+    $SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','');"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
+    $chosenSolution = $SolutionName.Replace(' ','')
     }
     else{
 
@@ -426,7 +426,6 @@ if ($CreateOrSelect -eq "C"){
 }
 
 #update values in Solution files 
-$chosenSolution = $chosenSolution.ToLower()
 $message = "Setting Configurations in Source Code"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.80
