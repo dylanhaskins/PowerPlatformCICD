@@ -1,4 +1,4 @@
-name: 1.0.0$(Rev:.r)
+name: $(BuildDefinitionName)_$(SourceBranchName)_$(Build.Reason)_1.$(Year:yy)$(DayOfYear).$(Hours)$(Minutes)
 
 resources:
  repositories:
@@ -38,13 +38,6 @@ stages:
         steps:
           - checkout: self
             submodules: true
-
-          - powershell: |
-              $path = $path = "$(System.DefaultWorkingDirectory)/Solutions/packageSolution/Other/Solution.xml"
-              [XML]$xml = Get-Content $path
-              $solutionversion = $xml.ImportExportXml.SolutionManifest.Version
-              Write-Host "##vso[build.updatebuildnumber]$solutionversion"
-            displayName: 'Set Build Number from D365 Solution'
     
           - task: NuGetToolInstaller@0
             displayName: 'Use NuGet 4.4.1'
