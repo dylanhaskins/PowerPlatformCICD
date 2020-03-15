@@ -29,7 +29,7 @@ Remove-Item (Join-Path $PSScriptRoot "..\package*patch*") -Force -Recurse
 
         Export-CrmSolution -SolutionName $SolutionName -Managed -SolutionZipFileName $SolutionName"_managed.zip" -conn $conn
 
-        $Path = (Join-Path $PSScriptRoot "..\Deployment")
+        $Path = (Join-Path $PSScriptRoot "..\..\PackageDeployer")
         $ImportConfig = Get-ChildItem -Path $Path -Include "ImportConfig.xml" -Recurse
                                 
         [xml] $xdoc = (Get-Content -Path "$($ImportConfig.DirectoryName)\ImportConfig.xml")
@@ -69,7 +69,7 @@ Remove-Item (Join-Path $PSScriptRoot "..\package*patch*") -Force -Recurse
 
         Export-CrmSolution -SolutionName $SolutionName -Managed -SolutionZipFileName $SolutionName"_managed.zip" -conn $conn
 
-        $Path = (Join-Path $PSScriptRoot "..\Deployment")
+        $Path = (Join-Path $PSScriptRoot "..\..\PackageDeployer")
         $ImportConfig = Get-ChildItem -Path $Path -Include "ImportConfig.xml" -Recurse
                                 
         [xml] $xdoc = (Get-Content -Path "$($ImportConfig.DirectoryName)\ImportConfig.xml")

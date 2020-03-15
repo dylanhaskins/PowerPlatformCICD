@@ -25,7 +25,7 @@ $PSolution = $package.SolutionName
     }
     if ($PFolder -eq "Solutions")
     {
-        $Path = "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer" 
+        $Path = "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\PackageDeployer\bin\Release\$PDest" 
     }
 
     if ($Path)
