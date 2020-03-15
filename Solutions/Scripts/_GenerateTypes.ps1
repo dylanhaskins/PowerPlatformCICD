@@ -36,3 +36,48 @@ Set-Location -Path (Join-Path $PSScriptRoot "..\XrmDefinitelyTyped")
 . .\XrmDefinitelyTyped.exe /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /out:"../../Webresources/typings/XRM" /jsLib:"../../Webresources/src/library"
 Set-Location -Path $CurrentLocation
 }
+
+##Add Files to Entities Project
+[xml]$xdoc = (Get-Content (Join-Path $PSScriptRoot "..\..\Entities\Entities.projitems"))
+
+[System.Xml.XmlNamespaceManager] $nsmgr = $xdoc.NameTable
+$nsmgr.AddNamespace('a','http://schemas.microsoft.com/developer/msbuild/2003')
+
+$nodes = $xdoc.SelectNodes("//a:Compile[contains(@Include,'$(MSBuildThisFileDirectory)Context\')]",$nsmgr)
+for ($i=0; $i -le ($nodes.Count-1); $i++)
+        {
+            $nodes[$i].ParentNode.RemoveChild($nodes[$i])
+        }
+
+$newnodes = $xdoc.SelectNodes("//a:Compile",$nsmgr)
+$addNode = $newnodes[0].Clone()
+
+Get-ChildItem (Join-Path $PSScriptRoot "..\..\Entities\Context") -Name | ForEach-Object {
+	$newnodes = $xdoc.SelectNodes("//a:Compile",$nsmgr)
+    $addNode = $newnodes[0].Clone()
+	$addNode.Include = "$(MSBuildThisFileDirectory)Context\$_"; $newnodes[0].ParentNode.AppendChild($addNode)
+}
+
+$xdoc.Save((Join-Path $PSScriptRoot "..\..\Entities\Entities.projitems"))
+
+##Add Files to WebResources Project
+[xml]$xdoc = (Get-Content (Join-Path $PSScriptRoot "..\..\WebResources\WebResources.csproj"))
+
+	$nodes = $xdoc.SelectNodes("//a:Compile[contains(@Include,'typings\XRM')]",$nsmgr)
+for ($i=0; $i -le ($nodes.Count-1); $i++)
+        {
+            $nodes[$i].ParentNode.RemoveChild($nodes[$i])
+        }
+
+$newnodes = $xdoc.SelectNodes("//a:Compile",$nsmgr)
+$addNode = $newnodes[0].Clone()
+
+Get-ChildItem (Join-Path $PSScriptRoot "..\..\WebResources\typings\XRM") -Name -Recurse | ForEach-Object {
+	$newnodes = $xdoc.SelectNodes("//a:Compile",$nsmgr)
+    $addNode = $newnodes[0].Clone()
+	$addNode.Include = "typings\XRM\$_"; $newnodes[0].ParentNode.AppendChild($addNode)
+}
+
+$xdoc.SelectNodes("//a:Compile",$nsmgr)
+
+$xdoc.Save((Join-Path $PSScriptRoot "..\..\WebResources\WebResources.csproj"))
