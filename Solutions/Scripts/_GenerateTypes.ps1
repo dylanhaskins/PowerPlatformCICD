@@ -1,5 +1,5 @@
 ######################## SETUP 
-. ".\_Config.ps1"
+. (Join-Path $PSScriptRoot "_Config.ps1")
 
 if (!$Credentials)
 {
@@ -43,41 +43,41 @@ Set-Location -Path $CurrentLocation
 [System.Xml.XmlNamespaceManager] $nsmgr = $xdoc.NameTable
 $nsmgr.AddNamespace('a','http://schemas.microsoft.com/developer/msbuild/2003')
 
-$nodes = $xdoc.SelectNodes("//a:Compile[contains(@Include,'$(MSBuildThisFileDirectory)Context\')]",$nsmgr)
-for ($i=0; $i -le ($nodes.Count-1); $i++)
+$searchString = '$(MSBuildThisFileDirectory)Context\'
+
+$nodes = $xdoc.SelectNodes("//a:Compile[contains(@Include,'$searchString')]",$nsmgr)
+for ($i=1; $i -le ($nodes.Count-1); $i++)
         {
             $nodes[$i].ParentNode.RemoveChild($nodes[$i])
         }
 
-$newnodes = $xdoc.SelectNodes("//a:Compile",$nsmgr)
-$addNode = $newnodes[0].Clone()
-
 Get-ChildItem (Join-Path $PSScriptRoot "..\..\Entities\Context") -Name | ForEach-Object {
 	$newnodes = $xdoc.SelectNodes("//a:Compile",$nsmgr)
-    $addNode = $newnodes[0].Clone()
-	$addNode.Include = "$(MSBuildThisFileDirectory)Context\$_"; $newnodes[0].ParentNode.AppendChild($addNode)
+	$addNode = $newnodes[0].Clone()
+	$replacementString = '$(MSBuildThisFileDirectory)Context\' + $_
+	$addNode.Include = "$replacementString"; $newnodes[0].ParentNode.AppendChild($addNode)
 }
+$nodes[0].ParentNode.RemoveChild($nodes[0])
 
 $xdoc.Save((Join-Path $PSScriptRoot "..\..\Entities\Entities.projitems"))
 
 ##Add Files to WebResources Project
 [xml]$xdoc = (Get-Content (Join-Path $PSScriptRoot "..\..\WebResources\WebResources.csproj"))
 
-	$nodes = $xdoc.SelectNodes("//a:Compile[contains(@Include,'typings\XRM')]",$nsmgr)
-for ($i=0; $i -le ($nodes.Count-1); $i++)
+$nodes = $xdoc.SelectNodes("//a:TypeScriptCompile[contains(@Include,'typings\XRM')]",$nsmgr)
+for ($i=1; $i -le ($nodes.Count-1); $i++)
         {
             $nodes[$i].ParentNode.RemoveChild($nodes[$i])
         }
 
-$newnodes = $xdoc.SelectNodes("//a:Compile",$nsmgr)
-$addNode = $newnodes[0].Clone()
-
 Get-ChildItem (Join-Path $PSScriptRoot "..\..\WebResources\typings\XRM") -Name -Recurse | ForEach-Object {
-	$newnodes = $xdoc.SelectNodes("//a:Compile",$nsmgr)
-    $addNode = $newnodes[0].Clone()
+	$newnodes = $xdoc.SelectNodes("//a:TypeScriptCompile",$nsmgr)
+	$addNode = $newnodes[0].Clone()
 	$addNode.Include = "typings\XRM\$_"; $newnodes[0].ParentNode.AppendChild($addNode)
 }
+$nodes[0].ParentNode.RemoveChild($nodes[0])
 
-$xdoc.SelectNodes("//a:Compile",$nsmgr)
+
+#$xdoc.SelectNodes("//a:TypeScriptCompile",$nsmgr)
 
 $xdoc.Save((Join-Path $PSScriptRoot "..\..\WebResources\WebResources.csproj"))
