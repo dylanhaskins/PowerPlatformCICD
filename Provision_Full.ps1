@@ -375,8 +375,8 @@ if ($CreateOrSelect -eq "C"){
     } while (!$success)
     }
     $SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"    
-    $SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','').ToLower();"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
-    $chosenSolution = $SolutionName.Replace(' ','').ToLower()
+    $SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','');"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
+    $chosenSolution = $SolutionName.Replace(' ','')
     }
     else{
 
@@ -426,7 +426,6 @@ if ($CreateOrSelect -eq "C"){
 }
 
 #update values in Solution files 
-
 $message = "Setting Configurations in Source Code"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.80
@@ -503,6 +502,10 @@ az pipelines variable-group variable create --name aadTenant --value $adAppCreds
 az pipelines variable-group variable create --name aadPowerAppId --value $adAppCreds.appId --group-id $varGroupCICD.id
 az pipelines variable-group variable create --name aadPowerAppSecret --value $adAppCreds.password --secret $true --group-id $varGroupCICD.id
 az pipelines variable-group variable create --name d365url --value $connCICD.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroupCICD.id
+
+$varGroupTest = az pipelines variable-group create --name "$adoRepo.D365TestEnvironment"  --variables d365username=$username --authorize $true| ConvertFrom-Json
+az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroupTest.id
+az pipelines variable-group variable create --name d365url --value "To Be Configured"  --group-id $varGroupTest.id
 
 $message = "Creating Build and Deploy Pipeline in Azure DevOps"
 Write-Host $message

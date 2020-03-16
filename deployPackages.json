@@ -3,6 +3,23 @@
     "DestinationFolder": "PkgFolder",
     "PackageFolder": "Solutions",
     "PackageName": "PackageDeployer.dll",
-    "SolutionName": "AddName"
+    "SolutionName": "AddName",
+    "DeployTo": [
+      {
+        "EnvironmentName": "Development",
+        "DeploymentType": "Unmanaged",
+        "DeployData": "true"
+      },
+      {
+        "EnvironmentName": "Deployment Staging",
+        "DeploymentType": "Managed",
+        "DeployData": "true"
+      },
+      {
+        "EnvironmentName": "Test",
+        "DeploymentType": "Managed",
+        "DeployData": "true"
+      }
+    ]
   }
 ]

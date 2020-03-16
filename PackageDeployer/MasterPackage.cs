@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xrm.Tooling.PackageDeployment.CrmPackageExtentionBase;
+using System;
 using System.ComponentModel.Composition;
 
 namespace PackageDeployer
@@ -30,6 +31,14 @@ namespace PackageDeployer
         public override void InitializeCustomExtension()
         {
             //Do Nothing
+        }
+        public override UserRequestedImportAction OverrideSolutionImportDecision(string solutionUniqueName, Version organizationVersion, Version packageSolutionVersion, Version inboundSolutionVersion, Version deployedSolutionVersion, ImportAction systemSelectedImportAction)
+        {
+            return ((systemSelectedImportAction == ImportAction.Import) && solutionUniqueName.Contains("Patch"))
+                ? UserRequestedImportAction.ForceUpdate
+                : base.OverrideSolutionImportDecision(solutionUniqueName, organizationVersion, packageSolutionVersion,
+                    inboundSolutionVersion, deployedSolutionVersion, systemSelectedImportAction);
+
         }
     }
 }

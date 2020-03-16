@@ -1,4 +1,4 @@
-name: 1.0.0$(Rev:.r)
+name: $(BuildDefinitionName)_$(SourceBranchName)_$(Build.Reason)_1.$(Year:yy)$(DayOfYear).$(Hours)$(Minutes)
 
 resources:
  repositories:
@@ -10,7 +10,7 @@ pool:
 trigger:
   branches:
     include:
-    - master
+    - /*
   paths:
     exclude:
     - README.md
@@ -38,13 +38,6 @@ stages:
         steps:
           - checkout: self
             submodules: true
-
-          - powershell: |
-              $path = $path = "$(System.DefaultWorkingDirectory)/Solutions/packageSolution/Other/Solution.xml"
-              [XML]$xml = Get-Content $path
-              $solutionversion = $xml.ImportExportXml.SolutionManifest.Version
-              Write-Host "##vso[build.updatebuildnumber]$solutionversion"
-            displayName: 'Set Build Number from D365 Solution'
     
           - task: NuGetToolInstaller@0
             displayName: 'Use NuGet 4.4.1'
@@ -105,9 +98,9 @@ stages:
               path: '$(build.artifactstagingdirectory)'
               artifact: drop
 
-  - stage: Deployment
+  - stage: Deployment_Staging
     
-    displayName: Deployment
+    displayName: Deployment Staging
     dependsOn: 'Build'
     condition: succeeded()
     jobs:
@@ -116,6 +109,28 @@ stages:
       environment: 'Deployment Staging'
       variables:
         - group: replaceRepo.D365CDEnvironment
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - task: PowerShell@2
+              displayName: 'Deploy Solution'
+              inputs:
+                targetType: filePath
+                filePath: '$(Pipeline.Workspace)/drop/Solutions/bin/Release/Scripts/SolutionDeploy.ps1'
+                arguments: '-DeployServerUrl $(d365url) -UserName $(d365username) -Password $(d365password) -PipelinePath $(Pipeline.Workspace)'
+
+  - stage: Test
+    
+    displayName: Test
+    dependsOn: 'Deployment_Staging'
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'),notIn(variables['Build.Reason'], 'IndividualCI', 'BatchedCI','PullRequest'))
+    jobs:
+    - deployment: DeployJob      
+      displayName: Test 
+      environment: 'Test'
+      variables:
+        - group: replaceRepo.D365TestEnvironment
       strategy:
         runOnce:
           deploy:

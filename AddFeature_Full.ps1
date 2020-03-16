@@ -96,7 +96,7 @@ if ($CreateOrSelect -eq "C"){
     $PublisherName = Read-Host -Prompt "Enter a Name for your Solution Publisher"
     $PublisherPrefix = Read-Host -Prompt "Enter a Publisher Prefix"
 
-    $PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','').ToLower();"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix.Replace(' ','').ToLower()}
+    $PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','');"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix.Replace(' ','').ToLower()}
     $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $PublisherId.Guid
     }
     else
@@ -146,8 +146,8 @@ if ($CreateOrSelect -eq "C"){
     } while (!$success)
     }
     $SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"    
-    $SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','').ToLower();"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
-    $chosenSolution = $SolutionName.Replace(' ','').ToLower()
+    $SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','');"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
+    $chosenSolution = $SolutionName.Replace(' ','')
     }
     else{
 
@@ -199,7 +199,7 @@ if ($CreateOrSelect -eq "C"){
 #update values in Solution files 
 $TextInfo = (Get-Culture).TextInfo
 
-$chosenSolution = $TextInfo.ToTitleCase($chosenSolution.ToLower())
+#$chosenSolution = $TextInfo.ToTitleCase($chosenSolution.ToLower())
 $message = "Adding Feature to Git Repo locally"
 Write-Host $message
 Write-Host "If prompted for credentials, enter the same credentials you used for dev.azure.com"
@@ -214,7 +214,7 @@ git branch | select-string -notmatch $Branch | foreach {git branch -D ("$_").Tri
 
 Remove-Item .git -Recurse -Force
 Set-Location -Path .\..
-
+#$chosenSolution = $chosenSolution.ToLower()
 $message = "Setting Configurations in Source Code"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.40
@@ -223,6 +223,7 @@ New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -Unique
 Write-Host "Updating config.json ..."
 (Get-Content -Path .\$chosenSolution\Scripts\config.json) -replace "https://AddServer.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path .\$chosenSolution\Scripts\config.json
 (Get-Content -Path .\$chosenSolution\Scripts\config.json) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\Scripts\config.json
+(Get-Content -Path .\$chosenSolution\Scripts\_GenerateTypes.ps1) -replace "ProjName",$chosenSolution | Set-Content -Path .\$chosenSolution\Scripts\_GenerateTypes.ps1
 (Get-Content -Path .\$chosenSolution\package.json) -replace "featuretemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\package.json
 
 Write-Host "Updating spkl.json ..."
@@ -231,9 +232,10 @@ Write-Host "Updating spkl.json ..."
 
 Write-Host "Updating ImportConfig.xml ..."
 Move-Item .\$chosenSolution\Deployment\FeatureTemplate .\$chosenSolution\Deployment\$chosenSolution
-Move-Item .\$chosenSolution\Deployment\FeatureTemplatePackage.cs .\$chosenSolution\Deployment\$($chosenSolution)Package.cs
+Move-Item .\$chosenSolution\Deployment\FeatureTemplatePackage.cs .\$chosenSolution\Deployment\$($chosenSolution)Package.cs  
 (Get-Content -Path .\$chosenSolution\Deployment\$chosenSolution\ImportConfig.xml) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\Deployment\$chosenSolution\ImportConfig.xml
 (Get-Content -Path .\$chosenSolution\Deployment\$($chosenSolution)Package.cs) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\Deployment\$($chosenSolution)Package.cs
+(Get-Content -Path .\$chosenSolution\Compile.bat) -replace "FeatureTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\Compile.bat
 
 Write-Host "Updating XrmContext.exe.config ..."
 (Get-Content -Path .\$chosenSolution\XrmContext\XrmContext.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\XrmContext\XrmContext.exe.config
@@ -254,8 +256,9 @@ Write-Host "Updating $chosenSolution.csproj ..."
 
 Write-Host "Adding Feature to packageDeploy.json"
 $packagesToDeploy = Get-Content .\deployPackages.json | ConvertFrom-Json
-$packagesToDeploy += @{PackageName="$($chosenSolution)Package.dll";PackageFolder=$chosenSolution;DestinationFolder=$chosenSolution;SolutionName=$chosenSolution.ToLower()} 
-$packagesToDeploy | ConvertTo-Json | Out-File .\deployPackages.json
+$deployTo = @([ordered]@{EnvironmentName="Deployment Staging";DeploymentType="Managed";DeployData="true"})
+$packagesToDeploy += [ordered]@{DestinationFolder=$chosenSolution;PackageFolder=$chosenSolution;PackageName="$($chosenSolution)Package.dll";SolutionName=$chosenSolution;DeployTo=$deployTo} 
+$packagesToDeploy | ConvertTo-Json -Depth 3 | Out-File .\deployPackages.json
 
 Set-Location -Path  .\$chosenSolution
 Write-Host "Installing Node module dependencies ..."
