@@ -223,7 +223,7 @@ New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -Unique
 Write-Host "Updating config.json ..."
 (Get-Content -Path .\$chosenSolution\Scripts\config.json) -replace "https://AddServer.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path .\$chosenSolution\Scripts\config.json
 (Get-Content -Path .\$chosenSolution\Scripts\config.json) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\Scripts\config.json
-(Get-Content -Path .\$chosenSolution\Scripts\_GenerateTypes.ps1) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\Scripts\_GenerateTypes.ps1
+(Get-Content -Path .\$chosenSolution\Scripts\_GenerateTypes.ps1) -replace "ProjName",$chosenSolution | Set-Content -Path .\$chosenSolution\Scripts\_GenerateTypes.ps1
 (Get-Content -Path .\$chosenSolution\package.json) -replace "featuretemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\package.json
 
 Write-Host "Updating spkl.json ..."
