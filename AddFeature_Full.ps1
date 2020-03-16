@@ -256,7 +256,7 @@ Write-Host "Updating $chosenSolution.csproj ..."
 
 Write-Host "Adding Feature to packageDeploy.json"
 $packagesToDeploy = Get-Content .\deployPackages.json | ConvertFrom-Json
-$deployTo = @([ordered]@{EnvironmentName="Deployment Staging";DeploymentType="Unmanaged";DeployData="true"})
+$deployTo = @([ordered]@{EnvironmentName="Deployment Staging";DeploymentType="Managed";DeployData="true"})
 $packagesToDeploy += [ordered]@{DestinationFolder=$chosenSolution;PackageFolder=$chosenSolution;PackageName="$($chosenSolution)Package.dll";SolutionName=$chosenSolution;DeployTo=$deployTo} 
 $packagesToDeploy | ConvertTo-Json -Depth 3 | Out-File .\deployPackages.json
 
