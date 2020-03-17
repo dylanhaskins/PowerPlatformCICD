@@ -67,13 +67,13 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="gulpfile.js" />
     <Content Include="src\library\dg.xrmquery.rest.js" />
     <Content Include="src\library\dg.xrmquery.rest.min.js" />
     <Content Include="src\library\dg.xrmquery.web.js" />
     <Content Include="src\library\dg.xrmquery.web.min.js" />
     <Content Include="src\library\dg.xrmquery.web.promise.min.js" />
     <Content Include="Web.config" />
-    <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
