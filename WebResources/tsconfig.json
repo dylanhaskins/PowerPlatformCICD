@@ -5,6 +5,7 @@
     "module": "commonjs",
     "target": "ES6",
     "sourceMap": true,
+    "outDir": "dist/js",
     "esModuleInterop": true
   },
   "include": [
