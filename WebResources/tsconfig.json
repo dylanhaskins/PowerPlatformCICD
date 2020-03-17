@@ -4,9 +4,13 @@
     "noEmitOnError": true,
     "module": "commonjs",
     "target": "ES6",
-    "outDir": "./dist",
+    "sourceMap": true,
     "esModuleInterop": true
   },
+  "include": [
+    "WebResources/src/ts/**/*",
+    "WebResources/typings/**/*"
+  ],
   "exclude": [
     "node_modules",
     "wwwroot"
