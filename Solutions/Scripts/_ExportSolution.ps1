@@ -93,7 +93,8 @@ Remove-Item (Join-Path $PSScriptRoot "..\package*patch*") -Force -Recurse
         Write-Host $message
         $ProgressBar = New-BTProgressBar -Status $message -Value 0.8
         New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
-        &.\Tools\SolutionPackager.exe /action:extract /folder:(Join-Path $PSScriptRoot "..\package$SolutionName\") /zipfile:"$SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
+        Remove-Item (Join-Path $PSScriptRoot "..\package$SolutionName\") -Recurse -Force
+        &.\Tools\SolutionPackager.exe /action:extract /folder:(Join-Path $PSScriptRoot "..\package$SolutionName\") /zipfile:"$SolutionName.zip" /packagetype:Both /allowDelete:No /c /useUnmanagedFileForMissingManaged
      }
 
 }
