@@ -236,6 +236,7 @@ Move-Item .\$chosenSolution\Deployment\FeatureTemplatePackage.cs .\$chosenSoluti
 (Get-Content -Path .\$chosenSolution\Deployment\$chosenSolution\ImportConfig.xml) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\Deployment\$chosenSolution\ImportConfig.xml
 (Get-Content -Path .\$chosenSolution\Deployment\$($chosenSolution)Package.cs) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\Deployment\$($chosenSolution)Package.cs
 (Get-Content -Path .\$chosenSolution\Compile.bat) -replace "FeatureTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\Compile.bat
+(Get-Content -Path .\$chosenSolution\webpack.config.js) -replace "AddName",$chosenSolution.ToLower() | Set-Content -Path .\$chosenSolution\webpack.config.js -ErrorAction Ignore
 
 Write-Host "Updating XrmContext.exe.config ..."
 (Get-Content -Path .\$chosenSolution\XrmContext\XrmContext.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\XrmContext\XrmContext.exe.config
@@ -253,6 +254,7 @@ Write-Host "Updating $chosenSolution.csproj ..."
 (Get-Content -Path .\$chosenSolution\$chosenSolution.csproj) -replace "FeatureTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\$chosenSolution.csproj
 
 (Get-Content -Path .\$chosenSolution\map.xml) -replace "PowerPlatformDevOpsPlugins",($chosenSolution) | Set-Content -Path .\$chosenSolution\map.xml
+
 
 Write-Host "Adding Feature to packageDeploy.json"
 $packagesToDeploy = Get-Content .\deployPackages.json | ConvertFrom-Json
