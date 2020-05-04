@@ -263,8 +263,8 @@ $packagesToDeploy += [ordered]@{DestinationFolder=$chosenSolution;PackageFolder=
 $packagesToDeploy | ConvertTo-Json -Depth 3 | Out-File .\deployPackages.json
 
 Set-Location -Path  .\$chosenSolution
-Write-Host "Installing Node module dependencies ..."
-npm install
+# Write-Host "Installing Node module dependencies ..."
+# npm install
 
 Set-Location -Path .\Scripts
 
