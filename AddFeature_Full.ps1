@@ -325,6 +325,7 @@ $ProgressBar = New-BTProgressBar -Status $message -Value 0.12
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+choco upgrade dotnetcore-runtime.install -y 
 choco upgrade dotnetcore -y
 
 Add-Feature
