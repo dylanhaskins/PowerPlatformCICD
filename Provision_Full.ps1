@@ -69,12 +69,17 @@ Write-host "Module $moduleName Found"
 
 function PreReq-Install
 {
-    $message = "Installing Chocolatey ...."
-    Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.12
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+    if (!$env:ChocolateyInstall) {
+        Write-Warning "The ChocolateyInstall environment variable was not found. `n Chocolatey is not detected as installed. Installing..."
+        $message = "Installing Chocolatey ...."
+        Write-Host $message
+        $ProgressBar = New-BTProgressBar -Status $message -Value 0.12
+        New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+    
+        Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    }
 
-    Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    choco upgrade chocolatey -y
  
     $message = "Installing Git ...."
     Write-Host $message

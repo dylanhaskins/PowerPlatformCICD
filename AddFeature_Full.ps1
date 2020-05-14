@@ -319,12 +319,17 @@ if ($quit -eq "Q")
 Write-Host("Performing Checks....")
 InstallToastModule
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-$message = "Installing Chocolatey ...."
-Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.12
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+if (!$env:ChocolateyInstall) {
+    Write-Warning "The ChocolateyInstall environment variable was not found. `n Chocolatey is not detected as installed. Installing..."
+    $message = "Installing Chocolatey ...."
+    Write-Host $message
+    $ProgressBar = New-BTProgressBar -Status $message -Value 0.12
+    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+}
+
+choco upgrade chocolatey -y
 choco upgrade dotnetcore --version=3.1.2 -y
 
 Add-Feature
