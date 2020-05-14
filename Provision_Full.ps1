@@ -106,7 +106,7 @@ function PreReq-Install
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.19
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-    choco upgrade dotnetcore -y
+    choco upgrade dotnetcore --version=3.1.2 -y
 
     ## Restart PowerShell Environment to Enable Azure CLI
     Restart-PowerShell
