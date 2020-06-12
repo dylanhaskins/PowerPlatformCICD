@@ -11,11 +11,11 @@ function Restart-PowerShell
     Start-Sleep -Seconds 5
     refreshenv
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
-    clear
+    Clear-Host
     DevOps-Install
 }
 
-function InstallXrmModule{
+function Install-XrmModule{
     $moduleName = "Microsoft.Xrm.Data.Powershell"
     $moduleVersion = "2.8.5"
     $module = Get-Module -ListAvailable -Name $moduleName
@@ -29,7 +29,7 @@ function InstallXrmModule{
     }
 }
 
-Function InstallToastModule{
+Function Install-ToastModule{
     $moduleName = "BurntToast"
     if (!(Get-Module -ListAvailable -Name $moduleName )) {
         Write-host "Module $moduleName Not found, installing now"
@@ -41,7 +41,7 @@ Function InstallToastModule{
     }
 }
 
-function InstallPowerAppsAdmin{
+function Install-PowerAppsAdmin{
 $moduleName = "Microsoft.PowerApps.Administration.PowerShell"
 $moduleVersion = "2.0.33"
 $module = Get-Module -ListAvailable -Name $moduleName
@@ -55,7 +55,7 @@ if (!($module.Version -ge $moduleVersion )) {
    }
 }
 
-function InstallPowerAppsPowerShell{
+function Install-PowerAppsPowerShell{
 $moduleName = "Microsoft.PowerApps.PowerShell"
 if (!(Get-Module -ListAvailable -Name $moduleName )) {
 Write-host "Module $moduleName Not found, installing now"
@@ -67,7 +67,7 @@ Write-host "Module $moduleName Found"
 }
 }
 
-function PreReq-Install
+function Install-PreReq
 {
     if (!$env:ChocolateyInstall) {
         Write-Warning "The ChocolateyInstall environment variable was not found. `n Chocolatey is not detected as installed. Installing..."
@@ -76,7 +76,7 @@ function PreReq-Install
         $ProgressBar = New-BTProgressBar -Status $message -Value 0.12
         New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
     
-        Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+        Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
     }
 
     choco upgrade chocolatey -y
@@ -112,17 +112,17 @@ function PreReq-Install
     Restart-PowerShell
 }
 
-function DevOps-PreReq
+function Confirm-DevOps-PreReq
 {
     $message = "Checking Pre-requisites"
     Write-Host $message
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.1
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-    PreReq-Install  
+    Install-PreReq
 }
 
-function DevOps-Install
+function Install-DevOps
 {
 ## Install Azure DevOps Extension
 $message = "Installing azure-devops extenstion"
@@ -220,7 +220,7 @@ $adApp = az ad app create --display-name "$adoRepo App" --native-app --required-
 $azureADAppPassword = (New-Guid).Guid.Replace("-","")
 $adAppCreds = az ad app credential reset --password $azureADAppPassword --id $adApp.appId | ConvertFrom-Json
 
-chdir -Path \Dev\Repos\$adoRepo\
+Set-Location -Path \Dev\Repos\$adoRepo\
 
 $message = "Confirming Git User Details"
 Write-Host $message
@@ -230,17 +230,15 @@ New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -Unique
 $GitUser = git config --global user.name
 $GitEmail = git config --global user.email
 
-If ($GitUser -eq $null){
+If ($null -eq $GitUser){
     $GitUser = Read-Host "Enter your name (to use when committing changes to Git)"
     git config --global user.name $GitUser
 }
 
-If ($GitEmail -eq $null){
+If ($null -eq $GitEmail){
     $GitEmail = Read-Host "Enter your email address (to use when committing changes to Git)"
     git config --global user.email $GitEmail
 }
-
-
 
 $message = "Cleaning up Git Repository"
 Write-Host $message
@@ -248,8 +246,8 @@ $ProgressBar = New-BTProgressBar -Status $message -Value 0.60
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 git checkout $branch
-git branch | select-string -notmatch $branch | foreach {git branch -D ("$_").Trim()} #Remove non-used local branches
-git branch -r | select-string -notmatch master | select-string -notmatch HEAD | foreach { git push origin --delete ("$_").Replace("origin/","").Trim()} #Remove non-used branches from remote
+git branch | select-string -notmatch $branch | ForEach-Object {git branch -D ("$_").Trim()} #Remove non-used local branches
+git branch -r | select-string -notmatch master | select-string -notmatch HEAD | ForEach-Object { git push origin --delete ("$_").Replace("origin/","").Trim()} #Remove non-used branches from remote
 
 Remove-Item .git -Recurse -Force
 git init
@@ -293,7 +291,7 @@ $password =  $Credentials.GetNetworkCredential().Password
     $geoselect = Read-Host "Please select the Geography for your Power Platform "
     $Geography = $Locations[$geoselect].LocationName
 
-    InstallXrmModule
+    Install-XrmModule
 
 #     $message = "Connecting to Development Environment"
 #     Write-Host $message
@@ -483,7 +481,7 @@ New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -Unique
 
 Write-Host ""
 Write-Host "---- Please Select your Deployment Staging (CI/CD) Environment ------"
-$connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
+$connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials 
 
 # . ".\SolutionExport.ps1"
     
@@ -542,7 +540,7 @@ if ($AzureSetup -eq "Y"){
         }
         else {
             $choice = $choice -as [int];
-            if ($choice -eq $null) {
+            if ($null -eq $choice) {
                 Write-Host "Invalid selection (not number)"
             }
             elseif ($choice -le -1) {
@@ -577,7 +575,7 @@ if ($AzureSetup -eq "Y"){
         }
         else {
             $choice = $choice -as [int];
-            if ($choice -eq $null) {
+            if ($null -eq $choice) {
                 Write-Host "Invalid selection (not number)"
             }
             elseif ($choice -le -1) {
@@ -613,7 +611,7 @@ if ($AzureSetup -eq "Y"){
     az pipelines variable-group variable create --name d365AppSecurityRoleNames --value "Delegate" --group-id $varGroupCICD.id
 
 
-    chdir -Path C:\Dev\Repos\$adoRepo\AzureResources\
+    Set-Location -Path C:\Dev\Repos\$adoRepo\AzureResources\
     & .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation $regionName -ResourceGroupName "$adoRepoLower-dev"
 }
 
@@ -668,15 +666,15 @@ if ($quit -eq "Q")
 }
     
 Write-Host("Performing Checks....")
-InstallToastModule
+Install-ToastModule
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-InstallPowerAppsAdmin
+Install-PowerAppsAdmin
 
 if ($PerformInstall)
 {
-    DevOps-Install
+    Install-DevOps
 }
 else {
-    DevOps-PreReq
+    Confirm-DevOps-PreReq
 }
 
