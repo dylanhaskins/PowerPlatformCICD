@@ -148,7 +148,7 @@ if ($quit -eq "Q")
     exit
 }
 
-az login --allow-no-subscriptions
+$azSubs = az login --allow-no-subscriptions
 
 Write-Host ""
 [console]::ForegroundColor = "White"
