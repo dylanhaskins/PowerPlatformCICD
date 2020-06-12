@@ -615,6 +615,7 @@ if ($AzureSetup -eq "Y"){
     & .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation $regionName -ResourceGroupName "$adoRepoLower-dev"
 }
 
+Set-Location -Path \Dev\Repos\$adoRepo\
 $message = "Complete ... Enjoy !!!"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 1

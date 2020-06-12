@@ -237,19 +237,19 @@ Write-Host "Updating XrmContext.exe.config ..."
 Write-Host "Updating XrmDefinitelyTyped.exe.config ..."
 (Get-Content -Path .\$chosenSolution\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config
 
-Write-Host "Rename FeatureTemplate.csproj to $chosenSolution.csproj"
-Rename-Item -Path .\$chosenSolution\FeatureTemplate.csproj -NewName "$chosenSolution.csproj"
+Write-Host "Rename SolutionTemplate.csproj to $chosenSolution.csproj"
+Rename-Item -Path .\$chosenSolution\SolutionTemplate.csproj -NewName "$chosenSolution.csproj"
 
-Write-Host "Rename FeatureTemplate.snk to $chosenSolution.snk"
-Rename-Item -Path .\$chosenSolution\FeatureTemplate.snk -NewName "$chosenSolution.snk"
+Write-Host "Rename SolutionTemplate.snk to $chosenSolution.snk"
+Rename-Item -Path .\$chosenSolution\SolutionTemplate.snk -NewName "$chosenSolution.snk"
 
 Write-Host "Updating $chosenSolution.csproj ..."
-(Get-Content -Path .\$chosenSolution\$chosenSolution.csproj) -replace "FeatureTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\$chosenSolution.csproj
+(Get-Content -Path .\$chosenSolution\$chosenSolution.csproj) -replace "SolutionTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\$chosenSolution.csproj
 
 (Get-Content -Path .\$chosenSolution\map.xml) -replace "PowerPlatformDevOpsPlugins",($chosenSolution) | Set-Content -Path .\$chosenSolution\map.xml
 
 
-Write-Host "Adding Feature to packageDeploy.json"
+Write-Host "Adding Solution to packageDeploy.json"
 $packagesToDeploy = Get-Content .\deployPackages.json | ConvertFrom-Json
 $deployTo = @([ordered]@{EnvironmentName="Deployment Staging";DeploymentType="Managed";DeployData="true"})
 $packagesToDeploy += [ordered]@{DestinationFolder=$chosenSolution;PackageFolder=$chosenSolution;PackageName="$($chosenSolution)Package.dll";SolutionName=$chosenSolution;DeployTo=$deployTo} 
