@@ -6,7 +6,7 @@ $ProgressPreference = 'SilentlyContinue'
 $Text = "Power Platform DevOps"
 $UniqueId = "PPDevOps"
 
-function InstallXrmModule{
+function Install-XrmModule{
     $moduleName = "Microsoft.Xrm.Data.Powershell"
     $moduleVersion = "2.8.5"
     $module = Get-Module -ListAvailable -Name $moduleName
@@ -20,7 +20,7 @@ function InstallXrmModule{
     }
 }
 
-Function InstallToastModule{
+Function Install-ToastModule{
     $moduleName = "BurntToast"
     if (!(Get-Module -ListAvailable -Name $moduleName )) {
         Write-host "Module $moduleName Not found, installing now"
@@ -59,7 +59,7 @@ $username =  $Credentials.GetNetworkCredential().UserName
 $password =  $Credentials.GetNetworkCredential().Password
 }
 
-        InstallXrmModule
+    Install-XrmModule
 
     $message = "Connecting to Development Environment"
     Write-Host $message
@@ -81,7 +81,7 @@ $password =  $Credentials.GetNetworkCredential().Password
                 $password =  $Credentials.GetNetworkCredential().Password
             }
         }
-	} Until ($conn.IsReady) 
+     } Until ($conn.IsReady) 
 
     $CreateOrSelect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Solution or [S]elect an Existing One (Default [S])"
 if ($CreateOrSelect -eq "C"){
@@ -293,11 +293,11 @@ ____                          ____  _       _    __                        ____ 
 
 
 
-Welcome to the Power Platform DevOps Feature Add script. This script will perform the following steps automatically :
+Welcome to the Power Platform DevOps Solution Add script. This script will perform the following steps automatically :
 
 - Install Pre-requisites (Dotnet Core CLI)
 - Connect to CDS to Get Solution
-- Add Feature Project to your Visual Studio Solution
+- Add Development Solution Project to your Visual Studio Solution
 
  
 "@
@@ -311,7 +311,7 @@ if ($quit -eq "Q")
 }
     
 Write-Host("Performing Checks....")
-InstallToastModule
+Install-ToastModule
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 if (!$env:ChocolateyInstall) {
     Write-Warning "The ChocolateyInstall environment variable was not found. `n Chocolatey is not detected as installed. Installing..."
