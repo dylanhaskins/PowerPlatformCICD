@@ -294,185 +294,185 @@ $password =  $Credentials.GetNetworkCredential().Password
 
     InstallXrmModule
 
-    $message = "Connecting to Development Environment"
-    Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.75
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+#     $message = "Connecting to Development Environment"
+#     Write-Host $message
+#     $ProgressBar = New-BTProgressBar -Status $message -Value 0.75
+#     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-    Write-Host ""
-    Write-Host "---- Please Select your Development Environment ------"
-    Do {
-    $conn = Connect-CrmOnlineDiscovery -Credential $Credentials
-    If (!$conn.IsReady)
-        {
-            Do {
-	         $Credentials = Get-Credential
-            } Until (($Credentials.GetNetworkCredential().UserName -ne "") -and ($Credentials.GetNetworkCredential().Password -ne "")) 
-            if (!$username)
-            {
-                $username =  $Credentials.GetNetworkCredential().UserName
-                $password =  $Credentials.GetNetworkCredential().Password
-            }
-        }
-	} Until ($conn.IsReady) 
+#     Write-Host ""
+#     Write-Host "---- Please Select your Development Environment ------"
+#     Do {
+#     $conn = Connect-CrmOnlineDiscovery -Credential $Credentials
+#     If (!$conn.IsReady)
+#         {
+#             Do {
+# 	         $Credentials = Get-Credential
+#             } Until (($Credentials.GetNetworkCredential().UserName -ne "") -and ($Credentials.GetNetworkCredential().Password -ne "")) 
+#             if (!$username)
+#             {
+#                 $username =  $Credentials.GetNetworkCredential().UserName
+#                 $password =  $Credentials.GetNetworkCredential().Password
+#             }
+#         }
+# 	} Until ($conn.IsReady) 
 
-    $CreateOrSelect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Solution or [S]elect an Existing One (Default [S])"
-if ($CreateOrSelect -eq "C"){
+#     $CreateOrSelect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Solution or [S]elect an Existing One (Default [S])"
+# if ($CreateOrSelect -eq "C"){
 
-    $message = "Creating Solution and Publisher"
-    Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.78
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+#     $message = "Creating Solution and Publisher"
+#     Write-Host $message
+#     $ProgressBar = New-BTProgressBar -Status $message -Value 0.78
+#     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-    $CreateOrSelectPub = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Publisher or [S]elect an Existing One (Default [S])"
-    if ($CreateOrSelectPub -eq "C"){
+#     $CreateOrSelectPub = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Publisher or [S]elect an Existing One (Default [S])"
+#     if ($CreateOrSelectPub -eq "C"){
 
-    $PublisherName = Read-Host -Prompt "Enter a Name for your Solution Publisher"
-    $PublisherPrefix = Read-Host -Prompt "Enter a Publisher Prefix"
+#     $PublisherName = Read-Host -Prompt "Enter a Name for your Solution Publisher"
+#     $PublisherPrefix = Read-Host -Prompt "Enter a Publisher Prefix"
 
-    $PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','').ToLower();"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix.Replace(' ','').ToLower()}
-    $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $PublisherId.Guid
-    }
-    else
-    {
-           $publisherFetch = @"
-    <fetch>
-    <entity name='publisher' >
-        <filter type='and' >
-        <condition attribute='isreadonly' operator='eq' value='false' />
-        </filter>
-    </entity>
-    </fetch>
-"@
+#     $PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','').ToLower();"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix.Replace(' ','').ToLower()}
+#     $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $PublisherId.Guid
+#     }
+#     else
+#     {
+#            $publisherFetch = @"
+#     <fetch>
+#     <entity name='publisher' >
+#         <filter type='and' >
+#         <condition attribute='isreadonly' operator='eq' value='false' />
+#         </filter>
+#     </entity>
+#     </fetch>
+# "@
 
-    $publishers = (Get-CrmRecordsByFetch -conn $conn -Fetch $publisherFetch).CrmRecords
+#     $publishers = (Get-CrmRecordsByFetch -conn $conn -Fetch $publisherFetch).CrmRecords
 
-    $choiceIndex = 0
-    $options = $publishers | ForEach-Object { write-host "[$($choiceIndex)] $($_.friendlyname)"; $choiceIndex++; }  
-
-
-    $success = $false
-    do {
-        $choice = read-host "Enter your selection"
-        if (!$choice) {
-            Write-Host "Invalid selection (null)"
-        }
-        else {
-            $choice = $choice -as [int];
-            if ($choice -eq $null) {
-                Write-Host "Invalid selection (not number)"
-            }
-            elseif ($choice -le -1) {
-                Write-Host "Invalid selection (negative)"
-            }
-            else {
-                $chosenPublisher = $publishers[$choice].uniquename
-                if ($null -ne $chosenPublisher) {
-                    $PublisherPrefix = $publishers[$choice].customizationprefix
-                    $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $publishers[$choice].publisherid
-                    $success = $true
-                }
-                else {
-                    Write-Host "Invalid selection (index out of range)"
-                }
-            } 
-        }
-    } while (!$success)
-    }
-    $SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"    
-    $SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','');"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
-    $chosenSolution = $SolutionName.Replace(' ','')
-    }
-    else{
-
-    $solutionFetch = @"
-    <fetch>
-    <entity name='solution' >
-        <filter type='and' >
-        <condition attribute='ismanaged' operator='eq' value='0' />
-        <condition attribute='isvisible' operator='eq' value='1' />
-        </filter>
-    </entity>
-    </fetch>
-"@
-
-    $solutions = (Get-CrmRecordsByFetch -conn $conn -Fetch $solutionFetch).CrmRecords
-
-    $choiceIndex = 0
-    $options = $solutions | ForEach-Object { write-host "[$($choiceIndex)] $($_.uniquename)"; $choiceIndex++; }  
+#     $choiceIndex = 0
+#     $options = $publishers | ForEach-Object { write-host "[$($choiceIndex)] $($_.friendlyname)"; $choiceIndex++; }  
 
 
-    $success = $false
-    do {
-        $choice = read-host "Enter your selection"
-        if (!$choice) {
-            Write-Host "Invalid selection (null)"
-        }
-        else {
-            $choice = $choice -as [int];
-            if ($choice -eq $null) {
-                Write-Host "Invalid selection (not number)"
-            }
-            elseif ($choice -le -1) {
-                Write-Host "Invalid selection (negative)"
-            }
-            else {
-                $chosenSolution = $solutions[$choice].uniquename
-                if ($null -ne $chosenSolution) {
-                    $PublisherPrefix = (Get-CrmRecord -conn $conn -EntityLogicalName publisher -Id $solutions[$choice].publisherid_Property.Value.Id -Fields customizationprefix).customizationprefix
-                    $success = $true
-                }
-                else {
-                    Write-Host "Invalid selection (index out of range)"
-                }
-            } 
-        }
-    } while (!$success)
-}
+#     $success = $false
+#     do {
+#         $choice = read-host "Enter your selection"
+#         if (!$choice) {
+#             Write-Host "Invalid selection (null)"
+#         }
+#         else {
+#             $choice = $choice -as [int];
+#             if ($choice -eq $null) {
+#                 Write-Host "Invalid selection (not number)"
+#             }
+#             elseif ($choice -le -1) {
+#                 Write-Host "Invalid selection (negative)"
+#             }
+#             else {
+#                 $chosenPublisher = $publishers[$choice].uniquename
+#                 if ($null -ne $chosenPublisher) {
+#                     $PublisherPrefix = $publishers[$choice].customizationprefix
+#                     $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $publishers[$choice].publisherid
+#                     $success = $true
+#                 }
+#                 else {
+#                     Write-Host "Invalid selection (index out of range)"
+#                 }
+#             } 
+#         }
+#     } while (!$success)
+#     }
+#     $SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"    
+#     $SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','');"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
+#     $chosenSolution = $SolutionName.Replace(' ','')
+#     }
+#     else{
 
-#update values in Solution files 
-$message = "Setting Configurations in Source Code"
-Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.80
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+#     $solutionFetch = @"
+#     <fetch>
+#     <entity name='solution' >
+#         <filter type='and' >
+#         <condition attribute='ismanaged' operator='eq' value='0' />
+#         <condition attribute='isvisible' operator='eq' value='1' />
+#         </filter>
+#     </entity>
+#     </fetch>
+# "@
 
-Write-Host "Updating config.json ..."
-(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
-(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
-(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddGeography",$Geography | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
+#     $solutions = (Get-CrmRecordsByFetch -conn $conn -Fetch $solutionFetch).CrmRecords
 
-Write-Host "Updating deployPackages.json ..."
-(Get-Content -Path \Dev\Repos\$adoRepo\deployPackages.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\deployPackages.json
+#     $choiceIndex = 0
+#     $options = $solutions | ForEach-Object { write-host "[$($choiceIndex)] $($_.uniquename)"; $choiceIndex++; }  
 
-Write-Host "Updating spkl.json ..."
-(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json
-(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json) -replace "prefix",$PublisherPrefix.Replace(' ','').ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json
 
-Write-Host "Updating ImportConfig.xml ..."
-(Get-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml
+#     $success = $false
+#     do {
+#         $choice = read-host "Enter your selection"
+#         if (!$choice) {
+#             Write-Host "Invalid selection (null)"
+#         }
+#         else {
+#             $choice = $choice -as [int];
+#             if ($choice -eq $null) {
+#                 Write-Host "Invalid selection (not number)"
+#             }
+#             elseif ($choice -le -1) {
+#                 Write-Host "Invalid selection (negative)"
+#             }
+#             else {
+#                 $chosenSolution = $solutions[$choice].uniquename
+#                 if ($null -ne $chosenSolution) {
+#                     $PublisherPrefix = (Get-CrmRecord -conn $conn -EntityLogicalName publisher -Id $solutions[$choice].publisherid_Property.Value.Id -Fields customizationprefix).customizationprefix
+#                     $success = $true
+#                 }
+#                 else {
+#                     Write-Host "Invalid selection (index out of range)"
+#                 }
+#             } 
+#         }
+#     } while (!$success)
+# }
 
-Write-Host "Updating Build.yaml ..."
-(Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceRepo",$adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
-(Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
+# #update values in Solution files 
+# $message = "Setting Configurations in Source Code"
+# Write-Host $message
+# $ProgressBar = New-BTProgressBar -Status $message -Value 0.80
+# New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-Write-Host "Updating XrmContext.exe.config ..."
-(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmContext\XrmContext.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmContext\XrmContext.exe.config
+# Write-Host "Updating config.json ..."
+# (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
+# (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
+# (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json) -replace "AddGeography",$Geography | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\Scripts\config.json
 
-Write-Host "Updating XrmDefinitelyTyped.exe.config ..."
-(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config
+# Write-Host "Updating deployPackages.json ..."
+# (Get-Content -Path \Dev\Repos\$adoRepo\deployPackages.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\deployPackages.json
 
-Write-Host "Updating Companion App Settings"
-(Get-Content -Path \Dev\Repos\$adoRepo\PortalCompanionApp\AppSettings.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\PortalCompanionApp\AppSettings.json
+# Write-Host "Updating spkl.json ..."
+# (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json
+# (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json) -replace "prefix",$PublisherPrefix.Replace(' ','').ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\spkl.json
 
-Write-Host "Updating Webhook Settings"
-(Get-Content -Path \Dev\Repos\$adoRepo\Webhook\local.settings.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\Webhook\local.settings.json
+# Write-Host "Updating ImportConfig.xml ..."
+# (Get-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml
 
-Write-Host "Rename PowerPlatformDevOps.sln to $adoRepo.sln"
-Rename-Item -Path \Dev\Repos\$adoRepo\PowerPlatformDevOps.sln -NewName "$adoRepo.sln"
-(Get-Content -Path \Dev\Repos\$adoRepo\Plugins\Plugins.csproj) -replace "PowerPlatformDevOpsPlugins",($adoRepo+"Plugins") | Set-Content -Path \Dev\Repos\$adoRepo\Plugins\Plugins.csproj
-(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\map.xml) -replace "PowerPlatformDevOpsPlugins",($adoRepo+"Plugins") | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\map.xml
-(Get-Content -Path \Dev\Repos\$adoRepo\Workflows\Workflows.csproj) -replace "PowerPlatformDevOpsWorkflows",($adoRepo+"Workflows") | Set-Content -Path \Dev\Repos\$adoRepo\Workflows\Workflows.csproj
-(Get-Content -Path \Dev\Repos\$adoRepo\Solutions\map.xml) -replace "PowerPlatformDevOpsWorkflows",($adoRepo+"Workflows") | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\map.xml
+# Write-Host "Updating Build.yaml ..."
+# (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceRepo",$adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
+# (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
+
+# Write-Host "Updating XrmContext.exe.config ..."
+# (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmContext\XrmContext.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmContext\XrmContext.exe.config
+
+# Write-Host "Updating XrmDefinitelyTyped.exe.config ..."
+# (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config
+
+# Write-Host "Updating Companion App Settings"
+# (Get-Content -Path \Dev\Repos\$adoRepo\PortalCompanionApp\AppSettings.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\PortalCompanionApp\AppSettings.json
+
+# Write-Host "Updating Webhook Settings"
+# (Get-Content -Path \Dev\Repos\$adoRepo\Webhook\local.settings.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\Webhook\local.settings.json
+
+# Write-Host "Rename PowerPlatformDevOps.sln to $adoRepo.sln"
+# Rename-Item -Path \Dev\Repos\$adoRepo\PowerPlatformDevOps.sln -NewName "$adoRepo.sln"
+# (Get-Content -Path \Dev\Repos\$adoRepo\Plugins\Plugins.csproj) -replace "PowerPlatformDevOpsPlugins",($adoRepo+"Plugins") | Set-Content -Path \Dev\Repos\$adoRepo\Plugins\Plugins.csproj
+# (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\map.xml) -replace "PowerPlatformDevOpsPlugins",($adoRepo+"Plugins") | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\map.xml
+# (Get-Content -Path \Dev\Repos\$adoRepo\Workflows\Workflows.csproj) -replace "PowerPlatformDevOpsWorkflows",($adoRepo+"Workflows") | Set-Content -Path \Dev\Repos\$adoRepo\Workflows\Workflows.csproj
+# (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\map.xml) -replace "PowerPlatformDevOpsWorkflows",($adoRepo+"Workflows") | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\map.xml
 
 
 $message = "Connecting to Deployment Staging (CI/CD)"
@@ -484,7 +484,7 @@ Write-Host ""
 Write-Host "---- Please Select your Deployment Staging (CI/CD) Environment ------"
 $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
 
-. ".\SolutionExport.ps1"
+# . ".\SolutionExport.ps1"
     
 #commit repo and update VariableGroup in DevOps
 
@@ -499,7 +499,7 @@ New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -Unique
 
 $varGroup = az pipelines variable-group create --name "$adoRepo.D365DevEnvironment"  --variables d365username=$username --authorize $true | ConvertFrom-Json
 az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroup.id
-az pipelines variable-group variable create --name d365url --value $conn.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroup.id
+az pipelines variable-group variable create --name d365url --value "To Be Configured"  --group-id $varGroup.id
 
 $varGroupCICD = az pipelines variable-group create --name "$adoRepo.D365CDEnvironment"  --variables d365username=$username --authorize $true| ConvertFrom-Json
 az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroupCICD.id
