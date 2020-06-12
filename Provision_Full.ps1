@@ -491,6 +491,8 @@ git add -A
 git commit -m "Initial Commit"
 git push origin master --force
 
+Set-Location -Path \Dev\Repos\$adoRepo\
+Write-Host "Add Solutions"
 . ".\AddSolution.ps1 -SkipPreReqs $true"
 
 $message = "Creating variable groups in Azure DevOps"
@@ -616,8 +618,6 @@ if ($AzureSetup -eq "Y"){
     Set-Location -Path C:\Dev\Repos\$adoRepo\AzureResources\
     & .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation $regionName -ResourceGroupName "$adoRepoLower-dev"
 }
-
-Set-Location -Path \Dev\Repos\$adoRepo\
 
 $message = "Complete ... Enjoy !!!"
 Write-Host $message
