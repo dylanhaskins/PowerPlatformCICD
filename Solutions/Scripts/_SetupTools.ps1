@@ -1,10 +1,10 @@
 ﻿function InstallXrmDataModule{
 $moduleName = "Microsoft.Xrm.Data.Powershell"
-$moduleVersion = "2.8.5"
+$moduleVersion = "2.8.8"
 $module = Get-Module -ListAvailable -Name $moduleName
 if (!($module.Version -ge $moduleVersion )) {
     Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
-    Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
+    Install-Module -Name $moduleName -RequiredVersion $moduleVersion -Force -Scope CurrentUser
 }
 else
 {
@@ -50,23 +50,37 @@ Set-Alias nuget $targetNugetExe -Scope Global
 ##
 ./nuget install Microsoft.CrmSdk.CoreTools -O .\Tools
 $coreToolsFolder = Get-ChildItem ./Tools | Where-Object {$_.Name -match 'Microsoft.CrmSdk.CoreTools.'}
-move .\Tools\$coreToolsFolder\content\bin\coretools\*.* .\Tools\
+Move-Item .\Tools\$coreToolsFolder\content\bin\coretools\*.* .\Tools\ -Force -ErrorAction SilentlyContinue
 Remove-Item .\Tools\$coreToolsFolder -Force -Recurse
 }
 
 function InstallXrmDeployModule {
 $moduleName = "Microsoft.Xrm.Tooling.PackageDeployment.Powershell"
-$moduleVersion = "3.3.0.879"
+$moduleVersion = "3.3.0.882"
 $module = Get-Module -ListAvailable -Name $moduleName
 if (!($module.Version -ge $moduleVersion )) {
     Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
-    Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
+    Install-Module -Name $moduleName -RequiredVersion $moduleVersion -Force -Scope CurrentUser
 }
 else
 {
 Write-host "Module $moduleName version $moduleVersion or higher Found"
 }
 }
+
+function InstallXrmConnectModule {
+    $moduleName = "Microsoft.Xrm.Tooling.CrmConnector.PowerShell"
+    $moduleVersion = "3.3.0.890"
+    $module = Get-Module -ListAvailable -Name $moduleName
+    if (!($module.Version -ge $moduleVersion )) {
+        Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
+        Install-Module -Name $moduleName -RequiredVersion $moduleVersion -Force -Scope CurrentUser
+    }
+    else
+    {
+    Write-host "Module $moduleName version $moduleVersion or higher Found"
+    }
+    }
 
 function InstallPowerAppsCheckerModule{
 $moduleName = "Microsoft.PowerApps.Checker.PowerShell"

@@ -1,5 +1,9 @@
+Param(
+	[string] [Parameter(Mandatory= $true)] $StartPath,
+	[boolean] [Parameter(Mandatory= $false)] $AutoExit = $false
+)
 ######################## SETUP 
-. (Join-Path $PSScriptRoot "_Config.ps1")
+. (Join-Path $PSScriptRoot "_Config.ps1") -StartPath $StartPath
 
 if (!$Credentials)
 {
@@ -22,62 +26,55 @@ New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -Unique
 
 Write-Host("Cleaning up Context Files...")
 #clean up
-Remove-Item (Join-Path $PSScriptRoot "..\..\Entities\Context") -Force -Recurse -ErrorAction Ignore
-Remove-Item (Join-Path $PSScriptRoot "..\..\WebResources\typings\XRM") -Force -Recurse -ErrorAction Ignore
+Move-Item (Join-Path $PSScriptRoot "..\Entities\Context\Actions.cs") (Join-Path $PSScriptRoot "\Actions.cs") -Force -ErrorAction Ignore
+Remove-Item (Join-Path $PSScriptRoot "..\Entities\Context") -Force -Recurse -ErrorAction Ignore
+Remove-Item (Join-Path $PSScriptRoot "..\WebResources\typings\XRM") -Force -Recurse -ErrorAction Ignore
 
-New-Item -ItemType Directory -Path (Join-Path $PSScriptRoot "..\..\Entities\Context") -ErrorAction Ignore
-New-Item -ItemType Directory -Path (Join-Path $PSScriptRoot  "..\..\WebResources\typings\XRM") -ErrorAction Ignore
+New-Item -ItemType Directory -Path (Join-Path $PSScriptRoot "..\Entities\Context") -ErrorAction Ignore
+New-Item -ItemType Directory -Path (Join-Path $PSScriptRoot  "..\WebResources\typings\XRM") -ErrorAction Ignore
+
+Move-Item (Join-Path $PSScriptRoot "\Actions.cs") (Join-Path $PSScriptRoot "..\Entities\Context\Actions.cs") -Force -ErrorAction Ignore
+
 
 	#generate types
 $CurrentLocation = Get-Location
-Set-Location -Path (Join-Path $PSScriptRoot "..\XrmContext")
-. .\XrmContext.exe /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /out:"../../Entities/Context"
-Set-Location -Path (Join-Path $PSScriptRoot "..\XrmDefinitelyTyped")
-. .\XrmDefinitelyTyped.exe /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /out:"../../Webresources/typings/XRM" /jsLib:"../../Webresources/src/library"
-Set-Location -Path $CurrentLocation
+$xc = (Get-ChildItem -Path $env:USERPROFILE\.nuget\packages -Filter XrmContext.exe -Recurse | Sort-Object CreationTime -Descending | Select-Object -First 1).DirectoryName
+$xd = (Get-ChildItem -Path $env:USERPROFILE\.nuget\packages -Filter XrmDefinitelyTyped.exe -Recurse | Sort-Object CreationTime -Descending | Select-Object -First 1).DirectoryName
+$exclude = @('*.ps1','*.config')
+if (Test-Path (Join-Path $StartPath "..\XrmContext"))
+{
+Set-Location -Path (Join-Path $StartPath "..\XrmContext")
+Copy-Item -Path $xc\*.* -Destination . -Exclude $exclude -Force -ErrorAction SilentlyContinue
+. .\XrmContext.exe /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /out:"../Entities/Context"
 }
-
-##Add Files to Entities Project
-[xml]$xdoc = (Get-Content (Join-Path $PSScriptRoot "..\..\Entities\Entities.projitems"))
+if (Test-Path (Join-Path $StartPath "..\XrmDefinitelyTyped"))
+{
+Set-Location -Path (Join-Path $StartPath "..\XrmDefinitelyTyped")
+Copy-Item -Path $xd\*.* -Destination . -Exclude $exclude -Force -ErrorAction SilentlyContinue
+. .\XrmDefinitelyTyped.exe /url:$global:ServerUrl/XRMServices/2011/Organization.svc /username:$username /password:$password /useconfig /out:"../Webresources/typings/XRM" /jsLib:"../Webresources/src/library"
+}
+Set-Location -Path $CurrentLocation
+##Add Files to Project
+[xml]$xdoc = (Get-Content (Join-Path $StartPath "..\$global:ProjectName.csproj"))
 
 [System.Xml.XmlNamespaceManager] $nsmgr = $xdoc.NameTable
 $nsmgr.AddNamespace('a','http://schemas.microsoft.com/developer/msbuild/2003')
 
-$searchString = '$(MSBuildThisFileDirectory)Context\'
-
-$nodes = $xdoc.SelectNodes("//a:Compile[contains(@Include,'$searchString')]",$nsmgr)
-for ($i=1; $i -le ($nodes.Count-1); $i++)
+$nodes = $xdoc.SelectNodes("//a:Compile[contains(@Include,'Entities\Context')]",$nsmgr)
+for ($i=0; $i -le ($nodes.Count-1); $i++)
         {
             $nodes[$i].ParentNode.RemoveChild($nodes[$i])
         }
 
-Get-ChildItem (Join-Path $PSScriptRoot "..\..\Entities\Context") -Name | ForEach-Object {
+$newnodes = $xdoc.SelectNodes("//a:Compile",$nsmgr)
+$addNode = $newnodes[0].Clone()
+
+Get-ChildItem (Join-Path $StartPath "..\Entities\Context") -Name | ForEach-Object {
 	$newnodes = $xdoc.SelectNodes("//a:Compile",$nsmgr)
-	$addNode = $newnodes[0].Clone()
-	$replacementString = '$(MSBuildThisFileDirectory)Context\' + $_
-	$addNode.Include = "$replacementString"; $newnodes[0].ParentNode.AppendChild($addNode)
+    $addNode = $newnodes[0].Clone()
+	$addNode.Include = "Entities\Context\$_"; $newnodes[0].ParentNode.AppendChild($addNode)
 }
-$nodes[0].ParentNode.RemoveChild($nodes[0])
 
-$xdoc.Save((Join-Path $PSScriptRoot "..\..\Entities\Entities.projitems"))
-
-##Add Files to WebResources Project
-[xml]$xdoc = (Get-Content (Join-Path $PSScriptRoot "..\..\WebResources\WebResources.csproj"))
-
-$nodes = $xdoc.SelectNodes("//a:TypeScriptCompile[contains(@Include,'typings\XRM')]",$nsmgr)
-for ($i=1; $i -le ($nodes.Count-1); $i++)
-        {
-            $nodes[$i].ParentNode.RemoveChild($nodes[$i])
-        }
-
-Get-ChildItem (Join-Path $PSScriptRoot "..\..\WebResources\typings\XRM") -Name -Recurse | ForEach-Object {
-	$newnodes = $xdoc.SelectNodes("//a:TypeScriptCompile",$nsmgr)
-	$addNode = $newnodes[0].Clone()
-	$addNode.Include = "typings\XRM\$_"; $newnodes[0].ParentNode.AppendChild($addNode)
+$xdoc.Save((Join-Path $StartPath "..\$global:ProjectName.csproj"))
 }
-$nodes[0].ParentNode.RemoveChild($nodes[0])
-
-
-#$xdoc.SelectNodes("//a:TypeScriptCompile",$nsmgr)
-
-$xdoc.Save((Join-Path $PSScriptRoot "..\..\WebResources\WebResources.csproj"))
+if ($AutoExit) {Stop-Process -Id $PID}
