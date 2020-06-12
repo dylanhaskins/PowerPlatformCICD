@@ -525,6 +525,7 @@ $pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --re
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
 
+[console]::ForegroundColor = "White"
 #Provision Azure Resource group 
 Write-Host "Setting up the Azure Resource group requires both Azure and your Power Platform/Dynamics 365 to be on the same Azure AD Tenant"
 $AzureSetup = Read-Host -Prompt "Azure subscriptions : Would you like to create the default Azure resources [Y] Yes or [S] Skip (Default [S])"
