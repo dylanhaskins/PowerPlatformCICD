@@ -27,7 +27,6 @@ variables:
     value: 'release'
   - name : Solution
     value: '**\*.sln'
-  - group: replaceRepo.D365CDEnvironment
 
 stages:
   - stage: Build
@@ -49,54 +48,45 @@ stages:
             inputs:
               restoreSolution: '$(Solution)'
 
+          - task: Npm@1
+            displayName: NPM Install pnpm
+            inputs:
+              command: custom
+              customCommand: install -g pnpm  
+
           - task: VSBuild@1
-            displayName: 'Build Solution'
+            displayName: Build Solution
             inputs:
-              solution: '$(Solution)'
+              solution: $(Solution)
               vsVersion: latest
-              platform: '$(BuildPlatform)'
-              configuration: '$(BuildConfiguration)'
-              msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)\\"'
-          
-          - task: VSTest@2
-            displayName: Run Unit and UI Tests
-            inputs:
-              testSelector: 'testAssemblies'
-              testAssemblyVer2: |
-                **\*test*.dll
-                !**\*TestAdapter.dll
-                !**\obj\**
-              searchFolder: '$(System.DefaultWorkingDirectory)'
-
-          - task: PowerShell@2
-            displayName: 'Pack Solution and Run Solution Checker'
-            inputs:
-              targetType: filePath
-              filePath: 'Solutions/Scripts/SolutionPack.ps1'
-              arguments: '-aadTenant $(aadTenant) -aadPowerAppId $(aadPowerAppId) -aadPowerAppSecret $(aadPowerAppSecret)'
-
-          - task: CopyFiles@2
-            displayName: 'Copy Build Artifact to: $(build.artifactstagingdirectory)'
-            inputs:
-              SourceFolder: '$(system.defaultworkingdirectory)'
-              Contents: |
-                **\bin\$(BuildConfiguration)\**
-                deployPackages.json
-              TargetFolder: '$(build.artifactstagingdirectory)'
-
-          - task: PublishSymbols@2
-            displayName: 'Publish symbols path'
-            inputs:
-              SearchPattern: '**\bin\**\*.pdb'
-              PublishSymbols: false
-            continueOnError: true
-
+              platform: $(BuildPlatform)
+              configuration: $(BuildConfiguration)
+              maximumCpuCount: true
 
           - task: PublishPipelineArtifact@1
-            displayName: 'Publish Artifact: drop'
+            displayName: Publish Pipeline Artifacts
             inputs:
-              path: '$(build.artifactstagingdirectory)'
+              path: $(System.DefaultWorkingDirectory)
               artifact: drop
+                          
+      - job: testjob
+        displayName: Test Job
+        dependsOn: buildjob
+        steps:  
+          - download: current
+
+          - task: VSTest@2
+            displayName: Run Unit Tests
+            inputs:
+              testSelector: testAssemblies
+              testAssemblyVer2: |
+                **\Plugins*\**\*test*.dll
+                !**\*TestAdapter.dll
+                !**\obj\**
+              searchFolder: $(Pipeline.Workspace)
+              codeCoverageEnabled: true
+              runInParallel: true
+              runOnlyImpactedTests: true
 
   - stage: Deployment_Staging
     
