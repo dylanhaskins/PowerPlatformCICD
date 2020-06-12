@@ -616,6 +616,7 @@ if ($AzureSetup -eq "Y"){
 }
 
 Set-Location -Path \Dev\Repos\$adoRepo\
+& .\AddSolution.ps1 -SkipPreReqs $true 
 $message = "Complete ... Enjoy !!!"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 1

@@ -1,5 +1,6 @@
 Param(
-    [string] [Parameter(Mandatory = $false)] $Branch = "master"
+    [string] [Parameter(Mandatory = $false)] $Branch = "master",
+    [bool] [Parameter(Mandatory= $false)] $SkipPreReqs = $false
 )
 $ProgressPreference = 'SilentlyContinue'
 $Text = "Power Platform DevOps"
@@ -274,7 +275,7 @@ dotnet sln $sln.Name add $chosenSolution\$chosenSolution.csproj
 #commit repo and update VariableGroup in DevOps
 
 git add -A
-git commit -m "Added Feature $chosenSolution"
+git commit -m "Added Solution $chosenSolution"
 
 $message = "Complete ... Enjoy !!!"
 Write-Host $message
@@ -322,8 +323,11 @@ if (!$env:ChocolateyInstall) {
     Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 }
 
-choco upgrade chocolatey -y
-choco upgrade dotnetcore --version=3.1.2 -y
+if (!$SkipPreReqs) {
+    choco upgrade chocolatey -y
+    choco upgrade dotnetcore --version=3.1.2 -y   
+}
+
 
 Add-Feature
 $ProgressPreference = 'Continue'
