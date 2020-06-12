@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FD9F7C75-6F1A-416D-96C2-1FFDAFBF06BF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FeatureTemplate</RootNamespace>
+    <AssemblyName>FeatureTemplate</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SolutionPackager|AnyCPU'">
+    <OutputPath>bin\SolutionPackager\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Deployment\FeatureTemplatePackage.cs" />
+    <Compile Include="Entities\Context\BusinessUnit.cs" />
+    <Compile Include="Entities\Context\GlobalOptionSets.cs" />
+    <Compile Include="Entities\Context\SystemUser.cs" />
+    <Compile Include="Entities\Context\Team.cs" />
+    <Compile Include="Entities\Context\TeamMembership.cs" />
+    <Compile Include="Entities\Context\XrmContext.cs" />
+    <Compile Include="Entities\Context\XrmExtensions.cs" />
+    <Compile Include="Plugins\Users\SamplePlugin.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\Common\CommonFunctions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="WebResources\src\ts\forms\systemuser.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\dg.xrmquery.rest.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\dg.xrmquery.web.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\Form\businessunit\Main\Information.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\Form\connection\Main\Information.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\Form\systemuser\AppointmentBook\Information.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\Form\systemuser\Main\ApplicationUser.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\Form\systemuser\Main\User.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\Form\systemuser\Main\UserformBusiness.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\Form\systemuser\Quick\UserHierarchyTileForm.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\Form\team\Main\Team.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\Form\team\Main\TeamformBusiness.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\metadata.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\rest.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\REST\businessunit.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\REST\connection.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\REST\systemuser.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\REST\team.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\REST\teammembership.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\businessunit\ActiveBusinessUnits.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\businessunit\InactiveBusinessUnits.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\AdministrativeAccessUsers.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\ApplicationUsers.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\AssociatedRecordTeamMembers.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\DisabledUsers.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\Disabledusersconsuminglicenses.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\EnabledUsers.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\FullAccessUsers.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\LocalBusinessUsers.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\MyConnections.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\MyDirectReports.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\ReadOnlyAccessUsers.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\Teammembers.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\UsersAssignedtoMobileOfflineProfile.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\UsersInfluencedDealsThatWeWon.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\Usersinthisposition.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\systemuser\UsersPrimaryEmailPendingApproval.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\team\AllAADOfficeGroupTeams.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\team\AllAADSecurityGroupTeams.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\team\AllOwnerTeams.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\team\AllUserAccessTeams.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\team\LocalBusinessOwnerTeams.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\team\MyConnections.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\View\team\MyOwnerTeams.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\Web\businessunit.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\Web\connection.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\Web\systemuser.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\Web\team.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\Web\teammembership.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\xrm.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\businessunit_address1_addresstypecode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\businessunit_address1_shippingmethodcode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\businessunit_address2_addresstypecode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\businessunit_address2_shippingmethodcode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\connection_record1objecttypecode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\connection_record2objecttypecode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\connection_statecode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\connection_statuscode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\LCID.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\systemuser_accessmode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\systemuser_address1_addresstypecode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\systemuser_address1_shippingmethodcode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\systemuser_address2_addresstypecode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\systemuser_address2_shippingmethodcode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\systemuser_caltype.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\systemuser_emailrouteraccessapproval.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\systemuser_incomingemaildeliverymethod.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\systemuser_invitestatuscode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\systemuser_outgoingemaildeliverymethod.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\systemuser_preferredaddresscode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\systemuser_preferredemailcode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\systemuser_preferredphonecode.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\Enum\team_type.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\rest-entities.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\sdk.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\web-entities.d.ts" />
+    <TypeScriptCompile Include="WebResources\typings\XRM\_internal\WebResources.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Compile.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="package.json" />
+    <None Include="Scripts\config.json" />
+    <None Include="Scripts\DeploymentFunctions.ps1" />
+    <None Include="Scripts\PostAction.ps1" />
+    <None Include="Scripts\PreAction.ps1" />
+    <None Include="Scripts\SolutionExport.ps1" />
+    <None Include="Scripts\_ConfigMigration.ps1" />
+    <None Include="Scripts\_GenerateTypes.ps1" />
+    <None Include="SolutionTemplate.snk" />
+    <None Include="spkl.json" />
+    <None Include="spkl\deploy-plugins.bat" />
+    <None Include="spkl\deploy-webresources.bat" />
+    <None Include="spkl\deploy-workflows.bat" />
+    <None Include="spkl\download-webresources.bat" />
+    <None Include="tsconfig.json" />
+    <None Include="XrmContext\Run.ps1" />
+    <None Include="XrmContext\XrmContext.exe.config" />
+    <None Include="XrmDefinitelyTyped\Run.ps1" />
+    <None Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WebResources\src\css\" />
+    <Folder Include="WebResources\src\html\" />
+    <Folder Include="WebResources\src\images\" />
+    <Folder Include="Workflows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Deployment\FeatureTemplate\ImportConfig.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="map.xml" />
+    <Content Include="ReferenceData\data.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ReferenceData\data_schema.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ReferenceData\[Content_Types].xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webpack.config.js" />
+    <Content Include="WebResources\src\library\dg.xrmquery.rest.js" />
+    <Content Include="WebResources\src\library\dg.xrmquery.rest.min.js" />
+    <Content Include="WebResources\src\library\dg.xrmquery.web.js" />
+    <Content Include="WebResources\src\library\dg.xrmquery.web.min.js" />
+    <Content Include="WebResources\src\library\dg.xrmquery.web.promise.min.js" />
+    <Content Include="XrmContext\XrmContext.exe" />
+    <Content Include="XrmDefinitelyTyped\XrmDefinitelyTyped.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Delegate.XrmContext">
+      <Version>1.7.4</Version>
+    </PackageReference>
+    <PackageReference Include="Delegate.XrmDefinitelyTyped">
+      <Version>5.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <Version>2.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies">
+      <Version>9.0.2.26</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CrmSdk.CoreTools">
+      <Version>9.1.0.43</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CrmSdk.Deployment">
+      <Version>9.0.2.26</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CrmSdk.Workflow">
+      <Version>9.0.2.26</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
+      <Version>5.2.7</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime">
+      <Version>2.3.21</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="spkl">
+      <Version>1.0.370</Version>
+    </PackageReference>
+    <PackageReference Include="System.IO">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Net.Http">
+      <Version>4.3.4</Version>
+    </PackageReference>
+    <PackageReference Include="System.Runtime">
+      <Version>4.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Security.Cryptography.Algorithms">
+      <Version>4.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Security.Cryptography.Encoding">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Security.Cryptography.Primitives">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Security.Cryptography.X509Certificates">
+      <Version>4.3.2</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="..\Common\Common.projitems" Label="Shared" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>if $(ConfigurationName) == SolutionPackager (powershell.exe -ExecutionPolicy Bypass -Command "&amp; ..\..\Scripts\SolutionExport.ps1 -DevMode $true")
+
+if $(ConfigurationName) == GenerateXrmTypes (powershell.exe -ExecutionPolicy Bypass -Command "&amp; ..\..\Scripts\_GenerateTypes.ps1 -DevMode $true")
+</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>rem cmd.exe /C Compile.bat $(ConfigurationName)
+npm run dist
+</PostBuildEvent>
+  </PropertyGroup>
+</Project>

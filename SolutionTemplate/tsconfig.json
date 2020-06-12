@@ -1,0 +1,34 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "module": "commonjs",
+    "target": "ES2015",
+    "sourceMap": true,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "watch": true
+  },
+  "include": [
+    "**/typings/**/*",
+    "**/src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    "useBabel": true,
+    "useCache": true,
+    "babelOptions": {
+      "babelrc": false, /* Important line */
+      "presets": [
+        [
+          "@babel/preset-typescript"
+        ]
+      ]
+    },
+    "babelCore": "@babel/core" // needed for Babel v7
+  }
+}
