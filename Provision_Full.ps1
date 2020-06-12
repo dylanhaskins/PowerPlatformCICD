@@ -148,10 +148,10 @@ if ($quit -eq "Q")
     exit
 }
 
-$azSubs = az login --allow-no-subscriptions
-clear 
+az login --allow-no-subscriptions
 
 Write-Host ""
+[console]::ForegroundColor = "White"
 $adoCreate = Read-Host -Prompt "Would you like to [C]reate a new Azure DevOps Project or [S]elect and existing one (Default [S])"
 
 if ($adoCreate -eq "C")
