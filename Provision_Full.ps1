@@ -282,14 +282,14 @@ $username =  $Credentials.GetNetworkCredential().UserName
 $password =  $Credentials.GetNetworkCredential().Password
 }
 
-    Add-PowerAppsAccount -Username $Credentials.UserName -Password $Credentials.Password
+    # Add-PowerAppsAccount -Username $Credentials.UserName -Password $Credentials.Password
 
-    $Locations = Get-AdminPowerAppEnvironmentLocations
+    # $Locations = Get-AdminPowerAppEnvironmentLocations
 
-    $choiceIndex = 0
-    $options = $Locations | ForEach-Object { write-Host "[$($choiceIndex)] $($_.LocationDisplayName)"; $choiceIndex++; }
-    $geoselect = Read-Host "Please select the Geography for your Power Platform "
-    $Geography = $Locations[$geoselect].LocationName
+    # $choiceIndex = 0
+    # $options = $Locations | ForEach-Object { write-Host "[$($choiceIndex)] $($_.LocationDisplayName)"; $choiceIndex++; }
+    # $geoselect = Read-Host "Please select the Geography for your Power Platform "
+    # $Geography = $Locations[$geoselect].LocationName
 
     Install-XrmModule
 
