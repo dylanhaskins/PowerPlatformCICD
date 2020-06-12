@@ -208,17 +208,17 @@ New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -Unique
 
 git clone $repo.webUrl \Dev\Repos\$adoRepo 
 
-$message = "Create $adoRepo Azure AD Application"
-Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.50
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+# $message = "Create $adoRepo Azure AD Application"
+# Write-Host $message
+# $ProgressBar = New-BTProgressBar -Status $message -Value 0.50
+# New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-$manifest = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/$branch/manifest.json" -UseBasicParsing:$true
-Set-Content .\manifest.json -Value $manifest.Content
+# $manifest = Invoke-WebRequest "https://github.com/dylanhaskins/PowerPlatformCICD/raw/$branch/manifest.json" -UseBasicParsing:$true
+# Set-Content .\manifest.json -Value $manifest.Content
 
-$adApp = az ad app create --display-name "$adoRepo App" --native-app --required-resource-accesses manifest.json --reply-urls "urn:ietf:wg:oauth:2.0:oob" | ConvertFrom-Json
-$azureADAppPassword = (New-Guid).Guid.Replace("-","")
-$adAppCreds = az ad app credential reset --password $azureADAppPassword --id $adApp.appId | ConvertFrom-Json
+# $adApp = az ad app create --display-name "$adoRepo App" --native-app --required-resource-accesses manifest.json --reply-urls "urn:ietf:wg:oauth:2.0:oob" | ConvertFrom-Json
+# $azureADAppPassword = (New-Guid).Guid.Replace("-","")
+# $adAppCreds = az ad app credential reset --password $azureADAppPassword --id $adApp.appId | ConvertFrom-Json
 
 Set-Location -Path \Dev\Repos\$adoRepo\
 
@@ -493,7 +493,7 @@ git push origin master --force
 
 Set-Location -Path \Dev\Repos\$adoRepo\
 Write-Host "Add Solution..."
-. .\AddSolution.ps1 -SkipPreReqs $true
+. .\AddSolution_Full.ps1 -SkipPreReqs $true
 
 $message = "Creating variable groups in Azure DevOps"
 Write-Host $message
@@ -506,9 +506,9 @@ az pipelines variable-group variable create --name d365url --value "To Be Config
 
 $varGroupCICD = az pipelines variable-group create --name "$adoRepo.D365CDEnvironment"  --variables d365username=$username --authorize $true| ConvertFrom-Json
 az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroupCICD.id
-az pipelines variable-group variable create --name aadTenant --value $adAppCreds.tenant --group-id $varGroupCICD.id
-az pipelines variable-group variable create --name aadPowerAppId --value $adAppCreds.appId --group-id $varGroupCICD.id
-az pipelines variable-group variable create --name aadPowerAppSecret --value $adAppCreds.password --secret $true --group-id $varGroupCICD.id
+# az pipelines variable-group variable create --name aadTenant --value $adAppCreds.tenant --group-id $varGroupCICD.id
+# az pipelines variable-group variable create --name aadPowerAppId --value $adAppCreds.appId --group-id $varGroupCICD.id
+# az pipelines variable-group variable create --name aadPowerAppSecret --value $adAppCreds.password --secret $true --group-id $varGroupCICD.id
 az pipelines variable-group variable create --name d365url --value $connCICD.ConnectedOrgPublishedEndpoints["WebApplication"]  --group-id $varGroupCICD.id
 
 $varGroupTest = az pipelines variable-group create --name "$adoRepo.D365TestEnvironment"  --variables d365username=$username --authorize $true| ConvertFrom-Json
