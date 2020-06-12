@@ -263,13 +263,13 @@ Set-Location -Path  .\$chosenSolution
 Set-Location -Path .\Scripts
 
 Write-Host "Exporting Solution and Generating Types"
-& ".\\SolutionExport.ps1"
+Start-Process powershell -ArgumentList ".\SolutionExport.ps1" -Wait
 
 Set-Location -Path .\..
 
 Write-Host "Adding $chosenSolution Project to Solution"
 Set-Location .\..
-$sln = ls *.sln
+$sln = Get-ChildItem *.sln
 dotnet sln $sln.Name add $chosenSolution\$chosenSolution.csproj
 
 #commit repo and update VariableGroup in DevOps
