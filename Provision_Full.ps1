@@ -492,8 +492,8 @@ git commit -m "Initial Commit"
 git push origin master --force
 
 Set-Location -Path \Dev\Repos\$adoRepo\
-Write-Host "Add Solutions"
-. ".\AddSolution.ps1 -SkipPreReqs $true"
+Write-Host "Add Solution..."
+. .\AddSolution.ps1 -SkipPreReqs $true
 
 $message = "Creating variable groups in Azure DevOps"
 Write-Host $message
