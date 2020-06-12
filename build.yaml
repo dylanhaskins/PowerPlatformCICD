@@ -110,24 +110,24 @@ stages:
                 filePath: '$(Pipeline.Workspace)/drop/Solutions/bin/Release/Scripts/SolutionDeploy.ps1'
                 arguments: '-DeployServerUrl $(d365url) -UserName $(d365username) -Password $(d365password) -PipelinePath $(Pipeline.Workspace)'
 
-  - stage: Test
+# - stage: Test
     
-    displayName: Test
-    dependsOn: 'Deployment_Staging'
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'),notIn(variables['Build.Reason'], 'IndividualCI', 'BatchedCI','PullRequest'))
-    jobs:
-    - deployment: DeployJob      
-      displayName: Test 
-      environment: 'Test'
-      variables:
-        - group: replaceRepo.D365TestEnvironment
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-            - task: PowerShell@2
-              displayName: 'Deploy Solution'
-              inputs:
-                targetType: filePath
-                filePath: '$(Pipeline.Workspace)/drop/Solutions/bin/Release/Scripts/SolutionDeploy.ps1'
-                arguments: '-DeployServerUrl $(d365url) -UserName $(d365username) -Password $(d365password) -PipelinePath $(Pipeline.Workspace)'
+#    displayName: Test
+#    dependsOn: 'Deployment_Staging'
+#    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'),notIn(variables['Build.Reason'], 'IndividualCI', 'BatchedCI','PullRequest'))
+#    jobs:
+#    - deployment: DeployJob      
+#      displayName: Test 
+#      environment: 'Test'
+#      variables:
+#        - group: replaceRepo.D365TestEnvironment
+#      strategy:
+#        runOnce:
+#          deploy:
+#            steps:
+#            - task: PowerShell@2
+#              displayName: 'Deploy Solution'
+#              inputs:
+#                targetType: filePath
+#                filePath: '$(Pipeline.Workspace)/drop/Solutions/bin/Release/Scripts/SolutionDeploy.ps1'
+#                arguments: '-DeployServerUrl $(d365url) -UserName $(d365username) -Password $(d365password) -PipelinePath $(Pipeline.Workspace)'
