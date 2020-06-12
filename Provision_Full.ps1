@@ -12,7 +12,7 @@ function Restart-PowerShell
     refreshenv
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
     Clear-Host
-    DevOps-Install
+    Install-DevOps
 }
 
 function Install-XrmModule{
