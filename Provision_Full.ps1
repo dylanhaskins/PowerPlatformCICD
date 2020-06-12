@@ -149,9 +149,10 @@ if ($quit -eq "Q")
 }
 
 $azSubs = az login --allow-no-subscriptions
+clear 
 
 Write-Host ""
-$adoCreate = Read-Host -Prompt "Would you like to [C]reate a new Project or [S]elect and existing one (Default [S])"
+$adoCreate = Read-Host -Prompt "Would you like to [C]reate a new Azure DevOps Project or [S]elect and existing one (Default [S])"
 
 if ($adoCreate -eq "C")
 {
@@ -451,9 +452,9 @@ $password =  $Credentials.GetNetworkCredential().Password
 # Write-Host "Updating ImportConfig.xml ..."
 # (Get-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\PackageDeployer\PkgFolder\ImportConfig.xml
 
-# Write-Host "Updating Build.yaml ..."
-# (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceRepo",$adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
-# (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
+Write-Host "Updating Build.yaml ..."
+(Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceRepo",$adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
+(Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 
 # Write-Host "Updating XrmContext.exe.config ..."
 # (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmContext\XrmContext.exe.config) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\XrmContext\XrmContext.exe.config
@@ -467,8 +468,8 @@ $password =  $Credentials.GetNetworkCredential().Password
 # Write-Host "Updating Webhook Settings"
 # (Get-Content -Path \Dev\Repos\$adoRepo\Webhook\local.settings.json) -replace "https://AddName.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path \Dev\Repos\$adoRepo\Webhook\local.settings.json
 
-# Write-Host "Rename PowerPlatformDevOps.sln to $adoRepo.sln"
-# Rename-Item -Path \Dev\Repos\$adoRepo\PowerPlatformDevOps.sln -NewName "$adoRepo.sln"
+Write-Host "Rename PowerPlatformDevOps.sln to $adoRepo.sln"
+Rename-Item -Path \Dev\Repos\$adoRepo\PowerPlatformDevOps.sln -NewName "$adoRepo.sln"
 # (Get-Content -Path \Dev\Repos\$adoRepo\Plugins\Plugins.csproj) -replace "PowerPlatformDevOpsPlugins",($adoRepo+"Plugins") | Set-Content -Path \Dev\Repos\$adoRepo\Plugins\Plugins.csproj
 # (Get-Content -Path \Dev\Repos\$adoRepo\Solutions\map.xml) -replace "PowerPlatformDevOpsPlugins",($adoRepo+"Plugins") | Set-Content -Path \Dev\Repos\$adoRepo\Solutions\map.xml
 # (Get-Content -Path \Dev\Repos\$adoRepo\Workflows\Workflows.csproj) -replace "PowerPlatformDevOpsWorkflows",($adoRepo+"Workflows") | Set-Content -Path \Dev\Repos\$adoRepo\Workflows\Workflows.csproj
