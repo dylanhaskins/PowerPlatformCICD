@@ -491,6 +491,8 @@ git add -A
 git commit -m "Initial Commit"
 git push origin master --force
 
+. ".\AddSolution.ps1 -SkipPreReqs $true"
+
 $message = "Creating variable groups in Azure DevOps"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.90
@@ -616,7 +618,7 @@ if ($AzureSetup -eq "Y"){
 }
 
 Set-Location -Path \Dev\Repos\$adoRepo\
-& .\AddSolution.ps1 -SkipPreReqs $true 
+
 $message = "Complete ... Enjoy !!!"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 1
