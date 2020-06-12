@@ -348,3 +348,4 @@ healthchecksdb
 
 /**/dist/
 
+/**/.awcache
