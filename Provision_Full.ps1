@@ -5,6 +5,7 @@ Param(
 
 $Text = "Power Platform DevOps"
 $UniqueId = "PPDevOps"
+$Version = "2.0.140620.1055"
 
 function Restart-PowerShell
 {
@@ -659,6 +660,7 @@ Welcome to the Power Platform DevOps provisioning script. This script will perfo
  - Open the Repo and Pipeline in the Browser (and complete the initial Build and Deploy)       
  - Create new Azure ResourceGroup in your selected Azure Subscription
 
+ ver. $Version
 
 "@
 

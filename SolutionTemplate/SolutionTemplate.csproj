@@ -264,7 +264,7 @@ if $(ConfigurationName) == GenerateXrmTypes (powershell.exe -ExecutionPolicy Byp
 </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>rem cmd.exe /C Compile.bat $(ConfigurationName)
+    <PostBuildEvent>xcopy Deployment\. ..\..\..\PackageDeployer\bin\Release\. /s/e/y/i
 npm run dist
 </PostBuildEvent>
   </PropertyGroup>
