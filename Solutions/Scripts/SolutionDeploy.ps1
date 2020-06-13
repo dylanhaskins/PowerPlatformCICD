@@ -142,7 +142,7 @@ function Import-Package {
 
                     Write-Host "##[section] Deploying $($package.SolutionName) as $($Deploy.DeploymentType) to - $env:ENVIRONMENT_NAME" 
 
-                    $PackageInfo = Get-CrmPackages -PackageDirectory PackageDirectory | Where-Object {$_.PackageShortName -eq $PFolder}
+                    $PackageInfo = Get-CrmPackages -PackageDirectory $PackageDirectory | Where-Object {$_.PackageShortName -eq $PFolder}
                     Write-Host Attempt $($Retrycount) of $RetryMax
                     If ($Retrycount -eq 0) {
 
