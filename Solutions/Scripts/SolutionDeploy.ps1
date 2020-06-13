@@ -7,7 +7,6 @@
 
 ######################## SETUP 
 . "$PipelinePath\drop\Solutions\bin\Release\Scripts\_SetupTools.ps1"
-#. "$PipelinePath\drop\Solutions\bin\Release\Scripts\_Config.ps1" -StartPath $PSScriptRoot
 
 InstallCoreTools
 
@@ -33,12 +32,6 @@ function Import-Package {
             $Path = "$PackageDirectory/$PFolder"
             $ImportConfig = Get-ChildItem -Path $Path -Include "ImportConfig.xml" -Recurse
             $envName = $env:ENVIRONMENT_NAME.Replace(" ", "")
-                     
-            # if ((Test-Path -Path "$($ImportConfig.DirectoryName)") -eq $false) {
-            #     Write-Host "Copying Files that weren't copied by the build"
-            #     Copy-Item -Path $PipelinePath\drop\$PFolder\Deployment\$PSolution\* -Destination $Path -Recurse -Force -ErrorAction Ignore -Verbose
-            #     Copy-Item -Path $PipelinePath\drop\$PFolder\bin\Release\$($PSolution)Package.dll -Destination $PackageDirectory -Force -ErrorAction Ignore -Verbose
-            # }
 
             [xml] $xdoc = (Get-Content -Path "$($ImportConfig.DirectoryName)\ImportConfig.xml")
 
@@ -136,7 +129,6 @@ function Import-Package {
             if ($Deploy.PreAction -eq $true) {
                 Write-Host "##[section] Execute Pre Action"
                 Write-Host "$PipelinePath\drop\$PFolder\bin\release\Scripts"
-                #Set-Location -Path $Path/Scripts/
                 . $PipelinePath\drop\$PFolder\bin\release\Scripts\PreAction.ps1 -Conn $CRMConn -EnvironmentName $Deploy.EnvironmentName -Path "$PipelinePath\drop\$PFolder\bin\release\"
             }
 
@@ -149,19 +141,15 @@ function Import-Package {
                     $error.Clear()
 
                     Write-Host "##[section] Deploying $($package.SolutionName) as $($Deploy.DeploymentType) to - $env:ENVIRONMENT_NAME" 
-                    #if (Test-Path -Path $PipelinePath\drop\$PFolder\bin\Release\CCMS.Entities.dll)
-                    #{
-                    #    Write-Host "##[command] Copy CCMS.Entities specific for $PSolution Package Deployment"
-                    #    Copy-Item -Path $PipelinePath\drop\$PFolder\bin\Release\CCMS.Entities.dll -Destination $PipelinePath\drop\PackageDeployer\bin\Release\ -Force 
-                    #}
-                    
+
+                    $PackageInfo = Get-CrmPackages -PackageDirectory PackageDirectory | Where-Object {$_.PackageShortName -eq $PFolder}
                     Write-Host Attempt $($Retrycount) of $RetryMax
                     If ($Retrycount -eq 0) {
 
-                            Import-CrmPackage -CrmConnection $CRMConn -PackageDirectory $PackageDirectory -PackageName $package.PackageName -EnabledAsyncForSolutionImport -SolutionBlockedRetryDelay 120 -SolutionBlockedRetryCount 10 -Timeout "00:15:00" -RuntimePackageSettings $RuntimeSettings -Verbose    
+                            Import-CrmPackage -CrmConnection $CRMConn -PackageDirectory $PackageDirectory -PackageInformation $PackageInfo -EnabledAsyncForSolutionImport -SolutionBlockedRetryDelay 120 -SolutionBlockedRetryCount 10 -Timeout "00:15:00" -RuntimePackageSettings $RuntimeSettings -Verbose    
                     }
                     else {
-                            Import-CrmPackage -CrmConnection $CRMConn -PackageDirectory $PackageDirectory -PackageName $package.PackageName -EnabledAsyncForSolutionImport -SolutionBlockedRetryDelay 120 -SolutionBlockedRetryCount 10 -Timeout "00:15:00" -RuntimePackageSettings $RuntimeSettings -Verbose    
+                            Import-CrmPackage -CrmConnection $CRMConn -PackageDirectory $PackageDirectory -PackageInformation $PackageInfo -EnabledAsyncForSolutionImport -SolutionBlockedRetryDelay 120 -SolutionBlockedRetryCount 10 -Timeout "00:15:00" -RuntimePackageSettings $RuntimeSettings -Verbose    
                     }
 
                     $Stoploop = $true
