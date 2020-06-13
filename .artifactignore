@@ -1,0 +1,10 @@
+**/*
+**/node_modules/**
+!**/bin/Release/**
+!deployPackages.json
+!**/package*/**
+!**/ReferenceData/**
+!**/Scripts/**
+!**/map.xml
+!**/EnvironmentVariables/**
+!**/dist/**

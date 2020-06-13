@@ -316,6 +316,7 @@ Rename-Item -Path .\$chosenSolution\SolutionTemplate.snk -NewName "$chosenSoluti
 
 Write-Host "Updating $chosenSolution.csproj ..."
 (Get-Content -Path .\$chosenSolution\$chosenSolution.csproj) -replace "FeatureTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\$chosenSolution.csproj
+(Get-Content -Path .\$chosenSolution\$chosenSolution.csproj) -replace "SolutionTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\$chosenSolution.csproj
 
 (Get-Content -Path .\$chosenSolution\map.xml) -replace "PowerPlatformDevOpsPlugins",($chosenSolution) | Set-Content -Path .\$chosenSolution\map.xml
 
