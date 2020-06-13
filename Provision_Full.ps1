@@ -5,7 +5,7 @@ Param(
 
 $Text = "Power Platform DevOps"
 $UniqueId = "PPDevOps"
-$Version = "2.0.140620.1055"
+$Version = "2.0.140620.1122"
 
 function Restart-PowerShell
 {
@@ -490,11 +490,11 @@ $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials
 
 git add -A
 git commit -m "Initial Commit"
-git push origin master --force
 
 Set-Location -Path \Dev\Repos\$adoRepo\
 Write-Host "Add Solution..."
 . .\AddSolution_Full.ps1 -SkipPreReqs $true
+git push origin master --force
 
 $message = "Creating variable groups in Azure DevOps"
 Write-Host $message
