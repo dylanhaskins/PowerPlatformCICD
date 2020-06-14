@@ -106,7 +106,7 @@ function Import-Package {
                     $newFileName = ($_.solutionpackagefilename).Replace("_managed", "")
                     $fileToPack = "$($envName)_$($newFileName)"
                     $_.solutionpackagefilename = $fileToPack
-                    $packageFolder = "package$($folder)"
+                    $packageFolder = "solution$($folder)"
                     Write-Host Packing Unmanaged Solution $_.solutionpackagefilename                  
                     &.\Tools\SolutionPackager.exe /action:pack /folder:$PipelinePath\drop\$PFolder\$packageFolder /zipfile:$PipelinePath\drop\PackageDeployer\bin\Release\$PFolder\$fileToPack /packagetype:Unmanaged /map:$PipelinePath\drop\$PFolder\map.xml 
                 }
@@ -117,7 +117,7 @@ function Import-Package {
                     $folder = ($_.solutionpackagefilename).Replace("_managed.zip", "").Replace(".zip", "")
                     $fileToPack = "$($envName)_$($_.solutionpackagefilename)"
                     $_.solutionpackagefilename = $fileToPack                    
-                    $packageFolder = "package$($folder)"
+                    $packageFolder = "solution$($folder)"
                     Write-Host Packing Managed Solution  $_.solutionpackagefilename
                     &.\Tools\SolutionPackager.exe /action:pack /folder:$PipelinePath\drop\$PFolder\$packageFolder /zipfile:$PipelinePath\drop\PackageDeployer\bin\Release\$PFolder\$fileToPack /packagetype:Managed /map:$PipelinePath\drop\$PFolder\map.xml 
                 }

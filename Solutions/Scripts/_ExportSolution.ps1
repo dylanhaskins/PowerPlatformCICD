@@ -6,8 +6,7 @@ if (!$conn) {$conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $glob
 
 if($conn.IsReady){
 
-Remove-Item (Join-Path $StartPath "..\package*patch*") -Force -Recurse
-#Remove-Item (Join-Path $PSScriptRoot "..\package*") -Force -Recurse -Exclude "packages.config", "package.json", "package$global:SolutionName"
+Remove-Item (Join-Path $StartPath "..\solution*patch*") -Force -Recurse
 
     ######################## EXPORT SOLUTION
 
@@ -52,8 +51,8 @@ Remove-Item (Join-Path $StartPath "..\package*patch*") -Force -Recurse
         Write-Host $message
         $ProgressBar = New-BTProgressBar -Status $message -Value 0.8
         New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
-        Remove-Item (Join-Path $StartPath "..\package$SolutionName\") -Recurse -Force
-        &.\Tools\SolutionPackager.exe /action:extract /folder:(Join-Path $StartPath "..\package$SolutionName\") /zipfile:"$SolutionName.zip" /packagetype:Both /allowDelete:No /c /useUnmanagedFileForMissingManaged
+        Remove-Item (Join-Path $StartPath "..\solution$SolutionName\") -Recurse -Force
+        &.\Tools\SolutionPackager.exe /action:extract /folder:(Join-Path $StartPath "..\solution$SolutionName\") /zipfile:"$SolutionName.zip" /packagetype:Both /allowDelete:No /c /useUnmanagedFileForMissingManaged
      }
     
     ## No Patches
@@ -97,8 +96,8 @@ Remove-Item (Join-Path $StartPath "..\package*patch*") -Force -Recurse
         Write-Host $message
         $ProgressBar = New-BTProgressBar -Status $message -Value 0.8
         New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
-        Remove-Item (Join-Path $StartPath "..\package$SolutionName\") -Recurse -Force
-        &.\Tools\SolutionPackager.exe /action:extract /folder:(Join-Path $StartPath "..\package$SolutionName\") /zipfile:"$SolutionName.zip" /packagetype:Both /allowDelete:No /c /useUnmanagedFileForMissingManaged
+        Remove-Item (Join-Path $StartPath "..\solution$SolutionName\") -Recurse -Force
+        &.\Tools\SolutionPackager.exe /action:extract /folder:(Join-Path $StartPath "..\solution$SolutionName\") /zipfile:"$SolutionName.zip" /packagetype:Both /allowDelete:No /c /useUnmanagedFileForMissingManaged
      }
 
 }
