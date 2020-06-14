@@ -161,7 +161,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Compile.bat" />
+    <None Include="Compile.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="package.json" />
     <None Include="Scripts\config.json" />
     <None Include="Scripts\DeploymentFunctions.ps1" />
