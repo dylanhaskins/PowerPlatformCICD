@@ -1,7 +1,7 @@
 **/*
 !**/bin/Release/**
 !deployPackages.json
-!**/solution*/**
+!**/cdsunpack*/**
 !**/ReferenceData/**
 !**/Scripts/**
 !**/map.xml

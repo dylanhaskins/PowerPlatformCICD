@@ -106,7 +106,7 @@ function Import-Package {
                     $newFileName = ($_.solutionpackagefilename).Replace("_managed", "")
                     $fileToPack = "$($envName)_$($newFileName)"
                     $_.solutionpackagefilename = $fileToPack
-                    $packageFolder = "solution$($folder)"
+                    $packageFolder = "cdsunpack$($folder)"
                     Write-Host Packing Unmanaged Solution $_.solutionpackagefilename                  
                     &.\Tools\SolutionPackager.exe /action:pack /folder:$PipelinePath\drop\$PFolder\$packageFolder /zipfile:$PipelinePath\drop\PackageDeployer\bin\Release\$PFolder\$fileToPack /packagetype:Unmanaged /map:$PipelinePath\drop\$PFolder\map.xml 
                 }
@@ -117,7 +117,7 @@ function Import-Package {
                     $folder = ($_.solutionpackagefilename).Replace("_managed.zip", "").Replace(".zip", "")
                     $fileToPack = "$($envName)_$($_.solutionpackagefilename)"
                     $_.solutionpackagefilename = $fileToPack                    
-                    $packageFolder = "solution$($folder)"
+                    $packageFolder = "cdsunpack$($folder)"
                     Write-Host Packing Managed Solution  $_.solutionpackagefilename
                     &.\Tools\SolutionPackager.exe /action:pack /folder:$PipelinePath\drop\$PFolder\$packageFolder /zipfile:$PipelinePath\drop\PackageDeployer\bin\Release\$PFolder\$fileToPack /packagetype:Managed /map:$PipelinePath\drop\$PFolder\map.xml 
                 }
@@ -142,14 +142,15 @@ function Import-Package {
 
                     Write-Host "##[section] Deploying $($package.SolutionName) as $($Deploy.DeploymentType) to - $env:ENVIRONMENT_NAME" 
 
-                    $PackageInfo = Get-CrmPackages -PackageDirectory $PackageDirectory | Where-Object {$_.PackageShortName -eq $PFolder}
+                    $PackageInfo = Get-CrmPackages -PackageDirectory $PackageDirectory | Where-Object {$_.PackageShortName -eq $package.SolutionName}
+                    Write-Host "Package Info Retrieved - $PackageInfo.PackageShortName"
                     Write-Host Attempt $($Retrycount) of $RetryMax
                     If ($Retrycount -eq 0) {
 
-                            Import-CrmPackage -CrmConnection $CRMConn -PackageDirectory $PackageDirectory -PackageInformation $PackageInfo -EnabledAsyncForSolutionImport -SolutionBlockedRetryDelay 120 -SolutionBlockedRetryCount 10 -Timeout "00:15:00" -RuntimePackageSettings $RuntimeSettings -Verbose    
+                            Import-CrmPackage -CrmConnection $CRMConn -PackageInformation $PackageInfo -EnabledAsyncForSolutionImport -SolutionBlockedRetryDelay 120 -SolutionBlockedRetryCount 10 -Timeout "00:15:00" -RuntimePackageSettings $RuntimeSettings -Verbose    
                     }
                     else {
-                            Import-CrmPackage -CrmConnection $CRMConn -PackageDirectory $PackageDirectory -PackageInformation $PackageInfo -EnabledAsyncForSolutionImport -SolutionBlockedRetryDelay 120 -SolutionBlockedRetryCount 10 -Timeout "00:15:00" -RuntimePackageSettings $RuntimeSettings -Verbose    
+                            Import-CrmPackage -CrmConnection $CRMConn -PackageInformation $PackageInfo -EnabledAsyncForSolutionImport -SolutionBlockedRetryDelay 120 -SolutionBlockedRetryCount 10 -Timeout "00:15:00" -RuntimePackageSettings $RuntimeSettings -Verbose    
                     }
 
                     $Stoploop = $true

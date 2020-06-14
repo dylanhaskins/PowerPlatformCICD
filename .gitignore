@@ -349,3 +349,23 @@ healthchecksdb
 /**/dist/
 
 /**/.awcache
+/**/XrmContext.xml
+/**/XrmContext.exe
+/**/System.Runtime.CompilerServices.Unsafe.dll
+/**/System.Numerics.Vectors.dll
+/**/System.Memory.dll
+/**/System.Buffers.dll
+/**/Run.fsx
+/**/Newtonsoft.Json.dll
+/**/Microsoft.Xrm.Tooling.Connector.dll
+/**/Microsoft.Xrm.Sdk.Workflow.dll
+/**/Microsoft.Xrm.Sdk.dll
+/**/Microsoft.Xrm.Sdk.Deployment.dll
+/**/Microsoft.Rest.ClientRuntime.dll
+/**/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll
+/**/Microsoft.IdentityModel.Clients.ActiveDirectory.dll
+/**/Microsoft.Crm.Sdk.Proxy.dll
+/**/FSharp.Core.dll
+/**/XrmDefinitelyTyped.xml
+/**/XrmDefinitelyTyped.exe
+/Scripts/Tools/**

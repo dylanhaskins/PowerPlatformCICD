@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.Composition;
 
-namespace Deployment
+namespace PackageDeployer
 {
     [Export(typeof(IImportExtensions))]
     public class AddName : ImportExtension
