@@ -298,7 +298,8 @@ Write-Host "Updating ImportConfig.xml ..."
 Move-Item .\$chosenSolution\Deployment\FeatureTemplate .\$chosenSolution\Deployment\$chosenSolution
 Move-Item .\$chosenSolution\Deployment\FeatureTemplatePackage.cs .\PackageDeployer\$($chosenSolution)Package.cs  
 (Get-Content -Path .\$chosenSolution\Deployment\$chosenSolution\ImportConfig.xml) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\Deployment\$chosenSolution\ImportConfig.xml
-(Get-Content -Path  .\PackageDeployer\$($chosenSolution)Package.cs) -replace "AddName",$chosenSolution | Set-Content -Path  .\PackageDeployer\$($chosenSolution)Package.cs
+(Get-Content -Path  .\PackageDeployer\$($chosenSolution)Package.cs) -replace "AddName",$chosenSolution | Set-Content -Path  .\PackageDeployer\$($chosenSolution)Package.cs #TODO : Include this file in PackageDeployer.csproj
+(Get-Content -Path .\$chosenSolution\Compile.bat) -replace "FeatureTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\Compile.bat #TODO : Remove Compile.bat
 (Get-Content -Path .\$chosenSolution\webpack.config.js) -replace "AddName",$chosenSolution.ToLower() | Set-Content -Path .\$chosenSolution\webpack.config.js -ErrorAction Ignore
 
 Write-Host "Updating XrmContext.exe.config ..."
@@ -318,20 +319,6 @@ Write-Host "Updating $chosenSolution.csproj ..."
 (Get-Content -Path .\$chosenSolution\$chosenSolution.csproj) -replace "SolutionTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\$chosenSolution.csproj
 
 (Get-Content -Path .\$chosenSolution\map.xml) -replace "PowerPlatformDevOpsPlugins",($chosenSolution) | Set-Content -Path .\$chosenSolution\map.xml
-
-##Add Files to Project
-[xml]$xdoc = (Get-Content (Join-Path $PSScriptRoot "\PackageDeployer\PackageDeployer.csproj"))
-
-[System.Xml.XmlNamespaceManager] $nsmgr = $xdoc.NameTable
-$nsmgr.AddNamespace('a','http://schemas.microsoft.com/developer/msbuild/2003')
-
-$nodes = $xdoc.SelectNodes("//a:Compile[contains(@Include,'MasterPackage.cs')]",$nsmgr)
-
-$addNode = $nodes[0].Clone()
-$addNode.Include = "$($chosenSolution)Package.cs"
-$nodes[0].ParentNode.AppendChild($addNode)
-
-$xdoc.Save((Join-Path $PSScriptRoot "\PackageDeployer\PackageDeployer.csproj"))
 
 
 Write-Host "Adding Solution to packageDeploy.json"

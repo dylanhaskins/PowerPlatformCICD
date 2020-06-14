@@ -161,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Compile.bat" />
     <None Include="package.json" />
     <None Include="Scripts\config.json" />
     <None Include="Scripts\DeploymentFunctions.ps1" />
@@ -275,7 +276,7 @@ if $(ConfigurationName) == GenerateXrmTypes (powershell.exe -ExecutionPolicy Byp
 </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>xcopy Deployment\. ..\..\..\PackageDeployer\bin\Release\. /s/e/y/i
+    <PostBuildEvent>cmd.exe /C compile.bat $(ConfigurationName)
 npm run dist
 </PostBuildEvent>
   </PropertyGroup>
