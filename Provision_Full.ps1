@@ -5,7 +5,7 @@ Param(
 
 $Text = "Power Platform DevOps"
 $UniqueId = "PPDevOps"
-$Version = "2.0.150620.1912"
+$Version = "2.0.150620.1914"
 
 function Restart-PowerShell
 {
@@ -107,7 +107,7 @@ function Install-PreReq
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.19
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-    choco upgrade dotnetcore --version=3.1.2 -y
+    choco upgrade dotnetcore -y
 
     ## Restart PowerShell Environment to Enable Azure CLI
     Restart-PowerShell
