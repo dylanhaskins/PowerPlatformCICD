@@ -275,10 +275,8 @@ Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.30
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-Copy-Item -Path .\SolutionTemplate -Destination $chosenSolution -Recurse 
-Set-Location -Path .\$chosenSolution
+Copy-Item -Path .\SolutionTemplate\. -Destination $chosenSolution -Recurse 
 
-Set-Location -Path .\..
 $message = "Setting Configurations in Source Code"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.40
@@ -404,7 +402,7 @@ if (!$env:ChocolateyInstall) {
 
 if (!$SkipPreReqs) {
     choco upgrade chocolatey -y
-    choco upgrade dotnetcore --version=3.1.2 -y   
+    choco upgrade dotnetcore -y   
 }
 
 
