@@ -296,10 +296,10 @@ Write-Host "Updating spkl.json ..."
 
 Write-Host "Updating ImportConfig.xml ..."
 Move-Item .\$chosenSolution\Deployment\FeatureTemplate .\$chosenSolution\Deployment\$chosenSolution
-Move-Item .\$chosenSolution\Deployment\FeatureTemplatePackage.cs .\PackageDeployer\$($chosenSolution)Package.cs  
+Move-Item .\$chosenSolution\Deployment\FeatureTemplatePackage.cs .\$chosenSolution\Deployment\$($chosenSolution)Package.cs  
 (Get-Content -Path .\$chosenSolution\Deployment\$chosenSolution\ImportConfig.xml) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\Deployment\$chosenSolution\ImportConfig.xml
-(Get-Content -Path  .\PackageDeployer\$($chosenSolution)Package.cs) -replace "AddName",$chosenSolution | Set-Content -Path  .\PackageDeployer\$($chosenSolution)Package.cs #TODO : Include this file in PackageDeployer.csproj
-(Get-Content -Path .\$chosenSolution\Compile.bat) -replace "FeatureTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\Compile.bat #TODO : Remove Compile.bat
+(Get-Content -Path .\$chosenSolution\Deployment\$($chosenSolution)Package.cs) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\Deployment\$($chosenSolution)Package.cs
+(Get-Content -Path .\$chosenSolution\Compile.bat) -replace "FeatureTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\Compile.bat
 (Get-Content -Path .\$chosenSolution\webpack.config.js) -replace "AddName",$chosenSolution.ToLower() | Set-Content -Path .\$chosenSolution\webpack.config.js -ErrorAction Ignore
 
 Write-Host "Updating XrmContext.exe.config ..."
@@ -349,6 +349,7 @@ Write-Host "Adding $chosenSolution Project to Solution"
 Set-Location .\..
 $sln = Get-ChildItem *.sln
 dotnet sln $sln.Name add $chosenSolution\$chosenSolution.csproj
+dotnet sln $sln.Name remove SolutionTemplate\SolutionTemplate.csproj
 
 #commit repo and update VariableGroup in DevOps
 
