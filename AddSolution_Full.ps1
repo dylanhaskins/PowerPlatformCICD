@@ -317,20 +317,20 @@ Write-Host "Updating $chosenSolution.csproj ..."
 (Get-Content -Path .\$chosenSolution\$chosenSolution.csproj) -replace "SolutionTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\$chosenSolution.csproj
 
 Write-Host "Update Sample Plugin NameSpace"
-(Get-Content -Path .\$chosenSolution\Plugins\Users\SamplePlugin.cs) -replace "AddName",$chosenSolution.ToLower() | Set-Content -Path .\$chosenSolution\\Plugins\Users\SamplePlugin.cs -ErrorAction Ignore
+(Get-Content -Path .\$chosenSolution\Plugins\Users\SamplePlugin.cs) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\\Plugins\Users\SamplePlugin.cs -ErrorAction Ignore
 
 (Get-Content -Path .\$chosenSolution\map.xml) -replace "PowerPlatformDevOpsPlugins",($chosenSolution) | Set-Content -Path .\$chosenSolution\map.xml
 
 
 Write-Host "Adding Solution to packageDeploy.json"
 $packagesToDeploy = Get-Content .\deployPackages.json | ConvertFrom-Json
-$deployTo = @([ordered]@{EnvironmentName="Deployment Staging";DeploymentType="Managed";DeployData="true"})
+$deployTo = @([ordered]@{EnvironmentName="Deployment Staging";DeploymentType="Managed";DeployData="true";PreAction=False;PostAction=False})
 if ($packagesToDeploy.Count -gt 0) {
     $packagesToDeploy += [ordered]@{DestinationFolder=$chosenSolution;PackageFolder=$chosenSolution;PackageName="$($chosenSolution)Package.dll";SolutionName=$chosenSolution;DeployTo=$deployTo}     
     ConvertTo-Json -Depth 3 $packagesToDeploy | Format-Json | Out-File .\deployPackages.json
 }
 else{
-    ConvertTo-Json -Depth 3 @(@{DestinationFolder=$chosenSolution;PackageFolder=$chosenSolution;PackageName="$($chosenSolution)Package.dll";SolutionName=$chosenSolution;DeployTo=$deployTo}) | Format-Json | Out-File .\deployPackages.json
+    ConvertTo-Json -Depth 3 @(@{DestinationFolder=$chosenSolution;PackageFolder=$chosenSolution;PackageName="$($chosenSolution)Package.dll";SolutionName=$chosenSolution;DeploymentSteps="";DeployTo=$deployTo}) | Format-Json | Out-File .\deployPackages.json
 }
 
 
