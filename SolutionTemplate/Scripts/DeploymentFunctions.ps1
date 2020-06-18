@@ -173,7 +173,7 @@ function Set-SystemSettings
         $updateFields.Add("isautosaveenabled", $false)   
         $updateFields.Add("plugintracelogsetting", (New-CrmOptionSetValue 2))   
         $updateFields.Add("useskypeprotocol", $false)   
-        $updateFields.Add("defaultcrmcustomname", "CCMS Admin (Classic UI)")   			
+        $updateFields.Add("defaultcrmcustomname", "Admin (Classic UI)")   			
         $updateFields.Add("localeid", 5129)   # New Zealand
         $updateFields.Add("enablelpauthoring", $false)
         $updateFields.Add("autoapplydefaultoncasecreate", $false)
