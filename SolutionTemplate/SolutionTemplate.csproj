@@ -63,9 +63,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Deployment\FeatureTemplatePackage.cs" />
     <Compile Include="Entities\Context\BusinessUnit.cs" />
     <Compile Include="Entities\Context\GlobalOptionSets.cs" />

@@ -1,5 +1,5 @@
 ﻿@echo off
-set package_root=..\..\..\
+set package_root=..\..\..\PackageDeployer\
 REM Find Microsoft.Xrm.Tooling.PackageDeployment.CrmPackageExtentionBase.dll in the package folder (irrespective of version)
 For /R %package_root% %%G IN (Microsoft.Xrm.Tooling.PackageDeployment.CrmPackageExtentionBase.dll) do (
 	IF EXIST "%%G" (set xrm_path=%%G
