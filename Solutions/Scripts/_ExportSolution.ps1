@@ -63,14 +63,14 @@ Remove-Item (Join-Path $StartPath "..\cdsunpack*patch*") -Force -Recurse
         $ProgressBar = New-BTProgressBar -Status $message -Value 0.6
         New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-        Export-CrmSolution -SolutionName $SolutionName -SolutionZipFileName "$SolutionName.zip" -conn $conn
+        Export-CrmSolution -SolutionName $SolutionName -SolutionZipFileName "$SolutionName.zip" -conn $conn -ErrorAction Stop
 
         $message = "Exporting Managed Solution for $SolutionName"
         Write-Host $message
         $ProgressBar = New-BTProgressBar -Status $message -Value 0.7
         New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-        Export-CrmSolution -SolutionName $SolutionName -Managed -SolutionZipFileName $SolutionName"_managed.zip" -conn $conn
+        Export-CrmSolution -SolutionName $SolutionName -Managed -SolutionZipFileName $SolutionName"_managed.zip" -conn $conn -ErrorAction Stop
 
         $Path = (Join-Path $StartPath "..\Deployment")
         $ImportConfig = Get-ChildItem -Path $Path -Include "ImportConfig.xml" -Recurse

@@ -339,19 +339,19 @@ Set-Location -Path  .\$chosenSolution
 # Write-Host "Installing Node module dependencies ..."
 # npm install
 
-Set-Location -Path .\Scripts
-
-Write-Host "Exporting Solution and Generating Types"
-Start-Process powershell -ArgumentList ".\SolutionExport.ps1" -Wait
-
-Set-Location -Path .\..
-
 Write-Host "Adding $chosenSolution Project to Solution"
 Set-Location .\..
 $sln = Get-ChildItem *.sln
 dotnet sln $sln.Name add $chosenSolution\$chosenSolution.csproj
 
 #commit repo and update VariableGroup in DevOps
+
+Set-Location -Path .\Scripts
+
+Write-Host "Exporting Solution and Generating Types"
+Start-Process powershell -ArgumentList ".\SolutionExport.ps1" -Wait
+
+Set-Location -Path .\..
 
 git add -A
 git commit -m "Added Solution $chosenSolution"
