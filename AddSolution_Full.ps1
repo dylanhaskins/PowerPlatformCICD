@@ -324,9 +324,9 @@ Write-Host "Update Sample Plugin NameSpace"
 
 Write-Host "Adding Solution to packageDeploy.json"
 $packagesToDeploy = Get-Content .\deployPackages.json | ConvertFrom-Json
-$deployTo = @([ordered]@{EnvironmentName="Deployment Staging";DeploymentType="Managed";DeployData="true";PreAction=False;PostAction=False})
+$deployTo = @([ordered]@{EnvironmentName="Deployment Staging";DeploymentType="Managed";DeployData="true";PreAction="false";PostAction="false"})
 if ($packagesToDeploy.Count -gt 0) {
-    $packagesToDeploy += [ordered]@{DestinationFolder=$chosenSolution;PackageFolder=$chosenSolution;PackageName="$($chosenSolution)Package.dll";SolutionName=$chosenSolution;DeployTo=$deployTo}     
+    $packagesToDeploy += [ordered]@{DestinationFolder=$chosenSolution;PackageFolder=$chosenSolution;PackageName="$($chosenSolution)Package.dll";SolutionName=$chosenSolution;DeploymentSteps="";DeployTo=$deployTo}     
     ConvertTo-Json -Depth 3 $packagesToDeploy | Format-Json | Out-File .\deployPackages.json
 }
 else{
