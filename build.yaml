@@ -52,7 +52,7 @@ stages:
             displayName: NPM Install pnpm
             inputs:
               command: custom
-              customCommand: install -g pnpm  
+              customCommand: install -g pnpm@5.1.8  
 
           - task: VSBuild@1
             displayName: Build Solution
