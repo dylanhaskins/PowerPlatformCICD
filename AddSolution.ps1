@@ -11,5 +11,5 @@ Param(
 
 Start-Sleep -Seconds 2
 
-& .\AddSolution_Full.ps1 #-Branch $FeatureBranch
+& .\AddSolution_Full.ps1 -ErrorAction Stop #-Branch $FeatureBranch
 
