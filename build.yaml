@@ -52,7 +52,21 @@ stages:
             displayName: NPM Install pnpm
             inputs:
               command: custom
-              customCommand: install -g pnpm@5.1.8  
+              customCommand: install -g pnpm
+              
+          - task: Npm@1
+            displayName: 'Cache NPM Modules'
+            inputs:
+              command: custom
+              customCommand: run prep  
+
+          - task: PowerShell@2
+            displayName: Prep PackageDeployer
+            inputs:
+              targetType: 'inline'
+              script: |
+                New-Item -ItemType Directory -Path .\PackageDeployer\bin\Release\ -Force
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
 
           - task: VSBuild@1
             displayName: Build Solution

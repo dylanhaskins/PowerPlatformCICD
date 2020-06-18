@@ -10,8 +10,8 @@ For /R %package_root% %%G IN (Microsoft.Xrm.Tooling.PackageDeployment.CrmPackage
 @echo Using '%xrm_path%' 
 roslyn\csc.exe /target:library ..\..\Deployment\FeatureTemplatePackage.cs /r:"%xrm_path%" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2\System.ComponentModel.Composition.dll"
 
-xcopy Deployment\. ..\..\..\PackageDeployer\bin\Release\. /s/e/y/i
 xcopy FeatureTemplatePackage.dll ..\..\..\PackageDeployer\bin\Release\.
+xcopy Deployment\. ..\..\..\PackageDeployer\bin\Release\. /s/e/y/i
 
 if errorlevel 1 (
 echo Error Code=%errorlevel%

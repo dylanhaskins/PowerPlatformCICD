@@ -277,7 +277,7 @@ if $(ConfigurationName) == GenerateXrmTypes (powershell.exe -ExecutionPolicy Byp
 </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>cmd.exe /C compile.bat $(ConfigurationName)
+    <PostBuildEvent>cmd.exe /C compile.bat
 npm run dist
 </PostBuildEvent>
   </PropertyGroup>
