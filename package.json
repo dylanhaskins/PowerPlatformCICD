@@ -26,7 +26,8 @@
     "typescript": "^3.5.3",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.5",
-    "pnpm": "^5.2.1"
+    "pnpm": "^5.2.1",
+    "source-map": "^0.7.3"
   },
   "dependencies": {
 

@@ -286,7 +286,7 @@ Write-Host "Updating config.json ..."
 (Get-Content -Path .\$chosenSolution\Scripts\config.json) -replace "https://AddServer.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path .\$chosenSolution\Scripts\config.json
 (Get-Content -Path .\$chosenSolution\Scripts\config.json) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\Scripts\config.json
 (Get-Content -Path .\$chosenSolution\Scripts\_GenerateTypes.ps1) -replace "ProjName",$chosenSolution | Set-Content -Path .\$chosenSolution\Scripts\_GenerateTypes.ps1
-(Get-Content -Path .\$chosenSolution\package.json) -replace "featuretemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\package.json
+(Get-Content -Path .\$chosenSolution\package.json) -replace "solutiontemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\package.json
 
 Write-Host "Updating spkl.json ..."
 (Get-Content -Path .\$chosenSolution\spkl.json) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\spkl.json
@@ -347,7 +347,6 @@ Write-Host "Adding $chosenSolution Project to Solution"
 Set-Location .\..
 $sln = Get-ChildItem *.sln
 dotnet sln $sln.Name add $chosenSolution\$chosenSolution.csproj
-dotnet sln $sln.Name remove SolutionTemplate\SolutionTemplate.csproj
 
 #commit repo and update VariableGroup in DevOps
 
