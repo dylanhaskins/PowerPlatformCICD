@@ -1,0 +1,35 @@
+{
+  "name": "solutiontemplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "pnpm": "npm list -g pnpm || npm install -g pnpm",
+    "dist": "pnpm install && npm run build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/node": "^12.12.31",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-cli": "^6.26.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "5.1.1",
+    "es6-promise": "^4.2.8",
+    "fs": "^0.0.1-security",
+    "glob": "^7.1.6",
+    "lodash": "^4.17.15",
+    "source-map-loader": "^1.0.0",
+    "typescript": "^3.5.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.5",
+    "pnpm": "^5.2.1",
+    "source-map": "^0.7.3"
+  },
+  "dependencies": {
+
+  }
+}

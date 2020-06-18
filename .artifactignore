@@ -1,0 +1,9 @@
+**/*
+!**/bin/Release/**
+!deployPackages.json
+!**/cdsunpack*/**
+!**/ReferenceData/**
+!**/Scripts/**
+!**/map.xml
+!**/EnvironmentVariables/**
+!**/dist/**

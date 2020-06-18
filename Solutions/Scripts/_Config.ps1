@@ -1,11 +1,13 @@
-﻿
+﻿Param(
+    [string] [Parameter(Mandatory= $true)] $StartPath
+)
 ######################## VARIABLES 
 #$global:ServerUrl = "https://AddNameHere.crm6.dynamics.com"
 #$global:SolutionName = "AddNameHere"
 #$global:UnmanagedPackageFile = "AddNameHere.zip"
 #$global:ManagedPackageFile = "AddNameHere_managed.zip"
 
-$global:BaseConfig = Join-Path $PSScriptRoot "config.json"
+$global:BaseConfig = Join-Path $StartPath "config.json"
 
 # Load and parse the JSON configuration file
 try {
@@ -25,6 +27,11 @@ $global:SolutionName = ($Config.target.SolutionName)
 $global:UnmanagedPackageFile = ($Config.target.UnmanagedPackageFile)
 $global:ManagedPackageFile = ($Config.target.ManagedPackageFile)
 $global:Geography = ($Config.target.Geography)
+$global:ProjectName = ($Config.target.ProjectName)
+
+if(!$global:ProjectName){
+	$global:ProjectName=$global:SolutionName
+}
 
 Write-Host $global:ServerUrl
 Write-Host $global:SolutionName

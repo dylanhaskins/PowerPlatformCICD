@@ -11,5 +11,5 @@ Set-Content .\Provision_Full.ps1 -Value $sourceFile.Content
 
 Start-Sleep -Seconds 2
 
-& .\Provision_Full.ps1 -PerformInstall $PerformInstall -Branch $Branch
+& .\Provision_Full.ps1 -PerformInstall $PerformInstall -Branch $Branch -ErrorAction Stop
 

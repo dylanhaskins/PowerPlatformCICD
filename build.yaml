@@ -27,7 +27,6 @@ variables:
     value: 'release'
   - name : Solution
     value: '**\*.sln'
-  - group: replaceRepo.D365CDEnvironment
 
 stages:
   - stage: Build
@@ -49,54 +48,59 @@ stages:
             inputs:
               restoreSolution: '$(Solution)'
 
-          - task: VSBuild@1
-            displayName: 'Build Solution'
+          - task: Npm@1
+            displayName: NPM Install pnpm
             inputs:
-              solution: '$(Solution)'
-              vsVersion: latest
-              platform: '$(BuildPlatform)'
-              configuration: '$(BuildConfiguration)'
-              msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)\\"'
-          
-          - task: VSTest@2
-            displayName: Run Unit and UI Tests
+              command: custom
+              customCommand: install -g pnpm
+              
+          - task: Npm@1
+            displayName: 'Cache NPM Modules'
             inputs:
-              testSelector: 'testAssemblies'
-              testAssemblyVer2: |
-                **\*test*.dll
-                !**\*TestAdapter.dll
-                !**\obj\**
-              searchFolder: '$(System.DefaultWorkingDirectory)'
+              command: custom
+              customCommand: run prep  
 
           - task: PowerShell@2
-            displayName: 'Pack Solution and Run Solution Checker'
+            displayName: Prep PackageDeployer
             inputs:
-              targetType: filePath
-              filePath: 'Solutions/Scripts/SolutionPack.ps1'
-              arguments: '-aadTenant $(aadTenant) -aadPowerAppId $(aadPowerAppId) -aadPowerAppSecret $(aadPowerAppSecret)'
+              targetType: 'inline'
+              script: |
+                New-Item -ItemType Directory -Path .\PackageDeployer\bin\Release\ -Force
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
 
-          - task: CopyFiles@2
-            displayName: 'Copy Build Artifact to: $(build.artifactstagingdirectory)'
+          - task: VSBuild@1
+            displayName: Build Solution
             inputs:
-              SourceFolder: '$(system.defaultworkingdirectory)'
-              Contents: |
-                **\bin\$(BuildConfiguration)\**
-                deployPackages.json
-              TargetFolder: '$(build.artifactstagingdirectory)'
-
-          - task: PublishSymbols@2
-            displayName: 'Publish symbols path'
-            inputs:
-              SearchPattern: '**\bin\**\*.pdb'
-              PublishSymbols: false
-            continueOnError: true
-
+              solution: $(Solution)
+              vsVersion: latest
+              platform: $(BuildPlatform)
+              configuration: $(BuildConfiguration)
+              maximumCpuCount: true
 
           - task: PublishPipelineArtifact@1
-            displayName: 'Publish Artifact: drop'
+            displayName: Publish Pipeline Artifacts
             inputs:
-              path: '$(build.artifactstagingdirectory)'
+              path: $(System.DefaultWorkingDirectory)
               artifact: drop
+                          
+      - job: testjob
+        displayName: Test Job
+        dependsOn: buildjob
+        steps:  
+          - download: current
+
+          - task: VSTest@2
+            displayName: Run Unit Tests
+            inputs:
+              testSelector: testAssemblies
+              testAssemblyVer2: |
+                **\Plugins*\**\*test*.dll
+                !**\*TestAdapter.dll
+                !**\obj\**
+              searchFolder: $(Pipeline.Workspace)
+              codeCoverageEnabled: true
+              runInParallel: true
+              runOnlyImpactedTests: true
 
   - stage: Deployment_Staging
     
@@ -120,24 +124,24 @@ stages:
                 filePath: '$(Pipeline.Workspace)/drop/Solutions/bin/Release/Scripts/SolutionDeploy.ps1'
                 arguments: '-DeployServerUrl $(d365url) -UserName $(d365username) -Password $(d365password) -PipelinePath $(Pipeline.Workspace)'
 
-  - stage: Test
+# - stage: Test
     
-    displayName: Test
-    dependsOn: 'Deployment_Staging'
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'),notIn(variables['Build.Reason'], 'IndividualCI', 'BatchedCI','PullRequest'))
-    jobs:
-    - deployment: DeployJob      
-      displayName: Test 
-      environment: 'Test'
-      variables:
-        - group: replaceRepo.D365TestEnvironment
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-            - task: PowerShell@2
-              displayName: 'Deploy Solution'
-              inputs:
-                targetType: filePath
-                filePath: '$(Pipeline.Workspace)/drop/Solutions/bin/Release/Scripts/SolutionDeploy.ps1'
-                arguments: '-DeployServerUrl $(d365url) -UserName $(d365username) -Password $(d365password) -PipelinePath $(Pipeline.Workspace)'
+#    displayName: Test
+#    dependsOn: 'Deployment_Staging'
+#    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'),notIn(variables['Build.Reason'], 'IndividualCI', 'BatchedCI','PullRequest'))
+#    jobs:
+#    - deployment: DeployJob      
+#      displayName: Test 
+#      environment: 'Test'
+#      variables:
+#        - group: replaceRepo.D365TestEnvironment
+#      strategy:
+#        runOnce:
+#          deploy:
+#            steps:
+#            - task: PowerShell@2
+#              displayName: 'Deploy Solution'
+#              inputs:
+#                targetType: filePath
+#                filePath: '$(Pipeline.Workspace)/drop/Solutions/bin/Release/Scripts/SolutionDeploy.ps1'
+#                arguments: '-DeployServerUrl $(d365url) -UserName $(d365username) -Password $(d365password) -PipelinePath $(Pipeline.Workspace)'

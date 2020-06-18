@@ -1,10 +1,12 @@
-﻿
+﻿Param(
+    [string] [Parameter(Mandatory= $true)] $StartPath
+)
 if (!$Credentials) {$Credentials = Get-Credential -Message "Credentials : $global:SolutionName @ $global:ServerUrl"}
 if (!$conn) {$conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $global:ServerUrl}
 
 if($conn.IsReady){
 
-Remove-Item (Join-Path $PSScriptRoot "..\package*patch*") -Force -Recurse
+Remove-Item (Join-Path $StartPath "..\cdsunpack*patch*") -Force -Recurse
 
     ######################## EXPORT SOLUTION
 
@@ -20,16 +22,16 @@ Remove-Item (Join-Path $PSScriptRoot "..\package*patch*") -Force -Recurse
         $ProgressBar = New-BTProgressBar -Status $message -Value 0.6
         New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-        Export-CrmSolution -SolutionName $SolutionName -SolutionZipFileName "$SolutionName.zip" -conn $conn
+        Export-CrmSolution -SolutionName $SolutionName -SolutionZipFileName "$SolutionName.zip" -conn $conn -ErrorAction Stop
 
         $message = "Exporting Managed Solution for $SolutionName"
         Write-Host $message
         $ProgressBar = New-BTProgressBar -Status $message -Value 0.7
         New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-        Export-CrmSolution -SolutionName $SolutionName -Managed -SolutionZipFileName $SolutionName"_managed.zip" -conn $conn
+        Export-CrmSolution -SolutionName $SolutionName -Managed -SolutionZipFileName $SolutionName"_managed.zip" -conn $conn -ErrorAction Stop
 
-        $Path = (Join-Path $PSScriptRoot "..\..\PackageDeployer")
+        $Path = (Join-Path $StartPath "..\Deployment")
         $ImportConfig = Get-ChildItem -Path $Path -Include "ImportConfig.xml" -Recurse
                                 
         [xml] $xdoc = (Get-Content -Path "$($ImportConfig.DirectoryName)\ImportConfig.xml")
@@ -49,7 +51,8 @@ Remove-Item (Join-Path $PSScriptRoot "..\package*patch*") -Force -Recurse
         Write-Host $message
         $ProgressBar = New-BTProgressBar -Status $message -Value 0.8
         New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
-        &.\Tools\SolutionPackager.exe /action:extract /folder:(Join-Path $PSScriptRoot "..\package$SolutionName\") /zipfile:"$SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
+        Remove-Item (Join-Path $StartPath "..\cdsunpack$SolutionName\") -Recurse -Force
+        &.\Tools\SolutionPackager.exe /action:extract /folder:(Join-Path $StartPath "..\cdsunpack$SolutionName\") /zipfile:"$SolutionName.zip" /packagetype:Both /allowDelete:No /c /useUnmanagedFileForMissingManaged
      }
     
     ## No Patches
@@ -60,16 +63,16 @@ Remove-Item (Join-Path $PSScriptRoot "..\package*patch*") -Force -Recurse
         $ProgressBar = New-BTProgressBar -Status $message -Value 0.6
         New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-        Export-CrmSolution -SolutionName $SolutionName -SolutionZipFileName "$SolutionName.zip" -conn $conn
+        Export-CrmSolution -SolutionName $SolutionName -SolutionZipFileName "$SolutionName.zip" -conn $conn -ErrorAction Stop
 
         $message = "Exporting Managed Solution for $SolutionName"
         Write-Host $message
         $ProgressBar = New-BTProgressBar -Status $message -Value 0.7
         New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-        Export-CrmSolution -SolutionName $SolutionName -Managed -SolutionZipFileName $SolutionName"_managed.zip" -conn $conn
+        Export-CrmSolution -SolutionName $SolutionName -Managed -SolutionZipFileName $SolutionName"_managed.zip" -conn $conn -ErrorAction Stop
 
-        $Path = (Join-Path $PSScriptRoot "..\..\PackageDeployer")
+        $Path = (Join-Path $StartPath "..\Deployment")
         $ImportConfig = Get-ChildItem -Path $Path -Include "ImportConfig.xml" -Recurse
                                 
         [xml] $xdoc = (Get-Content -Path "$($ImportConfig.DirectoryName)\ImportConfig.xml")
@@ -93,7 +96,8 @@ Remove-Item (Join-Path $PSScriptRoot "..\package*patch*") -Force -Recurse
         Write-Host $message
         $ProgressBar = New-BTProgressBar -Status $message -Value 0.8
         New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
-        &.\Tools\SolutionPackager.exe /action:extract /folder:(Join-Path $PSScriptRoot "..\package$SolutionName\") /zipfile:"$SolutionName.zip" /packagetype:Both /allowDelete:Yes /c
+        Remove-Item (Join-Path $StartPath "..\cdsunpack$SolutionName\") -Recurse -Force
+        &.\Tools\SolutionPackager.exe /action:extract /folder:(Join-Path $StartPath "..\cdsunpack$SolutionName\") /zipfile:"$SolutionName.zip" /packagetype:Both /allowDelete:No /c /useUnmanagedFileForMissingManaged
      }
 
 }

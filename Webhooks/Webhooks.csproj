@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net471</TargetFramework>
     <AzureFunctionsVersion>v1</AzureFunctionsVersion>
     <Configurations>Debug;Release;SolutionPackager</Configurations>
   </PropertyGroup>
