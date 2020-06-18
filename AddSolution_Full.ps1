@@ -289,8 +289,8 @@ Write-Host "Updating config.json ..."
 (Get-Content -Path .\$chosenSolution\package.json) -replace "solutiontemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\package.json
 
 Write-Host "Updating spkl.json ..."
-(Get-Content -Path .\$chosenSolution\spkl.json) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\spkl.json
-(Get-Content -Path .\$chosenSolution\spkl.json) -replace "prefix",$PublisherPrefix.Replace(' ','').ToLower() | Set-Content -Path .\$chosenSolution\spkl.json
+(Get-Content -Path .\$chosenSolution\spkl\spkl.json) -replace "AddName",$chosenSolution | Set-Content -Path .\$chosenSolution\spkl\spkl.json
+(Get-Content -Path .\$chosenSolution\spkl\spkl.json) -replace "prefix",$PublisherPrefix.Replace(' ','').ToLower() | Set-Content -Path .\$chosenSolution\spkl\spkl.json
 
 Write-Host "Updating ImportConfig.xml ..."
 Move-Item .\$chosenSolution\Deployment\FeatureTemplate .\$chosenSolution\Deployment\$chosenSolution

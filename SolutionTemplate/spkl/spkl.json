@@ -22,7 +22,7 @@
       "files": [
         {
           "uniquename": "prefix_/systemuser.js",
-          "file": "js\\systemuser.js",
+          "file": "..\\js\\systemuser.js",
           "description": "System User JavaScript Library"
         }
       ]
@@ -37,7 +37,7 @@
             */
       "profile": "default,debug",
       "solution": "AddName",
-      "assemblypath": "bin\\Debug",
+      "assemblypath": "..\\bin\\Debug\\AddName.dll",
       "classRegex": "((public( sealed)? class (?'class'[\\w]*)[\\W]*?)((?'plugin':[\\W]*?((IPlugin)|(BasePlugin)|(Plugin)))|(?'wf':[\\W]*?BaseWorkflow)))"
     }
   ],
