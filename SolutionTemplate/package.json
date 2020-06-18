@@ -30,6 +30,6 @@
   },
   "dependencies": {
     "moment": "^2.24.0",
-    "pnpm": "^4.12.4"
+    "pnpm": "5.1.8"
   }
 }
