@@ -346,7 +346,7 @@ dotnet sln $sln.Name add $chosenSolution\$chosenSolution.csproj
 
 #commit repo and update VariableGroup in DevOps
 
-Set-Location -Path .\Scripts
+Set-Location -Path .\$chosenSolution\Scripts
 
 Write-Host "Exporting Solution and Generating Types"
 Start-Process powershell -ArgumentList ".\SolutionExport.ps1" -Wait
