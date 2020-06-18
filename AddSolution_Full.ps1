@@ -316,6 +316,9 @@ Write-Host "Updating $chosenSolution.csproj ..."
 (Get-Content -Path .\$chosenSolution\$chosenSolution.csproj) -replace "FeatureTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\$chosenSolution.csproj
 (Get-Content -Path .\$chosenSolution\$chosenSolution.csproj) -replace "SolutionTemplate",$chosenSolution | Set-Content -Path .\$chosenSolution\$chosenSolution.csproj
 
+Write-Host "Update Sample Plugin NameSpace"
+(Get-Content -Path .\$chosenSolution\Plugins\Users\SamplePlugin.cs) -replace "AddName",$chosenSolution.ToLower() | Set-Content -Path .\$chosenSolution\\Plugins\Users\SamplePlugin.cs -ErrorAction Ignore
+
 (Get-Content -Path .\$chosenSolution\map.xml) -replace "PowerPlatformDevOpsPlugins",($chosenSolution) | Set-Content -Path .\$chosenSolution\map.xml
 
 

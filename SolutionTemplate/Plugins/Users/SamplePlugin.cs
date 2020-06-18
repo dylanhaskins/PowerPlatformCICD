@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FeatureABC.Users
+namespace AddName.Users
 
 {
     [CrmPluginRegistration("Update",

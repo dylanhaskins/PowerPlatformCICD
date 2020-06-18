@@ -5,7 +5,7 @@ Param(
 
 $Text = "Power Platform DevOps"
 $UniqueId = "PPDevOps"
-$Version = "2.0.180620.2305"
+$Version = "2.0.180620.2320"
 
 function Restart-PowerShell
 {
