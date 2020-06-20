@@ -350,5 +350,22 @@
       }
     }
   ],
-  "outputs": {}
+  "outputs": {
+    "FunctionAppResourceId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]"
+    },
+    "FunctionAppHostname": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Web/sites', parameters('functionAppName')), '2018-02-01').defaultHostName]"
+    },
+    "FunctionAppName": {
+      "type": "string",
+      "value": "[parameters('functionAppName')]"
+    },
+    "FunctionPrincipalId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Web/sites', parameters('functionAppName')), '2018-11-01','Full').identity.principalId]"
+    }
+  }
 }
