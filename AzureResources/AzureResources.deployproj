@@ -29,6 +29,7 @@
   <ItemGroup>
     <Content Include="azuredeploy.json" />
     <Content Include="azuredeploy.parameters.json" />
+    <None Include="Instructions.md" />
     <None Include="Set-ArmOutput.ps1" />
     <None Include="Deployment.targets">
       <Visible>False</Visible>
