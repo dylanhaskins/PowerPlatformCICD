@@ -29,10 +29,15 @@
   <ItemGroup>
     <Content Include="azuredeploy.json" />
     <Content Include="azuredeploy.parameters.json" />
+    <None Include="Set-ArmOutput.ps1" />
     <None Include="Deployment.targets">
       <Visible>False</Visible>
     </None>
     <Content Include="Deploy-AzureResourceGroup.ps1" />
+    <None Include="GetFunctionHostKey.bat" />
+    <None Include="GetAccessToken.bat" />
+    <None Include="Set-D365ApplicationUser.ps1" />
+    <None Include="Set-WebhookConfig.ps1" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>
