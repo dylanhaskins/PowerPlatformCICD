@@ -275,7 +275,7 @@ Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.30
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-Copy-Item -Path .\SolutionTemplate\. -Destination $chosenSolution -Recurse 
+Get-ChildItem -Path .\SolutionTemplate\ -Exclude "node_modules","dist","bin","obj",".awcache" | Copy-Item -Destination $chosenSolution -Recurse
 
 $message = "Setting Configurations in Source Code"
 Write-Host $message
