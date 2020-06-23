@@ -8,7 +8,7 @@ $UniqueId = "PPDevOps"
 
 function Install-XrmModule{
     $moduleName = "Microsoft.Xrm.Data.Powershell"
-    $moduleVersion = "2.8.5"
+    $moduleVersion = "2.8.8"
     $module = Get-Module -ListAvailable -Name $moduleName
     if (!($module.Version -ge $moduleVersion )) {
         Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
@@ -275,6 +275,7 @@ Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.30
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
+Remove-Item -Path ".\SolutionTemplate\node_modules",".\SolutionTemplate\.awcache",".\SolutionTemplate\bin",".\SolutionTemplate\dist",".\SolutionTemplate\obj" -Recurse -Force -ErrorAction SilentlyContinue
 Copy-Item -Path .\SolutionTemplate\. -Destination $chosenSolution -Recurse 
 
 $message = "Setting Configurations in Source Code"

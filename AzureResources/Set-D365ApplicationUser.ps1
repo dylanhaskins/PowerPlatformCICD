@@ -1,23 +1,3 @@
-<#
-  
-  Ensure the following values were created and set by the Provision script
-
-  - d365url - c
-  -CompanionAppName / WebhookAppName - name of CompanionApp or Webhook created in Azure
-  -d365AppSecurityRoleNames - Security Role
-
-  d365AccessToken will be created by the Get-AccessToken.bat script that should run as first Task in the release
-    
-  Pass following Script Arguments with a Powershell task in the release
-
-  example for Companion App
-  -d365ResourceName "$(d365CrmResourceName)" 
-  -servicePrincipalNames "$(CompanionAppName),$(WebhookAppName)" 
-  -roleNames "$(d365AppSecurityRoleNames)"
-
-#>
-
-
 Param(
     , [Parameter(Mandatory = $true)] [string] $d365ResourceName  
     , [Parameter(Mandatory = $true)] [string[]] $servicePrincipalNames
@@ -25,8 +5,7 @@ Param(
 )
 
 $accesstoken=$(az account get-access-token --resource $d365ResourceName --query accessToken --output json)
- 
-# setting output variables
+ # setting variables
 Write-Host "##vso[task.setvariable variable=accessToken;isOutput=true;issecret=true]$accesstoken"
 
 
