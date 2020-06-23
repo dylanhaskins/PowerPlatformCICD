@@ -8,7 +8,7 @@ $UniqueId = "PPDevOps"
 
 function Install-XrmModule{
     $moduleName = "Microsoft.Xrm.Data.Powershell"
-    $moduleVersion = "2.8.5"
+    $moduleVersion = "2.8.8"
     $module = Get-Module -ListAvailable -Name $moduleName
     if (!($module.Version -ge $moduleVersion )) {
         Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
