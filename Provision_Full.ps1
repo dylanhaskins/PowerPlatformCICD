@@ -177,7 +177,12 @@ if($prompt_result -eq 2){
 if ($prompt_result -eq 1)
 {
     #add check for empty string
-    $adoProject = Read-Host -Prompt "Please enter the Name of the Project you wish to Create"
+
+
+    do{
+        $adoProject = Read-Host -Prompt "Please enter the Name of the Project you wish to Create"
+	}until ($adoProject -ne "")
+    
 
     $message = "Creating DevOps Project $adoProject"
     Write-Host $message
@@ -203,9 +208,12 @@ if ($adoCreate -eq 1)
 else
 {
     Write-Host ""
-    $adoRepo = Read-Host -Prompt "Enter the name for the Git Repository you wish to Create"
-    $adoRepo = $adoRepo.Replace(' ','')
 
+    do{
+        $adoRepo = Read-Host -Prompt "Enter the name for the Git Repository you wish to Create"
+    } until ($adoRepo -ne "")
+
+    $adoRepo = $adoRepo.Replace(' ','')
     $message = "Creating Git Repo $adoRepo"
     Write-Host $message
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.38
@@ -268,7 +276,7 @@ $message = "Connecting to Power Platform"
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.70
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-$title = "CDS"
+$title = "Common Data Service"
 $option0 = New-Object System.Management.Automation.Host.ChoiceDescription '&Connect', 'connect'
 $option1 = New-Object System.Management.Automation.Host.ChoiceDescription '&Quit', 'quit'
 $options = [System.Management.Automation.Host.ChoiceDescription[]]($option0, $option1)
@@ -352,100 +360,6 @@ $pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --re
 az repos show --repository $repo.id --open
 az pipelines show --id $pipeline.definition.id --open
 
-[console]::ForegroundColor = "White"
-#Provision Azure Resource group 
-Write-Host "Setting up the Azure Resource group requires both Azure and your Power Platform/Dynamics 365 to be on the same Azure AD Tenant"
-$AzureSetup = Read-Host -Prompt "Azure subscriptions : Would you like to create the default Azure resources [Y] Yes or [S] Skip (Default [S])"
-
-if ($AzureSetup -eq "Y"){
-    
-    $selection =  az login | Out-String | ConvertFrom-Json
-    $choiceIndex = 0
-    $selection | ForEach-Object { write-host "[$($choiceIndex)] $($_.Name)"; $choiceIndex++; }     
-    $subscriptionName = $null 
-    $success = $false
-
-    do {
-        $choice = read-host "Select the Azure Subscription you want to deploy to"
-        if (!$choice) {
-            Write-Host "Invalid selection (null)"
-        }
-        else {
-            $choice = $choice -as [int];
-            if ($null -eq $choice) {
-                Write-Host "Invalid selection (not number)"
-            }
-            elseif ($choice -le -1) {
-                Write-Host "Invalid selection (negative)"
-            }
-            else {
-                $subscriptionId = $selection[$choice].id
-                $subscriptionName = $selection[$choice].name
-                if ($null -ne $subscriptionName) {
-                   Write-Host "Selected Subscription : $subscriptionName"
-                   $success = $true
-                }
-                else {
-                    Write-Host "Invalid selection (index out of range)"
-                }
-            } 
-        }
-    } while (!$success)
-
-    az account set --subscription $subscriptionId
-
-    $selection =  az account list-locations --output json | Out-String | ConvertFrom-Json
-    $choiceIndex = 0
-    $selection | ForEach-Object { write-host "[$($choiceIndex)] $($_.name)"; $choiceIndex++; } 
-    $regionName = $null 
-    $success = $false
-
-    do {
-        $choice = read-host "Select the Azure Region you want to deploy to"
-        if (!$choice) {
-            Write-Host "Invalid selection (null)"
-        }
-        else {
-            $choice = $choice -as [int];
-            if ($null -eq $choice) {
-                Write-Host "Invalid selection (not number)"
-            }
-            elseif ($choice -le -1) {
-                Write-Host "Invalid selection (negative)"
-            }
-            else {
-                $regionName = $selection[$choice].name
-                if ($null -ne $regionName) {
-                   Write-Host "Selected Region : $regionName"
-                   $success = $true
-                }
-                else {
-                    Write-Host "Invalid selection (index out of range)"
-                }
-            } 
-        }
-    } while (!$success)
-
-
-
-    Write-Host "Updating ARM Parameter values"
-    $adoRepoLower = $adoRepo.ToLower()
-    (Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddName" , $adoRepoLower | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
-    (Get-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json) -replace "AddGeography" , $regionName.ToLower() | Set-Content -Path \Dev\Repos\$adoRepo\AzureResources\azuredeploy.parameters.json
-
-    Write-Host "Set new variables in Azure DevOps"
-    az pipelines variable-group variable create --name CompanionAppName --value "$adoRepoLower-wba" --group-id $varGroup.id
-    az pipelines variable-group variable create --name WebhookAppName --value "$adoRepoLower-fna" --group-id $varGroup.id
-    az pipelines variable-group variable create --name d365AppSecurityRoleNames --value "Delegate" --group-id $varGroup.id
-
-    az pipelines variable-group variable create --name CompanionAppName --value "$adoRepoLower-wba" --group-id $varGroupCICD.id
-    az pipelines variable-group variable create --name WebhookAppName --value "$adoRepoLower-fna" --group-id $varGroupCICD.id
-    az pipelines variable-group variable create --name d365AppSecurityRoleNames --value "Delegate" --group-id $varGroupCICD.id
-
-
-    Set-Location -Path C:\Dev\Repos\$adoRepo\AzureResources\
-    & .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation $regionName -ResourceGroupName "$adoRepoLower-dev"
-}
 
 $message = "Complete ... Enjoy !!!"
 Write-Host $message
