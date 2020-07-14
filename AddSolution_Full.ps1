@@ -111,8 +111,13 @@ Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.10
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-$quit = Read-Host -Prompt "Press Enter to Connect to your CDS / D365 Tenant or [Q]uit"
-if ($quit -eq "Q")
+$title = "Common Data Service"
+$option0 = New-Object System.Management.Automation.Host.ChoiceDescription '&Connect', 'connect'
+$option1 = New-Object System.Management.Automation.Host.ChoiceDescription '&Quit', 'quit'
+$options = [System.Management.Automation.Host.ChoiceDescription[]]($option0, $option1)
+$prompt_result = $host.ui.PromptForChoice($title, $message, $options,-1)
+
+if ($quit -eq 1)
 {
     exit
 }
@@ -125,8 +130,8 @@ if (!$Credentials)
 }
 if (!$username)
 {
-$username =  $Credentials.GetNetworkCredential().UserName
-$password =  $Credentials.GetNetworkCredential().Password
+    $username =  $Credentials.GetNetworkCredential().UserName
+    $password =  $Credentials.GetNetworkCredential().Password
 }
 
     Install-XrmModule
@@ -153,22 +158,44 @@ $password =  $Credentials.GetNetworkCredential().Password
         }
      } Until ($conn.IsReady) 
 
-    $CreateOrSelect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Solution or [S]elect an Existing One (Default [S])"
-if ($CreateOrSelect -eq "C"){
+#$CreateOrSelect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Solution or [S]elect an Existing One (Default [S])"
+
+
+$title = "Common Data Service - Development Environment"
+$message = "Create a New Solution or Select existing"
+$option0 = New-Object System.Management.Automation.Host.ChoiceDescription '&Create', 'create'
+$option1 = New-Object System.Management.Automation.Host.ChoiceDescription '&Select', 'select'
+$options = [System.Management.Automation.Host.ChoiceDescription[]]($option0, $option1)
+$prompt_result = $host.ui.PromptForChoice($title, $message, $options,-1)
+
+if ($prompt_result -eq 0){
 
     $message = "Creating Solution and Publisher"
     Write-Host $message
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.78
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-    $CreateOrSelectPub = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Publisher or [S]elect an Existing One (Default [S])"
-    if ($CreateOrSelectPub -eq "C"){
+    #$CreateOrSelectPub = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Publisher or [S]elect an Existing One (Default [S])"
 
-    $PublisherName = Read-Host -Prompt "Enter a Name for your Solution Publisher"
-    $PublisherPrefix = Read-Host -Prompt "Enter a Publisher Prefix"
+    $title = "Common Data Service"
+    $message = "Create or select a Solution Publisher"
+    $option0 = New-Object System.Management.Automation.Host.ChoiceDescription '&Create', 'create'
+    $option1 = New-Object System.Management.Automation.Host.ChoiceDescription '&Select', 'select'
+    $options = [System.Management.Automation.Host.ChoiceDescription[]]($option0, $option1)
+    $prompt_result = $host.ui.PromptForChoice($title, $message, $options,-1)
 
-    $PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','');"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix.Replace(' ','').ToLower()}
-    $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $PublisherId.Guid
+    if ($prompt_result -eq 0){
+       
+        do{
+            $PublisherName = Read-Host -Prompt "Enter a Name for your Solution Publisher"
+        }until($PublisherName -ne "")
+
+        do{
+            $PublisherPrefix = Read-Host -Prompt "Enter a Publisher Prefix"
+        }until($PublisherPrefix -ne "")
+
+        $PublisherId = New-CrmRecord -EntityLogicalName publisher -Fields @{"uniquename"=$PublisherName.Replace(' ','');"friendlyname"=$PublisherName;"customizationprefix"=$PublisherPrefix.Replace(' ','').ToLower()}
+        $PubLookup = New-CrmEntityReference -EntityLogicalName publisher -Id $PublisherId.Guid
     }
     else
     {
@@ -183,10 +210,8 @@ if ($CreateOrSelect -eq "C"){
 "@
 
     $publishers = (Get-CrmRecordsByFetch -conn $conn -Fetch $publisherFetch).CrmRecords
-
     $choiceIndex = 0
     $options = $publishers | ForEach-Object { write-host "[$($choiceIndex)] $($_.friendlyname)"; $choiceIndex++; }  
-
 
     $success = $false
     do {
@@ -216,9 +241,14 @@ if ($CreateOrSelect -eq "C"){
         }
     } while (!$success)
     }
-    $SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"    
-    $SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','');"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
-    $chosenSolution = $SolutionName.Replace(' ','')
+
+
+    do{
+        $SolutionName = Read-Host -Prompt "Enter a Name for your Unmanaged Development Solution"    
+    }until ($SolutionName -ne "")
+
+        $SolutionId = New-CrmRecord -EntityLogicalName solution -Fields @{"uniquename"=$SolutionName.Replace(' ','');"friendlyname"=$SolutionName;"version"="1.0.0.0";"publisherid"=$PubLookup}
+        $chosenSolution = $SolutionName.Replace(' ','')
     }
     else{
 
@@ -237,8 +267,7 @@ if ($CreateOrSelect -eq "C"){
 
     $choiceIndex = 0
     $options = $solutions | ForEach-Object { write-host "[$($choiceIndex)] $($_.uniquename)"; $choiceIndex++; }  
-
-
+    
     $success = $false
     do {
         $choice = read-host "Enter your selection"
@@ -282,6 +311,7 @@ $message = "Setting Configurations in Source Code"
 Write-Host $message
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.40
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
+
 
 Write-Host "Updating config.json ..."
 (Get-Content -Path .\$chosenSolution\Scripts\config.json) -replace "https://AddServer.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path .\$chosenSolution\Scripts\config.json
@@ -333,8 +363,6 @@ if ($packagesToDeploy.Count -gt 0) {
 else{
     ConvertTo-Json -Depth 3 @(@{DestinationFolder=$chosenSolution;PackageFolder=$chosenSolution;PackageName="$($chosenSolution)Package.dll";SolutionName=$chosenSolution;DeploymentSteps="";DeployTo=$deployTo}) | Format-Json | Out-File .\deployPackages.json
 }
-
-
 
 Set-Location -Path  .\$chosenSolution
 # Write-Host "Installing Node module dependencies ..."

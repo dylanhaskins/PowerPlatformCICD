@@ -142,7 +142,10 @@ $message = "Connecting to Azure DevOps Organisation"
 $ProgressBar = New-BTProgressBar -Status $message -Value 0.30
 New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
-$adoOrg = Read-Host -Prompt "Enter the name of your Azure DevOps Organisation (https://dev.azure.com/<Name>)"
+
+do{
+    $adoOrg = Read-Host -Prompt "Enter the name of your Azure DevOps Organisation (https://dev.azure.com/<Name>)"
+}until ($adoOrg -ne "")
 
 $msg = "You will now be redirected to a Browser to Login to your Azure DevOps Organisation"
 $title = "Setting up Azure DevOps"
@@ -319,7 +322,6 @@ Write-Host "---- Please Select your Deployment Staging (CI/CD) Environment -----
 $connCICD = Connect-CrmOnlineDiscovery -Credential $Credentials 
 
 # . ".\SolutionExport.ps1"
-    
 #commit repo and update VariableGroup in DevOps
 
 git add -A
