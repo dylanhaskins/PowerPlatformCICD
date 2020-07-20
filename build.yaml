@@ -76,11 +76,21 @@ stages:
               platform: $(BuildPlatform)
               configuration: $(BuildConfiguration)
               maximumCpuCount: true
+              msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)\\"'
+
+          - task: CopyFiles@2
+            displayName: 'Copy Packaged files'
+            inputs:
+              SourceFolder: '$(System.DefaultWorkingDirectory)\'
+              Contents: |
+                        **\bin\$(BuildConfiguration)\**
+                        !**/node_modules/**
+              TargetFolder: '$(build.artifactstagingdirectory)\'
 
           - task: PublishPipelineArtifact@1
             displayName: Publish Pipeline Artifacts
             inputs:
-              path: $(System.DefaultWorkingDirectory)
+              path: $(System.artifactstagingdirectory)
               artifact: drop
                           
       - job: testjob

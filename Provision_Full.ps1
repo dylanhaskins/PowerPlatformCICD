@@ -144,7 +144,8 @@ New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -Unique
 
 
 do{
-    $adoOrg = Read-Host -Prompt "Enter the name of your Azure DevOps Organisation (https://dev.azure.com/<Name>)"
+    Write-Host "Enter the <NAME> of your Azure DevOps Organisation only the NAME - not the full path!"
+    $adoOrg = Read-Host -Prompt "Depending on your instance, either dev.azure.com/<NAME> or <NAME>.visualstudio.com"
 }until ($adoOrg -ne "")
 
 $msg = "You will now be redirected to a Browser to Login to your Azure DevOps Organisation"
@@ -179,9 +180,6 @@ if($prompt_result -eq 2){
 
 if ($prompt_result -eq 1)
 {
-    #add check for empty string
-
-
     do{
         $adoProject = Read-Host -Prompt "Please enter the Name of the Project you wish to Create"
 	}until ($adoProject -ne "")
@@ -306,7 +304,7 @@ Install-XrmModule
 
 Write-Host "Updating Build.yaml ..."
 (Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "replaceRepo",$adoRepo | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
-(Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
+#(Get-Content -Path \Dev\Repos\$adoRepo\build.yaml) -replace "AddName",$chosenSolution | Set-Content -Path \Dev\Repos\$adoRepo\build.yaml
 
 
 Write-Host "Rename PowerPlatformDevOps.sln to $adoRepo.sln"

@@ -158,7 +158,6 @@ if (!$username)
         }
      } Until ($conn.IsReady) 
 
-#$CreateOrSelect = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Solution or [S]elect an Existing One (Default [S])"
 
 
 $title = "Common Data Service - Development Environment"
@@ -174,8 +173,6 @@ if ($prompt_result -eq 0){
     Write-Host $message
     $ProgressBar = New-BTProgressBar -Status $message -Value 0.78
     New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
-
-    #$CreateOrSelectPub = Read-Host -Prompt "Development Environment : Would you like to [C]reate a New Publisher or [S]elect an Existing One (Default [S])"
 
     $title = "Common Data Service"
     $message = "Create or select a Solution Publisher"
