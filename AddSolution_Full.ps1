@@ -369,6 +369,7 @@ Write-Host "Adding $chosenSolution Project to Solution"
 Set-Location .\..
 $sln = Get-ChildItem *.sln
 dotnet sln $sln.Name add $chosenSolution\$chosenSolution.csproj
+dotnet sln $sln.Name remove SolutionTemplate\SolutionTemplate.csproj
 
 #commit repo and update VariableGroup in DevOps
 

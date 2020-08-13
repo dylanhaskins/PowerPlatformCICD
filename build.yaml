@@ -8,6 +8,7 @@ pool:
   vmImage: 'windows-latest'
 
 trigger:
+  batch : true
   branches:
     include:
     - /*
@@ -48,26 +49,6 @@ stages:
             inputs:
               restoreSolution: '$(Solution)'
 
-          - task: Npm@1
-            displayName: NPM Install pnpm
-            inputs:
-              command: custom
-              customCommand: install -g pnpm
-              
-          - task: Npm@1
-            displayName: 'Cache NPM Modules'
-            inputs:
-              command: custom
-              customCommand: run prep  
-
-          - task: PowerShell@2
-            displayName: Prep PackageDeployer
-            inputs:
-              targetType: 'inline'
-              script: |
-                New-Item -ItemType Directory -Path .\PackageDeployer\bin\Release\ -Force
-              workingDirectory: '$(System.DefaultWorkingDirectory)'
-
           - task: VSBuild@1
             displayName: Build Solution
             inputs:
@@ -84,6 +65,12 @@ stages:
               SourceFolder: '$(System.DefaultWorkingDirectory)\'
               Contents: |
                         **\bin\$(BuildConfiguration)\**
+                        deployPackages.json
+                        **/cdsunpack*/**
+                        **/ReferenceData/**
+                        **/Scripts/**
+                        **/map.xml
+                        **/EnvironmentVariables/**
                         !**/node_modules/**
               TargetFolder: '$(build.artifactstagingdirectory)\'
 
@@ -133,7 +120,43 @@ stages:
                 targetType: filePath
                 filePath: '$(Pipeline.Workspace)/drop/Solutions/bin/Release/Scripts/SolutionDeploy.ps1'
                 arguments: '-DeployServerUrl $(d365url) -UserName $(d365username) -Password $(d365password) -PipelinePath $(Pipeline.Workspace)'
+#### ----- Uncomment this block to Enable Azure ARM Template Deployment ------
+#    - deployment: AzureJob      
+#      displayName: Azure Function App 
+#      environment: 'Deployment Staging'
+#      variables:
+#        - group: replaceRepo.D365CDEnvironment
+#      strategy:
+#        runOnce:
+#          deploy:
+#            steps:
+#            - task: AzureResourceManagerTemplateDeployment@3
+#              displayName: 'ARM Template deployment: $(AzureResourceGroup) scope'
+#              inputs:
+#                deploymentScope: 'Resource Group'
+#                azureResourceManagerConnection: 'replaceRepo-Azure'  #Make sure you create this connection in Azure DevOps under Project / Service Connections
+#                subscriptionId: '$(AzureSubscriptionId)'
+#                action: 'Create Or Update Resource Group'
+#                resourceGroupName: '$(AzureResourceGroup)'
+#                location: '$(Location)'
+#                templateLocation: 'Linked artifact'
+#                csmFile: '$(Pipeline.Workspace)/drop/AzureResources/azuredeploy.json'
+#                csmParametersFile: '$(Pipeline.Workspace)/drop/AzureResources/azuredeploy.parameters.json'
+#                overrideParameters: '-appInsightsName "$(AzureAppInsightsName)" -appInsightsLocation "$(AzureLocation)" -storageAccountName "$(AzureStorageAccountName)" -storageAccountSku "Standard_LRS" -functionAppName "$(AzureFunctionAppName)" -webAppName "$(AzureWebAppName)" -workspaceName "$(WorkspaceName)" -keyVaultName "$(AzureKeyVaultName)"'
+#                deploymentMode: 'Incremental'
+#                deploymentOutputs: 'armoutputs'
 
+#            - task: AzureRmWebAppDeployment@4
+#              displayName: 'Azure App Service Deploy: $(AzureWebAppName)'
+#              inputs:
+#                ConnectionType: 'AzureRM'
+#                azureSubscription: 'replaceRepo-Azure'
+#                appType: functionApp
+#                WebAppName: '$(AzureFunctionAppName)'
+#                packageForLinux: '$(Pipeline.Workspace)/drop/replaceRepo.zip'
+#                #AppSettings: '-PowerAppsPortalConfig:Domain "$(PowerAppsPortalDomain)" -PowerAppsPortalConfig:ApplicationId "$(PowerAppsPortalApplicationId)" -AzureStorageConfig:ContainerName "$(AzureStorageContainerName)"'
+
+#### ----- Uncomment this block to Enable Test Environment Stage Deployment ------
 # - stage: Test
     
 #    displayName: Test
@@ -155,3 +178,38 @@ stages:
 #                targetType: filePath
 #                filePath: '$(Pipeline.Workspace)/drop/Solutions/bin/Release/Scripts/SolutionDeploy.ps1'
 #                arguments: '-DeployServerUrl $(d365url) -UserName $(d365username) -Password $(d365password) -PipelinePath $(Pipeline.Workspace)'
+
+#    - deployment: AzureJob      
+#      displayName: Azure Function App 
+#      environment: 'Test'
+#      variables:
+#        - group: replaceRepo.D365TestEnvironment
+#      strategy:
+#        runOnce:
+#          deploy:
+#            steps:
+#            - task: AzureResourceManagerTemplateDeployment@3
+#              displayName: 'ARM Template deployment: $(AzureResourceGroup) scope'
+#              inputs:
+#                deploymentScope: 'Resource Group'
+#                azureResourceManagerConnection: 'replaceRepo-Azure'  #Make sure you create this connection in Azure DevOps under Project / Service Connections
+#                subscriptionId: '$(AzureSubscriptionId)'
+#                action: 'Create Or Update Resource Group'
+#                resourceGroupName: '$(AzureResourceGroup)'
+#                location: '$(Location)'
+#                templateLocation: 'Linked artifact'
+#                csmFile: '$(Pipeline.Workspace)/drop/AzureResources/azuredeploy.json'
+#                csmParametersFile: '$(Pipeline.Workspace)/drop/AzureResources/azuredeploy.parameters.json'
+#                overrideParameters: '-appInsightsName "$(AzureAppInsightsName)" -appInsightsLocation "$(AzureLocation)" -storageAccountName "$(AzureStorageAccountName)" -storageAccountSku "Standard_LRS" -functionAppName "$(AzureFunctionAppName)" -webAppName "$(AzureWebAppName)" -workspaceName "$(WorkspaceName)" -keyVaultName "$(AzureKeyVaultName)"'
+#                deploymentMode: 'Incremental'
+#                deploymentOutputs: 'armoutputs'
+
+#            - task: AzureRmWebAppDeployment@4
+#              displayName: 'Azure App Service Deploy: $(AzureWebAppName)'
+#              inputs:
+#                ConnectionType: 'AzureRM'
+#                azureSubscription: 'replaceRepo-Azure'
+#                appType: functionApp
+#                WebAppName: '$(AzureFunctionAppName)'
+#                packageForLinux: '$(Pipeline.Workspace)/drop/replaceRepo.zip'
+#                #AppSettings: '-PowerAppsPortalConfig:Domain "$(PowerAppsPortalDomain)" -PowerAppsPortalConfig:ApplicationId "$(PowerAppsPortalApplicationId)" -AzureStorageConfig:ContainerName "$(AzureStorageContainerName)"'
