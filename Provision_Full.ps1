@@ -30,18 +30,6 @@ function Install-XrmModule{
     }
 }
 
-Function Install-ToastModule{
-    $moduleName = "BurntToast"
-    if (!(Get-Module -ListAvailable -Name $moduleName )) {
-        Write-host "Module $moduleName Not found, installing now"
-        Install-Module -Name $moduleName -Force -Scope CurrentUser
-    }
-    else
-    {
-        Write-host "Module $moduleName Found"
-    }
-}
-
 function Install-PowerAppsAdmin{
 $moduleName = "Microsoft.PowerApps.Administration.PowerShell"
 $moduleVersion = "2.0.66"
@@ -76,8 +64,6 @@ function Install-PreReq
         Write-Warning "The ChocolateyInstall environment variable was not found. `n Chocolatey is not detected as installed. Installing..."
         $message = "Installing Chocolatey ...."
         Write-Host $message
-        $ProgressBar = New-BTProgressBar -Status $message -Value 0.12
-        New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
     
         Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
     }
@@ -86,28 +72,20 @@ function Install-PreReq
  
     $message = "Installing Git ...."
     Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.15
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
     choco upgrade git.install -y
 
     $message = "Installing NodeJS ...."
     Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.17
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
     choco upgrade nodejs-lts -y
 
     $message = "Installing Azure CLI ...."
     Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.18
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
     choco upgrade azure-cli -y 
 
     $message = "Installing dotnet CLI ...."
     Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.19
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
     choco upgrade dotnetcore -y
 
@@ -119,8 +97,6 @@ function Confirm-DevOps-PreReq
 {
     $message = "Checking Pre-requisites"
     Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.1
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
     Install-PreReq
 }
@@ -130,8 +106,6 @@ function Install-DevOps
 ## Install Azure DevOps Extension
 $message = "Installing azure-devops extenstion"
 Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.20
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 az extension add --name azure-devops
 
@@ -139,8 +113,6 @@ $ErrorActionPreference = "SilentlyContinue"
 Remove-Item AzureCli.msi
 
 $message = "Connecting to Azure DevOps Organisation"
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.30
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 
 do{
@@ -187,8 +159,6 @@ if ($prompt_result -eq 1)
 
     $message = "Creating DevOps Project $adoProject"
     Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.35
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
     az devops project create --name $adoProject --organization=https://dev.azure.com/$adoOrg --process Scrum
 }
 else {
@@ -217,8 +187,6 @@ else
     $adoRepo = $adoRepo.Replace(' ','')
     $message = "Creating Git Repo $adoRepo"
     Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.38
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
     az devops configure --defaults organization=https://dev.azure.com/$adoOrg project=$adoProject
     $repo = az repos create --name $adoRepo | Out-String | ConvertFrom-Json
@@ -229,8 +197,6 @@ az repos import create --git-source-url https://github.com/dylanhaskins/PowerPla
 $message = "Cloning Git Repo $adoRepo locally"
 Write-Host $message
 Write-Host "If prompted for credentials, enter the same credentials you used for dev.azure.com"
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.40
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 git clone $repo.webUrl \Dev\Repos\$adoRepo 
 
@@ -238,8 +204,6 @@ Set-Location -Path \Dev\Repos\$adoRepo\
 
 $message = "Confirming Git User Details"
 Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.59
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 $GitUser = git config --global user.name
 $GitEmail = git config --global user.email
@@ -256,8 +220,6 @@ If ($null -eq $GitEmail){
 
 $message = "Cleaning up Git Repository"
 Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.60
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 git checkout $branch
 git branch | select-string -notmatch $branch | ForEach-Object {git branch -D ("$_").Trim()} #Remove non-used local branches
@@ -274,8 +236,6 @@ Write-Host ""
 Write-Host ""
 
 $message = "Connecting to Power Platform"
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.70
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 $title = "Common Data Service"
 $option0 = New-Object System.Management.Automation.Host.ChoiceDescription '&Connect', 'connect'
@@ -312,8 +272,6 @@ Rename-Item -Path \Dev\Repos\$adoRepo\PowerPlatformDevOps.sln -NewName "$adoRepo
 
 $message = "Connecting to Deployment Staging (CI/CD)"
 Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.85
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 Write-Host ""
 Write-Host "---- Please Select your Deployment Staging (CI/CD) Environment ------"
@@ -332,8 +290,6 @@ git push origin master --force
 
 $message = "Creating variable groups in Azure DevOps"
 Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.90
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 $varGroup = az pipelines variable-group create --name "$adoRepo.D365DevEnvironment"  --variables d365username=$username --authorize $true | ConvertFrom-Json
 az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroup.id
@@ -352,8 +308,6 @@ az pipelines variable-group variable create --name d365url --value "To Be Config
 
 $message = "Creating Build and Deploy Pipeline in Azure DevOps"
 Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.95
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 $pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
 
@@ -363,8 +317,6 @@ az pipelines show --id $pipeline.definition.id --open
 
 $message = "Complete ... Enjoy !!!"
 Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 1
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 }
 
 $message = @"
@@ -412,7 +364,6 @@ if ($quit -eq "Q")
 }
     
 Write-Host("Performing Checks....")
-Install-ToastModule
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 Install-PowerAppsAdmin
 

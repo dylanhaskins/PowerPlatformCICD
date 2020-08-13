@@ -27,11 +27,8 @@ Write-Host "Running for path : " $StartPath
 $Text = $global:SolutionName
 $UniqueId = "SolutionMGMT"
 
-InstallToastModule
     $message = "Installing Solution Management Tools..."
     Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.05
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 
 InstallXrmDataModule
@@ -42,16 +39,12 @@ InstallDevOpsDataModule
 if (!$Credentials) {
     $message = "Getting Credentials for $global:ServerUrl"
     Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.1
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
     $Credentials = Get-Credential -Message "Credentials : $global:SolutionName @ $global:ServerUrl"
 }
 
     $message = "Establishing connection to $global:ServerUrl"
     Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.2
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
     $conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $global:ServerUrl
 
 
@@ -85,8 +78,6 @@ Write-Host $mapper $params
 ######################### CLEANING UP
 $message = "Cleaning Up..."
 Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 1
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 Remove-Item (Join-Path $StartPath "nuget.exe") -ErrorAction Ignore -Force
 Remove-Item (Join-Path $StartPath "Tools") -Force -Recurse -ErrorAction Ignore

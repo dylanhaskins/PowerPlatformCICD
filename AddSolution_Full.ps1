@@ -20,18 +20,6 @@ function Install-XrmModule{
     }
 }
 
-Function Install-ToastModule{
-    $moduleName = "BurntToast"
-    if (!(Get-Module -ListAvailable -Name $moduleName )) {
-        Write-host "Module $moduleName Not found, installing now"
-        Install-Module -Name $moduleName -Force -Scope CurrentUser
-    }
-    else
-    {
-        Write-host "Module $moduleName Found"
-    }
-}
-
 function Format-Json {
     <#
     .SYNOPSIS
@@ -108,8 +96,6 @@ function Add-Feature
 
 $message = "Connecting to Power Platform"
 Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.10
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 $title = "Common Data Service"
 $option0 = New-Object System.Management.Automation.Host.ChoiceDescription '&Connect', 'connect'
@@ -138,8 +124,6 @@ if (!$username)
 
     $message = "Connecting to Development Environment"
     Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.20
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
     Write-Host ""
     Write-Host "---- Please Select your Development Environment ------"
@@ -171,8 +155,6 @@ if ($prompt_result -eq 0){
 
     $message = "Creating Solution and Publisher"
     Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.78
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
     $title = "Common Data Service"
     $message = "Create or select a Solution Publisher"
@@ -298,17 +280,12 @@ $TextInfo = (Get-Culture).TextInfo
 
 $message = "Copying Solution Template to New $chosenSolution Project"
 Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.30
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 Remove-Item -Path ".\SolutionTemplate\node_modules",".\SolutionTemplate\.awcache",".\SolutionTemplate\bin",".\SolutionTemplate\dist",".\SolutionTemplate\obj" -Recurse -Force -ErrorAction SilentlyContinue
 Copy-Item -Path .\SolutionTemplate\. -Destination $chosenSolution -Recurse 
 
 $message = "Setting Configurations in Source Code"
 Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.40
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
-
 
 Write-Host "Updating config.json ..."
 (Get-Content -Path .\$chosenSolution\Scripts\config.json) -replace "https://AddServer.crm6.dynamics.com",$conn.ConnectedOrgPublishedEndpoints["WebApplication"] | Set-Content -Path .\$chosenSolution\Scripts\config.json
@@ -385,8 +362,6 @@ git commit -m "Added Solution $chosenSolution"
 
 $message = "Complete ... Enjoy !!!"
 Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 1
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 }
 
 $message = @"
@@ -417,14 +392,11 @@ if ($quit -eq "Q")
 }
     
 Write-Host("Performing Checks....")
-Install-ToastModule
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 if (!$env:ChocolateyInstall) {
     Write-Warning "The ChocolateyInstall environment variable was not found. `n Chocolatey is not detected as installed. Installing..."
     $message = "Installing Chocolatey ...."
     Write-Host $message
-    $ProgressBar = New-BTProgressBar -Status $message -Value 0.12
-    New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
     Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 }

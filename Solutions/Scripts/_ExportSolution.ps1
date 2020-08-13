@@ -19,15 +19,11 @@ Remove-Item (Join-Path $StartPath "..\cdsunpack*patch*") -Force -Recurse
 
         $message = "Exporting Unmanaged Solution for $SolutionName"
         Write-Host $message
-        $ProgressBar = New-BTProgressBar -Status $message -Value 0.6
-        New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
         Export-CrmSolution -SolutionName $SolutionName -SolutionZipFileName "$SolutionName.zip" -conn $conn -ErrorAction Stop
 
         $message = "Exporting Managed Solution for $SolutionName"
         Write-Host $message
-        $ProgressBar = New-BTProgressBar -Status $message -Value 0.7
-        New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
         Export-CrmSolution -SolutionName $SolutionName -Managed -SolutionZipFileName $SolutionName"_managed.zip" -conn $conn -ErrorAction Stop
 
@@ -49,8 +45,6 @@ Remove-Item (Join-Path $StartPath "..\cdsunpack*patch*") -Force -Recurse
 
         $message = "Unpacking Solution $SolutionName"
         Write-Host $message
-        $ProgressBar = New-BTProgressBar -Status $message -Value 0.8
-        New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
         Remove-Item (Join-Path $StartPath "..\cdsunpack$SolutionName\") -Recurse -Force
         &.\Tools\SolutionPackager.exe /action:extract /folder:(Join-Path $StartPath "..\cdsunpack$SolutionName\") /zipfile:"$SolutionName.zip" /packagetype:Both /allowDelete:No /c /useUnmanagedFileForMissingManaged
      }
@@ -60,15 +54,11 @@ Remove-Item (Join-Path $StartPath "..\cdsunpack*patch*") -Force -Recurse
     {
         $message = "Exporting Unmanaged Solution for $SolutionName"
         Write-Host $message
-        $ProgressBar = New-BTProgressBar -Status $message -Value 0.6
-        New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
         Export-CrmSolution -SolutionName $SolutionName -SolutionZipFileName "$SolutionName.zip" -conn $conn -ErrorAction Stop
 
         $message = "Exporting Managed Solution for $SolutionName"
         Write-Host $message
-        $ProgressBar = New-BTProgressBar -Status $message -Value 0.7
-        New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
         Export-CrmSolution -SolutionName $SolutionName -Managed -SolutionZipFileName $SolutionName"_managed.zip" -conn $conn -ErrorAction Stop
 
@@ -94,8 +84,6 @@ Remove-Item (Join-Path $StartPath "..\cdsunpack*patch*") -Force -Recurse
 
         $message = "Unpacking Solution $SolutionName"
         Write-Host $message
-        $ProgressBar = New-BTProgressBar -Status $message -Value 0.8
-        New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
         Remove-Item (Join-Path $StartPath "..\cdsunpack$SolutionName\") -Recurse -Force
         &.\Tools\SolutionPackager.exe /action:extract /folder:(Join-Path $StartPath "..\cdsunpack$SolutionName\") /zipfile:"$SolutionName.zip" /packagetype:Both /allowDelete:No /c /useUnmanagedFileForMissingManaged
      }

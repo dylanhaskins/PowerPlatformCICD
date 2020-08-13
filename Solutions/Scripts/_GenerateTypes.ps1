@@ -21,8 +21,6 @@ if($conn.IsReady){
 
 $message = "Generating Context and Types from $global:ServerUrl"
 Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.4
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 Write-Host("Cleaning up Context Files...")
 #clean up

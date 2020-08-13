@@ -5,8 +5,6 @@ if (!$conn) {$conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $glob
 if($conn.IsReady){
 $message = "Updating Solution version for $global:SolutionName"
 Write-Host $message
-$ProgressBar = New-BTProgressBar -Status $message -Value 0.5
-New-BurntToastNotification -Text $Text -ProgressBar $ProgressBar -Silent -UniqueIdentifier $UniqueId
 
 ######################## CHECK SOLUTION
 # Get solution by name

@@ -12,18 +12,6 @@
     }
     }
     
-    Function InstallToastModule{
-    $moduleName = "BurntToast"
-    if (!(Get-Module -ListAvailable -Name $moduleName )) {
-    Write-host "Module $moduleName Not found, installing now"
-    Install-Module -Name $moduleName -Force -Scope CurrentUser
-    }
-    else
-    {
-    Write-host "Module $moduleName Found"
-    }
-    }
-    
     function InstallDevOpsDataModule{
     $moduleName = "Microsoft.Xrm.DevOps.Data.Powershell"
     $moduleVersion = "1.3.0"
