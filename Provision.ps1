@@ -9,7 +9,8 @@ do {
 }until ($adoProject -ne "")
 
 $configFile = (Get-Content (Join-Path $PSScriptRoot "\devopsConfig.json") | ConvertFrom-Json)
-
+$configFile.ADOProject = $adoProject
+$configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")
 
 Write-Host "Select a folder to create a new git Repository for your Power Platform Project"
 Add-Type -AssemblyName System.Windows.Forms
@@ -57,8 +58,7 @@ if (!(Test-Path -Path "$($FolderBrowser.SelectedPath)\$adoProject")) {
     Write-Host $message
 
     git checkout $branch
-    git branch | select-string -notmatch $branch | ForEach-Object { git branch -D ("$_").Trim() } #Remove non-used local branches
-    git branch -r | select-string -notmatch master | select-string -notmatch HEAD | ForEach-Object { git push origin --delete ("$_").Replace("origin/", "").Trim() } #Remove non-used branches from remote
+    git branch | select-string -notmatch $branch | ForEach-Object { git branch -D ("$_").Trim() } #Remove non-used local branches    
 
     Remove-Item .git -Recurse -Force
 
