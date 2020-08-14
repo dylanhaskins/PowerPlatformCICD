@@ -61,11 +61,12 @@ if (!(Test-Path -Path "$($FolderBrowser.SelectedPath)\$adoProject")) {
 
     git init
 
-    $configFile = (Get-Content (Join-Path $PSScriptRoot "\devopsConfig.json") | ConvertFrom-Json)
+    $configFile = (Get-Content (Join-Path $PSScriptRoot "DevOpsFramework\devopsConfig.json") | ConvertFrom-Json)
     $configFile.ADOProject = $adoProject
-    $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")
+    $configFile.PreReqsComplete = "True"
+    $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "DevOpsFramework\devopsConfig.json")
 
-    #& .\Provision_Full.ps1 -PerformInstall $PerformInstall -Branch $Branch -ErrorAction Stop
+    & .\DevOpsFramework\Configure-DevOps.ps1 -Branch $Branch -ErrorAction Stop
 }
 else {
     Write-Warning "The Path $($FolderBrowser.SelectedPath)\$adoProject already exists, please select a different path or project name"

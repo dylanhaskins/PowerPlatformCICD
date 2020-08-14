@@ -1,4 +1,17 @@
-$Version = (Get-Content (Join-Path $PSScriptRoot "\devopsConfig.json") | ConvertFrom-Json).Version
+function Set-Colour(
+    [string]$value
+) {
+    if ($value -eq "True") { 
+        return "Green" 
+    } 
+    elseif ($value -eq "Error") {
+        return "Red"
+    }
+    else { return "White" }
+}
+
+$configFile = Get-Content (Join-Path $PSScriptRoot "\devopsConfig.json") | ConvertFrom-Json
+$Version = $configFile.Version
 
 $message = @"
 ____                          ____  _       _    __                        ____              ___            
@@ -25,10 +38,11 @@ function Show-Menu {
     $Repeater = "=" * $Title.Length
     Write-Host "================ $Title ================"
     
-    Write-Host "1: Run Pre-requisite checks (Install / Update)."
-    Write-Host "2: Add New D365 / CDS Solution."
-    Write-Host "3: Enable Azure Resource Management Deployment."
-    Write-Host "4: Add Webhooks Project."
+    Write-Host "1: Run Pre-requisite checks (Install / Update)." -ForegroundColor (Set-Colour $configFile.PreReqsComplete)
+    Write-Host "2: Configure Azure DevOps" -ForegroundColor (Set-Colour $configFile.ADOConfigured)
+    Write-Host "3: Add New D365 / CDS Solution."
+    Write-Host "4: Enable Azure Resource Management Deployment."
+    Write-Host "5: Add Webhooks Project."
     Write-Host "Q: Press 'Q' to quit."
     Write-Host "=================$Repeater================="
 }
@@ -38,7 +52,15 @@ function Install-PreReqs
     $message = "Checking Pre-requisites"
     Write-Host $message
 
-    . (Join-Path $PSScriptRoot Install-PreRequisites.ps1)
+    try {
+        . (Join-Path $PSScriptRoot Install-PreRequisites.ps1)     
+        $configFile.PreReqsComplete = "True"
+    }
+    catch {
+        $configFile.PreReqsComplete = "Error"
+    }
+    $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")
+   
 }
 
 
