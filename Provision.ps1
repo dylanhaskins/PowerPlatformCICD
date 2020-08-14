@@ -4,7 +4,7 @@ Param(
 
 Clear-Host
 
-$message = @"
+$logo = @"
 ____                          ____  _       _    __                        ____              ___            
 |  _ \ _____      _____ _ __  |  _ \| | __ _| |_ / _| ___  _ __ _ __ ___   |  _ \  _____   __/ _ \ _ __  ___ 
 | |_) / _ \ \ /\ / / _ \ '__| | |_) | |/ _` | __| |_ / _ \| '__| '_ ` _ \  | | | |/ _ \ \ / / | | | '_ \/ __|
@@ -12,7 +12,9 @@ ____                          ____  _       _    __                        ____ 
 |_|   \___/ \_/\_/ \___|_|    |_|   |_|\__,_|\__|_|  \___/|_|  |_| |_| |_| |____/ \___| \_/  \___/| .__/|___/
                                                                                                   |_|        
 
+"@
 
+$message = @"
 
 Welcome to the Power Platform DevOps provisioning script. This script will perform the following steps automatically :
 
@@ -31,7 +33,8 @@ Welcome to the Power Platform DevOps provisioning script. This script will perfo
 
 "@
 
-Write-Host $message
+Write-Host $logo -ForegroundColor Magenta
+Write-Host $message -ForegroundColor White
 
 do {
     $adoProject = Read-Host -Prompt "Please enter a Name for the Project you wish to Create"

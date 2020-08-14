@@ -8,7 +8,7 @@ function Set-Colour(
         return "Red"
     }
     elseif ($value -eq "Optional") {
-        return "Purple"
+        return "Magenta"
     }
     else { return "White" }
 }
@@ -16,7 +16,7 @@ function Set-Colour(
 $configFile = Get-Content (Join-Path $PSScriptRoot "\devopsConfig.json") | ConvertFrom-Json
 $Version = $configFile.Version
 
-$message = @"
+$logo = @"
 ____                          ____  _       _    __                        ____              ___            
 |  _ \ _____      _____ _ __  |  _ \| | __ _| |_ / _| ___  _ __ _ __ ___   |  _ \  _____   __/ _ \ _ __  ___ 
 | |_) / _ \ \ /\ / / _ \ '__| | |_) | |/ _` | __| |_ / _ \| '__| '_ ` _ \  | | | |/ _ \ \ / / | | | '_ \/ __|
@@ -24,7 +24,9 @@ ____                          ____  _       _    __                        ____ 
 |_|   \___/ \_/\_/ \___|_|    |_|   |_|\__,_|\__|_|  \___/|_|  |_| |_| |_| |____/ \___| \_/  \___/| .__/|___/
                                                                                                   |_|        
 
+"@
 
+$message = @"
 
 Welcome to the Power Platform DevOps configuration script.
 
@@ -37,7 +39,8 @@ function Show-Menu {
         [string]$Title = 'Power Platform DevOps'
     )
     Clear-Host
-    Write-Host $message
+    Write-Host $logo -ForegroundColor Magenta
+    Write-Host $message -ForegroundColor White
     $Repeater = "=" * $Title.Length
     Write-Host "================ $Title ================"
     
