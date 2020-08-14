@@ -6,6 +6,9 @@
   "PreReqsComplete": "False",
   "ADOConfigured": "False",
   "SolutionAdded" :  "False",
+  "CICDEnvironmentName" : "",
+  "CICDEnvironmentURL" : "",
   "ARMAdded": "Optional",
-  "WebHooksAdded": "Optional"
+  "WebHooksAdded": "Optional",
+  "ServicePrincipal" : "Optional"
 }

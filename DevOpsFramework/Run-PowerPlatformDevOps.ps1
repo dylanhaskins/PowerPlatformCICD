@@ -1,8 +1,8 @@
 function Set-Colour(
     [string]$value
 ) {
-    if ($value -eq "True") { 
-        return "Green" 
+    if ($value -eq "False") { 
+        return "White" 
     } 
     elseif ($value -eq "Error") {
         return "Red"
@@ -10,7 +10,7 @@ function Set-Colour(
     elseif ($value -eq "Optional") {
         return "Magenta"
     }
-    else { return "White" }
+    else { return "Green" }
 }
 
 $configFile = Get-Content (Join-Path $PSScriptRoot "\devopsConfig.json") | ConvertFrom-Json
@@ -40,6 +40,7 @@ function Show-Menu {
     )
     $configFile = Get-Content (Join-Path $PSScriptRoot "\devopsConfig.json") | ConvertFrom-Json
     $devopsConfigMessage = "(ADO Org : $($configFile.ADOOrgName) | ADO Project : $($configFile.ADOProject) | git Repo : $($configFile.gitRepo))"
+    $CICDConfigMessage = "(Continuous Deployment Environment : $($configFile.CICDEnvironment)"
     [console]::ForegroundColor = "White"
     Clear-Host
     Write-Host $logo -ForegroundColor Magenta
@@ -49,9 +50,10 @@ function Show-Menu {
     
     Write-Host "1: Run Pre-requisite checks (Install / Update)." -ForegroundColor (Set-Colour $configFile.PreReqsComplete)
     Write-Host "2: Configure Azure DevOps" $devopsConfigMessage -ForegroundColor (Set-Colour $configFile.ADOConfigured)
-    Write-Host "3: Add New D365 / CDS Solution." -ForegroundColor White
-    Write-Host "4: Enable Azure Resource Management Deployment." -ForegroundColor (Set-Colour $configFile.ARMAdded)
-    Write-Host "5: Add Webhooks Project." -ForegroundColor (Set-Colour $configFile.WebHooksAdded)
+    Write-Host "3: Configure Continuous Deployment" $CICDConfigMessage -ForegroundColor (Set-Colour $configFile.CICDEnvironmentName)
+    Write-Host "4: Add New D365 / CDS Solution." -ForegroundColor (Set-Colour $configFile.SolutionAdded)
+    Write-Host "5: Enable Azure Resource Management Deployment." -ForegroundColor (Set-Colour $configFile.ARMAdded)
+    Write-Host "6: Add Webhooks Project." -ForegroundColor (Set-Colour $configFile.WebHooksAdded)
     Write-Host "Q: Press 'Q' to quit." -ForegroundColor White
     Write-Host "=================$Repeater=================" -ForegroundColor White
 }
@@ -115,8 +117,8 @@ do {
             Install-PreReqs
         } '2' {
             Connect-AzureDevOps
-        } '3' {
-            Add-Solution
+        } '4' {
+            Add-Solution    
         }
     }   
     Write-Host ""
