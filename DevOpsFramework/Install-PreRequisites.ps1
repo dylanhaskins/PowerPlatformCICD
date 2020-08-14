@@ -37,3 +37,4 @@ choco upgrade dotnetcore -y
 
 ## Restart PowerShell Environment to Enable Azure CLI
 Restart-PowerShell
+

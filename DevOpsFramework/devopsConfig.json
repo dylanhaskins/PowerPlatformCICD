@@ -1,6 +1,8 @@
 {
     "Version":  "2.0.140820.1111",
-    "ADOProject":  "TestDHV3_4",
+    "ADOProject":  "",
     "PreReqsComplete" : "False",
-    "ADOProjectCreated" : "False"
+    "ADOConfigured" : "False",
+    "ARMAdded" : "Optional",
+    "WebHooksAdded" : "Optional"
 }
