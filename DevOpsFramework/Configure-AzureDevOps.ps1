@@ -46,6 +46,7 @@ function Install-DevOps {
     [console]::ForegroundColor = "White"
     if ($adoProject -ne "") {
         $azproj = az devops project show --organization https://dev.azure.com/$adoOrg --project $adoProject | ConvertFrom-Json
+        [console]::ForegroundColor = "White"
     }
     
     if ($adoProject -eq "" -or !$azproj.url) {
@@ -113,7 +114,7 @@ function Install-DevOps {
 
         az devops configure --defaults organization=https://dev.azure.com/$adoOrg project=$adoProject
         
-        $repo = az repos create --name $adoRepo --project $adoProject | Out-String | ConvertFrom-Json
+        $repo = az repos create --name $adoRepo --project $adoProject --organization=https://dev.azure.com/$adoOrg | Out-String | ConvertFrom-Json
         if (!$repo.WebUrl) {
             $configFile.ADOConfigured = "Error"
             $configFile.gitRepo = ""
@@ -150,4 +151,4 @@ catch {
     $configFile.ADOConfigured = "Error"
     $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")
     pause
-}
+}   
