@@ -4,6 +4,35 @@ Param(
 
 Clear-Host
 
+$message = @"
+____                          ____  _       _    __                        ____              ___            
+|  _ \ _____      _____ _ __  |  _ \| | __ _| |_ / _| ___  _ __ _ __ ___   |  _ \  _____   __/ _ \ _ __  ___ 
+| |_) / _ \ \ /\ / / _ \ '__| | |_) | |/ _` | __| |_ / _ \| '__| '_ ` _ \  | | | |/ _ \ \ / / | | | '_ \/ __|
+|  __/ (_) \ V  V /  __/ |    |  __/| | (_| | |_|  _| (_) | |  | | | | | | | |_| |  __/\ V /| |_| | |_) \__ \
+|_|   \___/ \_/\_/ \___|_|    |_|   |_|\__,_|\__|_|  \___/|_|  |_| |_| |_| |____/ \___| \_/  \___/| .__/|___/
+                                                                                                  |_|        
+
+
+
+Welcome to the Power Platform DevOps provisioning script. This script will perform the following steps automatically :
+
+ - Install the Pre-Requisites (git, NodeJS and Azure CLI) if required
+ - Clone this Template Repository locally
+ - Allow you to Connect to Azure DevOps (You will need to have an Azure DevOps organisation to use, if you don't have one, please create one at https://dev.azure.com)
+ - Allow you to Create a New Project in Azure DevOps or to Select an existing one
+ - Create a New Git Repository in the Project to store your Source Code (and D365 / CDS Solutions and Data)
+ - Allow you to Create an Azure AD App Registration called "PowerApp Checker App" to enable PowerApp Solution Checker
+ - Allow you to Connect to your Power Platform tenant (You will need a Power Platform tenant, if you don't have one, please create one at https://powerapps.microsoft.com/)
+ - Allow you to Connect to your Power Platform Development Instance / Environment (If you don't have an instance to develop in, please create one at https://admin.powerplatform.microsoft.com)
+ - Allow you to Connect to your Power Platform Continuous Deployment Instance (If you don't have an instance to Continuously Deploy to, please create one at https://admin.powerplatform.microsoft.com)
+ - Allow you to Create an Azure DevOps Multi-Stage Pipeline to Build and Continuously Deploy your Code and Solutions
+ 
+ ver. $Version
+
+"@
+
+Write-Host $message
+
 do {
     $adoProject = Read-Host -Prompt "Please enter a Name for the Project you wish to Create"
 }until ($adoProject -ne "")
