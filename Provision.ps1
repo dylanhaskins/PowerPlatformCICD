@@ -8,9 +8,6 @@ do {
     $adoProject = Read-Host -Prompt "Please enter a Name for the Project you wish to Create"
 }until ($adoProject -ne "")
 
-$configFile = (Get-Content (Join-Path $PSScriptRoot "\devopsConfig.json") | ConvertFrom-Json)
-$configFile.ADOProject = $adoProject
-$configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")
 
 Write-Host "Select a folder to create a new git Repository for your Power Platform Project"
 Add-Type -AssemblyName System.Windows.Forms
@@ -61,6 +58,12 @@ if (!(Test-Path -Path "$($FolderBrowser.SelectedPath)\$adoProject")) {
     git branch | select-string -notmatch $branch | ForEach-Object { git branch -D ("$_").Trim() } #Remove non-used local branches    
 
     Remove-Item .git -Recurse -Force
+
+    git init
+
+    $configFile = (Get-Content (Join-Path $PSScriptRoot "\devopsConfig.json") | ConvertFrom-Json)
+    $configFile.ADOProject = $adoProject
+    $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")
 
     #& .\Provision_Full.ps1 -PerformInstall $PerformInstall -Branch $Branch -ErrorAction Stop
 }
