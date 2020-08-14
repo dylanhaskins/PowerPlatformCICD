@@ -46,17 +46,6 @@ function Install-PreReqs
 Write-Host ""
 [console]::ForegroundColor = "White"
 
-# $msg = "Select an option"
-# $title = "Configure Power Platform DevOps"
-# $option0 = New-Object System.Management.Automation.Host.ChoiceDescription '&Run Pre-requisite checks', 'prereqs'
-# $option1 = New-Object System.Management.Automation.Host.ChoiceDescription '&Add New D365 / CDS Solution', 'addsolution'
-# $option2 = New-Object System.Management.Automation.Host.ChoiceDescription '&Enable Azure Resource Management Deployment', 'addazure'
-# $option3 = New-Object System.Management.Automation.Host.ChoiceDescription 'Add &Webhooks Project', 'addazure'
-# $option4 = New-Object System.Management.Automation.Host.ChoiceDescription '&Quit', 'quit'
-# $options = [System.Management.Automation.Host.ChoiceDescription[]]($option0, $option1, $option2, $option3, $option4)
-# $prompt_result = $host.ui.PromptForChoice($title, $msg, $options,-1)
-
-
 do
  {
     Show-Menu

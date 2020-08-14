@@ -8,6 +8,9 @@ do {
     $adoProject = Read-Host -Prompt "Please enter a Name for the Project you wish to Create"
 }until ($adoProject -ne "")
 
+$configFile = (Get-Content (Join-Path $PSScriptRoot "\devopsConfig.json") | ConvertFrom-Json)
+
+
 Write-Host "Select a folder to create a new git Repository for your Power Platform Project"
 Add-Type -AssemblyName System.Windows.Forms
 $FolderBrowser = New-Object System.Windows.Forms.FolderBrowserDialog
@@ -15,21 +18,20 @@ $FolderBrowser.Description = "Select a folder to create a new git Repository for
 [void]$FolderBrowser.ShowDialog()
 
 if (!(Test-Path -Path "$($FolderBrowser.SelectedPath)\$adoProject")) {
+    Write-Host "Creating Project Folder"
     New-Item -Path $FolderBrowser.SelectedPath -Name $adoProject -ItemType Directory
     Set-Location -Path "$($FolderBrowser.SelectedPath)\$adoProject"   
-
-    # $sourceFile = Invoke-WebRequest "https://raw.githubusercontent.com/dylanhaskins/PowerPlatformCICD/$branch/Provision_Full.ps1" -UseBasicParsing:$true
-    # Set-Content .\Provision_Full.ps1 -Value $sourceFile.Content
 
     $sourceFile = Invoke-WebRequest "https://raw.githubusercontent.com/dylanhaskins/PowerPlatformCICD/$branch/Install-PreRequisites.ps1" -UseBasicParsing:$true
     Set-Content .\Install-PreRequisites.ps1 -Value $sourceFile.Content
 
-    # $sourceFile = Invoke-WebRequest "https://raw.githubusercontent.com/dylanhaskins/PowerPlatformCICD/$branch/devopsConfig.json" -UseBasicParsing:$true
-    # Set-Content .\devopsConfig.json -Value $sourceFile.Content
-
     Start-Sleep -Seconds 2
+    $message = "Checking Pre-requisites"
+    Write-Host $message
+
     .\Install-PreRequisites.ps1 -ErrorAction Stop
 
+    Remove-Item .\Install-PreRequisites.ps1 -Force -ErrorAction SilentlyContinue
     $message = "Cloning PowerPlatformCICD locally"
     Write-Host $message
 
