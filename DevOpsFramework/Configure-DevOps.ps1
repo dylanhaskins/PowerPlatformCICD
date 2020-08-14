@@ -7,6 +7,9 @@ function Set-Colour(
     elseif ($value -eq "Error") {
         return "Red"
     }
+    elseif ($value -eq "Optional") {
+        return "Purple"
+    }
     else { return "White" }
 }
 
@@ -41,8 +44,8 @@ function Show-Menu {
     Write-Host "1: Run Pre-requisite checks (Install / Update)." -ForegroundColor (Set-Colour $configFile.PreReqsComplete)
     Write-Host "2: Configure Azure DevOps" -ForegroundColor (Set-Colour $configFile.ADOConfigured)
     Write-Host "3: Add New D365 / CDS Solution."
-    Write-Host "4: Enable Azure Resource Management Deployment."
-    Write-Host "5: Add Webhooks Project."
+    Write-Host "4: Enable Azure Resource Management Deployment." -ForegroundColor (Set-Colour $configFile.ARMAdded)
+    Write-Host "5: Add Webhooks Project." -ForegroundColor (Set-Colour $configFile.WebHooksAdded)
     Write-Host "Q: Press 'Q' to quit."
     Write-Host "=================$Repeater================="
 }
@@ -71,7 +74,8 @@ Write-Host ""
 do
  {
     Show-Menu
-    $selection = Read-Host "Please make a selection"
+
+    $selection = Read-Host "Please make a selection (Purple items are optional)"
     switch ($selection)
     {
     '1' {
