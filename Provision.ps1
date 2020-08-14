@@ -37,8 +37,8 @@ Write-Host $logo -ForegroundColor Magenta
 Write-Host $message -ForegroundColor White
 
 do {
-    $adoProject = Read-Host -Prompt "Please enter a Name for the Project you wish to Create"
-}until ($adoProject -ne "")
+    $adoProject = Read-Host -Prompt "Please enter a Name for the Git Repository you wish to Create"
+}until ($gitRepo -ne "")
 
 
 Write-Host "Select a folder to create a new git Repository for your Power Platform Project"
@@ -46,10 +46,10 @@ try {
     $application = New-Object -ComObject Shell.Application
     $path = ($application.BrowseForFolder(0, 'Select a folder', 0)).Self.Path
     
-    if (!(Test-Path -Path "$path\$adoProject") -and !($null -eq $path)) {
+    if (!(Test-Path -Path "$path\$gitRepo") -and !($null -eq $path)) {
         Write-Host "Creating Project Folder"
-        New-Item -Path $path -Name $adoProject -ItemType Directory
-        Set-Location -Path "$path\$adoProject"   
+        New-Item -Path $path -Name $gitRepo -ItemType Directory
+        Set-Location -Path "$path\$gitRepo"   
     
         $sourceFile = Invoke-WebRequest "https://raw.githubusercontent.com/dylanhaskins/PowerPlatformCICD/$branch/DevOpsFramework/Install-PreRequisites.ps1" -UseBasicParsing:$true
         Set-Content .\Install-PreRequisites.ps1 -Value $sourceFile.Content
@@ -92,15 +92,15 @@ try {
     
         git init
     
-        $configFile = (Get-Content "$path\$adoProject\DevOpsFramework\devopsConfig.json" | ConvertFrom-Json)
-        $configFile.ADOProject = $adoProject
+        $configFile = (Get-Content "$path\$gitRepo\DevOpsFramework\devopsConfig.json" | ConvertFrom-Json)
+        $configFile.gitRepo = $gitRepo
         $configFile.PreReqsComplete = "True"
-        $configFile | ConvertTo-Json | Set-Content "$path\$adoProject\DevOpsFramework\devopsConfig.json"
+        $configFile | ConvertTo-Json | Set-Content "$path\$gitRepo\DevOpsFramework\devopsConfig.json"
     
         & .\DevOpsFramework\Configure-DevOps.ps1 -Branch $Branch -ErrorAction Stop
     }
     else {
-        Write-Warning "The Path $path\$adoProject already exists, please select a different path or project name"
+        Write-Warning "The Path $path\$gitRepo already exists, please select a different path or project name"
         $continue = Read-Host -Prompt "Press [Enter] to Continue or [Q] to Quit"
         if (!$continue -eq 'Q') {
             . (Join-Path $PSScriptRoot .\Provision.ps1)        

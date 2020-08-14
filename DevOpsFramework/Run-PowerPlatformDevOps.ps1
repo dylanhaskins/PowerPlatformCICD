@@ -69,6 +69,22 @@ function Install-PreReqs
    
 }
 
+function Configure-AzureDevOps
+{
+    $message = "Configuring Azure DevOps"
+    Write-Host $message
+
+    try {
+        . (Join-Path $PSScriptRoot Configure-AzureDevOps.ps1)     
+        $configFile.PreReqsComplete = "True"
+    }
+    catch {
+        $configFile.PreReqsComplete = "Error"
+    }
+    $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")
+   
+}
+
 
 
 Write-Host ""
