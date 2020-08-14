@@ -23,14 +23,15 @@ $message = "Connecting to Deployment Staging (CI/CD)"
 Write-Host $message
 
 Write-Host ""
-Write-Host "---- Please Select your Deployment Staging (CI/CD) Environment ------"
+Write-Host "---- Enter the Credentials for your Deployment Staging (CI/CD) Environment ------"
 $connCICD = Get-CrmOrganizations -OnLineType OAuth
-$choiceIndex = 0
-$options = $connCICD | ForEach-Object { New-Object System.Management.Automation.Host.ChoiceDescription "&$($choiceIndex) - $($_.FriendlyName) ($($_.WebApplicationUrl))"; $choiceIndex++ }
-do {
-    $chosenIndex = $host.ui.PromptForChoice("Deployment Staging", "Select the Environment you wish to use", $options, -1)
-    $CICDEnvironment = $connCICD[$chosenIndex]
-} until ($CICDEnvironment -ne "")
+$options = $connCICD | ForEach-Object {"$($_.FriendlyName) ($($_.WebApplicationUrl))"}
+
+ do {
+    $sel = Create-Menu -MenuTitle "---- Please Select your Deployment Staging (CI/CD) Environment ------" -MenuOptions $options
+    $CICDEnvironment = $connCICD[$sel]
+ } until ($CICDEnvironment -ne "")
+ Write-Host $CICDEnvironment.WebApplicationUrl
 
 if (!$Credentials) {
     Do {

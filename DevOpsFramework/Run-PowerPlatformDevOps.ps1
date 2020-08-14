@@ -40,7 +40,7 @@ function Show-Menu {
     )
     $configFile = Get-Content (Join-Path $PSScriptRoot "\devopsConfig.json") | ConvertFrom-Json
     $devopsConfigMessage = "(ADO Org : $($configFile.ADOOrgName) | ADO Project : $($configFile.ADOProject) | git Repo : $($configFile.gitRepo))"
-    $CICDConfigMessage = "(Continuous Deployment Environment : $($configFile.CICDEnvironment))"
+    $CICDConfigMessage = "(CI/CD Environment : $($configFile.CICDEnvironmentName) | CI/CD URL : $($configFile.CICDEnvironmentURL))"
     [console]::ForegroundColor = "White"
     Clear-Host
     Write-Host $logo -ForegroundColor Magenta

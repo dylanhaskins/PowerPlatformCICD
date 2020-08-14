@@ -1,4 +1,4 @@
-function Install-XrmModule{
+function Install-XrmModule {
     $moduleName = "Microsoft.Xrm.Data.Powershell"
     $moduleVersion = "2.8.8"
     $module = Get-Module -ListAvailable -Name $moduleName
@@ -6,57 +6,53 @@ function Install-XrmModule{
         Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
         Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -Scope CurrentUser
     }
-    else
-    {
+    else {
         Write-host "Module $moduleName Found"
     }
 }
 
-function Install-PowerAppsAdmin{
-$moduleName = "Microsoft.PowerApps.Administration.PowerShell"
-$moduleVersion = "2.0.66"
-$module = Get-Module -ListAvailable -Name $moduleName
-if (!($module.Version -ge $moduleVersion )) {
-     Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
-     Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -AllowClobber
-   }
-   else
-   {
-     Write-host "Module $moduleName version $moduleVersion or higher Found"
-   }
+function Install-PowerAppsAdmin {
+    $moduleName = "Microsoft.PowerApps.Administration.PowerShell"
+    $moduleVersion = "2.0.66"
+    $module = Get-Module -ListAvailable -Name $moduleName
+    if (!($module.Version -ge $moduleVersion )) {
+        Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
+        Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -AllowClobber
+    }
+    else {
+        Write-host "Module $moduleName version $moduleVersion or higher Found"
+    }
 }
 
-function Install-PowerAppsPowerShell{
-$moduleName = "Microsoft.PowerApps.PowerShell"
-$moduleVersion = "1.0.13"
-$module = Get-Module -ListAvailable -Name $moduleName
-if (!($module.Version -ge $moduleVersion )) {
-     Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
-     Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -AllowClobber
-   }
-else
-{
-Write-host "Module $moduleName Found"
-}
+function Install-PowerAppsPowerShell {
+    $moduleName = "Microsoft.PowerApps.PowerShell"
+    $moduleVersion = "1.0.13"
+    $module = Get-Module -ListAvailable -Name $moduleName
+    if (!($module.Version -ge $moduleVersion )) {
+        Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
+        Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -AllowClobber
+    }
+    else {
+        Write-host "Module $moduleName Found"
+    }
 }
 
-function Install-XrmToolingPowerShell{
+function Install-XrmToolingPowerShell {
     $moduleName = "Microsoft.Xrm.Tooling.CrmConnector.PowerShell"
     $moduleVersion = "3.3.0.899"
     $module = Get-Module -ListAvailable -Name $moduleName
     if (!($module.Version -ge $moduleVersion )) {
-         Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
-         Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -AllowClobber
-       }
-    else
-    {
-    Write-host "Module $moduleName Found"
-    Import-Module -Name $moduleName -MinimumVersion $moduleVersion -Force
+        Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
+        Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -AllowClobber
+    }
+    else {
+        Write-host "Module $moduleName Found"
+        Import-Module -Name $moduleName -MinimumVersion $moduleVersion -Force
     }
 }
 
 function Format-Json {
-  <#
+    <#
   .SYNOPSIS
       Prettifies JSON output.
   .DESCRIPTION
@@ -72,55 +68,111 @@ function Format-Json {
   .EXAMPLE
       $json | ConvertTo-Json  | Format-Json -Indentation 2
   #>
-  [CmdletBinding(DefaultParameterSetName = 'Prettify')]
-  Param(
-      [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)]
-      [string]$Json,
+    [CmdletBinding(DefaultParameterSetName = 'Prettify')]
+    Param(
+        [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)]
+        [string]$Json,
 
-      [Parameter(ParameterSetName = 'Minify')]
-      [switch]$Minify,
+        [Parameter(ParameterSetName = 'Minify')]
+        [switch]$Minify,
 
-      [Parameter(ParameterSetName = 'Prettify')]
-      [ValidateRange(1, 1024)]
-      [int]$Indentation = 4,
+        [Parameter(ParameterSetName = 'Prettify')]
+        [ValidateRange(1, 1024)]
+        [int]$Indentation = 4,
 
-      [Parameter(ParameterSetName = 'Prettify')]
-      [switch]$AsArray
-  )
+        [Parameter(ParameterSetName = 'Prettify')]
+        [switch]$AsArray
+    )
 
-  if ($PSCmdlet.ParameterSetName -eq 'Minify') {
-      return ($Json | ConvertFrom-Json) | ConvertTo-Json -Depth 100 -Compress
-  }
+    if ($PSCmdlet.ParameterSetName -eq 'Minify') {
+        return ($Json | ConvertFrom-Json) | ConvertTo-Json -Depth 100 -Compress
+    }
 
-  # If the input JSON text has been created with ConvertTo-Json -Compress
-  # then we first need to reconvert it without compression
-  if ($Json -notmatch '\r?\n') {
-      $Json = ($Json | ConvertFrom-Json) | ConvertTo-Json -Depth 100
-  }
+    # If the input JSON text has been created with ConvertTo-Json -Compress
+    # then we first need to reconvert it without compression
+    if ($Json -notmatch '\r?\n') {
+        $Json = ($Json | ConvertFrom-Json) | ConvertTo-Json -Depth 100
+    }
 
-  $indent = 0
-  $regexUnlessQuoted = '(?=([^"]*"[^"]*")*[^"]*$)'
+    $indent = 0
+    $regexUnlessQuoted = '(?=([^"]*"[^"]*")*[^"]*$)'
 
-  $result = $Json -split '\r?\n' |
-      ForEach-Object {
-          # If the line contains a ] or } character, 
-          # we need to decrement the indentation level unless it is inside quotes.
-          if ($_ -match "[}\]]$regexUnlessQuoted") {
-              $indent = [Math]::Max($indent - $Indentation, 0)
-          }
+    $result = $Json -split '\r?\n' |
+    ForEach-Object {
+        # If the line contains a ] or } character, 
+        # we need to decrement the indentation level unless it is inside quotes.
+        if ($_ -match "[}\]]$regexUnlessQuoted") {
+            $indent = [Math]::Max($indent - $Indentation, 0)
+        }
 
-          # Replace all colon-space combinations by ": " unless it is inside quotes.
-          $line = (' ' * $indent) + ($_.TrimStart() -replace ":\s+$regexUnlessQuoted", ': ')
+        # Replace all colon-space combinations by ": " unless it is inside quotes.
+        $line = (' ' * $indent) + ($_.TrimStart() -replace ":\s+$regexUnlessQuoted", ': ')
 
-          # If the line contains a [ or { character, 
-          # we need to increment the indentation level unless it is inside quotes.
-          if ($_ -match "[\{\[]$regexUnlessQuoted") {
-              $indent += $Indentation
-          }
+        # If the line contains a [ or { character, 
+        # we need to increment the indentation level unless it is inside quotes.
+        if ($_ -match "[\{\[]$regexUnlessQuoted") {
+            $indent += $Indentation
+        }
 
-          $line
-      }
+        $line
+    }
 
-  if ($AsArray) { return $result }
-  return $result -Join [Environment]::NewLine
+    if ($AsArray) { return $result }
+    return $result -Join [Environment]::NewLine
+}
+
+Function Create-Menu() {    
+    Param(
+        [Parameter(Mandatory = $True)][String]$MenuTitle,
+        [Parameter(Mandatory = $True)][array]$MenuOptions
+    )
+    $MaxValue = $MenuOptions.count - 1
+    $Selection = 0
+    $EnterPressed = $False
+    
+    Clear-Host
+
+    While ($EnterPressed -eq $False) { 
+        Write-Host "$MenuTitle"
+        For ($i = 0; $i -le $MaxValue; $i++) {            
+            If ($i -eq $Selection) {
+                Write-Host -BackgroundColor Cyan -ForegroundColor Black "[ $($MenuOptions[$i]) ]"
+            }
+            Else {
+                Write-Host "  $($MenuOptions[$i])  "
+            }
+        }
+        $KeyInput = $host.ui.rawui.readkey("NoEcho,IncludeKeyDown").virtualkeycode
+        Switch ($KeyInput) {
+            13 {
+                $EnterPressed = $True
+                Return $Selection
+                Clear-Host
+                break
+            }
+            38 {
+                If ($Selection -eq 0) {
+                    $Selection = $MaxValue
+                }
+                Else {
+                    $Selection -= 1
+                }
+                Clear-Host
+                break
+            }
+            40 {
+                If ($Selection -eq $MaxValue) {
+                    $Selection = 0
+                }
+                Else {
+                    $Selection += 1
+                }
+                Clear-Host
+                break
+            }
+            Default {
+                Clear-Host
+            }
+        }
+    }
 }

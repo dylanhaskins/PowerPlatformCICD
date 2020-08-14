@@ -83,11 +83,10 @@ function Install-DevOps {
         }
         else {
             $selection = az devops project list --organization=https://dev.azure.com/$adoOrg --query '[value][].{Name:name}' --output json | Out-String | ConvertFrom-Json
-            $choiceIndex = 0
-            $options = $selection | ForEach-Object { New-Object System.Management.Automation.Host.ChoiceDescription "&$($choiceIndex) - $($_.Name)"; $choiceIndex++ }
+            $options = $selection | ForEach-Object { "$($_.Name)"}
             do {
-                $chosenIndex = $host.ui.PromptForChoice("DevOps Project", "Select the Project you wish to use", $options, -1)
-                $adoProject = $selection[$chosenIndex].Name 
+                $sel = Create-Menu -MenuTitle "---- Select the Project you wish to Use ------" -MenuOptions $options
+                $adoProject = $selection[$sel].Name 
             } until ($adoProject -ne "")
             $configFile.ADOProject = $adoProject  
             az devops configure --defaults organization=https://dev.azure.com/$adoOrg project=$adoProject
