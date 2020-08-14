@@ -18,13 +18,6 @@ $varGroupTest = az pipelines variable-group create --name "$adoRepo.D365TestEnvi
 az pipelines variable-group variable create --name d365password --value $password --secret $true --group-id $varGroupTest.id
 az pipelines variable-group variable create --name d365url --value "To Be Configured"  --group-id $varGroupTest.id
 
-$message = "Creating Build and Deploy Pipeline in Azure DevOps"
-Write-Host $message
-
-$pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
-
-az repos show --repository $repo.id --open
-az pipelines show --id $pipeline.definition.id --open
 
 
 $message = "Complete ... Enjoy !!!"

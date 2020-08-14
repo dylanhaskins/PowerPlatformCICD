@@ -103,6 +103,20 @@ function Add-Solution {
    
 }
 
+function Add-CICDEnvironment {
+    $message = "Configuring CI/CD Environment"
+    Write-Host $message
+
+    try {
+        . (Join-Path $PSScriptRoot Configure-CICDEnvironment.ps1)     
+    }
+    catch {
+        $configFile.CICDEnvironmentName = "Error"
+    }
+    $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")
+   
+}
+
 
 
 Write-Host ""
@@ -117,6 +131,8 @@ do {
             Install-PreReqs
         } '2' {
             Connect-AzureDevOps
+        }'3' {
+            Add-CICDEnvironment
         } '4' {
             Add-Solution    
         }

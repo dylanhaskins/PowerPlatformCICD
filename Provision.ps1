@@ -93,7 +93,7 @@ try {
         git init
 
         Write-Host "Updating Build.yaml ..."
-        (Get-Content -Path $path\$gitRepo\build.yaml) -replace "replaceRepo", $girRepo | Set-Content -Path $path\$gitRepo\build.yaml
+        (Get-Content -Path $path\$gitRepo\build.yaml) -replace "replaceRepo", $gitRepo | Set-Content -Path $path\$gitRepo\build.yaml
 
         Write-Host "Rename PowerPlatformDevOps.sln to $gitRepo.sln"
         Rename-Item -Path $path\$gitRepo\PowerPlatformDevOps.sln -NewName "$gitRepo.sln"
