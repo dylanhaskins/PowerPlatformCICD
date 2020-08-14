@@ -64,7 +64,8 @@ try {
 }
 catch {
     $configFile.CICDEnvironmentName = "Error"
-    $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")    
+    $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json") 
+    pause   
 }
 
 
