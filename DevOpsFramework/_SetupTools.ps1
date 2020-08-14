@@ -40,6 +40,21 @@ Write-host "Module $moduleName Found"
 }
 }
 
+function Install-XrmToolingPowerShell{
+    $moduleName = "Microsoft.Xrm.Tooling.CrmConnector.PowerShell"
+    $moduleVersion = "3.3.0.899"
+    $module = Get-Module -ListAvailable -Name $moduleName
+    if (!($module.Version -ge $moduleVersion )) {
+         Write-host "Module $moduleName version $moduleVersion or higher not found, installing now"
+         Install-Module -Name $moduleName -MinimumVersion $moduleVersion -Force -AllowClobber
+       }
+    else
+    {
+    Write-host "Module $moduleName Found"
+    Import-Module -Name $moduleName -MinimumVersion $moduleVersion -Force
+    }
+}
+
 function Format-Json {
   <#
   .SYNOPSIS

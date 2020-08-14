@@ -8,6 +8,8 @@
   "SolutionAdded" :  "False",
   "CICDEnvironmentName" : "False",
   "CICDEnvironmentURL" : "",
+  "CICDVarGroupID" : "",
+  "CIPipeLineId" :"",
   "ARMAdded": "Optional",
   "WebHooksAdded": "Optional",
   "ServicePrincipal" : "Optional"
