@@ -42,10 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CrmSdk.XrmTooling.CoreAssembly">
-      <Version>9.1.0.43</Version>
+      <Version>9.1.0.49</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.CrmSdk.XrmTooling.PackageDeployment">
-      <Version>9.1.0.37</Version>
+      <Version>9.1.0.43</Version>
     </PackageReference>
     <PackageReference Include="System.ComponentModel.Composition">
       <Version>4.7.0</Version>

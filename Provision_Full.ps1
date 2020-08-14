@@ -5,16 +5,7 @@ Param(
 
 $Text = "Power Platform DevOps"
 $UniqueId = "PPDevOps"
-$Version = "2.0.230620.1625"
-
-function Restart-PowerShell
-{
-    Start-Sleep -Seconds 5
-    refreshenv
-    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
-    Clear-Host
-    Install-DevOps
-}
+$Version = (Get-Content (Join-Path $PSScriptRoot "\devopsConfig.json") | ConvertFrom-Json).Version
 
 function Install-XrmModule{
     $moduleName = "Microsoft.Xrm.Data.Powershell"
@@ -58,47 +49,13 @@ Write-host "Module $moduleName Found"
 }
 }
 
-function Install-PreReq
-{
-    if (!$env:ChocolateyInstall) {
-        Write-Warning "The ChocolateyInstall environment variable was not found. `n Chocolatey is not detected as installed. Installing..."
-        $message = "Installing Chocolatey ...."
-        Write-Host $message
-    
-        Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-    }
-
-    choco upgrade chocolatey -y
- 
-    $message = "Installing Git ...."
-    Write-Host $message
-
-    choco upgrade git.install -y
-
-    $message = "Installing NodeJS ...."
-    Write-Host $message
-
-    choco upgrade nodejs-lts -y
-
-    $message = "Installing Azure CLI ...."
-    Write-Host $message
-    choco upgrade azure-cli -y 
-
-    $message = "Installing dotnet CLI ...."
-    Write-Host $message
-
-    choco upgrade dotnetcore -y
-
-    ## Restart PowerShell Environment to Enable Azure CLI
-    Restart-PowerShell
-}
-
 function Confirm-DevOps-PreReq
 {
     $message = "Checking Pre-requisites"
     Write-Host $message
 
-    Install-PreReq
+    . (Join-Path $PSScriptRoot Install-PreRequisites.ps1)
+    Install-DevOps
 }
 
 function Install-DevOps
