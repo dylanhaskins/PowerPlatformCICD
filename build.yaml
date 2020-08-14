@@ -72,12 +72,12 @@ stages:
                         **/map.xml
                         **/EnvironmentVariables/**
                         !**/node_modules/**
-              TargetFolder: '$(build.artifactstagingdirectory)\'
+              TargetFolder: '$(build.artifactstagingdirectory)'
 
           - task: PublishPipelineArtifact@1
             displayName: Publish Pipeline Artifacts
             inputs:
-              path: $(System.artifactstagingdirectory)
+              path: $(build.artifactstagingdirectory)
               artifact: drop
                           
       - job: testjob

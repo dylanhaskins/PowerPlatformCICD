@@ -53,15 +53,15 @@ try {
     $message = "Creating Build and Deploy Pipeline in Azure DevOps"
     Write-Host $message
 
-    $configFile.CICDEnvironmentName = CICDEnvironment.FriendlyName
-    $configFile.CICDEnvironmentURL = CICDEnvironment.WebApplicationUrl
+    $configFile.CICDEnvironmentName = $CICDEnvironment.FriendlyName
+    $configFile.CICDEnvironmentURL = $CICDEnvironment.WebApplicationUrl
     $configFile.CICDVarGroupID = $varGroupCICD.id
     $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")    
 
-    $pipeline = az pipelines create --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
+    $pipeline = az pipelines create --organization https://dev.azure.com/$adoOrg --project $adoProject --name "$adoRepo.CI" --yml-path /build.yaml --repository $adoRepo --repository-type tfsgit --branch master | ConvertFrom-Json
     $configFile.CIPipeLineId = $pipeline.definition.id
     $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")   
-    az pipelines show --id $pipeline.definition.id --open
+    az pipelines show --organization https://dev.azure.com/$adoOrg --project $adoProject --id $pipeline.definition.id --open
 }
 catch {
     $configFile.CICDEnvironmentName = "Error"
