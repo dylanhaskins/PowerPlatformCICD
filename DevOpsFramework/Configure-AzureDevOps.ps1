@@ -112,8 +112,10 @@ try {
     Install-DevOps
     $configFile.ADOConfigured = "True"
     $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")
+    pause
 }
 catch {
     $configFile.ADOConfigured = "Error"
     $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")
+    pause
 }

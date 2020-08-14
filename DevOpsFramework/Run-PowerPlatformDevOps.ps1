@@ -38,6 +38,7 @@ function Show-Menu {
     param (
         [string]$Title = 'Power Platform DevOps'
     )
+    $configFile = Get-Content (Join-Path $PSScriptRoot "\devopsConfig.json") | ConvertFrom-Json
     Clear-Host
     Write-Host $logo -ForegroundColor Magenta
     Write-Host $message -ForegroundColor White
@@ -91,7 +92,7 @@ Write-Host ""
 do {
     Show-Menu
 
-    $selection = Read-Host "Please make a selection (Purple items are optional)" -ForegroundColor White
+    $selection = Read-Host "Please make a selection (Purple items are optional)"
     switch ($selection) {
         '1' {
             Install-PreReqs
