@@ -91,6 +91,12 @@ try {
         Remove-Item .git -Recurse -Force
     
         git init
+
+        Write-Host "Updating Build.yaml ..."
+        (Get-Content -Path $path\$gitRepo\build.yaml) -replace "replaceRepo", $girRepo | Set-Content -Path $path\$gitRepo\build.yaml
+
+        Write-Host "Rename PowerPlatformDevOps.sln to $gitRepo.sln"
+        Rename-Item -Path $path\$gitRepo\PowerPlatformDevOps.sln -NewName "$gitRepo.sln"
     
         $configFile = (Get-Content "$path\$gitRepo\DevOpsFramework\devopsConfig.json" | ConvertFrom-Json)
         $configFile.gitRepo = $gitRepo
