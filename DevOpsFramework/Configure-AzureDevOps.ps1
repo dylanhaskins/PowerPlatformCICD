@@ -16,12 +16,14 @@ function Install-DevOps {
     $ErrorActionPreference = "SilentlyContinue"
 
     $message = "Connecting to Azure DevOps Organisation"
-
-
-    do {
-        Write-Host "Enter the <NAME> of your Azure DevOps Organisation only the NAME - not the full path!"
-        $adoOrg = Read-Host -Prompt "Depending on your instance, either dev.azure.com/<NAME> or <NAME>.visualstudio.com"
-    }until ($adoOrg -ne "")
+    
+    if ($adoOrg -eq "") {
+        do {
+            Write-Host "Enter the <NAME> of your Azure DevOps Organisation only the NAME - not the full path!"
+            $adoOrg = Read-Host -Prompt "Depending on your instance, either dev.azure.com/<NAME> or <NAME>.visualstudio.com"
+        }until ($adoOrg -ne "")   
+        
+    }
 
     $configFile.ADOOrgName = $adoOrg
     $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")
@@ -42,8 +44,11 @@ function Install-DevOps {
 
     Write-Host ""
     [console]::ForegroundColor = "White"
-
-    if ($adoProject -eq "") {
+    if ($adoProject -ne "") {
+        $azproj = az devops project show --organization https://dev.azure.com/$adoOrg --project $adoProject | ConvertFrom-Json
+    }
+    
+    if ($adoProject -eq "" -or !$azproj.url) {
         $msg = "Select existing or Create a new Azure DevOps Project"
         $title = "Setting up Azure DevOps"
         $option0 = New-Object System.Management.Automation.Host.ChoiceDescription '&Select', 'select'
@@ -56,13 +61,14 @@ function Install-DevOps {
             exit
         }
 
-        if ($prompt_result -eq 1) {
-            do {
-                $adoProject = Read-Host -Prompt "Please enter the Name of the Project you wish to Create"
-            }until ($adoProject -ne "")
-    
+        if ($prompt_result -eq  1) {
+            if ($adoProject -eq "") {
+                do {
+                    $adoProject = Read-Host -Prompt "Please enter the Name of the Project you wish to Create"
+                }until ($adoProject -ne "")   
+            }
             $configFile.ADOProject = $adoProject            
-    
+        
             $message = "Creating DevOps Project $adoProject"
             Write-Host $message
             try {
@@ -72,7 +78,7 @@ function Install-DevOps {
             catch {
                 $configFile.ADOConfigured = "Error"
             }
-              
+                
         }
         else {
             $selection = az devops project list --organization=https://dev.azure.com/$adoOrg --query '[value][].{Name:name}' --output json | Out-String | ConvertFrom-Json
@@ -83,6 +89,7 @@ function Install-DevOps {
                 $adoProject = $selection[$chosenIndex].Name 
             } until ($adoProject -ne "")
             $configFile.ADOProject = $adoProject  
+            az devops configure --defaults organization=https://dev.azure.com/$adoOrg project=$adoProject
         }
         $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")
     }
@@ -94,25 +101,50 @@ function Install-DevOps {
     else {
         Write-Host ""
 
+        #Check for blank repo
+        if ($adoRepo -eq "") {
+            do {
+                $adoRepo = Read-Host -Prompt "Please enter a Name for the Git Repository you wish to Create"
+            }until ($adoRepo -ne "")
+        }
+
         $message = "Creating Git Repo $adoRepo"
         Write-Host $message
 
         az devops configure --defaults organization=https://dev.azure.com/$adoOrg project=$adoProject
-        $repo = az repos create --name $adoRepo | Out-String | ConvertFrom-Json
+        
+        $repo = az repos create --name $adoRepo --project $adoProject | Out-String | ConvertFrom-Json
+        if (!$repo.WebUrl) {
+            $configFile.ADOConfigured = "Error"
+            $configFile.gitRepo = ""
+            $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")
+            Throw "Error"
+        }
+        else {
+            $configFile.gitRepo = $adoRepo
+        }
     }
 
+    git remote remove origin
     git remote add origin $repo.webUrl
 
     git add -A
     git commit -m "Initial Commit"
+    git push origin master
 
+    pause
 }
 
 try {
-    Install-DevOps
-    $configFile.ADOConfigured = "True"
-    $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")
-    pause
+    if ($adoProject -eq "" -or $adoRepo -eq "" -or $adoOrg -eq "") {
+        Install-DevOps
+        $configFile.ADOConfigured = "True"
+        $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")            
+    }
+    else {
+        Write-Host Azure DevOps is already configured
+        pause
+    }
 }
 catch {
     $configFile.ADOConfigured = "Error"

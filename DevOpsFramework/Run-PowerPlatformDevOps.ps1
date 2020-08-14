@@ -39,6 +39,8 @@ function Show-Menu {
         [string]$Title = 'Power Platform DevOps'
     )
     $configFile = Get-Content (Join-Path $PSScriptRoot "\devopsConfig.json") | ConvertFrom-Json
+    $devopsConfigMessage = "(ADO Org : $($configFile.ADOOrgName) | ADO Project : $($configFile.ADOProject) | git Repo : $($configFile.gitRepo))"
+    [console]::ForegroundColor = "White"
     Clear-Host
     Write-Host $logo -ForegroundColor Magenta
     Write-Host $message -ForegroundColor White
@@ -46,7 +48,7 @@ function Show-Menu {
     Write-Host "================ $Title ================" -ForegroundColor White
     
     Write-Host "1: Run Pre-requisite checks (Install / Update)." -ForegroundColor (Set-Colour $configFile.PreReqsComplete)
-    Write-Host "2: Configure Azure DevOps" -ForegroundColor (Set-Colour $configFile.ADOConfigured)
+    Write-Host "2: Configure Azure DevOps" $devopsConfigMessage -ForegroundColor (Set-Colour $configFile.ADOConfigured)
     Write-Host "3: Add New D365 / CDS Solution." -ForegroundColor White
     Write-Host "4: Enable Azure Resource Management Deployment." -ForegroundColor (Set-Colour $configFile.ARMAdded)
     Write-Host "5: Add Webhooks Project." -ForegroundColor (Set-Colour $configFile.WebHooksAdded)
