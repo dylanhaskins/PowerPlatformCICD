@@ -42,19 +42,18 @@ function Show-Menu {
     Write-Host $logo -ForegroundColor Magenta
     Write-Host $message -ForegroundColor White
     $Repeater = "=" * $Title.Length
-    Write-Host "================ $Title ================"
+    Write-Host "================ $Title ================" -ForegroundColor White
     
     Write-Host "1: Run Pre-requisite checks (Install / Update)." -ForegroundColor (Set-Colour $configFile.PreReqsComplete)
     Write-Host "2: Configure Azure DevOps" -ForegroundColor (Set-Colour $configFile.ADOConfigured)
-    Write-Host "3: Add New D365 / CDS Solution."
+    Write-Host "3: Add New D365 / CDS Solution." -ForegroundColor White
     Write-Host "4: Enable Azure Resource Management Deployment." -ForegroundColor (Set-Colour $configFile.ARMAdded)
     Write-Host "5: Add Webhooks Project." -ForegroundColor (Set-Colour $configFile.WebHooksAdded)
-    Write-Host "Q: Press 'Q' to quit."
-    Write-Host "=================$Repeater================="
+    Write-Host "Q: Press 'Q' to quit." -ForegroundColor White
+    Write-Host "=================$Repeater=================" -ForegroundColor White
 }
 
-function Install-PreReqs
-{
+function Install-PreReqs {
     $message = "Checking Pre-requisites"
     Write-Host $message
 
@@ -69,8 +68,7 @@ function Install-PreReqs
    
 }
 
-function Configure-AzureDevOps
-{
+function Connect-AzureDevOps {
     $message = "Configuring Azure DevOps"
     Write-Host $message
 
@@ -90,21 +88,19 @@ function Configure-AzureDevOps
 Write-Host ""
 [console]::ForegroundColor = "White"
 
-do
- {
+do {
     Show-Menu
 
-    $selection = Read-Host "Please make a selection (Purple items are optional)"
-    switch ($selection)
-    {
-    '1' {
-    Install-PreReqs
-    } '2' {
-    'You chose option #2'
-    } '3' {
-      'You chose option #3'
-    }
+    $selection = Read-Host "Please make a selection (Purple items are optional)" -ForegroundColor White
+    switch ($selection) {
+        '1' {
+            Install-PreReqs
+        } '2' {
+            Connect-AzureDevOps
+        } '3' {
+            'You chose option #3'
+        }
     }   
     Write-Host ""
- }
- until ($selection -eq 'q')
+}
+until ($selection -eq 'q')
