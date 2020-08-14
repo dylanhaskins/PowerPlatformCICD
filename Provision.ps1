@@ -37,7 +37,7 @@ Write-Host $logo -ForegroundColor Magenta
 Write-Host $message -ForegroundColor White
 
 do {
-    $adoProject = Read-Host -Prompt "Please enter a Name for the Git Repository you wish to Create"
+    $gitRepo = Read-Host -Prompt "Please enter a Name for the Git Repository you wish to Create"
 }until ($gitRepo -ne "")
 
 
@@ -97,7 +97,7 @@ try {
         $configFile.PreReqsComplete = "True"
         $configFile | ConvertTo-Json | Set-Content "$path\$gitRepo\DevOpsFramework\devopsConfig.json"
     
-        & .\DevOpsFramework\Configure-DevOps.ps1 -Branch $Branch -ErrorAction Stop
+        & .\DevOpsFramework\Run-PowerPlatformDevOps.ps1 -Branch $Branch -ErrorAction Stop
     }
     else {
         Write-Warning "The Path $path\$gitRepo already exists, please select a different path or project name"
