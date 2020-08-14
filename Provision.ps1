@@ -20,7 +20,7 @@ if (!(Test-Path -Path "$($FolderBrowser.SelectedPath)\$adoProject")) {
     New-Item -Path $FolderBrowser.SelectedPath -Name $adoProject -ItemType Directory
     Set-Location -Path "$($FolderBrowser.SelectedPath)\$adoProject"   
 
-    $sourceFile = Invoke-WebRequest "https://raw.githubusercontent.com/dylanhaskins/PowerPlatformCICD/$branch/Install-PreRequisites.ps1" -UseBasicParsing:$true
+    $sourceFile = Invoke-WebRequest "https://raw.githubusercontent.com/dylanhaskins/PowerPlatformCICD/$branch/DevOpsFramework/Install-PreRequisites.ps1" -UseBasicParsing:$true
     Set-Content .\Install-PreRequisites.ps1 -Value $sourceFile.Content
 
     Start-Sleep -Seconds 2
