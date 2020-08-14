@@ -86,6 +86,21 @@ function Connect-AzureDevOps {
    
 }
 
+function Add-Solution {
+    $message = "Adding D365 / CDS Solution"
+    Write-Host $message
+
+    try {
+        . (Join-Path $PSScriptRoot Add-Solution.ps1)     
+        $configFile.SolutionAdded = "True"
+    }
+    catch {
+        $configFile.SolutionAdded = "Error"
+    }
+    $configFile | ConvertTo-Json | Set-Content (Join-Path $PSScriptRoot "\devopsConfig.json")
+   
+}
+
 
 
 Write-Host ""
@@ -101,7 +116,7 @@ do {
         } '2' {
             Connect-AzureDevOps
         } '3' {
-            'You chose option #3'
+            Add-Solution
         }
     }   
     Write-Host ""

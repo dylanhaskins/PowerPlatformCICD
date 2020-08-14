@@ -42,6 +42,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{A1B0
 		Solutions\Scripts\UpdatePortalConfig.ps1 = Solutions\Scripts\UpdatePortalConfig.ps1
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevOps Framework", "DevOps Framework", "{D2DAD2AA-AEA0-40F2-BDF2-D99735B02652}"
+	ProjectSection(SolutionItems) = preProject
+		DevOpsFramework\_SetupTools.ps1 = DevOpsFramework\_SetupTools.ps1
+		DevOpsFramework\Add-Solution.ps1 = DevOpsFramework\Add-Solution.ps1
+		DevOpsFramework\Configure-AzureDevOps.ps1 = DevOpsFramework\Configure-AzureDevOps.ps1
+		DevOpsFramework\devopsConfig.json = DevOpsFramework\devopsConfig.json
+		DevOpsFramework\Install-PreRequisites.ps1 = DevOpsFramework\Install-PreRequisites.ps1
+		DevOpsFramework\Provision_Full.ps1 = DevOpsFramework\Provision_Full.ps1
+		DevOpsFramework\Run-PowerPlatformDevOps.ps1 = DevOpsFramework\Run-PowerPlatformDevOps.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Common\Common.projitems*{7f925be0-a404-4902-9bc4-17e6d1d2be86}*SharedItemsImports = 13
@@ -89,6 +100,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A1B077EF-06ED-4E37-BEF4-E1B4CC9E249F} = {DB8D8804-C1BF-4614-AAB1-F2DCACFE24DE}
+		{D2DAD2AA-AEA0-40F2-BDF2-D99735B02652} = {DB8D8804-C1BF-4614-AAB1-F2DCACFE24DE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAFF6E65-3AFE-4170-B74B-F15AB461153A}

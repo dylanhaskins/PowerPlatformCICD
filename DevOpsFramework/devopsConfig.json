@@ -5,6 +5,7 @@
   "ADOOrgName": "",
   "PreReqsComplete": "False",
   "ADOConfigured": "False",
+  "SolutionAdded" :  "False",
   "ARMAdded": "Optional",
   "WebHooksAdded": "Optional"
 }
