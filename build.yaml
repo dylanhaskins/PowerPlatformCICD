@@ -118,7 +118,7 @@ stages:
               displayName: 'Deploy Solution'
               inputs:
                 targetType: filePath
-                filePath: '$(Pipeline.Workspace)/drop/Solutions/bin/Release/Scripts/SolutionDeploy.ps1'
+                filePath: '$(Pipeline.Workspace)/drop/Solutions/Scripts/SolutionDeploy.ps1'
                 arguments: '-DeployServerUrl $(d365url) -UserName $(d365username) -Password $(d365password) -PipelinePath $(Pipeline.Workspace)'
 #### ----- Uncomment this block to Enable Azure ARM Template Deployment ------
 #    - deployment: AzureJob      
@@ -176,7 +176,7 @@ stages:
 #              displayName: 'Deploy Solution'
 #              inputs:
 #                targetType: filePath
-#                filePath: '$(Pipeline.Workspace)/drop/Solutions/bin/Release/Scripts/SolutionDeploy.ps1'
+#                filePath: '$(Pipeline.Workspace)/drop/Solutions/Scripts/SolutionDeploy.ps1'
 #                arguments: '-DeployServerUrl $(d365url) -UserName $(d365username) -Password $(d365password) -PipelinePath $(Pipeline.Workspace)'
 
 #    - deployment: AzureJob      

@@ -6,7 +6,7 @@
 )
 
 ######################## SETUP 
-. "$PipelinePath\drop\Solutions\bin\Release\Scripts\_SetupTools.ps1"
+. "$PipelinePath\drop\Solutions\Scripts\_SetupTools.ps1"
 
 InstallCoreTools
 
