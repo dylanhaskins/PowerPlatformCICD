@@ -13,7 +13,10 @@ InstallCoreTools
 function Import-Package {
     [string]$PackageDirectory = "$PipelinePath/drop/PackageDeployer/bin/Release"
     [string]$LogsDirectory = "$PackageDirectory"
-    [string]$CrmConnectionString = "AuthType=Office365;Username=$UserName; Password=$Password;Url=$DeployServerUrl"
+    #[string]$CrmConnectionString = "AuthType=Office365;Username=$UserName; Password=$Password;Url=$DeployServerUrl"
+
+    #Need to replace AppId and RedirectUri from Library values
+    [string]$CrmConnectionString = "AuthType=OAuth;Username=$UserName;Password=$Password;Url=$DeployServerUrl;AppId=51f81489-12ee-4a9e-aaae-a2591f45987d;RedirectUri=app://58145B91-0C36-4500-8554-080854F2AC97;LoginPrompt=never"
 
     Write-Host $PackageDirectory
     Write-Host $LogsDirectory
