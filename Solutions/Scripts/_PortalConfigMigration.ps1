@@ -5,7 +5,6 @@ Write-Host("Exporting Configuration Data...")
 if (!$Credentials) {$Credentials = Get-Credential -Message "Credentials : $global:SolutionName @ $global:ServerUrl"}
 if (!$conn) {$conn = Connect-CrmOnline -Credential $Credentials -ServerUrl $global:ServerUrl}
 
-
 $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_contentsnippet'>
 <attribute name='adx_contentsnippetid' />
 <attribute name='adx_contentsnippetlanguageid' />
@@ -17,9 +16,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='adx_type' />
 <attribute name='adx_value' />
 <attribute name='adx_websiteid' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_entitypermission'>
 <attribute name='adx_accountrelationship' />
@@ -40,9 +36,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='statuscode' />
 <attribute name='adx_websiteid' />
 <attribute name='adx_write' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_entitypermission'>
 <attribute name='adx_entitypermissionid' />
@@ -64,9 +57,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='adx_usewebsiteheaderandfooter' />
 <attribute name='adx_webtemplateid' />
 <attribute name='adx_websiteid' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_portallanguage'>
 <attribute name='adx_description' />
@@ -79,9 +69,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='statecode' />
 <attribute name='statuscode' />
 <attribute name='adx_systemlanguage' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_publishingstate'>
 <attribute name='adx_displayorder' />
@@ -93,9 +80,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='statecode' />
 <attribute name='statuscode' />
 <attribute name='adx_websiteid' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_publishingstatetransitionrule'>
 <attribute name='adx_fromstate_publishingstateid' />
@@ -106,9 +90,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='statuscode' />
 <attribute name='adx_tostate_publishingstateid' />
 <attribute name='adx_websiteid' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_redirect'>
 <attribute name='importsequencenumber' />
@@ -122,9 +103,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='statuscode' />
 <attribute name='adx_webpageid' />
 <attribute name='adx_websiteid' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_shortcut'>
 <attribute name='adx_description' />
@@ -141,9 +119,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='adx_webfileid' />
 <attribute name='adx_webpageid' />
 <attribute name='adx_websiteid' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_sitemarker'>
 <attribute name='importsequencenumber' />
@@ -153,9 +128,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='statecode' />
 <attribute name='statuscode' />
 <attribute name='adx_websiteid' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_sitesetting'>
 <attribute name='adx_description' />
@@ -166,7 +138,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='statuscode' />
 <attribute name='adx_value' />
 <attribute name='adx_websiteid' />
-    <filter type='and'><condition attribute='statecode' operator='eq' value='0' /></filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_weblink'>
 <attribute name='adx_description' />
@@ -190,9 +161,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='statuscode' />
 <attribute name='adx_weblinkid' />
 <attribute name='adx_weblinksetid' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_weblinkset'>
 <attribute name='adx_copy' />
@@ -206,9 +174,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='adx_weblinksetid' />
 <attribute name='adx_websitelanguageid' />
 <attribute name='adx_websiteid' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_webpage'>
 <attribute name='adx_alloworigin' />
@@ -252,9 +217,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='adx_webpageid' />
 <attribute name='adx_webpagelanguageid' />
 <attribute name='adx_websiteid' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_webrole'>
 <attribute name='adx_anonymoususersrole' />
@@ -267,9 +229,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='statuscode' />
 <attribute name='adx_webroleid' />
 <attribute name='adx_websiteid' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_webtemplate'>
 <attribute name='importsequencenumber' />
@@ -280,9 +239,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='statuscode' />
 <attribute name='adx_webtemplateid' />
 <attribute name='adx_websiteid' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_website'>
 <attribute name='adx_defaultlanguage' />
@@ -295,9 +251,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='statecode' />
 <attribute name='statuscode' />
 <attribute name='adx_websiteid' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_websitelanguage'>
 <attribute name='importsequencenumber' />
@@ -308,9 +261,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='statuscode' />
 <attribute name='adx_websiteid' />
 <attribute name='adx_websitelanguageid' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_webnotificationurl'>
 <attribute name='importsequencenumber' />
@@ -320,9 +270,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='adx_token' />
 <attribute name='adx_url' />
 <attribute name='adx_webnotificationurlid' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_entityform'>
 <attribute name='adx_geolocation_addresslinefieldname' />
@@ -422,9 +369,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='adx_validationsummarylinktext' />
 <attribute name='adx_websiteid' />
 <attribute name='adx_geolocation_postalcodefieldname' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_entityformmetadata'>
 <attribute name='adx_adddescription' />
@@ -474,9 +418,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='adx_validationerrormessage' />
 <attribute name='adx_validationregularexpression' />
 <attribute name='adx_onsavevalue' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_entitylist'>
 <attribute name='adx_filter_applybuttonlabel' />
@@ -547,9 +488,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='adx_webpagefordetailsview' />
 <attribute name='adx_websiteid' />
 <attribute name='adx_map_zoom' />
-    <filter type='and'>
-      <condition attribute='statecode' operator='eq' value='0' />
-    </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_webfile'>
 <attribute name='adx_alloworigin' />
@@ -571,9 +509,6 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='adx_title' />
 <attribute name='adx_webfileid' />
 <attribute name='adx_websiteid' />
-      <filter type='and'>
-        <condition attribute='statecode' operator='eq' value='0' />
-      </filter>
 </entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='annotation'>
 <attribute name='notetext' />
@@ -589,12 +524,9 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='objectid' />
 <attribute name='stepid' />
 <attribute name='subject' />
-    <link-entity name='adx_webfile' from='adx_webfileid' to='objectid' link-type='inner' alias='ab'>
-      <filter type='and'>
-        <condition attribute='statecode' operator='eq' value='0' />
-      </filter>
-    </link-entity>
-</entity></fetch>") -DisablePluginsGlobally $true  `
+    <link-entity name='adx_webfile' from='adx_webfileid' to='objectid' link-type='inner' alias='ah'>
+      <filter type='and'><condition attribute='statecode' operator='eq' value='0' /></filter>
+    </link-entity></entity></fetch>") -DisablePluginsGlobally $true  `
 |Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch>
 <entity name='adx_webpageaccesscontrolrule' >
    <attribute name='adx_webpageid' />
@@ -605,10 +537,278 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 		<attribute name='adx_name' />
 		 <attribute name='adx_description' />
 	<filter type='and'>
+      <condition attribute='adx_right' operator='eq' value='2' /></filter></entity>
+</fetch>") -DisablePluginsGlobally $true `
+|Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch>
+<entity name='adx_webpageaccesscontrolrule' >
+	<attribute name='adx_webpageaccesscontrolruleid' />
+	  <link-entity name='adx_webpageaccesscontrolrule_webrole' from='adx_webpageaccesscontrolruleid' to='adx_webpageaccesscontrolruleid' intersect='true' visible='false' >
+		  <attribute name='adx_webroleid' />
+	  </link-entity>
+	 <filter type='and'>
       <condition attribute='adx_right' operator='eq' value='2' />
     </filter>
 </entity>
-</fetch>") -DisablePluginsGlobally $true 
+</fetch>") -DisablePluginsGlobally $true `
+|Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch>
+  <entity name='adx_websiteaccess'>
+    <attribute name='adx_name' />
+    <attribute name='adx_websiteid' />
+    <attribute name='adx_manageweblinksets' />
+    <attribute name='adx_managesitemarkers' />
+    <attribute name='adx_managecontentsnippets' />
+    <attribute name='adx_previewunpublishedentities' />
+    <attribute name='adx_websiteaccessid' />
+  </entity>
+</fetch>") -DisablePluginsGlobally $true `
+|Add-FetchesToCrmDataPackage -Conn $conn  -Fetches @("<fetch><entity name='adx_webformmetadata'>
+<attribute name='adx_adddescription' />
+<attribute name='adx_attributelogicalname' />
+<attribute name='adx_constantsummaximumtotal' />
+<attribute name='adx_constantsumminimumtotal' />
+<attribute name='adx_constantsumvalidationerrormessage' />
+<attribute name='adx_controlstyle' />
+<attribute name='adx_purchasecreateinvoiceonpayment' />
+<attribute name='adx_cssclass' />
+<attribute name='adx_description' />
+<attribute name='adx_entityformforcreate' />
+<attribute name='adx_fieldisrequired' />
+<attribute name='adx_purchasefulfillorderonpayment' />
+<attribute name='adx_geolocationvalidatorerrormessage' />
+<attribute name='adx_groupname' />
+<attribute name='adx_ignoredefaultvalue' />
+<attribute name='importsequencenumber' />
+<attribute name='adx_label' />
+<attribute name='adx_purchaselineitemdescriptionattribute' />
+<attribute name='adx_purchaselineiteminstructionsattribute' />
+<attribute name='adx_purchaselineitemorderattribute' />
+<attribute name='adx_purchaselineitemproductattribute' />
+<attribute name='adx_purchaselineitemquantityattribute' />
+<attribute name='adx_purchaselineitemrelationship' />
+<attribute name='adx_purchaselineitemrequiredattribute' />
+<attribute name='adx_purchaselineitemuomattribute' />
+<attribute name='adx_maxmultiplechoiceselectedcount' />
+<attribute name='adx_minmultiplechoiceselectedcount' />
+<attribute name='adx_multiplechoicevalidationerrormessage' />
+<attribute name='adx_notes_settings' />
+<attribute name='adx_onsavefromattribute' />
+<attribute name='adx_onsavetype' />
+<attribute name='adx_purchaseoptionalproductsrelationship' />
+<attribute name='adx_descriptionposition' />
+<attribute name='adx_prepopulatefromattribute' />
+<attribute name='adx_prepopulatetype' />
+<attribute name='adx_prepopulatevalue' />
+<attribute name='adx_provisionedlanguages' />
+<attribute name='adx_purchasequotename' />
+<attribute name='adx_randomizeoptionsetvalues' />
+<attribute name='adx_rangevalidationerrormessage' />
+<attribute name='adx_rankordernotiesvalidationerrormessage' />
+<attribute name='adx_validationregularexpressionerrormessage' />
+<attribute name='adx_requiredfieldvalidationerrormessage' />
+<attribute name='adx_purchaserequiredproductsrelationship' />
+<attribute name='adx_purchaserequiresshipping' />
+<attribute name='adx_sectionname' />
+<attribute name='adx_setvalueonsave' />
+<attribute name='statecode' />
+<attribute name='statuscode' />
+<attribute name='adx_subgrid_name' />
+<attribute name='adx_subgrid_settings' />
+<attribute name='adx_tabname' />
+<attribute name='adx_purchasetargetentityinvoicerelationship' />
+<attribute name='adx_purchasetargetentityorderrelationship' />
+<attribute name='adx_purchasetargetentityrelationship' />
+<attribute name='timezoneruleversionnumber' />
+<attribute name='adx_timeline_settings' />
+<attribute name='adx_type' />
+<attribute name='adx_useattributedescriptionproperty' />
+<attribute name='utcconversiontimezonecode' />
+<attribute name='adx_validationerrormessage' />
+<attribute name='adx_validationregularexpression' />
+<attribute name='adx_onsavevalue' />
+<attribute name='versionnumber' />
+<attribute name='adx_webformmetadataid' />
+<attribute name='adx_webformstep' />
+</entity></fetch>") -DisablePluginsGlobally $true `
+|Add-FetchesToCrmDataPackage -Conn $conn  -Fetches @("<fetch><entity name='adx_webform'>
+<attribute name='adx_authenticationrequired' />
+<attribute name='adx_savechangeswarningonclose' />
+<attribute name='adx_editexistingrecordpermitted' />
+<attribute name='adx_editexpiredmessage' />
+<attribute name='adx_editexpiredstatecode' />
+<attribute name='adx_editexpiredstatuscode' />
+<attribute name='adx_editnotpermittedmessage' />
+<attribute name='adx_progressindicatorenabled' />
+<attribute name='adx_progressindicatorignorelaststep' />
+<attribute name='importsequencenumber' />
+<attribute name='adx_multiplerecordsperuserpermitted' />
+<attribute name='adx_name' />
+<attribute name='adx_progressindicatorposition' />
+<attribute name='adx_progressindicatorprependstepnum' />
+<attribute name='adx_provisionedlanguages' />
+<attribute name='overriddencreatedon' />
+<attribute name='adx_savechangeswarningmessage' />
+<attribute name='adx_startnewsessiononload' />
+<attribute name='adx_startstep' />
+<attribute name='statecode' />
+<attribute name='statuscode' />
+<attribute name='timezoneruleversionnumber' />
+<attribute name='adx_progressindicatortype' />
+<attribute name='utcconversiontimezonecode' />
+<attribute name='versionnumber' />
+<attribute name='adx_webformid' />
+<attribute name='adx_websiteid' />
+</entity></fetch>") -DisablePluginsGlobally $true `
+|Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_webformstep'>
+<attribute name='adx_accept' />
+<attribute name='adx_geolocation_addresslinefieldname' />
+<attribute name='adx_allowmultiplefiles' />
+<attribute name='adx_redirecturlappendentityidquerystring' />
+<attribute name='adx_appendquerystring' />
+<attribute name='adx_associatecurrentportaluser' />
+<attribute name='adx_attachfile' />
+<attribute name='adx_attachfilelabel' />
+<attribute name='adx_attachfilemaxsize' />
+<attribute name='adx_attachfilerequired' />
+<attribute name='adx_attachfilerequirederrormessage' />
+<attribute name='adx_attachfilerestrictaccept' />
+<attribute name='adx_attachfilesizeerrormessage' />
+<attribute name='adx_attachfilestoragelocation' />
+<attribute name='adx_attachfiletypeerrormessage' />
+<attribute name='adx_redirecturlquerystringattribute' />
+<attribute name='adx_autogeneratesteps' />
+<attribute name='adx_autonumberattributelogicalname' />
+<attribute name='adx_autonumberdefinitionname' />
+<attribute name='adx_captcharequired' />
+<attribute name='adx_geolocation_cityfieldname' />
+<attribute name='adx_condition' />
+<attribute name='adx_conditiondefaultnextstep' />
+<attribute name='adx_geolocation_countryfieldname' />
+<attribute name='adx_geolocation_countyfieldname' />
+<attribute name='adx_createautonumber' />
+<attribute name='adx_registerstartupscript' />
+<attribute name='adx_redirecturlcustomquerystring' />
+<attribute name='adx_geolocation_displaymap' />
+<attribute name='adx_editexistingrecordpermitted' />
+<attribute name='adx_editexpiredmessage' />
+<attribute name='adx_editexpiredstatecode' />
+<attribute name='adx_editexpiredstatusreason' />
+<attribute name='adx_editnotpermittedmessage' />
+<attribute name='adx_entitypermissionsenabled' />
+<attribute name='adx_validationsummarylinksenabled' />
+<attribute name='adx_geolocation_enabled' />
+<attribute name='adx_entitysourcestep' />
+<attribute name='adx_entitysourcetype' />
+<attribute name='adx_formname' />
+<attribute name='adx_geolocation_formattedaddressfieldname' />
+<attribute name='adx_hideformonsuccess' />
+<attribute name='importsequencenumber' />
+<attribute name='adx_instructions' />
+<attribute name='adx_portaluserlookupattributeisactivityparty' />
+<attribute name='adx_geolocation_latitudefieldname' />
+<attribute name='adx_loadeventkeyname' />
+<attribute name='adx_loguser' />
+<attribute name='adx_geolocation_longitudefieldname' />
+<attribute name='adx_forceallfieldsrequired' />
+<attribute name='adx_geolocation_maptype' />
+<attribute name='adx_mode' />
+<attribute name='adx_movepreviouseventkeyname' />
+<attribute name='adx_movepreviouspermitted' />
+<attribute name='adx_multiplerecordsperuserpermitted' />
+<attribute name='adx_name' />
+<attribute name='adx_geolocation_neighborhoodfieldname' />
+<attribute name='adx_nextbuttoncssclass' />
+<attribute name='adx_nextbuttontext' />
+<attribute name='adx_nextstep' />
+<attribute name='adx_populatereferenceentitylookupfield' />
+<attribute name='adx_postbackurl' />
+<attribute name='adx_previousbuttoncssclass' />
+<attribute name='adx_previousbuttontext' />
+<attribute name='adx_previousstep' />
+<attribute name='adx_primarykeyattributelogicalname' />
+<attribute name='adx_primarykeyquerystringparametername' />
+<attribute name='adx_provisionedlanguages' />
+<attribute name='adx_redirecturlquerystringattributeparamname' />
+<attribute name='adx_recommendedfieldsrequired' />
+<attribute name='overriddencreatedon' />
+<attribute name='adx_recordnotfoundmessage' />
+<attribute name='adx_referencerecordsourcerelationshipname' />
+<attribute name='adx_redirecturl' />
+<attribute name='adx_redirecturlquerystringname' />
+<attribute name='adx_redirectwebpage' />
+<attribute name='adx_referenceentitylogicalname' />
+<attribute name='adx_referenceentityprimarykeylogicalname' />
+<attribute name='adx_referenceentityreadonlyformname' />
+<attribute name='adx_referenceentityrelationshipname' />
+<attribute name='adx_referenceentitysourcetype' />
+<attribute name='adx_referenceentitystep' />
+<attribute name='adx_referencequeryattributelogicalname' />
+<attribute name='adx_referencequerystringisprimarykey' />
+<attribute name='adx_referencequerystringname' />
+<attribute name='adx_referencesourceentitylogicalname' />
+<attribute name='adx_referencetargetlookupattributelogicalname' />
+<attribute name='adx_recordsourcerelationshipname' />
+<attribute name='adx_renderwebresourcesinline' />
+<attribute name='adx_savedeventkeyname' />
+<attribute name='adx_savingeventkeyname' />
+<attribute name='adx_setentityreference' />
+<attribute name='adx_settings' />
+<attribute name='adx_showcaptchaforauthenticatedusers' />
+<attribute name='adx_showownerfields' />
+<attribute name='adx_referenceentityshowreadonlyform' />
+<attribute name='adx_showunsupportedfields' />
+<attribute name='adx_geolocation_statefieldname' />
+<attribute name='statecode' />
+<attribute name='statuscode' />
+<attribute name='adx_submitbuttonbusytext' />
+<attribute name='adx_submitbuttoncssclass' />
+<attribute name='adx_submitbuttontext' />
+<attribute name='adx_submiteventkeyname' />
+<attribute name='adx_successmessage' />
+<attribute name='adx_tabname' />
+<attribute name='adx_targetentitylogicalname' />
+<attribute name='adx_targetentityportaluserlookupattribute' />
+<attribute name='adx_targetentityprimarykeylogicalname' />
+<attribute name='timezoneruleversionnumber' />
+<attribute name='adx_title' />
+<attribute name='adx_tooltipenabled' />
+<attribute name='adx_type' />
+<attribute name='adx_usercontrolpath' />
+<attribute name='adx_usercontroltitle' />
+<attribute name='adx_userhostaddressattributelogicalname' />
+<attribute name='adx_useridentitynameattributelogicalname' />
+<attribute name='utcconversiontimezonecode' />
+<attribute name='adx_validationgroup' />
+<attribute name='adx_validationsummarycssclass' />
+<attribute name='adx_validationsummaryheadertext' />
+<attribute name='adx_validationsummarylinktext' />
+<attribute name='versionnumber' />
+<attribute name='adx_webform' />
+<attribute name='adx_webformstepid' />
+<attribute name='adx_geolocation_postalcodefieldname' />
+</entity></fetch>") -DisablePluginsGlobally $true `
+| Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch>
+  <entity name='dia_applicationtype'>
+    <attribute name='dia_applicationtypeid' />
+    <attribute name='dia_name' />
+	<attribute name='dia_dalcode' />
+	<attribute name='statecode' />
+    <attribute name='statuscode' />
+    <filter type='and'>
+      <condition attribute='dia_applicationtypeid' operator='in'>
+        <value uitype='dia_applicationtype'>{6744D9BF-02CA-EA11-A812-000D3A7946D7}</value>
+        <value uitype='dia_applicationtype'>{02D0DFC5-02CA-EA11-A812-000D3A7946D7}</value>
+      </condition>
+    </filter>
+  </entity>
+</fetch>")  -DisablePluginsGlobally $true `
+| Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch>
+  <entity name='dia_eyecolour'>
+    <attribute name='dia_eyecolourid' />
+    <attribute name='dia_colour' />
+  </entity>
+</fetch>")  -DisablePluginsGlobally $true 
+
+
 
 $packages.Data.InnerXml | Out-File -FilePath  ..\..\ReferenceData\data.xml
 $packages.Schema.InnerXml | Out-File -FilePath ..\..\ReferenceData\data_schema.xml
