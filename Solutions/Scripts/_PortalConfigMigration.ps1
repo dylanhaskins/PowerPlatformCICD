@@ -785,29 +785,7 @@ $packages = Get-CrmDataPackage -Conn $conn -Fetches @("<fetch><entity name='adx_
 <attribute name='adx_webform' />
 <attribute name='adx_webformstepid' />
 <attribute name='adx_geolocation_postalcodefieldname' />
-</entity></fetch>") -DisablePluginsGlobally $true `
-| Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch>
-  <entity name='dia_applicationtype'>
-    <attribute name='dia_applicationtypeid' />
-    <attribute name='dia_name' />
-	<attribute name='dia_dalcode' />
-	<attribute name='statecode' />
-    <attribute name='statuscode' />
-    <filter type='and'>
-      <condition attribute='dia_applicationtypeid' operator='in'>
-        <value uitype='dia_applicationtype'>{6744D9BF-02CA-EA11-A812-000D3A7946D7}</value>
-        <value uitype='dia_applicationtype'>{02D0DFC5-02CA-EA11-A812-000D3A7946D7}</value>
-      </condition>
-    </filter>
-  </entity>
-</fetch>")  -DisablePluginsGlobally $true `
-| Add-FetchesToCrmDataPackage -Conn $conn -Fetches @("<fetch>
-  <entity name='dia_eyecolour'>
-    <attribute name='dia_eyecolourid' />
-    <attribute name='dia_colour' />
-  </entity>
-</fetch>")  -DisablePluginsGlobally $true 
-
+</entity></fetch>") -DisablePluginsGlobally $true 
 
 
 $packages.Data.InnerXml | Out-File -FilePath  ..\..\ReferenceData\data.xml
