@@ -1,7 +1,17 @@
 # PowerPlatformCICD 
+
+## The base of this template and strategy have been merged into the following project:
+
+[Microsoft.Powerplatform.Devops](https://www.powershellgallery.com/packages/Microsoft.PowerPlatform.DevOps/)
+
+## We wont be maintaining this template.
+
+
+
+
+
+
 This is a Template project to create new CDS/D365 Solution leveraging a lighweight framework and CI/CD
-
-
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
