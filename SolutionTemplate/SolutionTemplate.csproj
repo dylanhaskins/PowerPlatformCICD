@@ -238,7 +238,7 @@
       <Version>2.3.21</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.3</Version>
+      <Version>13.0.1</Version>
     </PackageReference>
     <PackageReference Include="spkl">
       <Version>1.0.370</Version>
